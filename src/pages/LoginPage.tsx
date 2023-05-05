@@ -1,11 +1,12 @@
 import { FC } from 'react'
+import LoginForm from '../components/LoginForm'
 
 interface LoginPageProps {}
 
 const LoginPage: FC<LoginPageProps> = ({}) => {
 	return (
-		<div className='flex justify-center pt-24'>
-			<h1 className='text-4xl'>Login</h1>
+		<div className='lg:pt- pt-20'>
+			<LoginForm />
 		</div>
 	)
 }

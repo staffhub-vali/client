@@ -6,7 +6,7 @@ interface NavbarProps {}
 const Navbar: FC<NavbarProps> = ({}) => {
 	const [mobile, setMobile] = useState(false)
 	return (
-		<div className=' fixed m-0 w-full bg-slate-100 font-sans'>
+		<div className=' fixed m-0 w-full font-sans'>
 			<div className='bg-white shadow'>
 				<div className='container mx-auto px-4'>
 					<div className='flex items-center justify-between py-4'>
@@ -37,7 +37,7 @@ const Navbar: FC<NavbarProps> = ({}) => {
 						<div className='hidden sm:flex sm:items-center'>
 							<Link
 								to='/login'
-								className='mr-4 p-3 text-sm font-semibold text-gray-800 hover:text-black active:scale-95'>
+								className='p-3 text-sm font-semibold text-gray-800 hover:text-black active:scale-95'>
 								Sign in
 							</Link>
 						</div>

@@ -18,3 +18,8 @@ body {
 	min-width: 100vw;
 	min-height: 100vh;
 }
+
+.mobile-nav {
+	transition: transform 0.3s ease-in-out;
+	transform: translateY(100%);
+}

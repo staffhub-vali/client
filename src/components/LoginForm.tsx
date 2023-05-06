@@ -1,9 +1,26 @@
-import { FC } from 'react'
+import { FC, useState } from 'react'
 import { Link } from 'react-router-dom'
+import axios from 'axios'
 
 interface LoginFormProps {}
 
 const LoginForm: FC<LoginFormProps> = ({}) => {
+	const [email, setEmail] = useState<string>('')
+	const [password, setPassword] = useState<string>('')
+
+	const handleSubmit = async (e: React.FormEvent) => {
+		e.preventDefault()
+
+		const response = await axios.post('http://localhost:8080/v1/auth/login', {
+			email: email,
+			password: password,
+		})
+
+		localStorage.setItem('user', JSON.stringify(response.data.user))
+		localStorage.setItem('token', response.data.token)
+		window.location.href = '/'
+	}
+
 	return (
 		<section className=''>
 			<div className='flex flex-col items-center justify-center lg:min-h-full lg:flex-row '>
@@ -16,7 +33,7 @@ const LoginForm: FC<LoginFormProps> = ({}) => {
 						</h1>
 
 						<form
-							action='#'
+							onSubmit={handleSubmit}
 							className='center mt-8 flex w-96 flex-col gap-6'>
 							<div className='flex-grow'>
 								<label
@@ -26,6 +43,8 @@ const LoginForm: FC<LoginFormProps> = ({}) => {
 								</label>
 
 								<input
+									onChange={(e) => setEmail(e.target.value)}
+									value={email}
 									type='email'
 									id='Email'
 									name='email'
@@ -41,6 +60,8 @@ const LoginForm: FC<LoginFormProps> = ({}) => {
 								</label>
 
 								<input
+									onChange={(e) => setPassword(e.target.value)}
+									value={password}
 									type='password'
 									id='Password'
 									name='password'

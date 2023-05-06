@@ -1,9 +1,45 @@
-import { FC } from 'react'
 import { Link } from 'react-router-dom'
+import axios from 'axios'
+import { FC, useEffect, useState } from 'react'
 
 interface RegisterFormProps {}
 
 const RegisterForm: FC<RegisterFormProps> = ({}) => {
+	const [name, setName] = useState('')
+	const [firstName, setFirstName] = useState('')
+	const [lastName, setLastName] = useState('')
+	const [email, setEmail] = useState('')
+	const [password, setPassword] = useState('')
+	const [confirmPassword, setConfirmPassword] = useState('')
+	const [error, setError] = useState('')
+	const [loading, setLoading] = useState(false)
+
+	useEffect(() => {
+		setName(`${firstName} ${lastName}`)
+	}, [firstName, lastName])
+
+	const handleSubmit = async (e: React.FormEvent) => {
+		e.preventDefault()
+
+		if (password === confirmPassword) {
+			try {
+				setLoading(true)
+				await axios.post('http://localhost:8080/v1/auth/register', {
+					name: name,
+					email: email,
+					password: password,
+				})
+				setLoading(false)
+			} catch (error) {
+				console.log(error)
+				setLoading(false)
+				setError('An error occurred. Please try again later.')
+			}
+		} else {
+			setError('Passwords do not match.')
+		}
+	}
+
 	return (
 		<section className=''>
 			<div className='flex flex-col items-center justify-center lg:min-h-full lg:flex-row '>
@@ -26,7 +62,7 @@ const RegisterForm: FC<RegisterFormProps> = ({}) => {
 						</p>
 
 						<form
-							action='#'
+							onSubmit={handleSubmit}
 							className='mt-8 grid grid-cols-6 gap-6'>
 							<div className='col-span-6 sm:col-span-3'>
 								<label
@@ -36,9 +72,11 @@ const RegisterForm: FC<RegisterFormProps> = ({}) => {
 								</label>
 
 								<input
+									value={firstName}
+									onChange={(e) => setFirstName(e.target.value)}
 									type='text'
 									id='FirstName'
-									name='first_name'
+									name='firstName'
 									className='mt-1 w-full rounded-md border-gray-200 bg-white p-2 text-xl text-gray-700 shadow-sm '
 								/>
 							</div>
@@ -51,9 +89,11 @@ const RegisterForm: FC<RegisterFormProps> = ({}) => {
 								</label>
 
 								<input
+									value={lastName}
+									onChange={(e) => setLastName(e.target.value)}
 									type='text'
 									id='LastName'
-									name='last_name'
+									name='lastName'
 									className='mt-1 w-full rounded-md border-gray-200 bg-white p-2 text-xl text-gray-700 shadow-sm'
 								/>
 							</div>
@@ -66,6 +106,8 @@ const RegisterForm: FC<RegisterFormProps> = ({}) => {
 								</label>
 
 								<input
+									value={email}
+									onChange={(e) => setEmail(e.target.value)}
 									type='email'
 									id='Email'
 									name='email'
@@ -81,6 +123,8 @@ const RegisterForm: FC<RegisterFormProps> = ({}) => {
 								</label>
 
 								<input
+									value={password}
+									onChange={(e) => setPassword(e.target.value)}
 									type='password'
 									id='Password'
 									name='password'
@@ -96,6 +140,8 @@ const RegisterForm: FC<RegisterFormProps> = ({}) => {
 								</label>
 
 								<input
+									value={confirmPassword}
+									onChange={(e) => setConfirmPassword(e.target.value)}
 									type='password'
 									id='PasswordConfirmation'
 									name='password_confirmation'
@@ -123,7 +169,7 @@ const RegisterForm: FC<RegisterFormProps> = ({}) => {
 
 							<div className='col-span-6 sm:flex sm:items-center sm:gap-4'>
 								<button className='inline-block shrink-0 rounded-md border border-black bg-black px-12 py-3 text-sm font-medium text-white transition hover:bg-transparent hover:text-black focus:outline-none active:scale-95'>
-									Create an account
+									{loading ? 'Loading...' : 'Sign Up'}
 								</button>
 
 								<p className='mt-4 text-sm text-gray-500 sm:mt-0'>
@@ -135,6 +181,7 @@ const RegisterForm: FC<RegisterFormProps> = ({}) => {
 									</Link>
 								</p>
 							</div>
+							<div>{error && error}</div>
 						</form>
 					</div>
 				</main>

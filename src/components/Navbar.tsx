@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom'
 interface NavbarProps {}
 
 const Navbar: FC<NavbarProps> = ({}) => {
+	const user = localStorage.getItem('user') as Object
 	const [mobile, setMobile] = useState(false)
 	return (
 		<div className=' fixed m-0 w-full font-sans'>
@@ -16,7 +17,7 @@ const Navbar: FC<NavbarProps> = ({}) => {
 							Logo
 						</Link>
 
-						<div className='hidden space-x-2 sm:flex sm:items-center'>
+						<div className=' hidden space-x-2 sm:flex sm:items-center'>
 							<Link
 								to='/employees'
 								className='p-3 text-sm font-semibold text-gray-800 hover:text-black active:scale-95'>
@@ -35,11 +36,19 @@ const Navbar: FC<NavbarProps> = ({}) => {
 						</div>
 
 						<div className='hidden sm:flex sm:items-center'>
-							<Link
-								to='/auth/register'
-								className='p-3 text-sm font-semibold text-gray-800 hover:text-black active:scale-95'>
-								Sign Up
-							</Link>
+							{user ? (
+								<Link
+									to={'/dashboard'}
+									className='inline-block shrink-0 rounded-md border border-black bg-black px-5 py-3 text-sm font-medium text-white transition duration-150 hover:bg-transparent hover:text-black focus:outline-none active:scale-95'>
+									Dashboard
+								</Link>
+							) : (
+								<Link
+									to='/auth/register'
+									className='p-3 text-sm font-semibold text-gray-800 hover:text-black active:scale-95'>
+									Sign Up
+								</Link>
+							)}
 						</div>
 
 						<div

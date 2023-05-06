@@ -36,9 +36,9 @@ const Navbar: FC<NavbarProps> = ({}) => {
 
 						<div className='hidden sm:flex sm:items-center'>
 							<Link
-								to='/login'
+								to='/auth/register'
 								className='p-3 text-sm font-semibold text-gray-800 hover:text-black active:scale-95'>
-								Sign in
+								Sign Up
 							</Link>
 						</div>
 
@@ -69,9 +69,9 @@ const Navbar: FC<NavbarProps> = ({}) => {
 
 								<div className='flex items-center justify-between border-t-2 pt-2'>
 									<Link
-										to='/login'
+										to='/auth/register'
 										className='mr-4 text-sm font-semibold text-gray-800 hover:text-black'>
-										Sign in
+										Sign Up
 									</Link>
 								</div>
 							</div>

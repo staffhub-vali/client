@@ -4,7 +4,7 @@ import HomePage from './pages/HomePage'
 import EmployeesPage from './pages/EmployeesPage'
 import SchedulesPage from './pages/SchedulesPage'
 import DocumentationPage from './pages/DocumentationPage'
-import LoginPage from './pages/LoginPage'
+import AuthPage from './pages/AuthPage'
 
 function App() {
 	return (
@@ -17,8 +17,8 @@ function App() {
 						element={<HomePage />}
 					/>
 					<Route
-						path='/login'
-						element={<LoginPage />}
+						path='/auth/:authForm'
+						element={<AuthPage />}
 					/>
 					<Route
 						path='/employees'

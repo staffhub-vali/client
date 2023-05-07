@@ -3,7 +3,7 @@ import Table from './ui/Table'
 import { Link } from 'react-router-dom'
 
 interface EmployeeListProps {
-	data: string[][]
+	data: Record<string, string>[]
 	headings: string[]
 }
 

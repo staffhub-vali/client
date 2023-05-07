@@ -10,19 +10,32 @@ const NewEmployeeForm: FC<NewEmployeeFormProps> = ({}) => {
 	const [email, setEmail] = useState<string>('')
 
 	const handleSubmit = async (e: React.FormEvent) => {
-		e.preventDefault()
-		const response = await axios.post('/v1/employees', {
-			headers: {
-				Authorization: 'Bearer' + localStorage.getItem('token'),
-			},
-			name,
-			phone,
-			email,
-		})
-		setEmail('')
-		setName('')
-		setPhone('')
-		console.log(response.data)
+		try {
+			e.preventDefault()
+
+			const token = localStorage.getItem('token')
+
+			const response = await axios.post(
+				'http://localhost:8080/v1/employees',
+				{
+					name: name,
+					phone: phone,
+					email: email,
+				},
+				{
+					headers: {
+						Authorization: `Bearer ${token}`,
+					},
+				},
+			)
+
+			setEmail('')
+			setName('')
+			setPhone('')
+			console.log(response.data)
+		} catch (error: any) {
+			console.log(error.response.data.message)
+		}
 	}
 
 	return (

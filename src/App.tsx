@@ -7,6 +7,8 @@ import DocumentationPage from './pages/DocumentationPage'
 import AuthPage from './pages/AuthPage'
 import DashboardPage from './pages/DashboardPage'
 import NewEmployeePage from './pages/NewEmployeePage'
+import EmployeeProfilePage from './pages/EmployeeProfilePage'
+import NewSchedulePage from './pages/NewSchedulePage'
 
 function App() {
 	return (
@@ -31,12 +33,20 @@ function App() {
 						element={<EmployeesPage />}
 					/>
 					<Route
+						path='/employees/:id'
+						element={<EmployeeProfilePage />}
+					/>
+					<Route
 						path='/employees/new'
 						element={<NewEmployeePage />}
 					/>
 					<Route
 						path='/schedules'
 						element={<SchedulesPage />}
+					/>
+					<Route
+						path='/schedules/new'
+						element={<NewSchedulePage />}
 					/>
 					<Route
 						path='/docs'

@@ -20,7 +20,6 @@ const EmployeesPage: FC<EmployeesPageProps> = ({}) => {
 					Authorization: `Bearer ${token}`,
 				},
 			})
-			console.log(response.data)
 			setData(response.data)
 		} catch (error) {
 			console.error(error)

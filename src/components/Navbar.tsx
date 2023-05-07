@@ -28,18 +28,13 @@ const Navbar: FC<NavbarProps> = ({}) => {
 								className='p-3 text-sm font-semibold text-gray-800 hover:text-black active:scale-95'>
 								Schedules
 							</Link>
-							<Link
-								to='/docs'
-								className='p-3 text-sm font-semibold text-gray-800 hover:text-black active:scale-95'>
-								Documentation
-							</Link>
 						</div>
 
 						<div className='hidden sm:flex sm:items-center'>
 							{user ? (
 								<Link
 									to={'/dashboard'}
-									className='inline-block shrink-0 rounded-md border border-black bg-black px-5 py-3 text-sm font-medium text-white transition duration-150 hover:bg-transparent hover:text-black focus:outline-none active:scale-95'>
+									className='inline-block shrink-0 rounded border border-black bg-black px-5 py-3 text-sm font-medium text-white transition duration-150 hover:bg-transparent hover:text-black focus:outline-none active:scale-95'>
 									Dashboard
 								</Link>
 							) : (

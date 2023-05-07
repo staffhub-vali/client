@@ -6,6 +6,7 @@ import SchedulesPage from './pages/SchedulesPage'
 import DocumentationPage from './pages/DocumentationPage'
 import AuthPage from './pages/AuthPage'
 import DashboardPage from './pages/DashboardPage'
+import NewEmployeePage from './pages/NewEmployeePage'
 
 function App() {
 	return (
@@ -28,6 +29,10 @@ function App() {
 					<Route
 						path='/employees'
 						element={<EmployeesPage />}
+					/>
+					<Route
+						path='/employees/new'
+						element={<NewEmployeePage />}
 					/>
 					<Route
 						path='/schedules'

@@ -2,12 +2,13 @@ import { FC } from 'react'
 import Table from './ui/Table'
 
 interface ScheduleMakerProps {
-	value: string
+	id: string
+	name: string
 }
 
 const headings = ['Date', 'Start', 'End', 'Hours']
 
-const ScheduleMaker: FC<ScheduleMakerProps> = ({ value }) => {
+const ScheduleMaker: FC<ScheduleMakerProps> = ({ id, name }) => {
 	const currentDate = new Date()
 	const year = currentDate.getFullYear()
 	const month = currentDate.getMonth() + 2
@@ -45,10 +46,12 @@ const ScheduleMaker: FC<ScheduleMakerProps> = ({ value }) => {
 
 	const totalHours = data.reduce((total, { hours }) => total + parseInt(hours || '0'), 0)
 
+	const createSchedule = () => {}
+	console.log(data)
 	return (
 		<>
 			<div className='pb-1 pt-4 text-xl'>
-				{value} - Total hours: {totalHours}
+				{name} - Total hours: {totalHours}
 			</div>
 			<Table
 				editable={true}
@@ -57,7 +60,7 @@ const ScheduleMaker: FC<ScheduleMakerProps> = ({ value }) => {
 				data={data}
 			/>
 
-			<button>Submit</button>
+			<button onClick={createSchedule}>Submit</button>
 		</>
 	)
 }

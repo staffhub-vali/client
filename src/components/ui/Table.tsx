@@ -55,17 +55,31 @@ const Table: FC<TableProps> = ({ headings, data, searchBar, editable }) => {
 							{headings.map((heading, index) => (
 								<td
 									key={`row-${index}`}
-									className='whitespace-nowrap px-4 py-3 text-slate-700'
+									className={`whitespace-nowrap px-4 py-3 text-slate-700${editable ? ' cursor-pointer' : ''}`}
 									onDoubleClick={(event: any) => {
 										if (editable) {
 											event.target.contentEditable = true
 											event.target.focus()
+											event.target.classList.add('bg-white')
+											event.target.classList.add('cursor-text')
 										}
 									}}
 									onBlur={(event: any) => {
 										if (editable) {
 											event.target.contentEditable = false
-											// Here you can update the corresponding value in your data structure
+											event.target.classList.remove('bg-white')
+											event.target.classList.remove('cursor-text')
+											const rowIndex = event.target.parentNode.rowIndex - 1 // subtract 1 to account for the table header row
+											const heading = headings[event.target.cellIndex]
+											const newValue = event.target.innerText
+											const newData = [...data]
+											newData[rowIndex][heading.toLowerCase()] = newValue
+										}
+									}}
+									onKeyDown={(event: any) => {
+										if (event.key === 'Enter') {
+											event.preventDefault()
+											event.target.blur()
 										}
 									}}>
 									{row[heading.toLowerCase()]}

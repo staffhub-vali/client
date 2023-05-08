@@ -20,12 +20,11 @@ const NewSchedulePage: FC<NewSchedulePageProps> = ({}) => {
 				setName={setName}
 				setIsOpen={setIsOpen}
 			/>
-			{name && (
-				<ScheduleMaker
-					id={id}
-					name={name}
-				/>
-			)}
+
+			<ScheduleMaker
+				id={id}
+				name={name}
+			/>
 		</div>
 	)
 }

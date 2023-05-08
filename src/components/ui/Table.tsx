@@ -1,5 +1,6 @@
 import { FC, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
+
 interface TableProps {
 	headings: string[]
 	data: Record<string, string>[]
@@ -16,6 +17,8 @@ const Table: FC<TableProps> = ({ headings, data, searchBar, editable }) => {
 	})
 
 	const navigate = useNavigate()
+
+	const path = window.location.pathname.split('/').pop()
 
 	return (
 		<div className='w-2/3 overflow-x-auto'>
@@ -47,7 +50,7 @@ const Table: FC<TableProps> = ({ headings, data, searchBar, editable }) => {
 				<tbody className='divide-y-2 divide-slate-200'>
 					{filteredData.map((row, index) => (
 						<tr
-							onClick={() => !editable && navigate(`/employees/${row._id}`)}
+							onClick={() => !editable && navigate(`/${path}/${row._id}`)}
 							key={`row-${index}`}
 							className={`cursor-pointer duration-75 hover:bg-gray-200 ${
 								index % 2 === 0 ? 'bg-slate-50' : 'bg-white'

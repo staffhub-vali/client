@@ -9,6 +9,7 @@ import DashboardPage from './pages/DashboardPage'
 import NewEmployeePage from './pages/NewEmployeePage'
 import EmployeeProfilePage from './pages/EmployeeProfilePage'
 import NewSchedulePage from './pages/NewSchedulePage'
+import ScheduleDetailsPage from './pages/ScheduleDetailsPage'
 
 function App() {
 	return (
@@ -43,6 +44,10 @@ function App() {
 					<Route
 						path='/schedules'
 						element={<SchedulesPage />}
+					/>
+					<Route
+						path='/schedules/:id'
+						element={<ScheduleDetailsPage />}
 					/>
 					<Route
 						path='/schedules/new'

@@ -10,6 +10,7 @@ import NewEmployeePage from './pages/NewEmployeePage'
 import EmployeeProfilePage from './pages/EmployeeProfilePage'
 import NewSchedulePage from './pages/NewSchedulePage'
 import ScheduleDetailsPage from './pages/ScheduleDetailsPage'
+import WorkDayPage from './pages/WorkDayPage'
 
 function App() {
 	return (
@@ -24,6 +25,10 @@ function App() {
 					<Route
 						path='/auth/:authForm'
 						element={<AuthPage />}
+					/>
+					<Route
+						path='/days/:id'
+						element={<WorkDayPage />}
 					/>
 					<Route
 						path='/dashboard'

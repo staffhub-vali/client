@@ -22,7 +22,6 @@ const SchedulesPage: FC<SchedulesPageProps> = ({}) => {
 					Authorization: `Bearer ${token}`,
 				},
 			})
-			console.log(response.data)
 			setSchedules(response.data)
 		} catch (error) {
 			console.log(error)

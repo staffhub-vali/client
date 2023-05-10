@@ -11,6 +11,7 @@ import EmployeeProfilePage from './pages/EmployeeProfilePage'
 import NewSchedulePage from './pages/NewSchedulePage'
 import ScheduleDetailsPage from './pages/ScheduleDetailsPage'
 import WorkDayPage from './pages/WorkDayPage'
+import RosterPage from './pages/RosterPage'
 
 function App() {
 	return (
@@ -25,6 +26,10 @@ function App() {
 					<Route
 						path='/auth/:authForm'
 						element={<AuthPage />}
+					/>
+					<Route
+						path='/rosters/:id'
+						element={<RosterPage />}
 					/>
 					<Route
 						path='/days/:id'

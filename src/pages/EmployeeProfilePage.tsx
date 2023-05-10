@@ -10,6 +10,7 @@ interface Employee {
 	name: string
 	email: string
 	phone: string
+	rosters: []
 }
 
 const EmployeeProfilePage: FC<EmployeeProfilePageProps> = ({}) => {
@@ -18,6 +19,7 @@ const EmployeeProfilePage: FC<EmployeeProfilePageProps> = ({}) => {
 		name: '',
 		email: '',
 		phone: '',
+		rosters: [],
 	})
 	const { id } = useParams()
 
@@ -33,7 +35,6 @@ const EmployeeProfilePage: FC<EmployeeProfilePageProps> = ({}) => {
 					Authorization: `Bearer ${token}`,
 				},
 			})
-			console.log(response.data)
 			setEmployee(response.data)
 		} catch (error) {
 			console.error(error)

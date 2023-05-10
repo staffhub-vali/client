@@ -13,17 +13,13 @@ const NewSchedulePage: FC<NewSchedulePageProps> = ({}) => {
 		<div
 			onClick={() => (isOpen ? setIsOpen(false) : null)}
 			className='flex h-screen w-screen flex-col items-center pb-16 pt-24'>
-			<NewScheduleSearch
+			<ScheduleMaker
+				id={id}
 				name={name}
 				setId={setId}
 				isOpen={isOpen}
 				setName={setName}
 				setIsOpen={setIsOpen}
-			/>
-
-			<ScheduleMaker
-				id={id}
-				name={name}
 			/>
 		</div>
 	)

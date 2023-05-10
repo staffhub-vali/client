@@ -44,7 +44,7 @@ const RosterPage: FC<RosterPageProps> = ({}) => {
 	})
 
 	return (
-		<div className='flex flex-col items-center pt-24'>
+		<div className='flex flex-col items-center py-24'>
 			<h1 className='mb-4 text-4xl'>Roster</h1>
 			{roster && (
 				<>

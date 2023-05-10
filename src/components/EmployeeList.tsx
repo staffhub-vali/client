@@ -12,6 +12,7 @@ const EmployeeList: FC<EmployeeListProps> = ({ data, headings }) => {
 		<>
 			<Table
 				data={data}
+				searchBar={true}
 				headings={headings}
 			/>
 			<Link

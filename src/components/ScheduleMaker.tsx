@@ -1,25 +1,38 @@
 import { FC, useMemo, useState } from 'react'
 import Table from './ui/Table'
 import axios from 'axios'
+import Calendar from 'react-calendar'
+import 'react-calendar/dist/Calendar.css'
+import NewScheduleSearch from './NewScheduleSearch'
 
 interface ScheduleMakerProps {
 	id: string
+	setId: (id: string) => void
 	name: string
+	setName: (name: string) => void
+	isOpen: boolean
+	setIsOpen: (isOpen: boolean) => void
 }
 
 const headings = ['Date', 'Start', 'End']
 
-const ScheduleMaker: FC<ScheduleMakerProps> = ({ id, name }) => {
+const ScheduleMaker: FC<ScheduleMakerProps> = ({ id, name, setName, setId, isOpen, setIsOpen }) => {
+	const [value, setValue] = useState(new Date())
+	console.log(value)
 	const currentDate = new Date()
-	const year = currentDate.getFullYear()
-	const month = currentDate.getMonth() + 2
-	const daysInMonth = new Date(year, month, 0).getDate()
+	const [month, setMonth] = useState(() => {
+		// Set the default month to the current month + 1
+		const month = currentDate.getMonth() + 2
+		return `${currentDate.getFullYear()}-${month < 10 ? `0${month}` : month}`
+	})
 
 	const [data, setData] = useState(() => {
-		const daysInMonth = new Date(year, month, 0).getDate()
+		const year = parseInt(month.slice(0, 4))
+		const monthIndex = parseInt(month.slice(5)) - 1
+		const daysInMonth = new Date(year, monthIndex + 1, 0).getDate()
 
 		const data = new Array(daysInMonth).fill(null).map((_, index) => {
-			const date = new Date(year, month - 1, index + 1)
+			const date = new Date(year, monthIndex, index + 1)
 			const formattedDate = date.toLocaleDateString('en-GB')
 			return {
 				date: formattedDate,
@@ -69,24 +82,75 @@ const ScheduleMaker: FC<ScheduleMakerProps> = ({ id, name }) => {
 		}
 	}
 
-	const handleCellUpdate = (rowIndex: number, heading: string, newValue: string) => {
-		setData((prevData) => {
-			const newData: any = [...prevData]
-			newData[rowIndex][heading.toLowerCase()] = newValue
-			return newData
+	const handleMonthChange = (date: Date) => {
+		const year = date.getFullYear()
+		const month = date.getMonth() + 1
+		setMonth(`${year}-${month < 10 ? `0${month}` : month}`)
+
+		setData((currentData) => updateMonthData(date, currentData))
+	}
+
+	const updateMonthData = (date: Date, currentData: any[]) => {
+		const year = date.getFullYear()
+		const monthIndex = date.getMonth()
+		const daysInMonth = new Date(year, monthIndex + 1, 0).getDate()
+
+		const data = new Array(daysInMonth).fill(null).map((_, index) => {
+			const day = index + 1
+			const date = new Date(year, monthIndex, day)
+			const formattedDate = date.toLocaleDateString('en-GB').replace(/\//g, '/')
+
+			// Check whether the date already has a shift assigned to it
+			const existingShift = currentData.find((shift: { date: string }) => shift.date === formattedDate)
+
+			if (existingShift) {
+				return existingShift
+			}
+
+			// Assign a random shift to the date
+			const start = '06:00'
+			const end = '14:00'
+			const hasShift = Math.random() >= 0.5
+
+			return {
+				date: formattedDate,
+				start: hasShift ? start : '',
+				end: hasShift ? end : '',
+			}
 		})
+
+		return data
 	}
 
 	return (
 		<>
-			<div className='pb-1 pt-4 text-xl'>{name}</div>
-			<Table
-				editable={true}
-				searchBar={false}
-				headings={headings}
-				data={data}
-			/>
+			<div className='mt-6 flex w-full justify-evenly'>
+				<div className='flex flex-col items-center space-y-4'>
+					<h2 className='text-2xl'>{name}</h2>
+					<NewScheduleSearch
+						setId={setId}
+						isOpen={isOpen}
+						setName={setName}
+						setIsOpen={setIsOpen}
+						name={''}
+					/>
+					<Calendar
+						view='month'
+						value={value}
+						maxDetail='year'
+						className='h-fit'
+						views={['month']}
+						onChange={handleMonthChange}
+					/>
+				</div>
 
+				<Table
+					data={data}
+					editable={true}
+					searchBar={false}
+					headings={headings}
+				/>
+			</div>
 			<button onClick={createSchedule}>Submit</button>
 		</>
 	)

@@ -1,12 +1,12 @@
 import axios from 'axios'
 import { FC, useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 
 interface WorkDayPageProps {}
 
 interface WorkDay {
 	date: string
-	shifts: [{ employee: { name: string }; start: string; end: string }]
+	shifts: [{ employee: { name: string; _id: string }; start: string; end: string }]
 }
 
 const WorkDayPage: FC<WorkDayPageProps> = ({}) => {
@@ -40,7 +40,7 @@ const WorkDayPage: FC<WorkDayPageProps> = ({}) => {
 					<div
 						className='flex space-x-4 text-4xl'
 						key={index}>
-						<p> {shift?.employee.name}</p>
+						<Link to={`/employees/${shift.employee._id}`}> {shift?.employee.name}</Link>
 						<p> {shift?.start}</p>
 						<p>-</p>
 						<p> {shift?.end}</p>

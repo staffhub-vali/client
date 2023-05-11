@@ -35,11 +35,11 @@ const ScheduleDetailsPage: FC<ScheduleDetailsPageProps> = ({}) => {
 
 	return (
 		<div className='flex flex-col items-center pt-24'>
-			<h1 className='mb-12 text-4xl'>Schedule</h1>
-			<div className='grid grid-cols-5 gap-16'>
+			<h1 className='mb-12 text-5xl'>Schedule</h1>
+			<div className='grid grid-cols-7 gap-10'>
 				{schedule.workDays?.map((day: { date: string; _id: string }, index: number) => (
 					<Link
-						className='text-4xl hover:underline'
+						className='text-3xl'
 						to={`/days/${day._id}`}
 						key={index}>
 						{day.date}

@@ -2,13 +2,14 @@ import { FC, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 
 interface TableProps {
+	noLink?: boolean
 	headings: string[]
-	data: Record<string, string>[]
-	searchBar?: boolean
 	editable?: boolean
+	searchBar?: boolean
+	data: Record<string, string>[]
 }
 
-const Table: FC<TableProps> = ({ headings, data, searchBar, editable }) => {
+const Table: FC<TableProps> = ({ headings, data, searchBar, editable, noLink }) => {
 	const [searchText, setSearchText] = useState<string>('')
 
 	const filteredData = data.filter((row) => {
@@ -50,11 +51,11 @@ const Table: FC<TableProps> = ({ headings, data, searchBar, editable }) => {
 				<tbody className='divide-y-2 divide-slate-200'>
 					{filteredData.map((row, index) => (
 						<tr
-							onClick={() => !editable && navigate(`/${path}/${row._id}`)}
+							onClick={() => !editable && !noLink && navigate(`/${path}/${row._id}`)}
 							key={`row-${index}`}
-							className={`cursor-pointer duration-75 hover:bg-gray-200 ${
-								index % 2 === 0 ? 'bg-slate-50' : 'bg-white'
-							}`}>
+							className={`${!noLink ? 'cursor-pointer ' : ''}duration-75 ${
+								!noLink ? 'hover:bg-gray-200 ' : ''
+							}${index % 2 === 0 ? 'bg-slate-50' : 'bg-white'}`}>
 							{headings.map((heading, index) => (
 								<td
 									key={`row-${index}`}

@@ -12,43 +12,41 @@ const Navbar: FC<NavbarProps> = ({}) => {
 		<div className=' fixed m-0 w-full font-sans'>
 			<div className='bg-white shadow'>
 				<div className='container mx-auto px-4'>
-					<div className='flex items-center justify-between py-4'>
+					<div className='grid grid-cols-12 py-4 text-center'>
 						<Link
 							to='/'
-							className='p-3 text-sm font-semibold text-gray-800 hover:text-black active:scale-95'>
+							className='p-3  font-semibold text-gray-800 hover:text-black active:scale-95'>
 							Logo
 						</Link>
 
 						{token && (
-							<div className=' hidden space-x-2 sm:flex sm:items-center'>
-								<Link
-									to='/employees'
-									className='p-3 text-sm font-semibold text-gray-800 hover:text-black active:scale-95'>
-									Employees
-								</Link>
-								<Link
-									to='/schedules'
-									className='p-3 text-sm font-semibold text-gray-800 hover:text-black active:scale-95'>
-									Schedules
-								</Link>
-							</div>
+							<Link
+								to='/employees'
+								className=' col-start-6 p-3  font-semibold text-gray-800 hover:text-black active:scale-95'>
+								Employees
+							</Link>
+						)}
+						<Link
+							to='/schedules'
+							className='p-3  font-semibold text-gray-800 hover:text-black active:scale-95'>
+							Schedules
+						</Link>
+
+						{user && (
+							<Link
+								to={'/dashboard'}
+								className='col-start-12 inline-block shrink-0 rounded border border-black bg-black px-5 py-3  font-medium text-white transition duration-150 hover:bg-transparent hover:text-black focus:outline-none active:scale-95'>
+								Dashboard
+							</Link>
 						)}
 
-						<div className='hidden sm:flex sm:items-center'>
-							{user ? (
-								<Link
-									to={'/dashboard'}
-									className='inline-block shrink-0 rounded border border-black bg-black px-5 py-3 text-sm font-medium text-white transition duration-150 hover:bg-transparent hover:text-black focus:outline-none active:scale-95'>
-									Dashboard
-								</Link>
-							) : (
-								<Link
-									to='/auth/login'
-									className='p-3 text-sm font-semibold text-gray-800 hover:text-black active:scale-95'>
-									Sign In
-								</Link>
-							)}
-						</div>
+						{!user && (
+							<Link
+								to='/auth/login'
+								className='p-3  font-semibold text-gray-800 hover:text-black active:scale-95'>
+								Sign In
+							</Link>
+						)}
 
 						<div
 							onClick={() => setMobile(!mobile)}

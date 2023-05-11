@@ -17,7 +17,6 @@ interface NewScheduleSearchProps {
 
 const NewScheduleSearch: FC<NewScheduleSearchProps> = ({ setId, isOpen, setIsOpen, name, setName }) => {
 	const [data, setData] = useState<Employee[]>([])
-	const filteredOptions = data.filter((employee) => employee.name.toLowerCase().includes(name.toLowerCase()))
 
 	useEffect(() => {
 		fetchEmployees()
@@ -27,11 +26,6 @@ const NewScheduleSearch: FC<NewScheduleSearchProps> = ({ setId, isOpen, setIsOpe
 		setIsOpen(false)
 		setName(option)
 		setId(id)
-	}
-
-	const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
-		setName(event.target.value)
-		setIsOpen(true)
 	}
 
 	const fetchEmployees = async () => {
@@ -52,22 +46,21 @@ const NewScheduleSearch: FC<NewScheduleSearchProps> = ({ setId, isOpen, setIsOpe
 	}
 
 	return (
-		<div className='relative w-96 text-lg '>
+		<div className='relative mt-0.5 w-96 text-lg '>
 			<div
-				className='group w-full cursor-pointer rounded bg-white px-4 py-3  shadow'
+				className='group w-full cursor-pointer rounded bg-white shadow'
 				onClick={() => setIsOpen(!isOpen)}>
 				<input
-					placeholder='For...'
+					placeholder='Choose an Employee...'
 					type='text'
 					value={name}
-					onChange={handleSearch}
-					className='group w-full cursor-pointer focus:cursor-text focus:outline-none'
+					className='group w-full cursor-pointer px-4 py-3  caret-transparent focus:outline-none'
 				/>
 			</div>
 			{isOpen && (
 				<div className='absolute left-0 top-10 z-10 mt-4 w-full rounded bg-white shadow'>
 					<ul>
-						{filteredOptions.map((employee) => (
+						{data.map((employee) => (
 							<li
 								className='cursor-pointer px-4 py-3 hover:bg-gray-200'
 								key={employee._id}

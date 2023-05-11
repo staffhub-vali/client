@@ -52,7 +52,8 @@ const RosterPage: FC<RosterPageProps> = ({}) => {
 					<Table
 						data={newShifts}
 						headings={headings}
-						editable={true}
+						editable={false}
+						noLink={true}
 					/>
 				</>
 			)}

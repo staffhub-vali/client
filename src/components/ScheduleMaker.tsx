@@ -130,7 +130,7 @@ const ScheduleMaker: FC<ScheduleMakerProps> = ({ id, name, setName, setId, isOpe
 		<>
 			<div className='mt-6 flex w-full justify-evenly'>
 				<div className='flex flex-col items-center space-y-4'>
-					<h2 className='text-2xl'>{name}</h2>
+					{name && <h2 className='text-3xl'>{name}</h2>}
 					<NewScheduleSearch
 						setId={setId}
 						isOpen={isOpen}
@@ -146,6 +146,11 @@ const ScheduleMaker: FC<ScheduleMakerProps> = ({ id, name, setName, setId, isOpe
 						views={['month']}
 						onChange={handleMonthChange}
 					/>
+					<button
+						className='rounded bg-black px-8 py-2 text-2xl text-white active:scale-95 '
+						onClick={createSchedule}>
+						Submit
+					</button>
 				</div>
 
 				<Table
@@ -155,7 +160,6 @@ const ScheduleMaker: FC<ScheduleMakerProps> = ({ id, name, setName, setId, isOpe
 					headings={headings}
 				/>
 			</div>
-			<button onClick={createSchedule}>Submit</button>
 		</>
 	)
 }

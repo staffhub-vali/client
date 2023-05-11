@@ -35,15 +35,17 @@ const WorkDayPage: FC<WorkDayPageProps> = ({}) => {
 	return (
 		<div className='flex flex-col items-center pt-24'>
 			<h1 className='mb-12 text-4xl'>{workDay?.date}</h1>
-			<div className='grid grid-cols-1 gap-16'>
+			<div className='flex w-10/12 flex-col items-center'>
 				{workDay?.shifts?.map((shift, index: number) => (
 					<div
-						className='flex space-x-4 text-4xl'
+						className='flex w-1/3 justify-between text-4xl'
 						key={index}>
-						<Link to={`/employees/${shift.employee._id}`}> {shift?.employee.name}</Link>
-						<p> {shift?.start}</p>
-						<p>-</p>
-						<p> {shift?.end}</p>
+						<div>
+							<Link to={`/employees/${shift.employee._id}`}> {shift?.employee.name}</Link>
+						</div>
+						<div className='flex'>
+							<p> {shift?.start}</p>-<p> {shift?.end}</p>
+						</div>
 					</div>
 				))}
 			</div>

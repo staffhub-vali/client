@@ -12,6 +12,7 @@ import NewSchedulePage from './pages/NewSchedulePage'
 import ScheduleDetailsPage from './pages/ScheduleDetailsPage'
 import WorkDayPage from './pages/WorkDayPage'
 import RosterPage from './pages/RosterPage'
+import PageNotFound from './pages/PageNotFound'
 
 function App() {
 	return (
@@ -66,6 +67,10 @@ function App() {
 					<Route
 						path='/docs'
 						element={<DocumentationPage />}
+					/>
+					<Route
+						path='*'
+						element={<PageNotFound />}
 					/>
 				</Routes>
 			</BrowserRouter>

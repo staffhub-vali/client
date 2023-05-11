@@ -1,6 +1,7 @@
 import axios from 'axios'
 import { FC, useState } from 'react'
 import { Link } from 'react-router-dom'
+import Logout from '../Auth'
 
 interface NewEmployeeFormProps {}
 
@@ -34,6 +35,9 @@ const NewEmployeeForm: FC<NewEmployeeFormProps> = ({}) => {
 			setPhone('')
 			console.log(response.data)
 		} catch (error: any) {
+			if (error.response.status === 401) {
+				Logout()
+			}
 			console.log(error.response.data.message)
 		}
 	}

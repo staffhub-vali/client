@@ -1,8 +1,9 @@
-import { FC, useMemo, useState } from 'react'
-import Table from './ui/Table'
 import axios from 'axios'
+import Logout from '../Auth'
+import Table from './ui/Table'
 import Calendar from 'react-calendar'
 import 'react-calendar/dist/Calendar.css'
+import { FC, useMemo, useState } from 'react'
 import NewScheduleSearch from './NewScheduleSearch'
 
 interface ScheduleMakerProps {
@@ -77,7 +78,10 @@ const ScheduleMaker: FC<ScheduleMakerProps> = ({ id, name, setName, setId, isOpe
 				},
 			)
 			return response.data
-		} catch (error) {
+		} catch (error: any) {
+			if (error.response.status === 401) {
+				Logout()
+			}
 			console.error(error)
 		}
 	}

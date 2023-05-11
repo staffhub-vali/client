@@ -1,5 +1,6 @@
 import axios from 'axios'
 import { FC, useEffect, useState } from 'react'
+import Logout from '../Auth'
 
 interface Employee {
 	_id: string
@@ -34,13 +35,20 @@ const NewScheduleSearch: FC<NewScheduleSearchProps> = ({ setId, isOpen, setIsOpe
 	}
 
 	const fetchEmployees = async () => {
-		const token = localStorage.getItem('token')
-		const response = await axios.get<Employee[]>('http://localhost:8080/v1/employees', {
-			headers: {
-				Authorization: `Bearer ${token}`,
-			},
-		})
-		setData(response.data)
+		try {
+			const token = localStorage.getItem('token')
+			const response = await axios.get<Employee[]>('http://localhost:8080/v1/employees', {
+				headers: {
+					Authorization: `Bearer ${token}`,
+				},
+			})
+			setData(response.data)
+		} catch (error: any) {
+			console.log(error)
+			if (error.response.status === 401) {
+				Logout()
+			}
+		}
 	}
 
 	return (

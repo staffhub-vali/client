@@ -1,6 +1,7 @@
 import { FC, useEffect, useState } from 'react'
 import EmployeeList from '../components/EmployeeList'
 import axios from 'axios'
+import Logout from '../Auth'
 
 interface EmployeesPageProps {}
 
@@ -21,8 +22,11 @@ const EmployeesPage: FC<EmployeesPageProps> = ({}) => {
 				},
 			})
 			setData(response.data)
-		} catch (error) {
+		} catch (error: any) {
 			console.error(error)
+			if (error.response.status === 401) {
+				Logout()
+			}
 		}
 	}
 

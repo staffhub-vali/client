@@ -1,11 +1,13 @@
 import { FC, useState } from 'react'
 import { Link } from 'react-router-dom'
+import Logout from '../Auth'
 
 interface NavbarProps {}
 
 const Navbar: FC<NavbarProps> = ({}) => {
-	const user = localStorage.getItem('user') as Object
+	const token = localStorage.getItem('token')
 	const [mobile, setMobile] = useState(false)
+	const user = localStorage.getItem('user') as Object
 	return (
 		<div className=' fixed m-0 w-full font-sans'>
 			<div className='bg-white shadow'>
@@ -17,18 +19,20 @@ const Navbar: FC<NavbarProps> = ({}) => {
 							Logo
 						</Link>
 
-						<div className=' hidden space-x-2 sm:flex sm:items-center'>
-							<Link
-								to='/employees'
-								className='p-3 text-sm font-semibold text-gray-800 hover:text-black active:scale-95'>
-								Employees
-							</Link>
-							<Link
-								to='/schedules'
-								className='p-3 text-sm font-semibold text-gray-800 hover:text-black active:scale-95'>
-								Schedules
-							</Link>
-						</div>
+						{token && (
+							<div className=' hidden space-x-2 sm:flex sm:items-center'>
+								<Link
+									to='/employees'
+									className='p-3 text-sm font-semibold text-gray-800 hover:text-black active:scale-95'>
+									Employees
+								</Link>
+								<Link
+									to='/schedules'
+									className='p-3 text-sm font-semibold text-gray-800 hover:text-black active:scale-95'>
+									Schedules
+								</Link>
+							</div>
+						)}
 
 						<div className='hidden sm:flex sm:items-center'>
 							{user ? (
@@ -39,9 +43,9 @@ const Navbar: FC<NavbarProps> = ({}) => {
 								</Link>
 							) : (
 								<Link
-									to='/auth/register'
+									to='/auth/login'
 									className='p-3 text-sm font-semibold text-gray-800 hover:text-black active:scale-95'>
-									Sign Up
+									Sign In
 								</Link>
 							)}
 						</div>
@@ -55,29 +59,39 @@ const Navbar: FC<NavbarProps> = ({}) => {
 					{mobile && (
 						<div className='block border-t-2 bg-white py-2 sm:hidden'>
 							<div className='flex flex-col'>
-								<Link
-									to='/employees'
-									className='mb-1 text-sm font-semibold text-gray-800 hover:text-black'>
-									Employees
-								</Link>
-								<Link
-									to='/schedules'
-									className='mb-1 text-sm font-semibold text-gray-800 hover:text-black'>
-									Schedules
-								</Link>
-								<Link
-									to='/docs'
-									className='mb-1 text-sm font-semibold text-gray-800 hover:text-black'>
-									Documentation
-								</Link>
-
-								<div className='flex items-center justify-between border-t-2 pt-2'>
+								{token && (
+									<>
+										<Link
+											to='/dashboard'
+											className='mr-4 py-2 text-sm font-bold text-gray-800 hover:text-black '>
+											Dashboard
+										</Link>
+										<Link
+											to='/employees'
+											className=' border-t py-2 text-sm font-semibold text-gray-800 hover:text-black'>
+											Employees
+										</Link>
+										<Link
+											to='/schedules'
+											className=' border-t py-2 text-sm font-semibold text-gray-800 hover:text-black'>
+											Schedules
+										</Link>
+									</>
+								)}
+								{token ? (
 									<Link
-										to='/auth/register'
-										className='mr-4 text-sm font-semibold text-gray-800 hover:text-black'>
-										Sign Up
+										to=''
+										onClick={Logout}
+										className='mr-4 border-t py-2 text-sm font-semibold text-gray-800 hover:text-black'>
+										Sign Out
 									</Link>
-								</div>
+								) : (
+									<Link
+										to='/auth/login'
+										className='mr-4 border-t py-2 text-sm font-semibold text-gray-800 hover:text-black'>
+										Sign In
+									</Link>
+								)}
 							</div>
 						</div>
 					)}

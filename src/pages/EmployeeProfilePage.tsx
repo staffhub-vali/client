@@ -2,6 +2,7 @@ import { FC, useEffect, useState } from 'react'
 import Profile from '../components/Profile'
 import { useParams } from 'react-router-dom'
 import axios from 'axios'
+import Logout from '../Auth'
 
 interface EmployeeProfilePageProps {}
 
@@ -36,8 +37,11 @@ const EmployeeProfilePage: FC<EmployeeProfilePageProps> = ({}) => {
 				},
 			})
 			setEmployee(response.data)
-		} catch (error) {
+		} catch (error: any) {
 			console.error(error)
+			if (error.response.status === 401) {
+				Logout()
+			}
 		}
 	}
 

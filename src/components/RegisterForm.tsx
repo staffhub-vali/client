@@ -1,5 +1,6 @@
-import { Link } from 'react-router-dom'
+import Logout from '../Auth'
 import axios from 'axios'
+import { Link } from 'react-router-dom'
 import { FC, useEffect, useState } from 'react'
 
 interface RegisterFormProps {}
@@ -30,7 +31,11 @@ const RegisterForm: FC<RegisterFormProps> = ({}) => {
 					password: password,
 				})
 				setLoading(false)
-			} catch (error) {
+			} catch (error: any) {
+				if (error.response.status === 401) {
+					Logout()
+					console.error(error)
+				}
 				console.log(error)
 				setLoading(false)
 				setError('An error occurred. Please try again later.')

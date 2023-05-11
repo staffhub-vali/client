@@ -10,15 +10,18 @@ const LoginForm: FC<LoginFormProps> = ({}) => {
 
 	const handleSubmit = async (e: React.FormEvent) => {
 		e.preventDefault()
+		try {
+			const response = await axios.post('http://localhost:8080/v1/auth/login', {
+				email: email,
+				password: password,
+			})
 
-		const response = await axios.post('http://localhost:8080/v1/auth/login', {
-			email: email,
-			password: password,
-		})
-
-		localStorage.setItem('user', JSON.stringify(response.data.user))
-		localStorage.setItem('token', response.data.token)
-		window.location.href = '/'
+			localStorage.setItem('user', JSON.stringify(response.data.user))
+			localStorage.setItem('token', response.data.token)
+			window.location.href = '/'
+		} catch (error) {
+			console.log(error)
+		}
 	}
 
 	return (

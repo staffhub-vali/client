@@ -11,10 +11,10 @@ interface ProfileProps {
 
 const Profile: FC<ProfileProps> = ({ data }) => {
 	return (
-		<div className='text-center'>
+		<div className='max-w-xl text-center'>
 			<h1 className='mb-6 text-4xl font-medium'>{data.name}</h1>
-			<div className='text-2xl'>
-				<h2 className='mb-3 border-b border-slate-300 text-3xl'>Rosters</h2>
+			<h2 className='mb-3  text-3xl'>Rosters</h2>
+			<div className='space-x-6 text-2xl'>
 				{data.rosters?.map((roster: { _id: string; month: string }) => (
 					<Link
 						to={`/rosters/${roster._id}`}

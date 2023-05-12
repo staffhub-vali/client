@@ -55,11 +55,13 @@ const Table: FC<TableProps> = ({ headings, data, searchBar, editable, noLink }) 
 							key={`row-${index}`}
 							className={`${!noLink ? 'cursor-pointer ' : ''}duration-75 ${
 								!noLink ? 'hover:bg-gray-200 ' : ''
-							}${index % 2 === 0 ? 'bg-slate-50' : 'bg-white'}`}>
+							}${index % 2 === 0 ? 'bg-slate-50 ' : 'bg-white'}`}>
 							{headings.map((heading, index) => (
 								<td
 									key={`row-${index}`}
-									className={`whitespace-nowrap px-4 py-3 text-slate-700${editable ? ' cursor-pointer' : ''}`}
+									className={`h-14 whitespace-nowrap px-4 py-3 text-slate-700${
+										editable ? ' cursor-pointer' : ''
+									}`}
 									onDoubleClick={(event: any) => {
 										if (editable) {
 											event.target.contentEditable = true
@@ -73,7 +75,7 @@ const Table: FC<TableProps> = ({ headings, data, searchBar, editable, noLink }) 
 											event.target.contentEditable = false
 											event.target.classList.remove('bg-white')
 											event.target.classList.remove('cursor-text')
-											const rowIndex = event.target.parentNode.rowIndex - 1 // subtract 1 to account for the table header row
+											const rowIndex = event.target.parentNode.rowIndex - 1
 											const heading = headings[event.target.cellIndex]
 											const newValue = event.target.innerText
 											const newData = [...data]

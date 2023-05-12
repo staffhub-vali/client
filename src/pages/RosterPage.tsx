@@ -8,6 +8,7 @@ interface RosterPageProps {}
 
 interface RosterData {
 	month: string
+	employee: { name: string; _id: string }
 	shifts: [{ workDay: { date: string }; start: string; end: string }]
 }
 
@@ -25,7 +26,6 @@ const RosterPage: FC<RosterPageProps> = ({}) => {
 					Authorization: `Bearer ${token}`,
 				},
 			})
-			console.log(response.data)
 			setRoster(response.data)
 		} catch (error: any) {
 			if (error.response.status === 401) {
@@ -39,7 +39,7 @@ const RosterPage: FC<RosterPageProps> = ({}) => {
 		fetchRoster()
 	}, [])
 
-	const newShifts: any = roster?.shifts.map((shift) => {
+	const shifts: any = roster?.shifts.map((shift) => {
 		return {
 			start: shift.start,
 			end: shift.end,
@@ -47,19 +47,59 @@ const RosterPage: FC<RosterPageProps> = ({}) => {
 		}
 	})
 
+	while (shifts?.length < 25) {
+		shifts.push({
+			start: '',
+			end: '',
+			date: '',
+		})
+	}
+
+	const handleSubmit = async (e: React.FormEvent) => {
+		e.preventDefault()
+		try {
+			const token = localStorage.getItem('token')
+			const response = await axios.put(
+				`http://localhost:8080/v1/roster`,
+				{
+					data: shifts,
+					id: roster?.employee._id,
+				},
+				{
+					headers: {
+						Authorization: `Bearer ${token}`,
+					},
+				},
+			)
+			console.log(response.data)
+			fetchRoster()
+		} catch (error: any) {
+			if (error.response.status === 401) {
+				Logout()
+			}
+			console.log(error)
+		}
+	}
+
 	return (
-		<div className='flex flex-col items-center py-24'>
-			<h1 className='mb-4 text-4xl'>Roster</h1>
+		<div className='py-24'>
 			{roster && (
-				<>
-					<h2>{roster.month}</h2>
+				<div className='flex w-full justify-center'>
+					<div className='px-8 pt-1 text-center'>
+						<h2 className='text-2xl'>{roster.month}</h2>
+						<h1 className='text-4xl'>{roster.employee.name}</h1>
+						<form onSubmit={handleSubmit}>
+							<button className='mt-4 rounded bg-black px-8 py-2 text-xl text-white active:scale-95 '>
+								Submit Changes
+							</button>
+						</form>
+					</div>
 					<Table
-						data={newShifts}
+						data={shifts}
 						headings={headings}
-						editable={false}
-						noLink={true}
+						editable={true}
 					/>
-				</>
+				</div>
 			)}
 		</div>
 	)

@@ -2,6 +2,7 @@ import axios from 'axios'
 import { FC, useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import Table from '../components/ui/Table'
+import Logout from '../Auth'
 
 interface RosterPageProps {}
 
@@ -26,7 +27,10 @@ const RosterPage: FC<RosterPageProps> = ({}) => {
 			})
 			console.log(response.data)
 			setRoster(response.data)
-		} catch (error) {
+		} catch (error: any) {
+			if (error.response.status === 401) {
+				Logout()
+			}
 			console.log(error)
 		}
 	}

@@ -2,6 +2,7 @@ import { FC, useEffect, useState } from 'react'
 import Table from '../components/ui/Table'
 import { Link } from 'react-router-dom'
 import axios from 'axios'
+import Logout from '../Auth'
 
 interface SchedulesPageProps {}
 
@@ -23,7 +24,10 @@ const SchedulesPage: FC<SchedulesPageProps> = ({}) => {
 				},
 			})
 			setSchedules(response.data)
-		} catch (error) {
+		} catch (error: any) {
+			if (error.response.status === 401) {
+				Logout()
+			}
 			console.log(error)
 		}
 	}

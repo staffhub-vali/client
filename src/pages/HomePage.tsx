@@ -1,3 +1,4 @@
+import axios from 'axios'
 import { FC, useEffect } from 'react'
 
 interface HomePageProps {}
@@ -5,13 +6,19 @@ interface HomePageProps {}
 const HomePage: FC<HomePageProps> = ({}) => {
 	const token = localStorage.getItem('token')
 	useEffect(() => {
-		fetch('http://localhost:8080/v1/auth/verify').catch((error) => {
-			if (token && error.response.status === 401) {
-				localStorage.setItem('token', '')
-				localStorage.setItem('user', '')
-				window.location.reload()
-			}
-		})
+		axios
+			.get('http://localhost:8080/v1/auth/verify', {
+				headers: {
+					Authorization: `Bearer ${token}`,
+				},
+			})
+			.catch((error) => {
+				if (token && error.response.status === 401) {
+					localStorage.setItem('token', '')
+					localStorage.setItem('user', '')
+					window.location.reload()
+				}
+			})
 	}, [])
 
 	return (

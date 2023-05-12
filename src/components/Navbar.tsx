@@ -19,18 +19,20 @@ const Navbar: FC<NavbarProps> = ({}) => {
 							Logo
 						</Link>
 
-						{token && (
+						{user && (
 							<Link
 								to='/employees'
 								className=' col-start-6 p-3  font-semibold text-gray-800 hover:text-black active:scale-95'>
 								Employees
 							</Link>
 						)}
-						<Link
-							to='/schedules'
-							className='p-3  font-semibold text-gray-800 hover:text-black active:scale-95'>
-							Schedules
-						</Link>
+						{user && (
+							<Link
+								to='/schedules'
+								className='p-3  font-semibold text-gray-800 hover:text-black active:scale-95'>
+								Schedules
+							</Link>
+						)}
 
 						{user && (
 							<Link
@@ -43,7 +45,7 @@ const Navbar: FC<NavbarProps> = ({}) => {
 						{!user && (
 							<Link
 								to='/auth/login'
-								className='p-3  font-semibold text-gray-800 hover:text-black active:scale-95'>
+								className='col-start-12 p-3 font-semibold text-gray-800 hover:text-black active:scale-95'>
 								Sign In
 							</Link>
 						)}
@@ -57,7 +59,7 @@ const Navbar: FC<NavbarProps> = ({}) => {
 					{mobile && (
 						<div className='block border-t-2 bg-white py-2 sm:hidden'>
 							<div className='flex flex-col'>
-								{token && (
+								{user && (
 									<>
 										<Link
 											to='/dashboard'
@@ -76,7 +78,7 @@ const Navbar: FC<NavbarProps> = ({}) => {
 										</Link>
 									</>
 								)}
-								{token ? (
+								{user ? (
 									<Link
 										to=''
 										onClick={Logout}

@@ -19,7 +19,6 @@ const headings = ['Date', 'Start', 'End']
 
 const ScheduleMaker: FC<ScheduleMakerProps> = ({ id, name, setName, setId, isOpen, setIsOpen }) => {
 	const [value, setValue] = useState(new Date())
-	console.log(value)
 	const currentDate = new Date()
 	const [month, setMonth] = useState(() => {
 		// Set the default month to the current month + 1

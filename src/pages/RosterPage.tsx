@@ -71,8 +71,25 @@ const RosterPage: FC<RosterPageProps> = ({}) => {
 					},
 				},
 			)
-			console.log(response.data)
 			fetchRoster()
+		} catch (error: any) {
+			if (error.response.status === 401) {
+				Logout()
+			}
+			console.log(error)
+		}
+	}
+
+	const handleDelete = async (e: React.FormEvent) => {
+		e.preventDefault()
+		try {
+			const token = localStorage.getItem('token')
+			const response = await axios.delete(`http://localhost:8080/v1/roster?id=${id}`, {
+				headers: {
+					Authorization: `Bearer ${token}`,
+				},
+			})
+			console.log(response.data)
 		} catch (error: any) {
 			if (error.response.status === 401) {
 				Logout()
@@ -91,6 +108,11 @@ const RosterPage: FC<RosterPageProps> = ({}) => {
 						<form onSubmit={handleSubmit}>
 							<button className='mt-4 rounded bg-black px-8 py-2 text-xl text-white active:scale-95 '>
 								Submit Changes
+							</button>
+						</form>
+						<form onSubmit={handleDelete}>
+							<button className='mt-4 rounded bg-red-500 px-8 py-2 text-xl text-white active:scale-95 '>
+								Delete Roster
 							</button>
 						</form>
 					</div>

@@ -54,6 +54,7 @@ const NewScheduleSearch: FC<NewScheduleSearchProps> = ({ setId, isOpen, setIsOpe
 					placeholder='Choose an Employee...'
 					type='text'
 					value={name}
+					onChange={(e) => setName(e.target.value)}
 					className='group w-full cursor-pointer px-4 py-3  caret-transparent focus:outline-none'
 				/>
 			</div>

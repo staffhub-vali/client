@@ -54,7 +54,7 @@ const Table: FC<TableProps> = ({ headings, data, searchBar, editable, noLink }) 
 							onClick={() => !editable && !noLink && navigate(`/${path}/${row._id}`)}
 							key={`row-${index}`}
 							className={`${!noLink ? 'cursor-pointer ' : ''}duration-75 ${
-								!noLink ? 'hover:bg-gray-200 ' : ''
+								!noLink ? 'hover:bg-slate-200 ' : ''
 							}${index % 2 === 0 ? 'bg-slate-50 ' : 'bg-white'}`}>
 							{headings.map((heading, index) => (
 								<td

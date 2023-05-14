@@ -76,13 +76,25 @@ const ScheduleMaker: FC<ScheduleMakerProps> = ({ id, name, setName, setId, isOpe
 
 			// Assign a random shift to the date
 			const startHour = 6
+			const startMinute = 0
 			const endHour = 14
+			const endMinute = 0
 			const hasShift = Math.random() >= 0.5
 
+			const start = hasShift ? new Date(year, monthIndex, day, startHour, startMinute) : null
+			const end = hasShift ? new Date(year, monthIndex, day, endHour, endMinute) : null
+			let total = null
+			if (start && end) {
+				const minutes = Math.round((end.getTime() - start.getTime()) / (1000 * 60)) // convert milliseconds to minutes
+				total = minutes
+			}
+
 			return {
+				id: `${year}-${monthIndex}-${day}`,
 				date: date,
-				start: hasShift ? new Date(year, monthIndex, day, startHour) : null,
-				end: hasShift ? new Date(year, monthIndex, day, endHour) : null,
+				start: start,
+				end: end,
+				total: total,
 			}
 		})
 
@@ -90,35 +102,37 @@ const ScheduleMaker: FC<ScheduleMakerProps> = ({ id, name, setName, setId, isOpe
 	}
 
 	return (
-		<>
-			<div className='mt-6 flex w-full justify-evenly'>
-				<div className='flex flex-col items-center space-y-4'>
-					{name && <h2 className='text-3xl'>{name}</h2>}
-					<NewScheduleSearch
-						setId={setId}
-						isOpen={isOpen}
-						setName={setName}
-						setIsOpen={setIsOpen}
-						name={''}
-					/>
-					<Calendar
-						view='month'
-						value={value}
-						maxDetail='year'
-						className='h-fit'
-						views={['month']}
-						onChange={handleMonthChange}
-					/>
+		<div className='mt-6 flex h-full w-full justify-evenly overflow-hidden'>
+			<div className='flex flex-col items-center space-y-4'>
+				<NewScheduleSearch
+					setId={setId}
+					isOpen={isOpen}
+					name={name}
+					setName={setName}
+					setIsOpen={setIsOpen}
+				/>
+				<Calendar
+					view='month'
+					value={value}
+					maxDetail='year'
+					className='h-fit'
+					views={['month']}
+					onChange={handleMonthChange}
+				/>
 
-					<button
-						className='rounded bg-black px-8 py-2 text-2xl text-white active:scale-95 '
-						onClick={createSchedule}>
-						Submit
-					</button>
-				</div>
-				<TableSchedule data={data} />
+				<button
+					className='rounded bg-black px-8 py-2 text-2xl text-white active:scale-95 '
+					onClick={createSchedule}>
+					Submit
+				</button>
 			</div>
-		</>
+			{data.length > 0 && (
+				<div className='w-1/2'>
+					{' '}
+					<TableSchedule data={data} />
+				</div>
+			)}
+		</div>
 	)
 }
 

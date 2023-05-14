@@ -106,8 +106,8 @@ const ScheduleMaker: FC<ScheduleMakerProps> = ({ id, name, setName, setId, isOpe
 			<div className='flex flex-col items-center space-y-4'>
 				<NewScheduleSearch
 					setId={setId}
-					isOpen={isOpen}
 					name={name}
+					isOpen={isOpen}
 					setName={setName}
 					setIsOpen={setIsOpen}
 				/>
@@ -126,12 +126,7 @@ const ScheduleMaker: FC<ScheduleMakerProps> = ({ id, name, setName, setId, isOpe
 					Submit
 				</button>
 			</div>
-			{data.length > 0 && (
-				<div className='w-1/2'>
-					{' '}
-					<TableSchedule data={data} />
-				</div>
-			)}
+			{data.length > 0 && <TableSchedule data={data} />}
 		</div>
 	)
 }

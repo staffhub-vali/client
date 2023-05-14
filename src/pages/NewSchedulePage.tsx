@@ -1,5 +1,4 @@
 import { FC, useState } from 'react'
-import NewScheduleSearch from '../components/NewScheduleSearch'
 import ScheduleMaker from '../components/ScheduleMaker'
 
 interface NewSchedulePageProps {}

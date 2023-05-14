@@ -1,9 +1,9 @@
 import axios from 'axios'
 import Logout from '../Auth'
-import Table from './ui/Table'
+import { FC, useState } from 'react'
 import Calendar from 'react-calendar'
 import 'react-calendar/dist/Calendar.css'
-import { FC, useMemo, useState } from 'react'
+import TableSchedule from './TableSchedule'
 import NewScheduleSearch from './NewScheduleSearch'
 
 interface ScheduleMakerProps {
@@ -15,50 +15,13 @@ interface ScheduleMakerProps {
 	setIsOpen: (isOpen: boolean) => void
 }
 
-const headings = ['Date', 'Start', 'End']
-
 const ScheduleMaker: FC<ScheduleMakerProps> = ({ id, name, setName, setId, isOpen, setIsOpen }) => {
+	const [data, setData] = useState<any[]>([])
 	const [value, setValue] = useState(new Date())
 	const currentDate = new Date()
 	const [month, setMonth] = useState(() => {
-		// Set the default month to the current month + 1
 		const month = currentDate.getMonth() + 2
 		return `${currentDate.getFullYear()}-${month < 10 ? `0${month}` : month}`
-	})
-
-	const [data, setData] = useState(() => {
-		const year = parseInt(month.slice(0, 4))
-		const monthIndex = parseInt(month.slice(5)) - 1
-		const daysInMonth = new Date(year, monthIndex + 1, 0).getDate()
-
-		const data = new Array(daysInMonth).fill(null).map((_, index) => {
-			const date = new Date(year, monthIndex, index + 1)
-			const formattedDate = date.toLocaleDateString('en-GB')
-			return {
-				date: formattedDate,
-				start: '',
-				end: '',
-			}
-		})
-
-		// randomly fill in 21 days with shifts
-		const daysToFill = 21
-		const start = '06:00'
-		const end = '14:00'
-		const daysFilled = new Set<number>()
-		while (daysFilled.size < daysToFill) {
-			const dayToFill = Math.floor(Math.random() * daysInMonth) + 1
-			if (!daysFilled.has(dayToFill)) {
-				daysFilled.add(dayToFill)
-				data[dayToFill - 1] = {
-					date: data[dayToFill - 1].date,
-					start: start,
-					end: end,
-				}
-			}
-		}
-
-		return data
 	})
 
 	const createSchedule = async () => {
@@ -101,24 +64,25 @@ const ScheduleMaker: FC<ScheduleMakerProps> = ({ id, name, setName, setId, isOpe
 		const data = new Array(daysInMonth).fill(null).map((_, index) => {
 			const day = index + 1
 			const date = new Date(year, monthIndex, day)
-			const formattedDate = date.toLocaleDateString('en-GB').replace(/\//g, '/')
 
 			// Check whether the date already has a shift assigned to it
-			const existingShift = currentData.find((shift: { date: string }) => shift.date === formattedDate)
+			const existingShift = currentData.find(
+				(shift: { date: Date }) => shift.date.getTime() === date.getTime(),
+			)
 
 			if (existingShift) {
 				return existingShift
 			}
 
 			// Assign a random shift to the date
-			const start = '06:00'
-			const end = '14:00'
+			const startHour = 6
+			const endHour = 14
 			const hasShift = Math.random() >= 0.5
 
 			return {
-				date: formattedDate,
-				start: hasShift ? start : '',
-				end: hasShift ? end : '',
+				date: date,
+				start: hasShift ? new Date(year, monthIndex, day, startHour) : null,
+				end: hasShift ? new Date(year, monthIndex, day, endHour) : null,
 			}
 		})
 
@@ -145,19 +109,14 @@ const ScheduleMaker: FC<ScheduleMakerProps> = ({ id, name, setName, setId, isOpe
 						views={['month']}
 						onChange={handleMonthChange}
 					/>
+
 					<button
 						className='rounded bg-black px-8 py-2 text-2xl text-white active:scale-95 '
 						onClick={createSchedule}>
 						Submit
 					</button>
 				</div>
-
-				<Table
-					data={data}
-					editable={true}
-					searchBar={false}
-					headings={headings}
-				/>
+				<TableSchedule data={data} />
 			</div>
 		</>
 	)

@@ -12,40 +12,39 @@ const Navbar: FC<NavbarProps> = ({}) => {
 		<div className=' fixed m-0 w-full font-sans'>
 			<div className='bg-white shadow'>
 				<div className='container mx-auto px-4'>
-					<div className='grid grid-cols-12 py-4 text-center'>
+					<div className='flex justify-around py-4 text-center'>
 						<Link
 							to='/'
-							className='p-3  font-semibold text-gray-800 hover:text-black active:scale-95'>
+							className=' w-40 py-2  font-semibold text-gray-800 hover:text-black active:scale-95'>
 							Logo
 						</Link>
 
 						{user && (
-							<Link
-								to='/employees'
-								className=' col-start-6 p-3  font-semibold text-gray-800 hover:text-black active:scale-95'>
-								Employees
-							</Link>
-						)}
-						{user && (
-							<Link
-								to='/schedules'
-								className='p-3  font-semibold text-gray-800 hover:text-black active:scale-95'>
-								Schedules
-							</Link>
+							<div className='flex items-center space-x-4'>
+								<Link
+									to='/employees'
+									className=' w-24 py-2   font-semibold text-gray-800 hover:text-black active:scale-95'>
+									Employees
+								</Link>
+
+								<Link
+									to='/schedules'
+									className=' w-24 py-2  font-semibold text-gray-800 hover:text-black active:scale-95'>
+									Schedules
+								</Link>
+							</div>
 						)}
 
-						{user && (
+						{user ? (
 							<Link
 								to={'/dashboard'}
-								className='col-start-12 inline-block shrink-0 rounded border border-black bg-black px-5 py-3  font-medium text-white transition duration-150 hover:bg-transparent hover:text-black focus:outline-none active:scale-95'>
+								className=' w-40 shrink-0 rounded border border-black bg-black py-2   font-medium text-white transition duration-150 hover:bg-transparent hover:text-black focus:outline-none active:scale-95'>
 								Dashboard
 							</Link>
-						)}
-
-						{!user && (
+						) : (
 							<Link
 								to='/auth/login'
-								className='col-start-12 p-3 font-semibold text-gray-800 hover:text-black active:scale-95'>
+								className=' w-44 py-2  font-semibold text-gray-800 hover:text-black active:scale-95'>
 								Sign In
 							</Link>
 						)}

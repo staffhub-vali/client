@@ -1,17 +1,18 @@
-import { FC, useEffect, useState } from 'react'
-import Profile from '../components/Profile'
-import { useParams } from 'react-router-dom'
 import axios from 'axios'
 import Logout from '../Auth'
+import Profile from '../components/Profile'
+import { useParams } from 'react-router-dom'
+import { FC, useEffect, useState } from 'react'
 
 interface EmployeeProfilePageProps {}
 
 interface Employee {
+	rosters: []
 	_id: string
 	name: string
 	email: string
 	phone: string
-	rosters: []
+	vacationDays: number
 }
 
 const EmployeeProfilePage: FC<EmployeeProfilePageProps> = ({}) => {
@@ -21,6 +22,7 @@ const EmployeeProfilePage: FC<EmployeeProfilePageProps> = ({}) => {
 		email: '',
 		phone: '',
 		rosters: [],
+		vacationDays: NaN,
 	})
 	const { id } = useParams()
 
@@ -47,7 +49,7 @@ const EmployeeProfilePage: FC<EmployeeProfilePageProps> = ({}) => {
 
 	return (
 		<div className='flex flex-col items-center pt-24'>
-			<Profile data={employee} />
+			<Profile employee={employee} />
 		</div>
 	)
 }

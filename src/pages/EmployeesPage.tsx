@@ -1,11 +1,11 @@
-import { FC, useEffect, useState } from 'react'
-import EmployeeList from '../components/EmployeeList'
 import axios from 'axios'
 import Logout from '../Auth'
+import { FC, useEffect, useState } from 'react'
+import EmployeeList from '../components/EmployeeList'
 
 interface EmployeesPageProps {}
 
-const headings = ['Name', 'Phone', 'Email']
+const headings = ['Name', 'Email', 'Phone']
 
 const EmployeesPage: FC<EmployeesPageProps> = ({}) => {
 	const [data, setData] = useState([])

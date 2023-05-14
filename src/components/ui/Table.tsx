@@ -6,13 +6,13 @@ interface TableProps {
 	headings: string[]
 	editable?: boolean
 	searchBar?: boolean
-	data: Record<string, string>[]
+	data: any
 }
 
 const Table: FC<TableProps> = ({ headings, data, searchBar, editable, noLink }) => {
 	const [searchText, setSearchText] = useState<string>('')
 
-	const filteredData = data.filter((row) => {
+	const filteredData = data.filter((row: any) => {
 		const values = Object.values(row).join('').toLowerCase()
 		return values.includes(searchText.toLowerCase())
 	})
@@ -49,7 +49,7 @@ const Table: FC<TableProps> = ({ headings, data, searchBar, editable, noLink }) 
 				</thead>
 
 				<tbody className='divide-y-2 divide-slate-200'>
-					{filteredData.map((row, index) => (
+					{filteredData.map((row: any, index: number) => (
 						<tr
 							onClick={() => !editable && !noLink && navigate(`/${path}/${row._id}`)}
 							key={`row-${index}`}

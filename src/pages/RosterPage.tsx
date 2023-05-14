@@ -1,8 +1,8 @@
 import axios from 'axios'
-import { FC, useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
-import Table from '../components/ui/Table'
 import Logout from '../Auth'
+import Table from '../components/ui/Table'
+import { useParams } from 'react-router-dom'
+import { FC, useEffect, useState } from 'react'
 
 interface RosterPageProps {}
 

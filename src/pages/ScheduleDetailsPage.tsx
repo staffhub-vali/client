@@ -1,7 +1,7 @@
 import axios from 'axios'
+import Logout from '../Auth'
 import { FC, useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
-import Logout from '../Auth'
 
 interface Schedule {
 	_id: string
@@ -41,11 +41,11 @@ const ScheduleDetailsPage: FC<ScheduleDetailsPageProps> = ({}) => {
 		<div className='flex flex-col items-center pt-24'>
 			<h1 className='mb-12 text-5xl'>Schedule</h1>
 			<div className='grid grid-cols-7 gap-10'>
-				{schedule.workDays?.map((day: { date: string; _id: string }, index: number) => (
+				{schedule.workDays?.map((day: { date: string; _id: string }) => (
 					<Link
+						key={day._id}
 						className='text-3xl'
-						to={`/days/${day._id}`}
-						key={index}>
+						to={`/days/${day._id}`}>
 						{day.date}
 					</Link>
 				))}

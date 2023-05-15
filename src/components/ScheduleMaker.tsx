@@ -5,6 +5,11 @@ import Calendar from 'react-calendar'
 import 'react-calendar/dist/Calendar.css'
 import TableSchedule from './TableSchedule'
 import NewScheduleSearch from './NewScheduleSearch'
+import moment from 'moment'
+
+let now = moment().format('LLL')
+
+console.log(now)
 
 interface ScheduleMakerProps {
 	id: string
@@ -56,18 +61,18 @@ const ScheduleMaker: FC<ScheduleMakerProps> = ({ id, name, setName, setId, isOpe
 		setData((currentData) => updateMonthData(date, currentData))
 	}
 
-	const updateMonthData = (date: Date, currentData: any[]) => {
+	const updateMonthData = (date: Date, currentData: any) => {
 		const year = date.getFullYear()
 		const monthIndex = date.getMonth()
 		const daysInMonth = new Date(year, monthIndex + 1, 0).getDate()
 
 		const data = new Array(daysInMonth).fill(null).map((_, index) => {
 			const day = index + 1
-			const date = new Date(year, monthIndex, day)
+			const dateUnixTimestamp = new Date(year, monthIndex, day).getTime() / 1000
 
 			// Check whether the date already has a shift assigned to it
 			const existingShift = currentData.find(
-				(shift: { date: Date }) => shift.date.getTime() === date.getTime(),
+				(shift: { date: number }) => Math.floor(shift.date / 1000) === dateUnixTimestamp,
 			)
 
 			if (existingShift) {
@@ -81,25 +86,26 @@ const ScheduleMaker: FC<ScheduleMakerProps> = ({ id, name, setName, setId, isOpe
 			const endMinute = 0
 			const hasShift = Math.random() >= 0.5
 
-			const start = hasShift ? new Date(year, monthIndex, day, startHour, startMinute) : null
-			const end = hasShift ? new Date(year, monthIndex, day, endHour, endMinute) : null
+			const start = hasShift ? new Date(year, monthIndex, day, startHour, startMinute).getTime() / 1000 : null
+			const end = hasShift ? new Date(year, monthIndex, day, endHour, endMinute).getTime() / 1000 : null
 			let total = null
 			if (start && end) {
-				const minutes = Math.round((end.getTime() - start.getTime()) / (1000 * 60)) // convert milliseconds to minutes
+				const minutes = Math.round((end - start) / 60)
 				total = minutes
 			}
 
 			return {
-				id: `${year}-${monthIndex}-${day}`,
-				date: date,
-				start: start,
-				end: end,
-				total: total,
+				date: dateUnixTimestamp,
+				start,
+				end,
+				total,
 			}
 		})
 
 		return data
 	}
+
+	console.log(data)
 
 	return (
 		<div className='mt-6 flex h-full w-full justify-evenly overflow-hidden'>

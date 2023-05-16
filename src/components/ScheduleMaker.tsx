@@ -5,11 +5,6 @@ import Calendar from 'react-calendar'
 import 'react-calendar/dist/Calendar.css'
 import TableSchedule from './TableSchedule'
 import NewScheduleSearch from './NewScheduleSearch'
-import moment from 'moment'
-
-let now = moment().format('LLL')
-
-console.log(now)
 
 interface ScheduleMakerProps {
 	id: string
@@ -24,6 +19,7 @@ const ScheduleMaker: FC<ScheduleMakerProps> = ({ id, name, setName, setId, isOpe
 	const [data, setData] = useState<any[]>([])
 	const [value, setValue] = useState(new Date())
 	const currentDate = new Date()
+
 	const [month, setMonth] = useState(() => {
 		const month = currentDate.getMonth() + 2
 		return `${currentDate.getFullYear()}-${month < 10 ? `0${month}` : month}`
@@ -105,18 +101,17 @@ const ScheduleMaker: FC<ScheduleMakerProps> = ({ id, name, setName, setId, isOpe
 		return data
 	}
 
-	console.log(data)
-
 	return (
 		<div className='mt-6 flex h-full w-full justify-evenly overflow-hidden'>
 			<div className='flex flex-col items-center space-y-4'>
 				<NewScheduleSearch
-					setId={setId}
 					name={name}
+					setId={setId}
 					isOpen={isOpen}
 					setName={setName}
 					setIsOpen={setIsOpen}
 				/>
+
 				<Calendar
 					view='month'
 					value={value}
@@ -132,7 +127,12 @@ const ScheduleMaker: FC<ScheduleMakerProps> = ({ id, name, setName, setId, isOpe
 					Submit
 				</button>
 			</div>
-			{data.length > 0 && <TableSchedule data={data} />}
+			{data.length > 0 && (
+				<TableSchedule
+					data={data}
+					setData={setData}
+				/>
+			)}
 		</div>
 	)
 }

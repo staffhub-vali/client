@@ -54,11 +54,10 @@ const ScheduleMaker: FC<ScheduleMakerProps> = ({ id, name, setName, setId, isOpe
 		const year = date.getFullYear()
 		const month = date.getMonth() + 1
 		setMonth(`${year}-${month < 10 ? `0${month}` : month}`)
-
-		setData((currentData) => updateMonthData(date, currentData))
+		setData(() => updateMonthData(date))
 	}
 
-	const updateMonthData = (date: Date, currentData: any) => {
+	const updateMonthData = (date: Date) => {
 		const year = date.getFullYear()
 		const monthIndex = date.getMonth()
 		const daysInMonth = new Date(year, monthIndex + 1, 0).getDate()
@@ -67,35 +66,8 @@ const ScheduleMaker: FC<ScheduleMakerProps> = ({ id, name, setName, setId, isOpe
 			const day = index + 1
 			const dateUnixTimestamp = new Date(year, monthIndex, day).getTime() / 1000
 
-			// Check whether the date already has a shift assigned to it
-			const existingShift = currentData.find(
-				(shift: { date: number }) => Math.floor(shift.date / 1000) === dateUnixTimestamp,
-			)
-
-			if (existingShift) {
-				return existingShift
-			}
-
-			// Assign a random shift to the date
-			const startHour = 6
-			const startMinute = 0
-			const endHour = 14
-			const endMinute = 0
-			const hasShift = Math.random() >= 0.5
-
-			const start = hasShift ? new Date(year, monthIndex, day, startHour, startMinute).getTime() / 1000 : null
-			const end = hasShift ? new Date(year, monthIndex, day, endHour, endMinute).getTime() / 1000 : null
-			let total = null
-			if (start && end) {
-				const minutes = Math.round((end - start) / 60)
-				total = minutes
-			}
-
 			return {
 				date: dateUnixTimestamp,
-				start,
-				end,
-				total,
 			}
 		})
 

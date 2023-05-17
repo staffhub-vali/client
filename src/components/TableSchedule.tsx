@@ -34,37 +34,6 @@ const TableSchedule: FC<TableScheduleProps> = ({ data, setData }) => {
 		}
 	}
 
-	function convertDateTimeToUnix(dateString: string, startTimeString: any, endTimeString: any) {
-		// Parse the date string
-		const [day, month, year] = dateString.split('/')
-		const date = new Date(`${year}-${month}-${day}`)
-
-		// Parse the start time string
-		const [startHour, startMinute] = startTimeString.split(':')
-		const startDate = new Date(date)
-
-		startDate.setHours(startHour)
-		startDate.setMinutes(startMinute)
-
-		// Parse the end time string
-		const [endHour, endMinute] = endTimeString.split(':')
-		const endDate = new Date(date)
-		endDate.setHours(endHour)
-		endDate.setMinutes(endMinute)
-
-		// Convert to Unix timestamps
-		const dateUnix = Math.floor(date.getTime() / 1000)
-		const startUnix = Math.floor(startDate.getTime() / 1000)
-		const endUnix = Math.floor(endDate.getTime() / 1000)
-
-		// Return the result as an object
-		return {
-			date: dateUnix,
-			start: startUnix,
-			end: endUnix,
-		}
-	}
-
 	return (
 		<div className='w-1/2 overflow-scroll overflow-x-hidden rounded'>
 			<table className='w-full divide-y-2 divide-slate-200 rounded border-2 bg-white text-center text-lg shadow-md'>
@@ -124,7 +93,7 @@ const TableSchedule: FC<TableScheduleProps> = ({ data, setData }) => {
 										}}
 									/>
 								</td>
-								{item.start && item.end && item.total ? (
+								{item.start && item.end ? (
 									<td className='py-2'>
 										{`${Math.floor((item.end - item.start) / 3600)}h ${
 											((item.end - item.start) % 3600) / 60 !== 0

@@ -41,12 +41,12 @@ const ScheduleDetailsPage: FC<ScheduleDetailsPageProps> = ({}) => {
 		<div className='flex flex-col items-center pt-24'>
 			<h1 className='mb-12 text-5xl'>Schedule</h1>
 			<div className='grid grid-cols-7 gap-10'>
-				{schedule.workDays?.map((day: { date: string; _id: string }) => (
+				{schedule.workDays?.map((day: { date: number; _id: string }) => (
 					<Link
 						key={day._id}
 						className='text-3xl'
 						to={`/days/${day._id}`}>
-						{day.date}
+						{new Date(day.date * 1000).toLocaleDateString('en-GB')}
 					</Link>
 				))}
 			</div>

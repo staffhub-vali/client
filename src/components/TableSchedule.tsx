@@ -126,9 +126,11 @@ const TableSchedule: FC<TableScheduleProps> = ({ data, setData }) => {
 								</td>
 								{item.start && item.end && item.total ? (
 									<td className='py-2'>
-										{`${Math.floor((item.end - item.start) / 3600)}h ${Math.floor(
-											((item.end - item.start) % 3600) / 60,
-										)}min`}
+										{`${Math.floor((item.end - item.start) / 3600)}h ${
+											((item.end - item.start) % 3600) / 60 !== 0
+												? `${Math.floor(((item.end - item.start) % 3600) / 60)}min`
+												: ''
+										}`}
 									</td>
 								) : (
 									<td className='py-2'></td>

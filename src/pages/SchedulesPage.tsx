@@ -3,6 +3,7 @@ import Logout from '../Auth'
 import { Link } from 'react-router-dom'
 import Table from '../components/ui/Table'
 import { FC, useEffect, useState } from 'react'
+import SchedulesList from '../components/SchedulesList'
 
 interface SchedulesPageProps {}
 
@@ -34,7 +35,7 @@ const SchedulesPage: FC<SchedulesPageProps> = ({}) => {
 
 	return (
 		<div className='flex flex-col items-center pt-24'>
-			<Table
+			<SchedulesList
 				data={schedules}
 				headings={headings}
 			/>

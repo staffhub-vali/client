@@ -24,3 +24,19 @@ body {
 	transition: transform 0.3s ease-in-out;
 	transform: translateY(100%);
 }
+
+.react-calendar__tile--now {
+	color: currentColor;
+}
+
+.react-calendar__tile--now:active {
+	color: white;
+}
+
+.react-calendar__tile--now:hover {
+	color: white;
+}
+
+.react-calendar__tile--now:focus {
+	color: white;
+}

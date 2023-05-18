@@ -12,23 +12,23 @@ interface TableScheduleProps {
 
 const TableSchedule: FC<TableScheduleProps> = ({ data, setData }) => {
 	const headings = ['Date', 'Start', 'End', 'Total']
-	console.log(data)
-	function formatDate(unixTimestamp: number) {
-		const date = new Date(unixTimestamp * 1000) // Convert UNIX timestamp to milliseconds
 
-		const day = String(date.getDate()).padStart(2, '0') // Get day and pad with leading zero if needed
-		const month = String(date.getMonth() + 1).padStart(2, '0') // Get month (zero-based) and pad with leading zero if needed
-		const year = date.getFullYear() // Get full year
+	function formatDate(unixTimestamp: number) {
+		const date = new Date(unixTimestamp * 1000)
+
+		const year = date.getFullYear()
+		const day = String(date.getDate()).padStart(2, '0')
+		const month = String(date.getMonth() + 1).padStart(2, '0')
 
 		return `${day}/${month}/${year}`
 	}
 
 	function formatTime(unixTimestamp: number) {
 		if (unixTimestamp) {
-			const date = new Date(unixTimestamp * 1000) // Convert UNIX timestamp to milliseconds
+			const date = new Date(unixTimestamp * 1000)
 
-			const hours = String(date.getHours()).padStart(2, '0') // Get hours and pad with leading zero if needed
-			const minutes = String(date.getMinutes()).padStart(2, '0') // Get minutes and pad with leading zero if needed
+			const hours = String(date.getHours()).padStart(2, '0')
+			const minutes = String(date.getMinutes()).padStart(2, '0')
 
 			return `${hours}:${minutes}`
 		}
@@ -57,17 +57,19 @@ const TableSchedule: FC<TableScheduleProps> = ({ data, setData }) => {
 								<td className='py-2'>{formatDate(item.date)}</td>
 								<td>
 									<input
-										className='bg-transparent py-2 text-center'
+										className='bg-transparent py-2 text-center focus:bg-white'
 										type='text'
 										value={formatTime(item.start)}
 										onChange={(e) => {
 											const newTime = e.target.value
+
 											// convert the new time into Unix timestamp
 											const [hour, minute]: any = newTime.split(':')
 											const newDate = new Date(item.date * 1000)
 											newDate.setHours(hour)
 											newDate.setMinutes(minute)
 											const newStartUnix = Math.floor(newDate.getTime() / 1000)
+
 											// set the new data
 											const newData = data.map((d, i) => (i === index ? { ...d, start: newStartUnix } : d))
 											setData(newData)
@@ -76,17 +78,19 @@ const TableSchedule: FC<TableScheduleProps> = ({ data, setData }) => {
 								</td>
 								<td>
 									<input
-										className='bg-transparent py-2 text-center'
+										className='bg-transparent py-2 text-center focus:bg-white'
 										type='text'
 										value={formatTime(item.end)}
 										onChange={(e) => {
 											const newTime = e.target.value
+
 											// convert the new time into Unix timestamp
 											const [hour, minute]: any = newTime.split(':')
 											const newDate = new Date(item.date * 1000)
 											newDate.setHours(hour)
 											newDate.setMinutes(minute)
 											const newEndUnix = Math.floor(newDate.getTime() / 1000)
+
 											// set the new data
 											const newData = data.map((d, i) => (i === index ? { ...d, end: newEndUnix } : d))
 											setData(newData)

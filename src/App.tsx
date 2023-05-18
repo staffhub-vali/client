@@ -1,18 +1,15 @@
-import Navbar from './components/Navbar'
-import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import HomePage from './pages/HomePage'
-import EmployeesPage from './pages/EmployeesPage'
-import SchedulesPage from './pages/SchedulesPage'
-import DocumentationPage from './pages/DocumentationPage'
 import AuthPage from './pages/AuthPage'
-import DashboardPage from './pages/DashboardPage'
-import NewEmployeePage from './pages/NewEmployeePage'
-import EmployeeProfilePage from './pages/EmployeeProfilePage'
-import NewSchedulePage from './pages/NewSchedulePage'
-import ScheduleDetailsPage from './pages/ScheduleDetailsPage'
+import Navbar from './components/Navbar'
 import WorkDayPage from './pages/WorkDayPage'
-import RosterPage from './pages/RosterPage'
 import PageNotFound from './pages/PageNotFound'
+import DashboardPage from './pages/DashboardPage'
+import EmployeesPage from './pages/EmployeesPage'
+import NewEmployeePage from './pages/NewEmployeePage'
+import NewSchedulePage from './pages/NewSchedulePage'
+import DocumentationPage from './pages/DocumentationPage'
+import EmployeeProfilePage from './pages/EmployeeProfilePage'
+import { BrowserRouter, Route, Routes } from 'react-router-dom'
 
 function App() {
 	return (
@@ -28,10 +25,7 @@ function App() {
 						path='/auth/:authForm'
 						element={<AuthPage />}
 					/>
-					<Route
-						path='/rosters/:id'
-						element={<RosterPage />}
-					/>
+
 					<Route
 						path='/days/:id'
 						element={<WorkDayPage />}
@@ -51,14 +45,6 @@ function App() {
 					<Route
 						path='/employees/new'
 						element={<NewEmployeePage />}
-					/>
-					<Route
-						path='/schedules'
-						element={<SchedulesPage />}
-					/>
-					<Route
-						path='/schedules/:id'
-						element={<ScheduleDetailsPage />}
 					/>
 					<Route
 						path='/schedules/new'

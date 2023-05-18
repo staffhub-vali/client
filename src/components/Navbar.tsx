@@ -23,14 +23,14 @@ const Navbar: FC<NavbarProps> = ({}) => {
 							<div className='flex items-center space-x-4'>
 								<Link
 									to='/employees'
-									className=' w-24 py-2    text-gray-800 hover:text-black active:scale-95'>
+									className=' w-36 py-2    text-gray-800 hover:text-black active:scale-95'>
 									Employees
 								</Link>
 
 								<Link
-									to='/schedules'
-									className=' w-24 py-2   text-gray-800 hover:text-black active:scale-95'>
-									Schedules
+									to='/schedules/new'
+									className=' w-36 py-2   text-gray-800 hover:text-black active:scale-95'>
+									New Schedule
 								</Link>
 							</div>
 						)}

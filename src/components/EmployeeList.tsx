@@ -1,5 +1,5 @@
 import { FC } from 'react'
-import Table from './ui/Table'
+import TableEmployees from './TableEmployees'
 import { Link } from 'react-router-dom'
 
 interface EmployeeListProps {
@@ -10,7 +10,7 @@ interface EmployeeListProps {
 const EmployeeList: FC<EmployeeListProps> = ({ data, headings }) => {
 	return (
 		<>
-			<Table
+			<TableEmployees
 				data={data}
 				searchBar={true}
 				headings={headings}

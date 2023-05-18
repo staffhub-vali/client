@@ -6,24 +6,8 @@ import { FC, useEffect, useState } from 'react'
 
 interface EmployeeProfilePageProps {}
 
-interface Employee {
-	rosters: []
-	_id: string
-	name: string
-	email: string
-	phone: string
-	vacationDays: number
-}
-
 const EmployeeProfilePage: FC<EmployeeProfilePageProps> = ({}) => {
-	const [employee, setEmployee] = useState<Employee>({
-		_id: '',
-		name: '',
-		email: '',
-		phone: '',
-		rosters: [],
-		vacationDays: NaN,
-	})
+	const [employee, setEmployee] = useState({})
 	const { id } = useParams()
 
 	useEffect(() => {

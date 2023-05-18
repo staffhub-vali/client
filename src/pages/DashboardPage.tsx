@@ -9,6 +9,7 @@ export interface WorkDay {
 	_id: string
 	date: number
 	shifts: object[]
+	notes: string[]
 }
 
 const DashboardPage: FC<DashboardPageProps> = ({}) => {

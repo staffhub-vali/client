@@ -1,18 +1,9 @@
-import { FC, useState, useEffect } from 'react'
+import React, { FC, useState, useEffect } from 'react'
 import { WorkDay } from '../pages/DashboardPage'
+import { formatDate, formatTime } from '../utils/DateFormatting'
 
 interface TableDashboardProps {
 	data: WorkDay[]
-}
-
-function formatDate(unixTimestamp: number) {
-	const date = new Date(unixTimestamp * 1000)
-
-	const year = date.getFullYear()
-	const day = String(date.getDate()).padStart(2, '0')
-	const month = String(date.getMonth() + 1).padStart(2, '0')
-
-	return `${day}/${month}/${year}`
 }
 
 const TableDashboard: FC<TableDashboardProps> = ({ data }) => {
@@ -45,8 +36,18 @@ const TableDashboard: FC<TableDashboardProps> = ({ data }) => {
 		setCurrentPage(initialPage)
 	}, [data, itemsPerPage])
 
+	const [activeRow, setActiveRow] = useState<string | null>(null)
+
+	const toggleRow = (rowId: string) => {
+		if (activeRow === rowId) {
+			setActiveRow(null)
+		} else {
+			setActiveRow(rowId)
+		}
+	}
+
 	return (
-		<div>
+		<>
 			<table className='min-w-full divide-y-2 divide-slate-200 border bg-white text-center text-lg'>
 				<thead>
 					<tr>
@@ -62,60 +63,79 @@ const TableDashboard: FC<TableDashboardProps> = ({ data }) => {
 
 				<tbody className='divide-y-2 divide-slate-200'>
 					{currentData.map((item, index) => (
-						<tr
-							key={item._id}
-							className={`cursor-pointer duration-75 hover:bg-slate-200 ${
-								index % 2 === 0 ? 'bg-slate-50' : 'bg-white'
-							}`}>
-							<td className='h-14 cursor-pointer whitespace-nowrap px-4 py-3 text-slate-700'>
-								{formatDate(item.date)}
-							</td>
-							<td className='h-14 cursor-pointer whitespace-nowrap px-4 py-3 text-slate-700'>
-								{item.shifts.length}
-							</td>
-							<td className='h-14 cursor-pointer whitespace-nowrap px-4 py-3 text-slate-700'>
-								{item.notes.length}
-							</td>
-						</tr>
+						<React.Fragment key={item._id}>
+							<tr
+								className={`cursor-pointer duration-75 hover:bg-slate-200 ${
+									index % 2 === 0 ? 'bg-slate-50' : 'bg-white'
+								}`}
+								onClick={() => toggleRow(item._id)}>
+								<td className='h-14 cursor-pointer whitespace-nowrap px-4 py-3 text-slate-700'>
+									{formatDate(item.date)}
+								</td>
+								<td className='h-14 cursor-pointer whitespace-nowrap px-4 py-3 text-slate-700'>
+									{item.shifts.length}
+								</td>
+								<td className='h-14 cursor-pointer whitespace-nowrap px-4 py-3 text-slate-700'>
+									{item.notes.length}
+								</td>
+							</tr>
+							{activeRow === item._id && (
+								<tr>
+									<td
+										colSpan={headings.length}
+										className='text-md px-4 py-3'>
+										{/* Dropdown content */}
+										{item.shifts.map((shift, index) => (
+											<div key={index}>
+												{shift.employee.name} {formatTime(shift.start)} - {formatTime(shift.end)}
+											</div>
+										))}
+									</td>
+								</tr>
+							)}
+						</React.Fragment>
 					))}
 				</tbody>
 			</table>
-
 			{/* Pagination */}
-			<div className='mt-4 flex justify-center'>
+			<div className='absolute bottom-56 left-0 right-0 flex justify-center rounded text-2xl'>
 				{data.length > itemsPerPage && (
 					<nav className='block'>
-						<ul className='flex list-none flex-wrap space-x-2 rounded pl-0'>
+						<ul className='flex list-none flex-wrap rounded pl-0'>
 							{/* Left Arrow */}
 							<li>
 								<button
 									onClick={() => handlePageChange(currentPage - 1)}
-									className={`relative block px-3 py-2 text-lg leading-tight text-slate-900 ${
-										currentPage === 1 ? 'cursor-pointer bg-gray-300 text-gray-600' : 'bg-white text-black'
-									}`}
+									className='relative block bg-white px-3 py-2 leading-tight text-slate-400'
 									disabled={currentPage === 1}>
-									<i className='fa-solid fa-less-than'></i>
+									<i className='fa-solid fa-angle-left'></i>
 								</button>
 							</li>
-
+							{Array.from({ length: Math.ceil(data.length / itemsPerPage) }).map((_, index) => (
+								<li key={index}>
+									<button
+										onClick={() => handlePageChange(index + 1)}
+										className={`relative block px-3 py-2 leading-tight text-slate-500 ${
+											currentPage === index + 1 ? 'bg-slate-400 text-white' : 'bg-white text-slate-500'
+										}`}>
+										{index + 1}
+									</button>
+								</li>
+							))}
 							{/* Right Arrow */}
 							<li>
 								<button
 									onClick={() => handlePageChange(currentPage + 1)}
-									className={`relative block px-3 py-2 text-lg leading-tight text-slate-900 ${
-										currentPage === Math.ceil(data.length / itemsPerPage)
-											? 'cursor-pointer bg-gray-300 text-gray-600'
-											: 'bg-white text-black'
-									}`}
+									className='relative block bg-white px-3 py-2 leading-tight text-slate-400'
 									disabled={currentPage === Math.ceil(data.length / itemsPerPage)}>
-									<i className='fa-solid fa-greater-than'></i>
+									<i className='fa-solid fa-angle-right'></i>
 								</button>
 							</li>
 						</ul>
 					</nav>
 				)}
 			</div>
-		</div>
+		</>
 	)
 }
 

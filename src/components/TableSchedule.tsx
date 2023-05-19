@@ -1,4 +1,5 @@
-import { FC, useState } from 'react'
+import { FC } from 'react'
+import { formatDate, formatTime } from '../utils/DateFormatting'
 
 interface TableScheduleProps {
 	data: Array<{
@@ -13,29 +14,8 @@ interface TableScheduleProps {
 const TableSchedule: FC<TableScheduleProps> = ({ data, setData }) => {
 	const headings = ['Date', 'Start', 'End', 'Total']
 
-	function formatDate(unixTimestamp: number) {
-		const date = new Date(unixTimestamp * 1000)
-
-		const year = date.getFullYear()
-		const day = String(date.getDate()).padStart(2, '0')
-		const month = String(date.getMonth() + 1).padStart(2, '0')
-
-		return `${day}/${month}/${year}`
-	}
-
-	function formatTime(unixTimestamp: number) {
-		if (unixTimestamp) {
-			const date = new Date(unixTimestamp * 1000)
-
-			const hours = String(date.getHours()).padStart(2, '0')
-			const minutes = String(date.getMinutes()).padStart(2, '0')
-
-			return `${hours}:${minutes}`
-		}
-	}
-
 	return (
-		<div className='w-1/2 overflow-scroll overflow-x-hidden rounded'>
+		<div className='h-1/2 w-full overflow-scroll overflow-x-hidden rounded'>
 			<table className='w-full divide-y-2 divide-slate-200 rounded border-2 bg-white text-center text-lg shadow-md'>
 				<thead>
 					<tr className='sticky top-0 bg-white '>

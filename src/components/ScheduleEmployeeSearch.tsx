@@ -7,7 +7,7 @@ interface Employee {
 	name: string
 }
 
-interface NewScheduleSearchProps {
+interface ScheduleEmployeeSearchProps {
 	name: string
 	isOpen: boolean
 	setId: (id: string) => void
@@ -15,7 +15,13 @@ interface NewScheduleSearchProps {
 	setIsOpen: (isOpen: boolean) => void
 }
 
-const NewScheduleSearch: FC<NewScheduleSearchProps> = ({ setId, isOpen, setIsOpen, name, setName }) => {
+const ScheduleEmployeeSearch: FC<ScheduleEmployeeSearchProps> = ({
+	setId,
+	isOpen,
+	setIsOpen,
+	name,
+	setName,
+}) => {
 	const [data, setData] = useState<Employee[]>([])
 
 	useEffect(() => {
@@ -48,14 +54,13 @@ const NewScheduleSearch: FC<NewScheduleSearchProps> = ({ setId, isOpen, setIsOpe
 	return (
 		<div className='relative mt-0.5 w-96 text-lg '>
 			<div
-				className='group w-full cursor-pointer rounded bg-white shadow'
+				className='group w-full cursor-pointer rounded bg-white shadow hover:shadow-md'
 				onClick={() => setIsOpen(!isOpen)}>
 				<input
 					placeholder='Choose an Employee...'
 					type='text'
 					value={name}
-					onChange={(e) => setName(e.target.value)}
-					className='group w-full cursor-pointer px-4 py-3  caret-transparent focus:outline-none'
+					className='group w-full cursor-pointer px-4 py-3  caret-transparent placeholder:text-slate-500 focus:outline-none'
 				/>
 			</div>
 			{isOpen && (
@@ -76,4 +81,4 @@ const NewScheduleSearch: FC<NewScheduleSearchProps> = ({ setId, isOpen, setIsOpe
 	)
 }
 
-export default NewScheduleSearch
+export default ScheduleEmployeeSearch

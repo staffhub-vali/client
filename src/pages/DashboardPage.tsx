@@ -8,8 +8,14 @@ interface DashboardPageProps {}
 export interface WorkDay {
 	_id: string
 	date: number
-	shifts: object[]
+	shifts: Shift[]
 	notes: string[]
+}
+
+interface Shift {
+	employee: { name: string }
+	start: number
+	end: number
 }
 
 const DashboardPage: FC<DashboardPageProps> = ({}) => {
@@ -27,7 +33,6 @@ const DashboardPage: FC<DashboardPageProps> = ({}) => {
 					Authorization: `Bearer ${token}`,
 				},
 			})
-			console.log(response.data)
 			setData(response.data)
 		} catch (error: any) {
 			if (error.response.status === 401) {
@@ -35,11 +40,10 @@ const DashboardPage: FC<DashboardPageProps> = ({}) => {
 			}
 		}
 	}
-	console.log(data)
+
 	return (
 		<div className='flex flex-col items-center pt-24'>
 			<h1 className='mb-8 text-4xl'>Dashboard</h1>
-
 			<Dashboard data={data} />
 		</div>
 	)

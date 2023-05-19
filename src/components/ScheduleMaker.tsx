@@ -4,7 +4,7 @@ import { FC, useState } from 'react'
 import Calendar from 'react-calendar'
 import 'react-calendar/dist/Calendar.css'
 import TableSchedule from './TableSchedule'
-import NewScheduleSearch from './NewScheduleSearch'
+import ScheduleEmployeeSearch from './ScheduleEmployeeSearch'
 
 interface ScheduleMakerProps {
 	id: string
@@ -49,7 +49,6 @@ const ScheduleMaker: FC<ScheduleMakerProps> = ({ id, name, setName, setId, isOpe
 	}
 
 	const handleMonthChange: any = (date: Date) => {
-		console.log(date)
 		const year = date.getFullYear()
 		const month = date.getMonth() + 1
 		setMonth(`${year}-${month < 10 ? `0${month}` : month}`)
@@ -74,10 +73,9 @@ const ScheduleMaker: FC<ScheduleMakerProps> = ({ id, name, setName, setId, isOpe
 	}
 
 	return (
-		<div className='mt-6 flex h-full w-full justify-evenly overflow-hidden'>
-			<div className='flex flex-col items-center space-y-4'>
-				{name ? <h2 className='text-2xl'>{name}</h2> : <h2 className='h-8'></h2>}
-				<NewScheduleSearch
+		<div className='mt-4 grid h-full w-full grid-cols-12 overflow-hidden'>
+			<div className='col-span-4 mt-12 flex flex-col items-center space-y-4'>
+				<ScheduleEmployeeSearch
 					name={name}
 					setId={setId}
 					isOpen={isOpen}
@@ -97,12 +95,21 @@ const ScheduleMaker: FC<ScheduleMakerProps> = ({ id, name, setName, setId, isOpe
 					Submit
 				</button>
 			</div>
-			{data.length > 0 && (
-				<TableSchedule
-					data={data}
-					setData={setData}
-				/>
-			)}
+			<div className='col-span-6 col-start-6'>
+				{data.length > 0 ? (
+					<>
+						{name ? <h2 className='mb-2 text-center text-4xl'>{name}</h2> : <h2 className='h-12'></h2>}
+						<TableSchedule
+							data={data}
+							setData={setData}
+						/>
+					</>
+				) : (
+					<div className='col-span-6 col-start-6 pt-48'>
+						<p className='text-center text-4xl text-gray-500'>Pick a month and an employee</p>
+					</div>
+				)}
+			</div>
 		</div>
 	)
 }

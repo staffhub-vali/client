@@ -1,4 +1,4 @@
-import { FC, useState } from 'react'
+import { FC, useState, useEffect } from 'react'
 import { WorkDay } from '../pages/DashboardPage'
 
 interface TableDashboardProps {
@@ -31,6 +31,19 @@ const TableDashboard: FC<TableDashboardProps> = ({ data }) => {
 	const handlePageChange = (pageNumber: number) => {
 		setCurrentPage(pageNumber)
 	}
+
+	useEffect(() => {
+		// Find the index of the current date in the data array
+		const currentDateIndex = data.findIndex((item) => {
+			const currentDate = new Date().setHours(0, 0, 0, 0) / 1000 // Get the current date at midnight in Unix timestamp format
+			return item.date <= currentDate && item.date + 86400 > currentDate // Compare if the item's date falls within the current date
+		})
+
+		// Calculate the initial page based on the current date's position
+		const initialPage = Math.floor(currentDateIndex / itemsPerPage) + 1
+
+		setCurrentPage(initialPage)
+	}, [data, itemsPerPage])
 
 	return (
 		<div>
@@ -72,18 +85,32 @@ const TableDashboard: FC<TableDashboardProps> = ({ data }) => {
 			<div className='mt-4 flex justify-center'>
 				{data.length > itemsPerPage && (
 					<nav className='block'>
-						<ul className='flex list-none flex-wrap rounded pl-0'>
-							{Array.from({ length: Math.ceil(data.length / itemsPerPage) }).map((_, index) => (
-								<li key={index}>
-									<button
-										onClick={() => handlePageChange(index + 1)}
-										className={`relative block px-3 py-2 text-lg leading-tight text-slate-900 ${
-											currentPage === index + 1 ? 'bg-black text-white' : 'bg-white text-black'
-										}`}>
-										{index + 1}
-									</button>
-								</li>
-							))}
+						<ul className='flex list-none flex-wrap space-x-2 rounded pl-0'>
+							{/* Left Arrow */}
+							<li>
+								<button
+									onClick={() => handlePageChange(currentPage - 1)}
+									className={`relative block px-3 py-2 text-lg leading-tight text-slate-900 ${
+										currentPage === 1 ? 'cursor-pointer bg-gray-300 text-gray-600' : 'bg-white text-black'
+									}`}
+									disabled={currentPage === 1}>
+									<i className='fa-solid fa-less-than'></i>
+								</button>
+							</li>
+
+							{/* Right Arrow */}
+							<li>
+								<button
+									onClick={() => handlePageChange(currentPage + 1)}
+									className={`relative block px-3 py-2 text-lg leading-tight text-slate-900 ${
+										currentPage === Math.ceil(data.length / itemsPerPage)
+											? 'cursor-pointer bg-gray-300 text-gray-600'
+											: 'bg-white text-black'
+									}`}
+									disabled={currentPage === Math.ceil(data.length / itemsPerPage)}>
+									<i className='fa-solid fa-greater-than'></i>
+								</button>
+							</li>
 						</ul>
 					</nav>
 				)}

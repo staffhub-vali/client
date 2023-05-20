@@ -13,7 +13,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom'
 
 function App() {
 	return (
-		<div className='App min-h-screen overflow-x-hidden bg-slate-100 antialiased '>
+		<div className='App min-h-screen overflow-x-hidden bg-slate-100 antialiased dark:bg-slate-800 '>
 			<BrowserRouter>
 				<Navbar />
 				<Routes>

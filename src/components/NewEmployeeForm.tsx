@@ -55,7 +55,7 @@ const NewEmployeeForm: FC<NewEmployeeFormProps> = ({}) => {
 							<div className='flex-grow'>
 								<label
 									htmlFor='name'
-									className='block text-center text-sm font-medium text-gray-700'>
+									className='block text-center text-sm font-medium text-slate-700 dark:text-slate-300'>
 									Name
 								</label>
 
@@ -65,13 +65,13 @@ const NewEmployeeForm: FC<NewEmployeeFormProps> = ({}) => {
 									type='text'
 									id='name'
 									name='name'
-									className='mt-1 w-full rounded-md border-gray-200 bg-white p-2 text-xl text-gray-700 shadow-sm'
+									className='mt-1 w-full rounded-md border-slate-200 bg-white p-2 text-xl text-slate-700 shadow-sm dark:bg-slate-700 dark:text-slate-200 dark:outline-slate-700'
 								/>
 							</div>
 							<div className='flex-grow'>
 								<label
 									htmlFor='Email'
-									className='block text-center text-sm font-medium text-gray-700'>
+									className='block text-center text-sm font-medium text-slate-700 dark:text-slate-300'>
 									Email
 								</label>
 
@@ -81,13 +81,13 @@ const NewEmployeeForm: FC<NewEmployeeFormProps> = ({}) => {
 									type='text'
 									id='email'
 									name='email'
-									className='mt-1 w-full rounded-md border-gray-200 bg-white p-2 text-xl text-gray-700 shadow-sm'
+									className='mt-1 w-full rounded-md border-slate-200 bg-white p-2 text-xl text-slate-700 shadow-sm dark:bg-slate-700 dark:text-slate-200 dark:outline-slate-700'
 								/>
 							</div>
 							<div className='flex-grow'>
 								<label
 									htmlFor='phone'
-									className='block text-center text-sm font-medium text-gray-700'>
+									className='block text-center text-sm font-medium text-slate-700 dark:text-slate-300'>
 									Phone
 								</label>
 
@@ -102,12 +102,12 @@ const NewEmployeeForm: FC<NewEmployeeFormProps> = ({}) => {
 									type='text'
 									id='phone'
 									name='phone'
-									className='mt-1 w-full rounded-md border-gray-200 bg-white p-2 text-xl text-gray-700 shadow-sm'
+									className='mt-1 w-full rounded-md border-slate-200 bg-white p-2 text-xl text-slate-700 shadow-sm dark:bg-slate-700 dark:text-slate-200 dark:outline-slate-700'
 								/>
 							</div>
 
 							<div className='flex flex-grow-0 flex-col sm:items-center sm:gap-6'>
-								<button className='inline-block shrink-0 rounded-md border border-black bg-black px-12 py-3 text-sm font-medium text-white transition hover:bg-transparent hover:text-black focus:outline-none active:scale-95'>
+								<button className='inline-block shrink-0 rounded-md border border-black bg-black px-12 py-3 text-sm font-medium text-white transition hover:bg-transparent hover:text-black focus:outline-none active:scale-95 dark:bg-white dark:text-black'>
 									Add Employee
 								</button>
 							</div>

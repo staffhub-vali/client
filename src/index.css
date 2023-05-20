@@ -26,17 +26,16 @@ body {
 }
 
 .react-calendar__tile--now {
-	color: currentColor;
+	@apply bg-transparent text-black  !important;
 }
 
-.react-calendar__tile--now:active {
-	color: white;
+.react-calendar__navigation__arrow,
+.react-calendar__navigation__label,
+.react-calendar__tile,
+.react-calendar__tile--now {
+	@apply hover:bg-slate-200 focus:bg-slate-300 dark:text-slate-200 dark:hover:bg-slate-600 dark:focus:bg-slate-500 !important;
 }
 
-.react-calendar__tile--now:hover {
-	color: white;
-}
-
-.react-calendar__tile--now:focus {
-	color: white;
+.react-calendar {
+	@apply dark:border-slate-600 dark:bg-slate-700 dark:text-slate-200 !important;
 }

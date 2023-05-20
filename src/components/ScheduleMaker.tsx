@@ -90,7 +90,7 @@ const ScheduleMaker: FC<ScheduleMakerProps> = ({ id, name, setName, setId, isOpe
 					onChange={handleMonthChange}
 				/>
 				<button
-					className='rounded bg-black px-8 py-2 text-2xl text-white active:scale-95 '
+					className='rounded bg-black px-8 py-2 text-2xl text-white active:scale-95 dark:bg-white dark:text-black '
 					onClick={createSchedule}>
 					Submit
 				</button>
@@ -98,7 +98,11 @@ const ScheduleMaker: FC<ScheduleMakerProps> = ({ id, name, setName, setId, isOpe
 			<div className='col-span-6 col-start-6'>
 				{data.length > 0 ? (
 					<>
-						{name ? <h2 className='mb-2 text-center text-4xl'>{name}</h2> : <h2 className='h-12'></h2>}
+						{name ? (
+							<h2 className='mb-2 text-center text-4xl text-slate-800 dark:text-slate-200'>{name}</h2>
+						) : (
+							<h2 className='h-12'></h2>
+						)}
 						<TableSchedule
 							data={data}
 							setData={setData}
@@ -106,7 +110,9 @@ const ScheduleMaker: FC<ScheduleMakerProps> = ({ id, name, setName, setId, isOpe
 					</>
 				) : (
 					<div className='col-span-6 col-start-6 pt-48'>
-						<p className='text-center text-4xl text-gray-500'>Pick a month and an employee</p>
+						<p className='text-center text-4xl text-gray-500 dark:text-slate-400'>
+							Pick a month and an employee
+						</p>
 					</div>
 				)}
 			</div>

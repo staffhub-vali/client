@@ -43,7 +43,7 @@ const DashboardPage: FC<DashboardPageProps> = ({}) => {
 
 	return (
 		<div className='flex flex-col items-center pt-24'>
-			<h1 className='mb-8 text-4xl'>Dashboard</h1>
+			<h1 className='mb-8 text-4xl text-slate-800 dark:text-slate-300'>Dashboard</h1>
 			<Dashboard data={data} />
 		</div>
 	)

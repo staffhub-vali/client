@@ -48,36 +48,30 @@ const TableDashboard: FC<TableDashboardProps> = ({ data }) => {
 
 	return (
 		<>
-			<table className='min-w-full divide-y-2 divide-slate-200 border bg-white text-center text-lg'>
+			<table className='min-w-full divide-y-2 divide-slate-200 border-2 bg-white text-center text-lg text-slate-800 dark:divide-slate-500 dark:border-slate-500 dark:bg-slate-700 dark:text-slate-300'>
 				<thead>
 					<tr>
 						{headings.map((heading, index) => (
 							<th
 								key={index}
-								className='whitespace-nowrap px-4 py-3 font-medium text-slate-900'>
+								className='whitespace-nowrap px-4 py-3 font-medium'>
 								{heading}
 							</th>
 						))}
 					</tr>
 				</thead>
 
-				<tbody className='divide-y-2 divide-slate-200'>
+				<tbody className='divide-y-2 divide-slate-200 dark:divide-slate-500'>
 					{currentData.map((item, index) => (
 						<React.Fragment key={item._id}>
 							<tr
 								className={`cursor-pointer duration-75 hover:bg-slate-200 ${
-									index % 2 === 0 ? 'bg-slate-50' : 'bg-white'
+									index % 2 === 0 ? 'bg-slate-50 dark:bg-slate-600' : 'bg-white dark:bg-slate-700'
 								}`}
 								onClick={() => toggleRow(item._id)}>
-								<td className='h-14 cursor-pointer whitespace-nowrap px-4 py-3 text-slate-700'>
-									{formatDate(item.date)}
-								</td>
-								<td className='h-14 cursor-pointer whitespace-nowrap px-4 py-3 text-slate-700'>
-									{item.shifts.length}
-								</td>
-								<td className='h-14 cursor-pointer whitespace-nowrap px-4 py-3 text-slate-700'>
-									{item.notes.length}
-								</td>
+								<td className='h-14 cursor-pointer whitespace-nowrap px-4 py-3'>{formatDate(item.date)}</td>
+								<td className='h-14 cursor-pointer whitespace-nowrap px-4 py-3'>{item.shifts.length}</td>
+								<td className='h-14 cursor-pointer whitespace-nowrap px-4 py-3'>{item.notes.length}</td>
 							</tr>
 							{activeRow === item._id && (
 								<tr>
@@ -106,7 +100,7 @@ const TableDashboard: FC<TableDashboardProps> = ({ data }) => {
 							<li>
 								<button
 									onClick={() => handlePageChange(currentPage - 1)}
-									className='relative block bg-white px-3 py-2 leading-tight text-slate-400'
+									className='relative block bg-white px-3 py-2 leading-tight text-slate-400 dark:bg-slate-700'
 									disabled={currentPage === 1}>
 									<i className='fa-solid fa-angle-left'></i>
 								</button>
@@ -116,7 +110,9 @@ const TableDashboard: FC<TableDashboardProps> = ({ data }) => {
 									<button
 										onClick={() => handlePageChange(index + 1)}
 										className={`relative block px-3 py-2 leading-tight text-slate-500 ${
-											currentPage === index + 1 ? 'bg-slate-400 text-white' : 'bg-white text-slate-500'
+											currentPage === index + 1
+												? 'bg-slate-400 text-white dark:bg-slate-600'
+												: 'bg-white text-slate-600 dark:bg-slate-700 dark:text-slate-400'
 										}`}>
 										{index + 1}
 									</button>
@@ -126,7 +122,7 @@ const TableDashboard: FC<TableDashboardProps> = ({ data }) => {
 							<li>
 								<button
 									onClick={() => handlePageChange(currentPage + 1)}
-									className='relative block bg-white px-3 py-2 leading-tight text-slate-400'
+									className='relative block bg-white px-3 py-2 leading-tight text-slate-400 dark:bg-slate-700'
 									disabled={currentPage === Math.ceil(data.length / itemsPerPage)}>
 									<i className='fa-solid fa-angle-right'></i>
 								</button>

@@ -1,12 +1,14 @@
-import React, { FC, useState, useEffect } from 'react'
+import { FC, useState, useEffect } from 'react'
 import { WorkDay } from '../pages/DashboardPage'
-import { formatDate, formatTime } from '../utils/DateFormatting'
+import { formatDate } from '../utils/DateFormatting'
+import { useNavigate } from 'react-router-dom'
 
 interface TableDashboardProps {
 	data: WorkDay[]
 }
 
 const TableDashboard: FC<TableDashboardProps> = ({ data }) => {
+	const navigate = useNavigate()
 	const headings = ['Date', 'Shifts', 'Notes']
 	const itemsPerPage = 7
 
@@ -36,19 +38,9 @@ const TableDashboard: FC<TableDashboardProps> = ({ data }) => {
 		setCurrentPage(initialPage)
 	}, [data, itemsPerPage])
 
-	const [activeRow, setActiveRow] = useState<string | null>(null)
-
-	const toggleRow = (rowId: string) => {
-		if (activeRow === rowId) {
-			setActiveRow(null)
-		} else {
-			setActiveRow(rowId)
-		}
-	}
-
 	return (
 		<>
-			<table className='min-w-full divide-y-2 divide-slate-200 border-2 bg-white text-center text-lg text-slate-800 dark:divide-slate-500 dark:border-slate-500 dark:bg-slate-700 dark:text-slate-300'>
+			<table className='min-w-full divide-y-2 divide-slate-200 border-2 bg-white text-center text-lg text-slate-800 dark:divide-slate-600 dark:border-slate-600 dark:bg-slate-800 dark:text-slate-300'>
 				<thead>
 					<tr>
 						{headings.map((heading, index) => (
@@ -61,33 +53,18 @@ const TableDashboard: FC<TableDashboardProps> = ({ data }) => {
 					</tr>
 				</thead>
 
-				<tbody className='divide-y-2 divide-slate-200 dark:divide-slate-500'>
+				<tbody className='divide-y-2 divide-slate-200 dark:divide-slate-600'>
 					{currentData.map((item, index) => (
-						<React.Fragment key={item._id}>
-							<tr
-								className={`cursor-pointer duration-75 hover:bg-slate-200 ${
-									index % 2 === 0 ? 'bg-slate-50 dark:bg-slate-600' : 'bg-white dark:bg-slate-700'
-								}`}
-								onClick={() => toggleRow(item._id)}>
-								<td className='h-14 cursor-pointer whitespace-nowrap px-4 py-3'>{formatDate(item.date)}</td>
-								<td className='h-14 cursor-pointer whitespace-nowrap px-4 py-3'>{item.shifts.length}</td>
-								<td className='h-14 cursor-pointer whitespace-nowrap px-4 py-3'>{item.notes.length}</td>
-							</tr>
-							{activeRow === item._id && (
-								<tr>
-									<td
-										colSpan={headings.length}
-										className='text-md px-4 py-3'>
-										{/* Dropdown content */}
-										{item.shifts.map((shift, index) => (
-											<div key={index}>
-												{shift.employee.name} {formatTime(shift.start)} - {formatTime(shift.end)}
-											</div>
-										))}
-									</td>
-								</tr>
-							)}
-						</React.Fragment>
+						<tr
+							key={index}
+							onClick={() => navigate(`/days/${item._id}`)}
+							className={`cursor-pointer duration-75 hover:bg-slate-200 dark:hover:bg-slate-600 ${
+								index % 2 === 0 ? 'bg-slate-50 dark:bg-slate-700' : 'bg-white dark:bg-slate-800'
+							}`}>
+							<td className='h-14 cursor-pointer whitespace-nowrap px-4 py-3'>{formatDate(item.date)}</td>
+							<td className='h-14 cursor-pointer whitespace-nowrap px-4 py-3'>{item.shifts.length}</td>
+							<td className='h-14 cursor-pointer whitespace-nowrap px-4 py-3'>{item.notes.length}</td>
+						</tr>
 					))}
 				</tbody>
 			</table>

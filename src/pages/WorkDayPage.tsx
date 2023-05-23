@@ -36,7 +36,7 @@ const WorkDayPage: FC<WorkDayPageProps> = ({}) => {
 	}
 
 	return (
-		<div className='flex flex-col items-center pt-24'>
+		<div className='flex flex-col items-center pt-24 text-slate-800 dark:text-slate-300'>
 			<h1 className='mb-12 text-4xl'>
 				{workDay && new Date(workDay.date * 1000).toLocaleDateString('en-GB')}
 			</h1>
@@ -49,7 +49,7 @@ const WorkDayPage: FC<WorkDayPageProps> = ({}) => {
 							<Link to={`/employees/${shift.employee._id}`}> {shift?.employee.name}</Link>
 						</div>
 						<div className='flex'>
-							{new Date(shift.start * 1000).toLocaleTimeString('en-GB').slice(0, 5)} -
+							{new Date(shift.start * 1000).toLocaleTimeString('en-GB').slice(0, 5)} -{' '}
 							{new Date(shift.end * 1000).toLocaleTimeString('en-GB').slice(0, 5)}
 						</div>
 						<div className='w-96'>{`${Math.floor((shift.end - shift.start) / 3600)}h ${

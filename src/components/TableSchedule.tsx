@@ -15,29 +15,29 @@ const TableSchedule: FC<TableScheduleProps> = ({ data, setData }) => {
 	const headings = ['Date', 'Start', 'End', 'Total']
 
 	return (
-		<div className='h-1/2 w-full overflow-scroll overflow-x-hidden rounded border-2 text-slate-800 dark:border-slate-500 dark:text-slate-300'>
-			<table className='w-full divide-y-2 divide-slate-200 rounded bg-white text-center text-lg shadow-md dark:divide-slate-500  dark:bg-slate-700'>
+		<div className='h-full w-full overflow-x-hidden rounded border-2 text-slate-800 dark:border-slate-500 dark:text-slate-300'>
+			<table className='w-full divide-y-2 divide-slate-200 overflow-scroll rounded bg-white text-center text-lg shadow-md dark:divide-slate-600  dark:bg-slate-800'>
 				<thead>
-					<tr className='sticky top-0 bg-white dark:bg-slate-700 '>
+					<tr className='sticky top-0 bg-white dark:bg-slate-800 '>
 						{headings.map((heading, index) => (
 							<th
-								className='py-3 font-semibold'
+								className='py-2 font-semibold'
 								key={index}>
 								{heading}
 							</th>
 						))}
 					</tr>
 				</thead>
-				<tbody className='divide-y-2 divide-slate-200 dark:divide-slate-500 '>
+				<tbody className='divide-y-2 divide-slate-200 dark:divide-slate-600 '>
 					{data.map((item, index) => {
 						return (
 							<tr
 								key={index}
-								className={index % 2 === 0 ? 'bg-slate-50 dark:bg-slate-600' : 'bg-white dark:bg-slate-700'}>
+								className={index % 2 === 0 ? 'bg-slate-50 dark:bg-slate-700' : 'bg-white dark:bg-slate-800'}>
 								<td className='py-2'>{formatDate(item.date)}</td>
 								<td>
 									<input
-										className='bg-transparent py-2 text-center focus:bg-white dark:outline-slate-700 dark:focus:bg-slate-700'
+										className='rounded bg-transparent py-2 text-center focus:bg-white dark:outline-none dark:ring-slate-100 dark:focus:bg-transparent dark:focus:ring-1'
 										type='text'
 										value={formatTime(item.start)}
 										onChange={(e) => {
@@ -58,7 +58,7 @@ const TableSchedule: FC<TableScheduleProps> = ({ data, setData }) => {
 								</td>
 								<td>
 									<input
-										className='bg-transparent py-2 text-center focus:bg-white dark:outline-slate-700 dark:focus:bg-slate-700'
+										className='rounded bg-transparent py-2 text-center ring-slate-100 focus:bg-white dark:outline-none dark:focus:bg-transparent dark:focus:ring-1'
 										type='text'
 										value={formatTime(item.end)}
 										onChange={(e) => {

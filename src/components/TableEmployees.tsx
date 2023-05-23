@@ -51,7 +51,7 @@ const TableEmployees: FC<TableEmployeesProps> = ({ headings, data, searchBar }) 
 						<tr
 							onClick={() => navigate(`/${path}/${row._id}`)}
 							key={`row-${index}`}
-							className={` cursor-pointer duration-75 hover:bg-slate-200
+							className={` cursor-pointer duration-75 hover:bg-slate-200 dark:hover:bg-slate-600
 							${index % 2 === 0 ? 'bg-slate-50 dark:bg-slate-800 ' : 'bg-white dark:bg-slate-700'}`}>
 							{headings.map((heading, index) => (
 								<td

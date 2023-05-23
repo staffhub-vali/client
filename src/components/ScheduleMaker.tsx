@@ -73,7 +73,7 @@ const ScheduleMaker: FC<ScheduleMakerProps> = ({ id, name, setName, setId, isOpe
 	}
 
 	return (
-		<div className='mt-4 grid h-full w-full grid-cols-12 overflow-hidden'>
+		<div className='mt-4 grid h-full w-full grid-cols-12 '>
 			<div className='col-span-4 mt-12 flex flex-col items-center space-y-4'>
 				<ScheduleEmployeeSearch
 					name={name}

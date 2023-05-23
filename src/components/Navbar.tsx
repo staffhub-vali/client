@@ -102,7 +102,7 @@ const Navbar: FC<NavbarProps> = ({}) => {
 						) : (
 							<Link
 								to='/auth/login'
-								className=' w-44 py-2   text-gray-800 hover:text-black active:scale-95'>
+								className=' w-44 py-2 active:scale-95'>
 								Sign In
 							</Link>
 						)}

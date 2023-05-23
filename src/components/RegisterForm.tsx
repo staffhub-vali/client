@@ -46,7 +46,7 @@ const RegisterForm: FC<RegisterFormProps> = ({}) => {
 	}
 
 	return (
-		<section className=''>
+		<section className='text-slate-800 dark:text-slate-200'>
 			<div className='flex flex-col items-center justify-center lg:min-h-full lg:flex-row '>
 				<aside className='min-h-full lg:w-1/2'>
 					<img
@@ -59,12 +59,7 @@ const RegisterForm: FC<RegisterFormProps> = ({}) => {
 					aria-label='Main'
 					className='flex items-center justify-center px-8 py-8 sm:px-12 lg:col-span-7 lg:px-16 lg:py-12 xl:col-span-6'>
 					<div className='max-w-xl lg:max-w-2xl'>
-						<h1 className='mt-6 text-2xl font-bold text-gray-900 sm:text-3xl md:text-4xl'>Sign Up </h1>
-
-						<p className='mt-4 leading-relaxed text-gray-500'>
-							Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eligendi nam dolorum aliquam,
-							quibusdam aperiam voluptatum.
-						</p>
+						<h1 className='mt-6 text-2xl font-semibold sm:text-3xl md:text-4xl'>Sign Up </h1>
 
 						<form
 							onSubmit={handleSubmit}
@@ -72,7 +67,7 @@ const RegisterForm: FC<RegisterFormProps> = ({}) => {
 							<div className='col-span-6 sm:col-span-3'>
 								<label
 									htmlFor='FirstName'
-									className='block text-sm font-medium text-gray-700'>
+									className='block text-sm font-medium'>
 									First Name
 								</label>
 
@@ -82,14 +77,14 @@ const RegisterForm: FC<RegisterFormProps> = ({}) => {
 									type='text'
 									id='FirstName'
 									name='firstName'
-									className='mt-1 w-full rounded-md border-gray-200 bg-white p-2 text-xl text-gray-700 shadow-sm '
+									className='mt-1 w-full rounded-md border-gray-200 bg-white p-2 text-xl shadow ring-slate-100 dark:bg-slate-700 dark:outline-none dark:focus:ring-2 '
 								/>
 							</div>
 
 							<div className='col-span-6 sm:col-span-3'>
 								<label
 									htmlFor='LastName'
-									className='block text-sm font-medium text-gray-700'>
+									className='block text-sm font-medium'>
 									Last Name
 								</label>
 
@@ -99,14 +94,14 @@ const RegisterForm: FC<RegisterFormProps> = ({}) => {
 									type='text'
 									id='LastName'
 									name='lastName'
-									className='mt-1 w-full rounded-md border-gray-200 bg-white p-2 text-xl text-gray-700 shadow-sm'
+									className='mt-1 w-full rounded-md border-gray-200 bg-white p-2 text-xl shadow ring-slate-100 dark:bg-slate-700 dark:outline-none dark:focus:ring-2'
 								/>
 							</div>
 
 							<div className='col-span-6'>
 								<label
 									htmlFor='Email'
-									className='block text-sm font-medium text-gray-700'>
+									className='block text-sm font-medium'>
 									Email
 								</label>
 
@@ -116,14 +111,14 @@ const RegisterForm: FC<RegisterFormProps> = ({}) => {
 									type='email'
 									id='Email'
 									name='email'
-									className='mt-1 w-full rounded-md border-gray-200 bg-white p-2 text-xl text-gray-700 shadow-sm'
+									className='mt-1 w-full rounded-md border-gray-200 bg-white p-2 text-xl shadow ring-slate-100 dark:bg-slate-700 dark:outline-none dark:focus:ring-2'
 								/>
 							</div>
 
 							<div className='col-span-6 sm:col-span-3'>
 								<label
 									htmlFor='Password'
-									className='block text-sm font-medium text-gray-700'>
+									className='block text-sm font-medium'>
 									Password
 								</label>
 
@@ -133,14 +128,14 @@ const RegisterForm: FC<RegisterFormProps> = ({}) => {
 									type='password'
 									id='Password'
 									name='password'
-									className='mt-1 w-full rounded-md border-gray-200 bg-white p-2 text-xl text-gray-700 shadow-sm'
+									className='mt-1 w-full rounded-md border-gray-200 bg-white p-2 text-xl shadow ring-slate-100 dark:bg-slate-700 dark:outline-none dark:focus:ring-2'
 								/>
 							</div>
 
 							<div className='col-span-6 sm:col-span-3'>
 								<label
 									htmlFor='PasswordConfirmation'
-									className='block text-sm font-medium text-gray-700'>
+									className='block text-sm font-medium'>
 									Confirm Password
 								</label>
 
@@ -150,43 +145,43 @@ const RegisterForm: FC<RegisterFormProps> = ({}) => {
 									type='password'
 									id='PasswordConfirmation'
 									name='password_confirmation'
-									className='mt-1 w-full rounded-md border-gray-200 bg-white p-2 text-xl text-gray-700 shadow-sm'
+									className='mt-1 w-full rounded-md border-gray-200 bg-white p-2 text-xl shadow ring-slate-100 dark:bg-slate-700 dark:outline-none dark:focus:ring-2'
 								/>
 							</div>
 
-							<div className='col-span-6'>
-								<p className='text-sm text-gray-500'>
+							<div className='col-span-6 '>
+								<p className='text-sm'>
 									By creating an account, you agree to our {''}
 									<Link
 										to='#'
-										className='font-semibold text-gray-700'>
+										className='font-semibold'>
 										terms and conditions {''}
 									</Link>
 									and {''}
 									<Link
 										to='#'
-										className='font-semibold text-gray-700'>
+										className='font-semibold'>
 										privacy policy
 									</Link>
 									.
 								</p>
 							</div>
 
-							<div className='col-span-6 sm:flex sm:items-center sm:gap-4'>
-								<button className='inline-block shrink-0 rounded-md border border-black bg-black px-12 py-3 text-sm font-medium text-white transition hover:bg-transparent hover:text-black focus:outline-none active:scale-95'>
-									{loading ? 'Loading...' : 'Sign Up'}
+							<div className='col-span-6 sm:flex sm:items-center sm:gap-4  '>
+								<button className='inline-block shrink-0 rounded-md border border-black bg-black  px-12 py-3 text-sm font-medium text-white transition hover:bg-transparent  focus:outline-none active:scale-95 dark:bg-white dark:text-black'>
+									Sign Up
 								</button>
 
-								<p className='mt-4 text-sm text-gray-500 sm:mt-0'>
+								<p className='mt-4 text-sm text-slate-500 dark:text-slate-400 sm:mt-0'>
 									Already have an account? {''}
 									<Link
 										to='/auth/login'
-										className='font-semibold text-gray-700'>
+										className='font-semibold text-slate-950 dark:text-slate-100'>
 										Log in
 									</Link>
 								</p>
 							</div>
-							<div>{error && error}</div>
+							{error && error}
 						</form>
 					</div>
 				</main>

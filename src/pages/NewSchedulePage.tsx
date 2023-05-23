@@ -11,7 +11,7 @@ const NewSchedulePage: FC<NewSchedulePageProps> = ({}) => {
 	return (
 		<div
 			onClick={() => (isOpen ? setIsOpen(false) : null)}
-			className='flex h-screen w-screen flex-col items-center pb-16 pt-24'>
+			className='flex h-full w-screen flex-col items-center pb-16 pt-24'>
 			<ScheduleMaker
 				id={id}
 				name={name}

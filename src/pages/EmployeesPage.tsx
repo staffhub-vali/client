@@ -2,6 +2,7 @@ import axios from 'axios'
 import Logout from '../Auth'
 import { FC, useEffect, useState } from 'react'
 import EmployeeList from '../components/EmployeeList'
+import { Link } from 'react-router-dom'
 
 interface EmployeesPageProps {}
 
@@ -9,6 +10,7 @@ const headings = ['Name', 'Email', 'Phone']
 
 const EmployeesPage: FC<EmployeesPageProps> = ({}) => {
 	const [data, setData] = useState([])
+
 	useEffect(() => {
 		fetchEmployees()
 	}, [])
@@ -36,6 +38,11 @@ const EmployeesPage: FC<EmployeesPageProps> = ({}) => {
 				data={data}
 				headings={headings}
 			/>
+			<Link
+				className='mt-8 rounded bg-black px-8 py-2 text-2xl text-white active:scale-95 dark:bg-white dark:text-black '
+				to={'/employees/new'}>
+				New <i className='fa-solid fa-user-plus'></i>
+			</Link>
 		</div>
 	)
 }

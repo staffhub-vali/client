@@ -1,11 +1,12 @@
 import axios from 'axios'
 import { FC, useState } from 'react'
-import { Link } from 'react-router-dom'
 import Logout from '../Auth'
+import { Loader2 } from 'lucide-react'
 
 interface NewEmployeeFormProps {}
 
 const NewEmployeeForm: FC<NewEmployeeFormProps> = ({}) => {
+	const [isLoading, setIsLoading] = useState<boolean>(false)
 	const [name, setName] = useState<string>('')
 	const [phone, setPhone] = useState<string>('')
 	const [email, setEmail] = useState<string>('')
@@ -13,7 +14,7 @@ const NewEmployeeForm: FC<NewEmployeeFormProps> = ({}) => {
 	const handleSubmit = async (e: React.FormEvent) => {
 		try {
 			e.preventDefault()
-
+			setIsLoading(true)
 			const token = localStorage.getItem('token')
 
 			const response = await axios.post(
@@ -29,15 +30,16 @@ const NewEmployeeForm: FC<NewEmployeeFormProps> = ({}) => {
 					},
 				},
 			)
-
+			setIsLoading(false)
 			setEmail('')
 			setName('')
 			setPhone('')
-			console.log(response.data)
+			console.log(response.data.message)
 		} catch (error: any) {
 			if (error.response.status === 401) {
 				Logout()
 			}
+			setIsLoading(false)
 			console.log(error.response.data.message)
 		}
 	}
@@ -107,8 +109,8 @@ const NewEmployeeForm: FC<NewEmployeeFormProps> = ({}) => {
 							</div>
 
 							<div className='flex flex-grow-0 flex-col sm:items-center sm:gap-6'>
-								<button className='inline-block shrink-0 rounded-md border border-black bg-black px-12 py-3 text-sm font-medium text-white transition hover:bg-transparent hover:text-black focus:outline-none active:scale-95 dark:bg-white dark:text-black'>
-									Add Employee
+								<button className='inline-block w-40 shrink-0 rounded-md border border-black bg-black py-3 text-sm font-medium text-white transition  focus:outline-none active:scale-95 dark:bg-white dark:text-black'>
+									{isLoading ? <Loader2 className='mx-auto animate-spin' /> : 'Submit'}
 								</button>
 							</div>
 						</form>

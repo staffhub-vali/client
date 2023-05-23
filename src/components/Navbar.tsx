@@ -28,7 +28,7 @@ const Navbar: FC<NavbarProps> = ({}) => {
 	}, [])
 
 	return (
-		<div className=' fixed m-0 w-full select-none font-semibold'>
+		<div className=' fixed m-0 w-full select-none font-bold'>
 			<div className='bg-white shadow dark:bg-slate-900 dark:text-slate-100'>
 				<div className='container mx-auto px-4'>
 					<div className='flex justify-around py-4 text-center'>

@@ -5,6 +5,7 @@ import Calendar from 'react-calendar'
 import 'react-calendar/dist/Calendar.css'
 import TableSchedule from './TableSchedule'
 import ScheduleEmployeeSearch from './ScheduleEmployeeSearch'
+import { Loader2 } from 'lucide-react'
 
 interface ScheduleMakerProps {
 	id: string
@@ -16,6 +17,7 @@ interface ScheduleMakerProps {
 }
 
 const ScheduleMaker: FC<ScheduleMakerProps> = ({ id, name, setName, setId, isOpen, setIsOpen }) => {
+	const [isLoading, setIsLoading] = useState<boolean>(false)
 	const [data, setData] = useState<any[]>([])
 	const [value, setValue] = useState(new Date())
 	const currentDate = new Date()
@@ -27,6 +29,7 @@ const ScheduleMaker: FC<ScheduleMakerProps> = ({ id, name, setName, setId, isOpe
 	const createSchedule = async () => {
 		const token = localStorage.getItem('token')
 		try {
+			setIsLoading(true)
 			const response = await axios.post(
 				`http://localhost:8080/v1/roster`,
 				{
@@ -39,8 +42,10 @@ const ScheduleMaker: FC<ScheduleMakerProps> = ({ id, name, setName, setId, isOpe
 					},
 				},
 			)
-			return response.data
+			setIsLoading(false)
+			console.log(response.data.message)
 		} catch (error: any) {
+			setIsLoading(false)
 			if (error.response.status === 401) {
 				Logout()
 			}
@@ -90,9 +95,9 @@ const ScheduleMaker: FC<ScheduleMakerProps> = ({ id, name, setName, setId, isOpe
 					onChange={handleMonthChange}
 				/>
 				<button
-					className='rounded bg-black px-8 py-2 text-2xl text-white active:scale-95 dark:bg-white dark:text-black '
+					className='w-40 rounded bg-black py-2 text-2xl text-white active:scale-95 dark:bg-white dark:text-black '
 					onClick={createSchedule}>
-					Submit
+					{isLoading ? <Loader2 className='mx-auto h-8 w-8 animate-spin' /> : 'Submit'}
 				</button>
 			</div>
 			<div className='col-span-6 col-start-6'>

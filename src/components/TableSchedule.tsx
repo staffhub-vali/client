@@ -15,7 +15,7 @@ const TableSchedule: FC<TableScheduleProps> = ({ data, setData }) => {
 	const headings = ['Date', 'Start', 'End', 'Total']
 
 	return (
-		<div className='h-96 w-full overflow-x-hidden rounded border-2 text-slate-800 dark:border-slate-500 dark:text-slate-300'>
+		<div className='h-[33rem] w-full overflow-x-hidden rounded border-2 text-slate-800 dark:border-slate-500 dark:text-slate-300'>
 			<table className='w-full divide-y-2 divide-slate-200 overflow-scroll rounded bg-white text-center text-lg shadow-md dark:divide-slate-600  dark:bg-slate-800'>
 				<thead>
 					<tr className='sticky top-0 bg-white dark:bg-slate-800 '>

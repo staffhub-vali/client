@@ -2,9 +2,12 @@ import { FC, useState } from 'react'
 import { Link } from 'react-router-dom'
 import axios from 'axios'
 
-interface LoginFormProps {}
+interface LoginFormProps {
+	message: string | null
+}
 
-const LoginForm: FC<LoginFormProps> = ({}) => {
+const LoginForm: FC<LoginFormProps> = ({ message }) => {
+	const [error, setError] = useState<string>('')
 	const [email, setEmail] = useState<string>('')
 	const [password, setPassword] = useState<string>('')
 
@@ -19,13 +22,14 @@ const LoginForm: FC<LoginFormProps> = ({}) => {
 			localStorage.setItem('user', JSON.stringify(response.data.user))
 			localStorage.setItem('token', response.data.token)
 			window.location.href = '/'
-		} catch (error) {
+		} catch (error: any) {
+			setError(error.response.data.message)
 			console.log(error)
 		}
 	}
 
 	return (
-		<section className='text-slate-800 dark:text-slate-200'>
+		<section className='pt-12 text-slate-800 dark:text-slate-200'>
 			<div className='flex flex-col items-center justify-center lg:min-h-full lg:flex-row '>
 				<main
 					aria-label='Main'
@@ -88,6 +92,16 @@ const LoginForm: FC<LoginFormProps> = ({}) => {
 					</div>
 				</main>
 			</div>
+			{message && (
+				<div className='absolute left-0 right-0 top-28 mx-auto w-fit rounded bg-green-500 px-4 py-2 text-2xl text-white'>
+					{message}
+				</div>
+			)}
+			{error && (
+				<div className='absolute left-0 right-0 top-28 mx-auto w-fit rounded bg-red-400 px-4 py-2 text-2xl text-white'>
+					{error}
+				</div>
+			)}
 		</section>
 	)
 }

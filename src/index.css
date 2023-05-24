@@ -13,6 +13,15 @@
 	-webkit-text-size-adjust: 100%;
 }
 
+* {
+	-webkit-user-drag: none;
+	-moz-user-select: none;
+	-webkit-user-drag: none;
+	-webkit-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+}
+
 body {
 	cursor: default;
 	margin: 0;

@@ -52,7 +52,7 @@ const ScheduleEmployeeSearch: FC<ScheduleEmployeeSearchProps> = ({
 	}
 
 	return (
-		<div className='relative mt-0.5 w-96 text-lg '>
+		<div className='relative mt-0.5 w-full text-lg '>
 			<div
 				className='group w-full cursor-pointer rounded bg-white shadow hover:shadow-md '
 				onClick={() => setIsOpen(!isOpen)}>
@@ -65,11 +65,11 @@ const ScheduleEmployeeSearch: FC<ScheduleEmployeeSearchProps> = ({
 				/>
 			</div>
 			{isOpen && (
-				<div className='absolute left-0 top-10 z-10 mt-4 w-full rounded bg-white shadow dark:bg-slate-700 dark:text-slate-300'>
+				<div className='absolute left-0 top-10 z-10 mt-4 w-full rounded bg-white shadow dark:bg-slate-600 dark:text-slate-300'>
 					<ul>
 						{data.map((employee) => (
 							<li
-								className='cursor-pointer px-4 py-3 hover:bg-gray-200 dark:hover:bg-slate-600'
+								className='cursor-pointer px-4 py-3 hover:bg-gray-100 dark:hover:bg-slate-500'
 								key={employee._id}
 								onClick={() => handleSelect(employee.name, employee._id)}>
 								{employee.name}

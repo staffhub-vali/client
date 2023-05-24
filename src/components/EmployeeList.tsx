@@ -1,6 +1,5 @@
 import { FC } from 'react'
 import TableEmployees from './TableEmployees'
-import { Link } from 'react-router-dom'
 
 interface EmployeeListProps {
 	data: Record<string, string>[]
@@ -9,11 +8,19 @@ interface EmployeeListProps {
 
 const EmployeeList: FC<EmployeeListProps> = ({ data, headings }) => {
 	return (
-		<TableEmployees
-			data={data}
-			searchBar={true}
-			headings={headings}
-		/>
+		<>
+			{data.length > 0 ? (
+				<TableEmployees
+					data={data}
+					searchBar={true}
+					headings={headings}
+				/>
+			) : (
+				<h2 className='pt-24 text-3xl text-slate-800 dark:text-slate-300'>
+					You do not have any employees currently, add them below:
+				</h2>
+			)}
+		</>
 	)
 }
 

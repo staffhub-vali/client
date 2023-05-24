@@ -1,11 +1,15 @@
-import Logout from '../Auth'
 import axios from 'axios'
-import { Link } from 'react-router-dom'
+import Logout from '../Auth'
+import { Loader2 } from 'lucide-react'
+import { Link, useNavigate } from 'react-router-dom'
 import { FC, useEffect, useState } from 'react'
 
-interface RegisterFormProps {}
+interface RegisterFormProps {
+	setMessage: React.Dispatch<React.SetStateAction<null>>
+}
 
-const RegisterForm: FC<RegisterFormProps> = ({}) => {
+const RegisterForm: FC<RegisterFormProps> = ({ setMessage }) => {
+	const navigate = useNavigate()
 	const [name, setName] = useState('')
 	const [firstName, setFirstName] = useState('')
 	const [lastName, setLastName] = useState('')
@@ -21,16 +25,18 @@ const RegisterForm: FC<RegisterFormProps> = ({}) => {
 
 	const handleSubmit = async (e: React.FormEvent) => {
 		e.preventDefault()
-
+		setLoading(true)
 		if (password === confirmPassword) {
 			try {
-				setLoading(true)
-				await axios.post('http://localhost:8080/v1/auth/register', {
+				const response = await axios.post('http://localhost:8080/v1/auth/register', {
 					name: name,
 					email: email,
 					password: password,
 				})
+
+				setMessage(response.data.message)
 				setLoading(false)
+				navigate('/auth/login')
 			} catch (error: any) {
 				if (error.response.status === 401) {
 					Logout()
@@ -41,6 +47,7 @@ const RegisterForm: FC<RegisterFormProps> = ({}) => {
 				setError('An error occurred. Please try again later.')
 			}
 		} else {
+			setLoading(false)
 			setError('Passwords do not match.')
 		}
 	}
@@ -168,8 +175,8 @@ const RegisterForm: FC<RegisterFormProps> = ({}) => {
 							</div>
 
 							<div className='col-span-6 sm:flex sm:items-center sm:gap-4  '>
-								<button className='inline-block shrink-0 rounded-md border border-black bg-black  px-12 py-3 text-sm font-medium text-white transition hover:bg-transparent  focus:outline-none active:scale-95 dark:bg-white dark:text-black'>
-									Sign Up
+								<button className='inline-block h-12 w-32 shrink-0 rounded-md border  border-black bg-black text-sm font-medium text-white transition focus:outline-none active:scale-95 dark:bg-white dark:text-black'>
+									{loading ? <Loader2 className='mx-auto animate-spin' /> : 'Sign Up'}
 								</button>
 
 								<p className='mt-4 text-sm text-slate-500 dark:text-slate-400 sm:mt-0'>
@@ -181,11 +188,15 @@ const RegisterForm: FC<RegisterFormProps> = ({}) => {
 									</Link>
 								</p>
 							</div>
-							{error && error}
 						</form>
 					</div>
 				</main>
 			</div>
+			{error && (
+				<div className='absolute bottom-16 left-0 right-0 mx-auto w-fit rounded bg-red-400 px-4 py-2 text-3xl text-white'>
+					{error}
+				</div>
+			)}
 		</section>
 	)
 }

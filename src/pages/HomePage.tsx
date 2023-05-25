@@ -1,7 +1,6 @@
 import axios from 'axios'
 import { FC, useEffect } from 'react'
 import Button from '../components/ui/Button'
-import { buttonVariants } from '../components/ui/Button'
 
 interface HomePageProps {}
 
@@ -26,19 +25,6 @@ const HomePage: FC<HomePageProps> = ({}) => {
 	return (
 		<div className='flex flex-col items-center justify-center space-y-4 pt-24'>
 			<h1 className='mb-12 text-4xl dark:text-slate-300'>Home</h1>
-			<Button
-				variant='default'
-				size='default'>
-				Default
-			</Button>
-
-			<Button
-				variant='outline'
-				size='lg'>
-				Outline
-			</Button>
-
-			<Button variant='link'>Link</Button>
 		</div>
 	)
 }

@@ -39,7 +39,7 @@ const EmployeesPage: FC<EmployeesPageProps> = ({}) => {
 				headings={headings}
 			/>
 			<Link
-				className='mt-8 rounded bg-black px-8 py-2 text-2xl text-white active:scale-95 dark:bg-white dark:text-black '
+				className='mt-8 rounded bg-black px-6 py-2 text-2xl text-white active:scale-95 dark:bg-white dark:text-black '
 				to={'/employees/new'}>
 				New <i className='fa-solid fa-user-plus'></i>
 			</Link>

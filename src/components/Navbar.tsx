@@ -1,7 +1,8 @@
 import Logout from '../Auth'
-import { FC, useEffect, useState } from 'react'
 import { themeSwitch } from '../main'
 import { Link } from 'react-router-dom'
+import { buttonVariants } from './ui/Button'
+import { FC, useEffect, useState } from 'react'
 
 interface NavbarProps {}
 
@@ -32,10 +33,10 @@ const Navbar: FC<NavbarProps> = ({}) => {
 			<div className='bg-white shadow dark:bg-slate-900 dark:text-slate-100'>
 				<div className='container mx-auto px-4'>
 					<div className='flex justify-around py-4 text-center'>
-						<div className='flex w-40 items-center justify-between'>
+						<div className='flex w-36 items-center justify-between'>
 							<Link
 								to='/'
-								className='px-2 text-gray-800 hover:text-black active:scale-95'>
+								className={`${buttonVariants({ variant: 'link' })} scale-110 `}>
 								<img
 									src='../logo.svg'
 									alt='logo'
@@ -49,7 +50,7 @@ const Navbar: FC<NavbarProps> = ({}) => {
 										setMoon(true)
 										setSun(false)
 									}}
-									className='moon-icon scale-110 cursor-pointer items-center p-2 font-medium text-slate-800 dark:text-slate-100'>
+									className={`${buttonVariants({ variant: 'link' })} scale-110 cursor-pointer `}>
 									<svg
 										className='h-5 w-5'
 										xmlns='http://www.w3.org/2000/svg'
@@ -66,7 +67,7 @@ const Navbar: FC<NavbarProps> = ({}) => {
 										setMoon(false)
 										setSun(true)
 									}}
-									className='sun-icon scale-110 cursor-pointer items-center p-2 font-medium text-slate-800 dark:text-slate-100'>
+									className={`${buttonVariants({ variant: 'link' })} scale-110 cursor-pointer `}>
 									<svg
 										className='h-5 w-5'
 										xmlns='http://www.w3.org/2000/svg'
@@ -81,13 +82,13 @@ const Navbar: FC<NavbarProps> = ({}) => {
 							<div className='flex items-center space-x-4'>
 								<Link
 									to='/employees'
-									className='w-36 py-2 active:scale-95'>
+									className={`${buttonVariants({ variant: 'link' })} w-36`}>
 									Employees
 								</Link>
 
 								<Link
 									to='/schedules/new'
-									className='w-36 py-2 active:scale-95'>
+									className={`${buttonVariants({ variant: 'link' })} w-36`}>
 									New Schedule
 								</Link>
 							</div>
@@ -96,13 +97,13 @@ const Navbar: FC<NavbarProps> = ({}) => {
 						{user ? (
 							<Link
 								to={'/dashboard'}
-								className=' w-40 shrink-0 rounded border border-black bg-black py-2     text-white transition duration-150 hover:bg-transparent hover:text-black focus:outline-none active:scale-95 dark:border-white dark:bg-white dark:text-black dark:hover:bg-transparent dark:hover:text-white '>
+								className={`${buttonVariants({ variant: 'outline' })} w-36`}>
 								Dashboard
 							</Link>
 						) : (
 							<Link
 								to='/auth/login'
-								className=' w-44 py-2 active:scale-95'>
+								className={`${buttonVariants({ variant: 'outline' })} w-36`}>
 								Sign In
 							</Link>
 						)}

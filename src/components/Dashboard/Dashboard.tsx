@@ -1,6 +1,6 @@
 import { FC } from 'react'
 import TableDashboard from './TableDashboard'
-import { WorkDay } from '../pages/DashboardPage'
+import { WorkDay } from '../../pages/DashboardPage'
 
 interface DashboardProps {
 	data: WorkDay[]

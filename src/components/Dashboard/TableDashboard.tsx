@@ -1,6 +1,6 @@
 import { FC, useState, useEffect } from 'react'
-import { WorkDay } from '../pages/DashboardPage'
-import { formatDate } from '../utils/DateFormatting'
+import { WorkDay } from '../../pages/DashboardPage'
+import { formatDate } from '../../utils/DateFormatting'
 import { useNavigate } from 'react-router-dom'
 
 interface TableDashboardProps {

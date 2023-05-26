@@ -1,7 +1,7 @@
 import axios from 'axios'
 import Logout from '../Auth'
 import { FC, useEffect, useState } from 'react'
-import EmployeeList from '../components/EmployeeList'
+import EmployeeList from '../components/Employee/EmployeeList'
 import { Link } from 'react-router-dom'
 
 interface EmployeesPageProps {}

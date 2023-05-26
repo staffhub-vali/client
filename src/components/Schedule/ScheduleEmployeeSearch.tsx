@@ -1,6 +1,6 @@
 import axios from 'axios'
 import { FC, useEffect, useState } from 'react'
-import Logout from '../Auth'
+import Logout from '../../Auth'
 
 interface Employee {
 	_id: string

@@ -1,6 +1,6 @@
 import { FC } from 'react'
 
-interface ProfileProps {
+interface EmployeeProfileProps {
 	employee: {
 		name: string
 		email: string
@@ -8,7 +8,7 @@ interface ProfileProps {
 	}
 }
 
-const Profile: FC<ProfileProps> = ({ employee }) => {
+const EmployeeProfile: FC<EmployeeProfileProps> = ({ employee }) => {
 	return (
 		<div className='w-2/3 text-center text-slate-800 dark:text-slate-300'>
 			<h1 className='mb-6 text-4xl font-medium'>{employee?.name}</h1>
@@ -16,4 +16,4 @@ const Profile: FC<ProfileProps> = ({ employee }) => {
 	)
 }
 
-export default Profile
+export default EmployeeProfile

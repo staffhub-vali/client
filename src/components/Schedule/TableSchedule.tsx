@@ -1,5 +1,5 @@
 import { FC } from 'react'
-import { formatDate, formatTime } from '../utils/DateFormatting'
+import { formatDate, formatTime } from '../../utils/DateFormatting'
 
 interface TableScheduleProps {
 	data: Array<{

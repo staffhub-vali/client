@@ -1,6 +1,6 @@
 import axios from 'axios'
 import { FC, useState } from 'react'
-import Logout from '../Auth'
+import Logout from '../../Auth'
 import { Loader2 } from 'lucide-react'
 
 interface NewEmployeeFormProps {}

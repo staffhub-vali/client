@@ -1,5 +1,5 @@
 import axios from 'axios'
-import Logout from '../Auth'
+import Logout from '../../Auth'
 import { Loader2 } from 'lucide-react'
 import { Link, useNavigate } from 'react-router-dom'
 import { FC, useEffect, useState } from 'react'

@@ -1,5 +1,5 @@
 import axios from 'axios'
-import Logout from '../Auth'
+import Logout from '../../Auth'
 import { FC, useState } from 'react'
 import Calendar from 'react-calendar'
 import 'react-calendar/dist/Calendar.css'

@@ -1,6 +1,6 @@
 import axios from 'axios'
 import Logout from '../Auth'
-import Profile from '../components/Profile'
+import EmployeeProfile from '../components/Employee/EmployeeProfile'
 import { useParams } from 'react-router-dom'
 import { FC, useEffect, useState } from 'react'
 
@@ -33,7 +33,7 @@ const EmployeeProfilePage: FC<EmployeeProfilePageProps> = ({}) => {
 
 	return (
 		<div className='flex flex-col items-center pt-24'>
-			<Profile employee={employee} />
+			<EmployeeProfile employee={employee} />
 		</div>
 	)
 }

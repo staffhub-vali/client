@@ -1,6 +1,6 @@
 import axios from 'axios'
 import { FC, useEffect } from 'react'
-import Button from '../components/ui/Button'
+import Button from '../../components/ui/Button'
 
 interface HomePageProps {}
 

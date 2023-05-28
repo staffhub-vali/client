@@ -1,8 +1,8 @@
 import axios from 'axios'
 import Logout from '../../Auth'
-import { Loader2 } from 'lucide-react'
-import { Link, useNavigate } from 'react-router-dom'
+import Button from '../ui/Button'
 import { FC, useEffect, useState } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
 
 interface RegisterFormProps {
 	setMessage: React.Dispatch<React.SetStateAction<null>>
@@ -17,7 +17,7 @@ const RegisterForm: FC<RegisterFormProps> = ({ setMessage }) => {
 	const [password, setPassword] = useState('')
 	const [confirmPassword, setConfirmPassword] = useState('')
 	const [error, setError] = useState('')
-	const [loading, setLoading] = useState(false)
+	const [isLoading, setIsLoading] = useState(false)
 
 	useEffect(() => {
 		setName(`${firstName} ${lastName}`)
@@ -25,7 +25,7 @@ const RegisterForm: FC<RegisterFormProps> = ({ setMessage }) => {
 
 	const handleSubmit = async (e: React.FormEvent) => {
 		e.preventDefault()
-		setLoading(true)
+		setIsLoading(true)
 		if (password === confirmPassword) {
 			try {
 				const response = await axios.post('http://localhost:8080/v1/auth/register', {
@@ -35,7 +35,7 @@ const RegisterForm: FC<RegisterFormProps> = ({ setMessage }) => {
 				})
 
 				setMessage(response.data.message)
-				setLoading(false)
+				setIsLoading(false)
 				navigate('/auth/login')
 			} catch (error: any) {
 				if (error.response.status === 401) {
@@ -43,11 +43,11 @@ const RegisterForm: FC<RegisterFormProps> = ({ setMessage }) => {
 					console.error(error)
 				}
 				console.log(error)
-				setLoading(false)
+				setIsLoading(false)
 				setError('An error occurred. Please try again later.')
 			}
 		} else {
-			setLoading(false)
+			setIsLoading(false)
 			setError('Passwords do not match.')
 		}
 	}
@@ -175,9 +175,11 @@ const RegisterForm: FC<RegisterFormProps> = ({ setMessage }) => {
 							</div>
 
 							<div className='col-span-6 sm:flex sm:items-center sm:gap-4  '>
-								<button className='inline-block h-12 w-32 shrink-0 rounded-md border  border-black bg-black text-sm font-medium text-white transition focus:outline-none active:scale-95 dark:bg-white dark:text-black'>
-									{loading ? <Loader2 className='mx-auto animate-spin' /> : 'Sign Up'}
-								</button>
+								<Button
+									isLoading={isLoading}
+									size={'lg'}>
+									Sign Up
+								</Button>
 
 								<p className='mt-4 text-sm text-slate-500 dark:text-slate-400 sm:mt-0'>
 									Already have an account? {''}

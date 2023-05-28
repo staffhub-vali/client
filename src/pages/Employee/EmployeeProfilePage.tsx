@@ -1,6 +1,6 @@
 import axios from 'axios'
-import Logout from '../Auth'
-import EmployeeProfile from '../components/Employee/EmployeeProfile'
+import Logout from '../../Auth'
+import EmployeeProfile from '../../components/Employee/EmployeeProfile'
 import { useParams } from 'react-router-dom'
 import { FC, useEffect, useState } from 'react'
 

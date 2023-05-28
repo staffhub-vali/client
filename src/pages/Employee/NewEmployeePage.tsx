@@ -1,5 +1,5 @@
 import { FC } from 'react'
-import NewEmployeeForm from '../components/Employee/NewEmployeeForm'
+import NewEmployeeForm from '../../components/Employee/NewEmployeeForm'
 
 interface NewEmployeePageProps {}
 

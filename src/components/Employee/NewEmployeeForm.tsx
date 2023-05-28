@@ -1,15 +1,17 @@
 import axios from 'axios'
-import { FC, useState } from 'react'
 import Logout from '../../Auth'
-import { Loader2 } from 'lucide-react'
+import Input from '../ui/Input'
+import Label from '../ui/Label'
+import Button from '../ui/Button'
+import { FC, useState } from 'react'
 
 interface NewEmployeeFormProps {}
 
 const NewEmployeeForm: FC<NewEmployeeFormProps> = ({}) => {
-	const [isLoading, setIsLoading] = useState<boolean>(false)
 	const [name, setName] = useState<string>('')
 	const [phone, setPhone] = useState<string>('')
 	const [email, setEmail] = useState<string>('')
+	const [isLoading, setIsLoading] = useState<boolean>(false)
 
 	const handleSubmit = async (e: React.FormEvent) => {
 		try {
@@ -45,7 +47,7 @@ const NewEmployeeForm: FC<NewEmployeeFormProps> = ({}) => {
 	}
 
 	return (
-		<section className=''>
+		<>
 			<div className='flex flex-col items-center justify-center lg:min-h-full lg:flex-row '>
 				<main
 					aria-label='Main'
@@ -55,45 +57,43 @@ const NewEmployeeForm: FC<NewEmployeeFormProps> = ({}) => {
 							onSubmit={handleSubmit}
 							className='center flex w-96 flex-col gap-6'>
 							<div className='flex-grow'>
-								<label
-									htmlFor='name'
-									className='block text-center text-sm font-medium text-slate-700 dark:text-slate-300'>
+								<Label
+									className='text-center'
+									id='name'>
 									Name
-								</label>
+								</Label>
 
-								<input
-									onChange={(e) => setName(e.target.value)}
-									value={name}
-									type='text'
+								<Input
 									id='name'
-									name='name'
-									className='mt-1 w-full rounded-md border-slate-200 bg-white p-2 text-xl text-slate-700 shadow-sm dark:bg-slate-700 dark:text-slate-200 dark:outline-slate-700'
-								/>
-							</div>
-							<div className='flex-grow'>
-								<label
-									htmlFor='Email'
-									className='block text-center text-sm font-medium text-slate-700 dark:text-slate-300'>
-									Email
-								</label>
-
-								<input
-									onChange={(e) => setEmail(e.target.value)}
-									value={email}
 									type='text'
-									id='email'
-									name='email'
-									className='mt-1 w-full rounded-md border-slate-200 bg-white p-2 text-xl text-slate-700 shadow-sm dark:bg-slate-700 dark:text-slate-200 dark:outline-slate-700'
+									name='name'
+									value={name}
+									onChange={(e) => setName(e.target.value)}
 								/>
 							</div>
 							<div className='flex-grow'>
-								<label
-									htmlFor='phone'
-									className='block text-center text-sm font-medium text-slate-700 dark:text-slate-300'>
-									Phone
-								</label>
+								<Label
+									className='text-center'
+									id='email'>
+									Email
+								</Label>
 
-								<input
+								<Input
+									id='email'
+									type='text'
+									name='email'
+									value={email}
+									onChange={(e) => setEmail(e.target.value)}
+								/>
+							</div>
+							<div className='flex-grow'>
+								<Label
+									className='text-center'
+									id='phone'>
+									Phone
+								</Label>
+
+								<Input
 									onChange={(e) => {
 										const re = /^[0-9+\s]*$/
 										if (re.test(e.target.value)) {
@@ -104,20 +104,21 @@ const NewEmployeeForm: FC<NewEmployeeFormProps> = ({}) => {
 									type='text'
 									id='phone'
 									name='phone'
-									className='mt-1 w-full rounded-md border-slate-200 bg-white p-2 text-xl text-slate-700 shadow-sm dark:bg-slate-700 dark:text-slate-200 dark:outline-slate-700'
 								/>
 							</div>
 
 							<div className='flex flex-grow-0 flex-col sm:items-center sm:gap-6'>
-								<button className='inline-block w-40 shrink-0 rounded-md border border-black bg-black py-3 text-sm font-medium text-white transition  focus:outline-none active:scale-95 dark:bg-white dark:text-black'>
-									{isLoading ? <Loader2 className='mx-auto animate-spin' /> : 'Submit'}
-								</button>
+								<Button
+									size={'lg'}
+									isLoading={isLoading}>
+									Submit
+								</Button>
 							</div>
 						</form>
 					</div>
 				</main>
 			</div>
-		</section>
+		</>
 	)
 }
 

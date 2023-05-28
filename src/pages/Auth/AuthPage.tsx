@@ -1,7 +1,7 @@
 import { FC, useState } from 'react'
 import { useLocation } from 'react-router-dom'
-import LoginForm from '../components/Auth/LoginForm'
-import RegisterForm from '../components/Auth/RegisterForm'
+import LoginForm from '../../components/Auth/LoginForm'
+import RegisterForm from '../../components/Auth/RegisterForm'
 
 interface AuthPageProps {}
 

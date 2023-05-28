@@ -1,6 +1,7 @@
+import axios from 'axios'
+import Button from '../ui/Button'
 import { FC, useState } from 'react'
 import { Link } from 'react-router-dom'
-import axios from 'axios'
 
 interface LoginFormProps {
 	message: string | null
@@ -10,19 +11,22 @@ const LoginForm: FC<LoginFormProps> = ({ message }) => {
 	const [error, setError] = useState<string>('')
 	const [email, setEmail] = useState<string>('')
 	const [password, setPassword] = useState<string>('')
+	const [isLoading, setIsLoading] = useState<boolean>(false)
 
 	const handleSubmit = async (e: React.FormEvent) => {
 		e.preventDefault()
+		setIsLoading(true)
 		try {
 			const response = await axios.post('http://localhost:8080/v1/auth/login', {
 				email: email,
 				password: password,
 			})
-
+			setIsLoading(false)
 			localStorage.setItem('user', JSON.stringify(response.data.user))
 			localStorage.setItem('token', response.data.token)
 			window.location.href = '/'
 		} catch (error: any) {
+			setIsLoading(false)
 			setError(error.response.data.message)
 			console.log(error)
 		}
@@ -75,9 +79,11 @@ const LoginForm: FC<LoginFormProps> = ({ message }) => {
 							</div>
 
 							<div className='flex flex-grow-0 flex-col sm:items-center sm:gap-6'>
-								<button className='inline-block shrink-0 rounded-md border border-black bg-black px-12 py-3 text-sm font-medium text-white transition hover:bg-transparent hover:text-black focus:outline-none active:scale-95 dark:bg-white dark:text-black'>
+								<Button
+									isLoading={isLoading}
+									size={'lg'}>
 									Sign In
-								</button>
+								</Button>
 
 								<p className='mt-4 text-center text-sm text-slate-500 dark:text-slate-400 sm:mt-0'>
 									Don't have an account? {''}

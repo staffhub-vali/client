@@ -1,5 +1,5 @@
 import { FC, useState, useEffect } from 'react'
-import { WorkDay } from '../../pages/DashboardPage'
+import { WorkDay } from '../../pages/Dashboard/DashboardPage'
 import { formatDate } from '../../utils/DateFormatting'
 import { useNavigate } from 'react-router-dom'
 

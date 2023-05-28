@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { FC, useEffect, useState } from 'react'
-import Dashboard from '../components/Dashboard/Dashboard'
-import Logout from '../Auth'
+import Dashboard from '../../components/Dashboard/Dashboard'
+import Logout from '../../Auth'
 import { Link } from 'react-router-dom'
 
 interface DashboardPageProps {}

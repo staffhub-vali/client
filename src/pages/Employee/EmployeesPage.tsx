@@ -3,6 +3,8 @@ import Logout from '../../Auth'
 import { FC, useEffect, useState } from 'react'
 import EmployeeList from '../../components/Employee/EmployeeList'
 import { Link } from 'react-router-dom'
+import { buttonVariants } from '../../components/ui/Button'
+import { UserPlus } from 'lucide-react'
 
 interface EmployeesPageProps {}
 
@@ -39,9 +41,9 @@ const EmployeesPage: FC<EmployeesPageProps> = ({}) => {
 				headings={headings}
 			/>
 			<Link
-				className='mt-8 rounded bg-black px-6 py-2 text-2xl text-white active:scale-95 dark:bg-white dark:text-black '
+				className={`${buttonVariants({ variant: 'default', size: 'lg' })} mt-8`}
 				to={'/employees/new'}>
-				New <i className='fa-solid fa-user-plus'></i>
+				New Employee {<UserPlus className='ml-2' />}
 			</Link>
 		</div>
 	)

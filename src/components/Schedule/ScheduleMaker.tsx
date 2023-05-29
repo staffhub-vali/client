@@ -1,11 +1,16 @@
 import axios from 'axios'
 import Logout from '../../Auth'
+import Button from '../ui/Button'
 import { FC, useState } from 'react'
 import Calendar from 'react-calendar'
 import 'react-calendar/dist/Calendar.css'
 import TableSchedule from './TableSchedule'
 import ScheduleEmployeeSearch from './ScheduleEmployeeSearch'
-import { Loader2 } from 'lucide-react'
+
+interface Employee {
+	_id: string
+	name: string
+}
 
 interface ScheduleMakerProps {
 	id: string
@@ -14,13 +19,23 @@ interface ScheduleMakerProps {
 	setName: (name: string) => void
 	isOpen: boolean
 	setIsOpen: (isOpen: boolean) => void
+	employees: Employee[]
 }
 
-const ScheduleMaker: FC<ScheduleMakerProps> = ({ id, name, setName, setId, isOpen, setIsOpen }) => {
-	const [isLoading, setIsLoading] = useState<boolean>(false)
+const ScheduleMaker: FC<ScheduleMakerProps> = ({
+	id,
+	name,
+	employees,
+	setName,
+	setId,
+	isOpen,
+	setIsOpen,
+}) => {
+	const currentDate = new Date()
 	const [data, setData] = useState<any[]>([])
 	const [value, setValue] = useState(new Date())
-	const currentDate = new Date()
+	const [isLoading, setIsLoading] = useState<boolean>(false)
+
 	const [month, setMonth] = useState(() => {
 		const month = currentDate.getMonth() + 2
 		return `${currentDate.getFullYear()}-${month < 10 ? `0${month}` : month}`
@@ -85,20 +100,22 @@ const ScheduleMaker: FC<ScheduleMakerProps> = ({ id, name, setName, setId, isOpe
 					setId={setId}
 					isOpen={isOpen}
 					setName={setName}
+					employees={employees}
 					setIsOpen={setIsOpen}
 				/>
 				<Calendar
 					value={value}
+					view={'month'}
 					maxDetail='year'
 					className='h-fit'
-					view={'month'}
 					onChange={handleMonthChange}
 				/>
-				<button
-					className='w-40 rounded bg-black py-2 text-2xl text-white active:scale-95 dark:bg-white dark:text-black '
+				<Button
+					size={'lg'}
+					isLoading={isLoading}
 					onClick={createSchedule}>
-					{isLoading ? <Loader2 className='mx-auto h-8 w-8 animate-spin' /> : 'Submit'}
-				</button>
+					Submit
+				</Button>
 			</div>
 			<div className='col-span-6 col-start-6'>
 				{data.length > 0 ? (

@@ -22,6 +22,11 @@ const TableDashboard: FC<TableDashboardProps> = ({ data }) => {
 	const currentData = data.slice(startIndex, endIndex)
 
 	const handlePageChange = (pageNumber: number) => {
+		if (pageNumber < 1) {
+			pageNumber = 1
+		} else if (pageNumber > 5) {
+			pageNumber = 5
+		}
 		setCurrentPage(pageNumber)
 	}
 

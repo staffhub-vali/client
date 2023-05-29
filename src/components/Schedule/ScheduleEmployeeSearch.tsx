@@ -1,6 +1,4 @@
-import axios from 'axios'
-import { FC, useEffect, useState } from 'react'
-import Logout from '../../Auth'
+import { FC } from 'react'
 
 interface Employee {
 	_id: string
@@ -10,6 +8,7 @@ interface Employee {
 interface ScheduleEmployeeSearchProps {
 	name: string
 	isOpen: boolean
+	employees: Employee[]
 	setId: (id: string) => void
 	setName: (value: string) => void
 	setIsOpen: (isOpen: boolean) => void
@@ -21,34 +20,12 @@ const ScheduleEmployeeSearch: FC<ScheduleEmployeeSearchProps> = ({
 	setIsOpen,
 	name,
 	setName,
+	employees,
 }) => {
-	const [data, setData] = useState<Employee[]>([])
-
-	useEffect(() => {
-		fetchEmployees()
-	}, [])
-
 	const handleSelect = (option: string, id: string) => {
 		setIsOpen(false)
 		setName(option)
 		setId(id)
-	}
-
-	const fetchEmployees = async () => {
-		try {
-			const token = localStorage.getItem('token')
-			const response = await axios.get<Employee[]>('http://localhost:8080/v1/employees', {
-				headers: {
-					Authorization: `Bearer ${token}`,
-				},
-			})
-			setData(response.data)
-		} catch (error: any) {
-			console.log(error)
-			if (error.response.status === 401) {
-				Logout()
-			}
-		}
 	}
 
 	return (
@@ -67,7 +44,7 @@ const ScheduleEmployeeSearch: FC<ScheduleEmployeeSearchProps> = ({
 			{isOpen && (
 				<div className='absolute left-0 top-10 z-10 mt-4 w-full rounded bg-white shadow dark:bg-slate-600 dark:text-slate-300'>
 					<ul>
-						{data.map((employee) => (
+						{employees.map((employee) => (
 							<li
 								className='cursor-pointer px-4 py-3 hover:bg-gray-100 dark:hover:bg-slate-500'
 								key={employee._id}

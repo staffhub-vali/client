@@ -3,6 +3,8 @@ import { FC, useEffect, useState } from 'react'
 import Dashboard from '../../components/Dashboard/Dashboard'
 import Logout from '../../Auth'
 import { Link } from 'react-router-dom'
+import { buttonVariants } from '../../components/ui/Button'
+import { CalendarPlus } from 'lucide-react'
 
 interface DashboardPageProps {}
 
@@ -35,6 +37,7 @@ const DashboardPage: FC<DashboardPageProps> = ({}) => {
 				},
 			})
 			setData(response.data)
+			console.log(response.data)
 		} catch (error: any) {
 			if (error.response.status === 401) {
 				Logout()
@@ -48,15 +51,15 @@ const DashboardPage: FC<DashboardPageProps> = ({}) => {
 			{data.length > 0 ? (
 				<Dashboard data={data} />
 			) : (
-				<div className='w-1/2 '>
+				<div className='w-1/2 text-center'>
 					<h2 className='pt-4 text-3xl text-slate-800 dark:text-slate-300'>
 						You did not create any schedules for your employees yet.
 					</h2>
-					<p className='pt-4 text-3xl text-slate-800 dark:text-slate-300'>Click below to create one.</p>
+					<p className='mb-6 pt-4 text-3xl text-slate-800 dark:text-slate-300'>Click below to create one.</p>
 					<Link
-						to='/schedules/new'
-						className='mt-16 w-1/3 rounded bg-black py-2 text-center text-4xl text-white active:scale-95 dark:bg-white dark:text-black'>
-						New Schedule
+						className={`${buttonVariants({ variant: 'default', size: 'lg' })} mt-4`}
+						to='/schedules/new'>
+						New Schedule {<CalendarPlus className='ml-2' />}
 					</Link>
 				</div>
 			)}

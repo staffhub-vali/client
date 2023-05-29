@@ -32,13 +32,28 @@ const TableDashboard: FC<TableDashboardProps> = ({ data }) => {
 
 	useEffect(() => {
 		// Find the index of the current date in the data array
+		const currentDate = new Date().setHours(0, 0, 0, 0) / 1000 // Get the current date at midnight in Unix timestamp format
 		const currentDateIndex = data.findIndex((item) => {
-			const currentDate = new Date().setHours(0, 0, 0, 0) / 1000 // Get the current date at midnight in Unix timestamp format
 			return item.date <= currentDate && item.date + 86400 > currentDate // Compare if the item's date falls within the current date
 		})
 
-		// Calculate the initial page based on the current date's position
-		const initialPage = Math.floor(currentDateIndex / itemsPerPage) + 1
+		let initialPage
+		if (currentDateIndex !== -1) {
+			// Calculate the initial page based on the current date's position
+			initialPage = Math.floor(currentDateIndex / itemsPerPage) + 1
+		} else {
+			// If no matching date found, find the closest date to the current date
+			const closestDateIndex = data.reduce((closestIndex, item, index) => {
+				const closestDate = data[closestIndex].date
+				const currentDateDiff = Math.abs(item.date - currentDate)
+				const closestDateDiff = Math.abs(closestDate - currentDate)
+				if (currentDateDiff < closestDateDiff) {
+					return index
+				}
+				return closestIndex
+			}, 0)
+			initialPage = Math.floor(closestDateIndex / itemsPerPage) + 1
+		}
 
 		setCurrentPage(initialPage)
 	}, [data, itemsPerPage])

@@ -8,6 +8,15 @@ export function formatDate(unixTimestamp: number) {
 	return `${day}/${month}/${year}`
 }
 
+export function formatDay(unixTimestamp: number) {
+	const date = new Date(unixTimestamp * 1000)
+
+	const weekdays = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
+	const weekday = weekdays[date.getDay()]
+
+	return `${weekday}`
+}
+
 export function formatTime(unixTimestamp: number) {
 	if (unixTimestamp) {
 		const date = new Date(unixTimestamp * 1000)

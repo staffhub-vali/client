@@ -2,6 +2,10 @@ import axios from 'axios'
 import Button from '../ui/Button'
 import { FC, useState } from 'react'
 import { Link } from 'react-router-dom'
+import Input from '../ui/Input'
+import Label from '../ui/Label'
+import Heading from '../ui/Heading'
+import Paragraph from '../ui/Paragraph'
 
 interface LoginFormProps {
 	message: string | null
@@ -33,81 +37,61 @@ const LoginForm: FC<LoginFormProps> = ({ message }) => {
 	}
 
 	return (
-		<section className='pt-12 text-slate-800 dark:text-slate-200'>
-			<div className='flex flex-col items-center justify-center lg:min-h-full lg:flex-row '>
-				<main
-					aria-label='Main'
-					className='flex items-center justify-center px-8 py-8 sm:px-12 lg:col-span-7 lg:px-16 lg:py-12 xl:col-span-6'>
-					<div className='max-w-xl lg:max-w-2xl'>
-						<h1 className='mt-6 text-center text-2xl font-semibold  sm:text-3xl md:text-4xl'>Sign In</h1>
+		<section className='flex justify-center pt-24 text-slate-800 dark:text-slate-200'>
+			<main className='flex flex-col items-center'>
+				<Heading size={'sm'}>Sign In</Heading>
+				<form
+					onSubmit={handleSubmit}
+					className='mt-12 flex w-96 flex-col'>
+					<Label id='Email'>Email</Label>
+					<Input
+						size='lg'
+						onChange={(e) => setEmail(e.target.value)}
+						value={email}
+						type='email'
+						id='Email'
+						name='email'
+					/>
+					<Label id='Password'>Password</Label>
+					<Input
+						size='lg'
+						onChange={(e) => setPassword(e.target.value)}
+						value={password}
+						type='password'
+						id='Password'
+						name='password'
+					/>
 
-						<form
-							onSubmit={handleSubmit}
-							className='center mt-8 flex w-96 flex-col gap-6'>
-							<div className='flex-grow'>
-								<label
-									htmlFor='Email'
-									className='block text-center text-sm font-medium'>
-									Email
-								</label>
+					<Button
+						className='mx-auto mb-3 w-fit'
+						isLoading={isLoading}
+						size={'lg'}>
+						Sign In
+					</Button>
 
-								<input
-									onChange={(e) => setEmail(e.target.value)}
-									value={email}
-									type='email'
-									id='Email'
-									name='email'
-									className='mt-1 w-full rounded-md border-gray-200 bg-white p-2 text-xl shadow ring-white dark:bg-slate-700 dark:text-slate-300 dark:outline-none dark:focus:ring-2'
-								/>
-							</div>
+					<Paragraph
+						size={'sm'}
+						className=' text-slate-500 dark:text-slate-400 '>
+						Don't have an account? {''}
+						<Link
+							to='/auth/register'
+							className='font-semibold text-slate-700 dark:text-slate-300'>
+							Sign Up
+						</Link>
+					</Paragraph>
+				</form>
 
-							<div className='flex-grow'>
-								<label
-									htmlFor='Password'
-									className='block text-center text-sm font-medium '>
-									Password
-								</label>
-
-								<input
-									onChange={(e) => setPassword(e.target.value)}
-									value={password}
-									type='password'
-									id='Password'
-									name='password'
-									className='mt-1 w-full rounded-md bg-white p-2 text-xl text-slate-700 shadow ring-white dark:bg-slate-700 dark:text-slate-300 dark:outline-none dark:focus:ring-2'
-								/>
-							</div>
-
-							<div className='flex flex-grow-0 flex-col sm:items-center sm:gap-6'>
-								<Button
-									isLoading={isLoading}
-									size={'lg'}>
-									Sign In
-								</Button>
-
-								<p className='mt-4 text-center text-sm text-slate-500 dark:text-slate-400 sm:mt-0'>
-									Don't have an account? {''}
-									<Link
-										to='/auth/register'
-										className='font-semibold text-slate-700 dark:text-slate-300'>
-										Sign Up
-									</Link>
-								</p>
-							</div>
-						</form>
+				{message && (
+					<div className='absolute left-0 right-0 top-28 mx-auto w-fit rounded bg-green-500 px-4 py-2 text-2xl text-white'>
+						{message}
 					</div>
-				</main>
-			</div>
-			{message && (
-				<div className='absolute left-0 right-0 top-28 mx-auto w-fit rounded bg-green-500 px-4 py-2 text-2xl text-white'>
-					{message}
-				</div>
-			)}
-			{error && (
-				<div className='absolute left-0 right-0 top-28 mx-auto w-fit rounded bg-red-400 px-4 py-2 text-2xl text-white'>
-					{error}
-				</div>
-			)}
+				)}
+				{error && (
+					<div className='absolute left-0 right-0 top-28 mx-auto w-fit rounded bg-red-400 px-4 py-2 text-2xl text-white'>
+						{error}
+					</div>
+				)}
+			</main>
 		</section>
 	)
 }

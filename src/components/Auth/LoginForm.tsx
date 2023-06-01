@@ -7,6 +7,7 @@ import Label from '../ui/Label'
 import Heading from '../ui/Heading'
 import Paragraph from '../ui/Paragraph'
 import Container from '../ui/Container'
+import Notification from '../ui/Notification'
 
 interface LoginFormProps {
 	message: string | null
@@ -90,14 +91,20 @@ const LoginForm: FC<LoginFormProps> = ({ message }) => {
 			</form>
 
 			{message && (
-				<div className='absolute left-0 right-0 top-28 mx-auto w-fit rounded bg-green-500 px-4 py-2 text-2xl text-white'>
+				<Notification
+					size={'lg'}
+					variant={'success'}
+					className='absolute left-0 right-0 top-28'>
 					{message}
-				</div>
+				</Notification>
 			)}
 			{error && (
-				<div className='absolute left-0 right-0 top-28 mx-auto w-fit rounded bg-red-400 px-4 py-2 text-2xl text-white'>
+				<Notification
+					size={'lg'}
+					variant={'error'}
+					className='absolute left-0 right-0 top-28 '>
 					{error}
-				</div>
+				</Notification>
 			)}
 		</Container>
 	)

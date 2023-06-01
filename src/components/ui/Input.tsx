@@ -27,11 +27,12 @@ interface InputProps extends InputHTMLAttributes<HTMLInputElement>, VariantProps
 	name: string
 	type: string
 	value: string
+	placeholder?: string
 	onChange: (e: ChangeEvent<HTMLInputElement>) => void
 }
 
 const Input: FC<InputProps> = forwardRef<HTMLInputElement, InputProps>(
-	({ className, variant, size, value, type, id, name, onChange }, ref) => {
+	({ className, variant, size, value, type, id, name, placeholder, onChange }, ref) => {
 		return (
 			<input
 				id={id}
@@ -40,6 +41,7 @@ const Input: FC<InputProps> = forwardRef<HTMLInputElement, InputProps>(
 				type={type}
 				value={value}
 				onChange={onChange}
+				placeholder={placeholder}
 				className={cn(inputVariants({ variant, size, className }))}
 			/>
 		)

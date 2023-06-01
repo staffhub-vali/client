@@ -5,7 +5,7 @@ import { cn } from '../../utils/helpers'
 interface HeadingProps extends HTMLAttributes<HTMLHeadingElement>, VariantProps<typeof headingVariants> {}
 
 const headingVariants = cva(
-	'text-slate-800 dark:text-slate-200 text-center lg:text-left font-extrabold leading-tight tracking-tight',
+	'text-slate-800 dark:text-slate-200 font-extrabold leading-tight tracking-tight',
 	{
 		variants: {
 			size: {

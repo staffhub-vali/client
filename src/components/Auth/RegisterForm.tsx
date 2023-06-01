@@ -3,6 +3,11 @@ import Logout from '../../Auth'
 import Button from '../ui/Button'
 import { FC, useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
+import Container from '../ui/Container'
+import Heading from '../ui/Heading'
+import Label from '../ui/Label'
+import Input from '../ui/Input'
+import Paragraph from '../ui/Paragraph'
 
 interface RegisterFormProps {
 	setMessage: React.Dispatch<React.SetStateAction<null>>
@@ -53,7 +58,7 @@ const RegisterForm: FC<RegisterFormProps> = ({ setMessage }) => {
 	}
 
 	return (
-		<section className='text-slate-800 dark:text-slate-200'>
+		<Container size='lg'>
 			<div className='flex flex-col items-center justify-center lg:min-h-full lg:flex-row '>
 				<aside className='min-h-full lg:w-1/2'>
 					<img
@@ -66,129 +71,113 @@ const RegisterForm: FC<RegisterFormProps> = ({ setMessage }) => {
 					aria-label='Main'
 					className='flex items-center justify-center px-8 py-8 sm:px-12 lg:col-span-7 lg:px-16 lg:py-12 xl:col-span-6'>
 					<div className='max-w-xl lg:max-w-2xl'>
-						<h1 className='mt-6 text-2xl font-semibold sm:text-3xl md:text-4xl'>Sign Up </h1>
+						<Heading size='sm'>Sign Up </Heading>
 
 						<form
 							onSubmit={handleSubmit}
-							className='mt-8 grid grid-cols-6 gap-6'>
+							className='mt-8 grid grid-cols-6 gap-2'>
 							<div className='col-span-6 sm:col-span-3'>
-								<label
-									htmlFor='FirstName'
-									className='block text-sm font-medium'>
-									First Name
-								</label>
+								<Label id='FirstName'>First Name</Label>
 
-								<input
+								<Input
+									size='lg'
 									value={firstName}
 									onChange={(e) => setFirstName(e.target.value)}
 									type='text'
 									id='FirstName'
 									name='firstName'
-									className='mt-1 w-full rounded-md border-gray-200 bg-white p-2 text-xl shadow ring-slate-100 dark:bg-slate-700 dark:outline-none dark:focus:ring-2 '
 								/>
 							</div>
 
 							<div className='col-span-6 sm:col-span-3'>
-								<label
-									htmlFor='LastName'
-									className='block text-sm font-medium'>
-									Last Name
-								</label>
+								<Label id='LastName'>Last Name</Label>
 
-								<input
+								<Input
+									size='lg'
 									value={lastName}
 									onChange={(e) => setLastName(e.target.value)}
 									type='text'
 									id='LastName'
 									name='lastName'
-									className='mt-1 w-full rounded-md border-gray-200 bg-white p-2 text-xl shadow ring-slate-100 dark:bg-slate-700 dark:outline-none dark:focus:ring-2'
 								/>
 							</div>
 
 							<div className='col-span-6'>
-								<label
-									htmlFor='Email'
-									className='block text-sm font-medium'>
-									Email
-								</label>
+								<Label id='Email'>Email</Label>
 
-								<input
+								<Input
+									size='lg'
 									value={email}
 									onChange={(e) => setEmail(e.target.value)}
 									type='email'
 									id='Email'
 									name='email'
-									className='mt-1 w-full rounded-md border-gray-200 bg-white p-2 text-xl shadow ring-slate-100 dark:bg-slate-700 dark:outline-none dark:focus:ring-2'
 								/>
 							</div>
 
 							<div className='col-span-6 sm:col-span-3'>
-								<label
-									htmlFor='Password'
-									className='block text-sm font-medium'>
-									Password
-								</label>
+								<Label id='Password'>Password</Label>
 
-								<input
+								<Input
+									size='lg'
 									value={password}
 									onChange={(e) => setPassword(e.target.value)}
 									type='password'
 									id='Password'
 									name='password'
-									className='mt-1 w-full rounded-md border-gray-200 bg-white p-2 text-xl shadow ring-slate-100 dark:bg-slate-700 dark:outline-none dark:focus:ring-2'
 								/>
 							</div>
 
 							<div className='col-span-6 sm:col-span-3'>
-								<label
-									htmlFor='PasswordConfirmation'
-									className='block text-sm font-medium'>
-									Confirm Password
-								</label>
+								<Label id='PasswordConfirmation'>Confirm Password</Label>
 
-								<input
+								<Input
+									size='lg'
 									value={confirmPassword}
 									onChange={(e) => setConfirmPassword(e.target.value)}
 									type='password'
 									id='PasswordConfirmation'
 									name='password_confirmation'
-									className='mt-1 w-full rounded-md border-gray-200 bg-white p-2 text-xl shadow ring-slate-100 dark:bg-slate-700 dark:outline-none dark:focus:ring-2'
 								/>
 							</div>
 
 							<div className='col-span-6 '>
-								<p className='text-sm'>
+								<Paragraph
+									size='sm'
+									className='text-slate-500 dark:text-slate-400'>
 									By creating an account, you agree to our {''}
 									<Link
 										to='#'
-										className='font-semibold'>
+										className='font-semibold text-slate-800 dark:text-slate-200'>
 										terms and conditions {''}
 									</Link>
 									and {''}
 									<Link
 										to='#'
-										className='font-semibold'>
+										className='font-semibold text-slate-800 dark:text-slate-200'>
 										privacy policy
 									</Link>
 									.
-								</p>
+								</Paragraph>
 							</div>
 
-							<div className='col-span-6 sm:flex sm:items-center sm:gap-4  '>
+							<div className='col-span-6 sm:flex sm:items-center sm:gap-4'>
 								<Button
 									isLoading={isLoading}
 									size={'lg'}>
 									Sign Up
 								</Button>
 
-								<p className='mt-4 text-sm text-slate-500 dark:text-slate-400 sm:mt-0'>
+								<Paragraph
+									size='sm'
+									className='mt-1 text-slate-500 dark:text-slate-400'>
 									Already have an account? {''}
 									<Link
 										to='/auth/login'
 										className='font-semibold text-slate-950 dark:text-slate-100'>
 										Log in
 									</Link>
-								</p>
+								</Paragraph>
 							</div>
 						</form>
 					</div>
@@ -199,7 +188,7 @@ const RegisterForm: FC<RegisterFormProps> = ({ setMessage }) => {
 					{error}
 				</div>
 			)}
-		</section>
+		</Container>
 	)
 }
 

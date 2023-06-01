@@ -1,5 +1,6 @@
 import { FC } from 'react'
 import TableEmployees from './TableEmployees'
+import Heading from '../ui/Heading'
 
 interface EmployeeListProps {
 	data: Record<string, string>[]
@@ -16,9 +17,14 @@ const EmployeeList: FC<EmployeeListProps> = ({ data, headings }) => {
 					headings={headings}
 				/>
 			) : (
-				<h2 className='pt-24 text-3xl text-slate-800 dark:text-slate-300'>
-					You do not have any employees currently, add them below:
-				</h2>
+				<>
+					<Heading
+						className='mb-2 mt-6'
+						size={'sm'}>
+						You do not currently have any employees on your account.
+					</Heading>
+					<Heading size={'xs'}>Click below if you wish to create an employee.</Heading>{' '}
+				</>
 			)}
 		</>
 	)

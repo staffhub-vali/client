@@ -5,6 +5,8 @@ import Logout from '../../Auth'
 import { buttonVariants } from '../../components/ui/Button'
 import { Link } from 'react-router-dom'
 import { UserPlus } from 'lucide-react'
+import Container from '../../components/ui/Container'
+import Heading from '../../components/ui/Heading'
 
 interface NewSchedulePageProps {}
 
@@ -36,9 +38,9 @@ const NewSchedulePage: FC<NewSchedulePageProps> = ({}) => {
 	}
 
 	return (
-		<div
-			onClick={() => (isOpen ? setIsOpen(false) : null)}
-			className='flex h-full w-screen flex-col items-center pb-16 pt-24'>
+		<Container
+			size={'lg'}
+			onClick={() => (isOpen ? setIsOpen(false) : null)}>
 			{employees.length > 0 ? (
 				<ScheduleMaker
 					id={id}
@@ -50,17 +52,21 @@ const NewSchedulePage: FC<NewSchedulePageProps> = ({}) => {
 					setIsOpen={setIsOpen}
 				/>
 			) : (
-				<div className='pt-24 text-center text-3xl text-slate-800 dark:text-slate-200'>
-					<h2>You do not currently have any employees on your account.</h2>
-					<h3>Click below if you wish to create an employee.</h3>
+				<>
+					<Heading
+						className='mb-2 mt-6'
+						size={'sm'}>
+						You do not currently have any employees on your account.
+					</Heading>
+					<Heading size={'xs'}>Click below if you wish to create an employee.</Heading>
 					<Link
 						to='/employees/new'
 						className={`${buttonVariants({ variant: 'default', size: 'lg' })} mt-6`}>
 						New Employee {<UserPlus className='ml-2' />}
 					</Link>
-				</div>
+				</>
 			)}
-		</div>
+		</Container>
 	)
 }
 

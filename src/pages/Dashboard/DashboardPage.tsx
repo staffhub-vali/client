@@ -5,6 +5,9 @@ import Logout from '../../Auth'
 import { Link } from 'react-router-dom'
 import { buttonVariants } from '../../components/ui/Button'
 import { CalendarPlus } from 'lucide-react'
+import Heading from '../../components/ui/Heading'
+import Paragraph from '../../components/ui/Paragraph'
+import Container from '../../components/ui/Container'
 
 interface DashboardPageProps {}
 
@@ -46,24 +49,25 @@ const DashboardPage: FC<DashboardPageProps> = ({}) => {
 	}
 
 	return (
-		<div className='mx-auto flex flex-col items-center pt-24'>
-			<h1 className='mb-8 text-4xl text-slate-800 dark:text-slate-300'>Dashboard</h1>
+		<Container size={'lg'}>
 			{data.length > 0 ? (
 				<Dashboard data={data} />
 			) : (
-				<div className='w-1/2 text-center'>
-					<h2 className='pt-4 text-3xl text-slate-800 dark:text-slate-300'>
-						You did not create any schedules for your employees yet.
-					</h2>
-					<p className='mb-6 pt-4 text-3xl text-slate-800 dark:text-slate-300'>Click below to create one.</p>
+				<>
+					<Heading
+						className='mb-2 mt-6'
+						size={'sm'}>
+						You do not currently have any created schedules.
+					</Heading>
+					<Heading size={'xs'}>Click below if you wish to create a schedule.</Heading>
 					<Link
-						className={`${buttonVariants({ variant: 'default', size: 'lg' })} mt-4`}
+						className={`${buttonVariants({ variant: 'default', size: 'lg' })} mt-6`}
 						to='/schedules/new'>
 						New Schedule {<CalendarPlus className='ml-2' />}
 					</Link>
-				</div>
+				</>
 			)}
-		</div>
+		</Container>
 	)
 }
 

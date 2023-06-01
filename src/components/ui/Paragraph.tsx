@@ -9,8 +9,10 @@ interface ParagraphProps
 const paragraphVariants = cva('text-slate-800 max-w-prose dark:text-slate-200 mb-2 text-center', {
 	variants: {
 		size: {
-			default: 'text-base sm:text-lg',
+			default: 'text-lg',
 			sm: 'text-sm',
+			lg: 'text-xl',
+			xl: 'text-2xl',
 		},
 	},
 	defaultVariants: { size: 'default' },

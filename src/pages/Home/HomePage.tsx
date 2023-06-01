@@ -1,6 +1,7 @@
 import axios from 'axios'
 import { FC, useEffect } from 'react'
-import Button from '../../components/ui/Button'
+import Container from '../../components/ui/Container'
+import Heading from '../../components/ui/Heading'
 
 interface HomePageProps {}
 
@@ -23,9 +24,13 @@ const HomePage: FC<HomePageProps> = ({}) => {
 	}, [])
 
 	return (
-		<div className='flex flex-col items-center justify-center space-y-4 pt-24'>
-			<h1 className='mb-12 text-4xl dark:text-slate-300'>Home</h1>
-		</div>
+		<Container>
+			<Heading
+				size={'sm'}
+				className='mt-6'>
+				Home
+			</Heading>
+		</Container>
 	)
 }
 

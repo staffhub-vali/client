@@ -1,14 +1,16 @@
 import { FC } from 'react'
 import NewEmployeeForm from '../../components/Employee/NewEmployeeForm'
+import Heading from '../../components/ui/Heading'
+import Container from '../../components/ui/Container'
 
 interface NewEmployeePageProps {}
 
 const NewEmployeePage: FC<NewEmployeePageProps> = ({}) => {
 	return (
-		<div className='flex flex-col items-center pt-24 dark:text-slate-300'>
-			<h1 className='mb-4 text-4xl'>Add an Employee </h1>
+		<Container>
+			<Heading size='sm'>Create an Employee</Heading>
 			<NewEmployeeForm />
-		</div>
+		</Container>
 	)
 }
 

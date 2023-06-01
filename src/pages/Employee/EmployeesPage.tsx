@@ -5,6 +5,7 @@ import EmployeeList from '../../components/Employee/EmployeeList'
 import { Link } from 'react-router-dom'
 import { buttonVariants } from '../../components/ui/Button'
 import { UserPlus } from 'lucide-react'
+import Container from '../../components/ui/Container'
 
 interface EmployeesPageProps {}
 
@@ -35,17 +36,17 @@ const EmployeesPage: FC<EmployeesPageProps> = ({}) => {
 	}
 
 	return (
-		<div className='flex flex-col items-center pt-24'>
+		<Container size={'lg'}>
 			<EmployeeList
 				data={data}
 				headings={headings}
 			/>
 			<Link
-				className={`${buttonVariants({ variant: 'default', size: 'lg' })} mt-8`}
+				className={`${buttonVariants({ variant: 'default', size: 'lg' })} mt-6`}
 				to={'/employees/new'}>
 				New Employee {<UserPlus className='ml-2' />}
 			</Link>
-		</div>
+		</Container>
 	)
 }
 

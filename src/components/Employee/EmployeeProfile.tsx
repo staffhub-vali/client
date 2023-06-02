@@ -1,4 +1,6 @@
 import { FC } from 'react'
+import Container from '../ui/Container'
+import Heading from '../ui/Heading'
 
 interface EmployeeProfileProps {
 	employee: {
@@ -10,9 +12,9 @@ interface EmployeeProfileProps {
 
 const EmployeeProfile: FC<EmployeeProfileProps> = ({ employee }) => {
 	return (
-		<div className='w-2/3 text-center text-slate-800 dark:text-slate-300'>
-			<h1 className='mb-6 text-4xl font-medium'>{employee?.name}</h1>
-		</div>
+		<Container>
+			<Heading size={'sm'}>{employee.name}</Heading>
+		</Container>
 	)
 }
 

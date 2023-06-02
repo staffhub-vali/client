@@ -1,6 +1,6 @@
 import { FC } from 'react'
-import TableEmployees from './TableEmployees'
 import Heading from '../ui/Heading'
+import EmployeesTable from './EmployeesTable'
 
 interface EmployeeListProps {
 	data: Record<string, string>[]
@@ -11,7 +11,7 @@ const EmployeeList: FC<EmployeeListProps> = ({ data, headings }) => {
 	return (
 		<>
 			{data.length > 0 ? (
-				<TableEmployees
+				<EmployeesTable
 					data={data}
 					searchBar={true}
 					headings={headings}

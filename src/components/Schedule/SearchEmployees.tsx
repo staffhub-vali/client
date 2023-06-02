@@ -1,11 +1,13 @@
 import { FC } from 'react'
+import Container from '../ui/Container'
+import Input from '../ui/Input'
 
 interface Employee {
 	_id: string
 	name: string
 }
 
-interface ScheduleEmployeeSearchProps {
+interface SearchEmployeesProps {
 	name: string
 	isOpen: boolean
 	employees: Employee[]
@@ -14,7 +16,7 @@ interface ScheduleEmployeeSearchProps {
 	setIsOpen: (isOpen: boolean) => void
 }
 
-const ScheduleEmployeeSearch: FC<ScheduleEmployeeSearchProps> = ({
+const SearchEmployees: FC<SearchEmployeesProps> = ({
 	setId,
 	isOpen,
 	setIsOpen,
@@ -29,16 +31,19 @@ const ScheduleEmployeeSearch: FC<ScheduleEmployeeSearchProps> = ({
 	}
 
 	return (
-		<div className='relative mt-0.5 w-full text-lg '>
+		<Container
+			className='relative p-0 text-lg'
+			size={'lg'}>
 			<div
-				className='group w-full cursor-pointer rounded bg-white shadow hover:shadow-md '
+				className='group w-full cursor-pointer rounded bg-white shadow hover:shadow-md dark:bg-slate-700 dark:shadow-slate-950 '
 				onClick={() => setIsOpen(!isOpen)}>
-				<input
+				<Input
 					readOnly
-					placeholder='Choose an Employee...'
 					type='text'
+					size={'lg'}
 					value={name}
-					className='group w-full cursor-pointer px-4 py-3  caret-transparent placeholder:text-slate-500 focus:outline-none dark:bg-slate-700 dark:text-slate-300 dark:placeholder-slate-400'
+					placeholder='Choose an Employee...'
+					className='group m-0 cursor-pointer caret-transparent focus:ring-0 dark:placeholder:text-slate-400'
 				/>
 			</div>
 			{isOpen && (
@@ -55,8 +60,8 @@ const ScheduleEmployeeSearch: FC<ScheduleEmployeeSearchProps> = ({
 					</ul>
 				</div>
 			)}
-		</div>
+		</Container>
 	)
 }
 
-export default ScheduleEmployeeSearch
+export default SearchEmployees

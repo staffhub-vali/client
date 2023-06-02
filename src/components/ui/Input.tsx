@@ -23,12 +23,12 @@ export const inputVariants = cva('rounded-md font-medium focus:outline-none shad
 
 interface InputProps extends InputHTMLAttributes<HTMLInputElement>, VariantProps<typeof inputVariants> {
 	size?: any
-	id: string
-	name: string
+	id?: string
+	name?: string
 	type: string
 	value: string
 	placeholder?: string
-	onChange: (e: ChangeEvent<HTMLInputElement>) => void
+	onChange?: (e: ChangeEvent<HTMLInputElement>) => void
 }
 
 const Input: FC<InputProps> = forwardRef<HTMLInputElement, InputProps>(

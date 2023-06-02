@@ -1,13 +1,15 @@
+import Input from '../ui/Input'
 import { FC, useState } from 'react'
+import Container from '../ui/Container'
 import { useNavigate } from 'react-router-dom'
 
-interface TableEmployeesProps {
+interface EmployeesTableProps {
 	headings: string[]
 	searchBar?: boolean
 	data: any
 }
 
-const TableEmployees: FC<TableEmployeesProps> = ({ headings, data, searchBar }) => {
+const EmployeesTable: FC<EmployeesTableProps> = ({ headings, data, searchBar }) => {
 	const [searchText, setSearchText] = useState<string>('')
 
 	const filteredData = data.filter((row: any) => {
@@ -20,20 +22,23 @@ const TableEmployees: FC<TableEmployeesProps> = ({ headings, data, searchBar }) 
 	const path = window.location.pathname.split('/').pop()
 
 	return (
-		<div className='w-2/3 overflow-x-auto text-slate-800 dark:text-slate-200'>
+		<Container
+			className='p-6'
+			size={'lg'}>
 			{searchBar && (
-				<div className='mx-auto mb-2 flex w-1/3 items-center rounded bg-white px-2 py-1 shadow dark:bg-slate-700'>
-					<i className='fa fa-search text-slate-500 dark:text-slate-400'></i>
-					<input
-						placeholder='Search...'
-						className='w-full p-2 text-lg  outline-none dark:bg-slate-700 dark:text-slate-400'
+				<div className='mx-auto mb-4 flex w-2/5 items-center rounded-lg bg-white px-2 py-1 focus-within:shadow dark:bg-slate-700'>
+					<i className='fa fa-search text-slate-500 dark:text-slate-400' />
+					<Input
 						type='text'
+						size={'lg'}
 						value={searchText}
+						placeholder='Search for employees...'
+						className='group mb-0 shadow-none focus:ring-0'
 						onChange={(event) => setSearchText(event.target.value)}
 					/>
 				</div>
 			)}
-			<table className='divide-slate200 min-w-full divide-y-2 border-2 bg-white text-center text-lg dark:divide-slate-600 dark:border-slate-600 dark:bg-slate-700'>
+			<table className='w-4/5 divide-y-2 divide-slate-200 border-2 bg-white text-center text-lg dark:divide-slate-600 dark:border-slate-600 dark:bg-slate-700'>
 				<thead>
 					<tr>
 						{headings.map((heading, index) => (
@@ -64,8 +69,8 @@ const TableEmployees: FC<TableEmployeesProps> = ({ headings, data, searchBar }) 
 					))}
 				</tbody>
 			</table>
-		</div>
+		</Container>
 	)
 }
 
-export default TableEmployees
+export default EmployeesTable

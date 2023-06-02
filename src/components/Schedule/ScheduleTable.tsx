@@ -1,7 +1,8 @@
 import { FC } from 'react'
 import { formatDate, formatTime } from '../../utils/DateFormatting'
+import Container from '../ui/Container'
 
-interface TableScheduleProps {
+interface ScheduleTableProps {
 	data: Array<{
 		date: number
 		start: number
@@ -11,11 +12,13 @@ interface TableScheduleProps {
 	setData: any
 }
 
-const TableSchedule: FC<TableScheduleProps> = ({ data, setData }) => {
+const ScheduleTable: FC<ScheduleTableProps> = ({ data, setData }) => {
 	const headings = ['Date', 'Start', 'End', 'Total']
 
 	return (
-		<div className='h-[33rem] w-full overflow-x-hidden rounded border-2 text-slate-800 dark:border-slate-500 dark:text-slate-300'>
+		<Container
+			size={'lg'}
+			className='h-[32rem] overflow-x-hidden rounded border-2 p-0 dark:border-slate-500'>
 			<table className='w-full divide-y-2 divide-slate-200 overflow-scroll rounded bg-white text-center text-lg shadow-md dark:divide-slate-600  dark:bg-slate-800'>
 				<thead>
 					<tr className='sticky top-0 bg-white dark:bg-slate-800 '>
@@ -93,8 +96,8 @@ const TableSchedule: FC<TableScheduleProps> = ({ data, setData }) => {
 					})}
 				</tbody>
 			</table>
-		</div>
+		</Container>
 	)
 }
 
-export default TableSchedule
+export default ScheduleTable

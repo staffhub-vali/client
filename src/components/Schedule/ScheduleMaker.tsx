@@ -1,11 +1,14 @@
 import axios from 'axios'
-import { Logout } from '../../Auth'
 import Button from '../ui/Button'
+import Heading from '../ui/Heading'
+import { Logout } from '../../Auth'
 import { FC, useState } from 'react'
 import Calendar from 'react-calendar'
+import Container from '../ui/Container'
 import 'react-calendar/dist/Calendar.css'
-import TableSchedule from './TableSchedule'
-import ScheduleEmployeeSearch from './ScheduleEmployeeSearch'
+import ScheduleTable from './ScheduleTable'
+import SearchEmployees from './SearchEmployees'
+import { formatMonth } from '../../utils/DateFormatting'
 
 interface Employee {
 	_id: string
@@ -93,9 +96,11 @@ const ScheduleMaker: FC<ScheduleMakerProps> = ({
 	}
 
 	return (
-		<div className='mt-4 grid h-full w-full grid-cols-12 '>
-			<div className='col-span-4 col-start-2 mt-12 flex w-fit flex-col items-center space-y-4'>
-				<ScheduleEmployeeSearch
+		<Container
+			size={'lg'}
+			className=' grid grid-cols-12 px-0 py-12 '>
+			<div className='col-span-4 col-start-2 mt-14 flex w-fit flex-col items-center space-y-4'>
+				<SearchEmployees
 					name={name}
 					setId={setId}
 					isOpen={isOpen}
@@ -121,24 +126,28 @@ const ScheduleMaker: FC<ScheduleMakerProps> = ({
 				{data.length > 0 ? (
 					<>
 						{name ? (
-							<h2 className='mb-2 text-center text-4xl text-slate-800 dark:text-slate-200'>{name}</h2>
+							<Heading
+								size={'sm'}
+								className='pb-2 text-center'>
+								{name} - {formatMonth(data[0].date)}
+							</Heading>
 						) : (
-							<h2 className='h-12'></h2>
+							<div className='h-12' />
 						)}
-						<TableSchedule
+						<ScheduleTable
 							data={data}
 							setData={setData}
 						/>
 					</>
 				) : (
-					<div className='col-span-6 col-start-6 pt-48'>
-						<p className='text-center text-4xl text-gray-500 dark:text-slate-400'>
+					<div className='col-span-6 col-start-6'>
+						<Heading className='font-normal text-slate-500 dark:text-slate-400'>
 							Pick a month and an employee
-						</p>
+						</Heading>
 					</div>
 				)}
 			</div>
-		</div>
+		</Container>
 	)
 }
 

@@ -17,6 +17,29 @@ export function formatDay(unixTimestamp: number) {
 	return `${weekday}`
 }
 
+export function formatMonth(unixTimestamp: number) {
+	const date = new Date(unixTimestamp * 1000)
+
+	const months = [
+		'January',
+		'February',
+		'March',
+		'April',
+		'May',
+		'June',
+		'July',
+		'August',
+		'September',
+		'October',
+		'November',
+		'December',
+	]
+	const month = months[date.getMonth()]
+	const year = date.getFullYear()
+
+	return `${month} ${year}`
+}
+
 export function formatTime(unixTimestamp: number) {
 	if (unixTimestamp) {
 		const date = new Date(unixTimestamp * 1000)

@@ -1,17 +1,17 @@
 import axios from 'axios'
 import { Logout } from '../../Auth'
 import { FC, useEffect, useState } from 'react'
-import EmployeeList from '../../components/Employee/EmployeeList'
+import EmployeesList from '../../components/Employee/EmployeesList'
 import { Link } from 'react-router-dom'
 import { buttonVariants } from '../../components/ui/Button'
 import { UserPlus } from 'lucide-react'
 import Container from '../../components/ui/Container'
 
-interface EmployeesPageProps {}
+interface EmployeesListPageProps {}
 
 const headings = ['Name', 'Email', 'Phone']
 
-const EmployeesPage: FC<EmployeesPageProps> = ({}) => {
+const EmployeesListPage: FC<EmployeesListPageProps> = ({}) => {
 	const [data, setData] = useState([])
 
 	useEffect(() => {
@@ -37,7 +37,7 @@ const EmployeesPage: FC<EmployeesPageProps> = ({}) => {
 
 	return (
 		<Container size={'lg'}>
-			<EmployeeList
+			<EmployeesList
 				data={data}
 				headings={headings}
 			/>
@@ -50,4 +50,4 @@ const EmployeesPage: FC<EmployeesPageProps> = ({}) => {
 	)
 }
 
-export default EmployeesPage
+export default EmployeesListPage

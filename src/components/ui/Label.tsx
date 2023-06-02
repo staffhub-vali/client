@@ -2,16 +2,16 @@ import { FC } from 'react'
 import { clsx } from 'clsx'
 
 interface LabelProps {
-	id: string
+	htmlFor: string
 	children: string
 	className?: string
 }
 
-const Label: FC<LabelProps> = ({ id, className, children }) => {
+const Label: FC<LabelProps> = ({ htmlFor, className, children }) => {
 	return (
 		<label
 			className={clsx('text-md mb-2 block font-medium text-slate-800 dark:text-slate-200', className)}
-			htmlFor={id}>
+			htmlFor={htmlFor}>
 			{children}
 		</label>
 	)

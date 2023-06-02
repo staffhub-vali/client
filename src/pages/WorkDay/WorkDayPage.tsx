@@ -2,6 +2,7 @@ import axios from 'axios'
 import { Logout } from '../../Auth'
 import { FC, useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
+import Container from '../../components/ui/Container'
 
 interface WorkDayPageProps {}
 
@@ -36,7 +37,7 @@ const WorkDayPage: FC<WorkDayPageProps> = ({}) => {
 	}
 
 	return (
-		<div className='flex flex-col items-center pt-24 text-slate-800 dark:text-slate-300'>
+		<Container>
 			<h1 className='mb-12 text-4xl'>
 				{workDay && new Date(workDay.date * 1000).toLocaleDateString('en-GB')}
 			</h1>
@@ -60,7 +61,7 @@ const WorkDayPage: FC<WorkDayPageProps> = ({}) => {
 					</div>
 				))}
 			</div>
-		</div>
+		</Container>
 	)
 }
 

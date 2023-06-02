@@ -3,12 +3,12 @@ import AuthPage from './pages/Auth/AuthPage'
 import HomePage from './pages/Home/HomePage'
 import PageNotFound from './pages/PageNotFound'
 import WorkDayPage from './pages/WorkDay/WorkDayPage'
-import EmployeesPage from './pages/Employee/EmployeesPage'
 import DashboardPage from './pages/Dashboard/DashboardPage'
 import NewEmployeePage from './pages/Employee/NewEmployeePage'
 import NewSchedulePage from './pages/Schedule/NewSchedulePage'
 import DocumentationPage from './pages/Docs/DocumentationPage'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import EmployeesListPage from './pages/Employee/EmployeesListPage'
 import EmployeeProfilePage from './pages/Employee/EmployeeProfilePage'
 
 function App() {
@@ -36,7 +36,7 @@ function App() {
 					/>
 					<Route
 						path='/employees'
-						element={<EmployeesPage />}
+						element={<EmployeesListPage />}
 					/>
 					<Route
 						path='/employees/:id'

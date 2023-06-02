@@ -1,12 +1,14 @@
 import { FC } from 'react'
+import Container from '../../components/ui/Container'
+import Heading from '../../components/ui/Heading'
 
 interface DocumentationPageProps {}
 
 const DocumentationPage: FC<DocumentationPageProps> = ({}) => {
 	return (
-		<div className='flex justify-center pt-24'>
-			<h1 className='text-4xl'>Documentation</h1>
-		</div>
+		<Container>
+			<Heading>Documentation</Heading>
+		</Container>
 	)
 }
 

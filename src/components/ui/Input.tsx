@@ -26,7 +26,7 @@ interface InputProps extends InputHTMLAttributes<HTMLInputElement>, VariantProps
 	id?: string
 	name?: string
 	type: string
-	value: string
+	value: any
 	placeholder?: string
 	onChange?: (e: ChangeEvent<HTMLInputElement>) => void
 }

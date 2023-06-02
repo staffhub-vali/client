@@ -3,11 +3,12 @@ import { Logout } from '../../Auth'
 import EmployeeProfile from '../../components/Employee/EmployeeProfile'
 import { useParams } from 'react-router-dom'
 import { FC, useEffect, useState } from 'react'
+import Container from '../../components/ui/Container'
 
 interface EmployeeProfilePageProps {}
 
 const EmployeeProfilePage: FC<EmployeeProfilePageProps> = ({}) => {
-	const [employee, setEmployee] = useState({ name: '', email: '', vacationDays: null })
+	const [employee, setEmployee] = useState(null)
 	const { id } = useParams()
 
 	useEffect(() => {
@@ -32,9 +33,11 @@ const EmployeeProfilePage: FC<EmployeeProfilePageProps> = ({}) => {
 	}
 
 	return (
-		<div className='flex flex-col items-center pt-24'>
-			<EmployeeProfile employee={employee} />
-		</div>
+		<Container
+			size={'lg'}
+			className='p-6'>
+			{employee && <EmployeeProfile data={employee} />}
+		</Container>
 	)
 }
 

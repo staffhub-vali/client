@@ -2,12 +2,12 @@ import { FC } from 'react'
 import Heading from '../ui/Heading'
 import EmployeesTable from './EmployeesTable'
 
-interface EmployeeListProps {
+interface EmployeesListProps {
 	data: Record<string, string>[]
 	headings: string[]
 }
 
-const EmployeeList: FC<EmployeeListProps> = ({ data, headings }) => {
+const EmployeesList: FC<EmployeesListProps> = ({ data, headings }) => {
 	return (
 		<>
 			{data.length > 0 ? (
@@ -30,4 +30,4 @@ const EmployeeList: FC<EmployeeListProps> = ({ data, headings }) => {
 	)
 }
 
-export default EmployeeList
+export default EmployeesList

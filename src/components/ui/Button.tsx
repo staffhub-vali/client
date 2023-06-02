@@ -4,7 +4,7 @@ import { ButtonHTMLAttributes, FC, forwardRef } from 'react'
 import { cva, VariantProps } from 'class-variance-authority'
 
 export const buttonVariants = cva(
-	'active:scale-95 inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus:outline-none disabled:opacity-50 disabled:pointer-events-none',
+	'active:scale-95 inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus:outline-none disabled:pointer-events-none',
 	{
 		variants: {
 			variant: {
@@ -17,9 +17,9 @@ export const buttonVariants = cva(
 				link: 'bg-transparent dark:bg-transparent text-slate-900 dark:text-slate-100',
 			},
 			size: {
-				default: 'h-10 py-2 px-4',
-				sm: 'h-9 px-2',
-				lg: 'h-11 px-8 text-2xl',
+				default: 'h-10 w-32 py-2 px-4',
+				sm: 'h-9 px-2 w-28',
+				lg: 'h-11 px-8 text-2xl w-48',
 			},
 		},
 		defaultVariants: {
@@ -41,7 +41,7 @@ const Button: FC<ButtonProps> = forwardRef<HTMLButtonElement, ButtonProps>(
 				ref={ref}
 				disabled={isLoading}
 				{...props}>
-				{isLoading ? <Loader2 className='mr-2 h-4 w-4 animate-spin' /> : null}
+				{isLoading ? <Loader2 className='mr-2 h-6 w-6 animate-spin' /> : null}
 				{children}
 			</button>
 		)

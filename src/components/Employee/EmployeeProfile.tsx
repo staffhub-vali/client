@@ -1,10 +1,10 @@
-import { FC, FormEvent, useState } from 'react'
-import Container from '../ui/Container'
-import Heading from '../ui/Heading'
-import Input from '../ui/Input'
-import Label from '../ui/Label'
 import axios from 'axios'
+import Modal from 'react-modal'
 import Button from '../ui/Button'
+import Heading from '../ui/Heading'
+import Paragraph from '../ui/Paragraph'
+import Container from '../ui/Container'
+import { Dispatch, FC, SetStateAction, useState } from 'react'
 
 interface EmployeeProfileProps {
 	data: {
@@ -15,103 +15,84 @@ interface EmployeeProfileProps {
 		sickDays: number | string
 		vacationDays: number | string
 	}
+
+	setEdit: Dispatch<SetStateAction<boolean>>
 }
 
-const EmployeeProfile: FC<EmployeeProfileProps> = ({ data }) => {
-	const { _id } = data
-	const [name, setName] = useState(data.name)
-	const [email, setEmail] = useState(data.email)
-	const [phone, setPhone] = useState(data.phone)
-	const [sickDays, setSickDays] = useState<any>(data.sickDays)
-	const [vacationDays, setVacationDays] = useState<any>(data.vacationDays)
-	const [isLoading, setIsLoading] = useState(false)
+const customStyles = {
+	content: {
+		top: '50%',
+		left: '50%',
+		right: 'auto',
+		bottom: 'auto',
+		marginRight: '-50%',
+		transform: 'translate(-50%, -50%)',
+	},
+}
 
-	const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
-		e.preventDefault()
+const EmployeeProfile: FC<EmployeeProfileProps> = ({ data, setEdit }) => {
+	const [isLoading, setIsLoading] = useState(false)
+	const [showModal, setShowModal] = useState(false)
+
+	const deleteEmployee = async () => {
+		const token = localStorage.getItem('token')
 		try {
 			setIsLoading(true)
-			const token = localStorage.getItem('token')
-			const { data } = await axios.put(
-				`http://localhost:8080/v1/employees/${_id}`,
-				{
-					id: _id,
-					name,
-					email,
-					phone,
-					sickDays,
-					vacationDays,
+			await axios.delete(`http://localhost:8080/v1/employees/${data._id}?id=${data._id}`, {
+				headers: {
+					Authorization: `Bearer ${token}`,
 				},
-				{
-					headers: {
-						Authorization: `Bearer ${token}`,
-					},
-				},
-			)
-			console.log(data)
-			setIsLoading(false)
+			})
+			setShowModal(false)
+			window.location.href = '/employees'
 		} catch (error) {
 			setIsLoading(false)
 			console.log(error)
 		}
 	}
-
 	return (
 		<Container>
 			<Heading size={'sm'}>{data.name}</Heading>
-			<form
-				onSubmit={handleSubmit}
-				className='mt-6 w-full'>
-				<Label htmlFor='name'>Name</Label>
-				<Input
-					size='lg'
-					type='text'
-					id='name'
-					name='name'
-					value={name}
-					onChange={(e) => setName(e.target.value)}
-				/>
-				<Label htmlFor='email'>Email</Label>
-				<Input
-					size='lg'
-					type='text'
-					id='email'
-					name='email'
-					value={email}
-					onChange={(e) => setEmail(e.target.value)}
-				/>
-				<Label htmlFor='phone'>Phone</Label>
-				<Input
-					size='lg'
-					type='text'
-					id='phone'
-					name='phone'
-					value={phone}
-					onChange={(e) => setPhone(e.target.value)}
-				/>
-				<Label htmlFor='sickDays'>Sick Days</Label>
-				<Input
-					size='lg'
-					type='text'
-					id='sickDays'
-					name='sickDays'
-					value={sickDays}
-					onChange={(e) => setSickDays(e.target.value)}
-				/>
-				<Label htmlFor='vacationDays'>Vacation Days</Label>
-				<Input
-					size='lg'
-					type='text'
-					id='vacationDays'
-					name='vacationDays'
-					value={vacationDays}
-					onChange={(e) => setVacationDays(e.target.value)}
-				/>
-				<Button
-					size={'lg'}
-					isLoading={isLoading}>
-					Submit
-				</Button>
-			</form>
+
+			<div className='mt-6 flex flex-col items-center'>
+				<Paragraph>Email: {data.email}</Paragraph>
+				<Paragraph>Phone: {data.phone}</Paragraph>
+				<Paragraph>Sick Days: {data.sickDays}</Paragraph>
+				<Paragraph>Vacation Days: {data.vacationDays}</Paragraph>
+
+				<div className='mt-2 flex space-x-2'>
+					<Button onClick={() => setEdit(true)}>Edit</Button>
+					<Button
+						onClick={() => setShowModal(true)}
+						variant={'danger'}>
+						Delete
+					</Button>
+				</div>
+
+				{showModal && (
+					<Modal
+						isOpen={showModal}
+						style={customStyles}
+						contentLabel='Delete Modal'>
+						Are you sure you want to delete this employee?
+						<div className='mt-2 flex justify-center space-x-2'>
+							<Button
+								className='my-2'
+								variant={'danger'}
+								isLoading={isLoading}
+								onClick={deleteEmployee}>
+								Yes
+							</Button>
+							<Button
+								className='my-2 bg-slate-400 text-white hover:bg-slate-400 dark:bg-slate-400 dark:text-white dark:hover:bg-slate-400'
+								isLoading={isLoading}
+								onClick={() => setShowModal(false)}>
+								Cancel
+							</Button>
+						</div>
+					</Modal>
+				)}
+			</div>
 		</Container>
 	)
 }

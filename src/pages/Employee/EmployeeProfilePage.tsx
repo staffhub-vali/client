@@ -1,19 +1,21 @@
 import axios from 'axios'
 import { Logout } from '../../Auth'
-import EmployeeProfile from '../../components/Employee/EmployeeProfile'
+import EditEmployee from '../../components/Employee/EditEmployee'
 import { useParams } from 'react-router-dom'
 import { FC, useEffect, useState } from 'react'
 import Container from '../../components/ui/Container'
+import EmployeeProfile from '../../components/Employee/EmployeeProfile'
 
 interface EmployeeProfilePageProps {}
 
 const EmployeeProfilePage: FC<EmployeeProfilePageProps> = ({}) => {
-	const [employee, setEmployee] = useState(null)
 	const { id } = useParams()
+	const [edit, setEdit] = useState(false)
+	const [employee, setEmployee] = useState(null)
 
 	useEffect(() => {
 		fetchProfile()
-	}, [])
+	}, [edit, employee])
 
 	const fetchProfile = async () => {
 		const token = localStorage.getItem('token')
@@ -36,7 +38,19 @@ const EmployeeProfilePage: FC<EmployeeProfilePageProps> = ({}) => {
 		<Container
 			size={'lg'}
 			className='p-6'>
-			{employee && <EmployeeProfile data={employee} />}
+			{employee && edit ? (
+				<EditEmployee
+					setEdit={setEdit}
+					data={employee}
+				/>
+			) : (
+				employee && (
+					<EmployeeProfile
+						data={employee}
+						setEdit={setEdit}
+					/>
+				)
+			)}
 		</Container>
 	)
 }

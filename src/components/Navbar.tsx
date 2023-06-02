@@ -1,4 +1,4 @@
-import Logout from '../Auth'
+import { Logout } from '../Auth'
 import { themeSwitch } from '../main'
 import { Link } from 'react-router-dom'
 import { buttonVariants } from './ui/Button'

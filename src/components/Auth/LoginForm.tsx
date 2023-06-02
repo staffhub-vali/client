@@ -1,12 +1,12 @@
-import axios from 'axios'
-import Button from '../ui/Button'
-import { FC, useState } from 'react'
-import { Link } from 'react-router-dom'
 import Input from '../ui/Input'
 import Label from '../ui/Label'
+import Button from '../ui/Button'
+import { Login } from '../../Auth'
 import Heading from '../ui/Heading'
+import { FC, useState } from 'react'
 import Paragraph from '../ui/Paragraph'
 import Container from '../ui/Container'
+import { Link } from 'react-router-dom'
 import Notification from '../ui/Notification'
 
 interface LoginFormProps {
@@ -23,18 +23,11 @@ const LoginForm: FC<LoginFormProps> = ({ message }) => {
 		e.preventDefault()
 		setIsLoading(true)
 		try {
-			const response = await axios.post('http://localhost:8080/v1/auth/login', {
-				email: email,
-				password: password,
-			})
-			setIsLoading(false)
-			localStorage.setItem('user', JSON.stringify(response.data.user))
-			localStorage.setItem('token', response.data.token)
-			window.location.href = '/'
+			await Login(email, password)
 		} catch (error: any) {
-			setIsLoading(false)
 			setError(error.response.data.message)
-			console.log(error)
+		} finally {
+			setIsLoading(false)
 		}
 	}
 

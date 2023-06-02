@@ -1,14 +1,12 @@
 import axios from 'axios'
-import Logout from '../../Auth'
+import Input from '../ui/Input'
 import Button from '../ui/Button'
+import Heading from '../ui/Heading'
+import Paragraph from '../ui/Paragraph'
+import Container from '../ui/Container'
+import Notification from '../ui/Notification'
 import { FC, useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import Container from '../ui/Container'
-import Heading from '../ui/Heading'
-import Label from '../ui/Label'
-import Input from '../ui/Input'
-import Paragraph from '../ui/Paragraph'
-import Notification from '../ui/Notification'
 
 interface RegisterFormProps {
 	setMessage: React.Dispatch<React.SetStateAction<null>>
@@ -44,10 +42,6 @@ const RegisterForm: FC<RegisterFormProps> = ({ setMessage }) => {
 				setIsLoading(false)
 				navigate('/auth/login')
 			} catch (error: any) {
-				if (error.response.status === 401) {
-					Logout()
-					console.error(error)
-				}
 				console.log(error)
 				setIsLoading(false)
 				setError('An error occurred. Please try again later.')

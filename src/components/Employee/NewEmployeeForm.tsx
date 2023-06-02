@@ -1,5 +1,5 @@
 import axios from 'axios'
-import Logout from '../../Auth'
+import { Logout } from '../../Auth'
 import Input from '../ui/Input'
 import Label from '../ui/Label'
 import Button from '../ui/Button'

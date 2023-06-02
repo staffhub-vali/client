@@ -1,7 +1,7 @@
 import { FC, useEffect, useState } from 'react'
 import ScheduleMaker from '../../components/Schedule/ScheduleMaker'
 import axios from 'axios'
-import Logout from '../../Auth'
+import { Logout } from '../../Auth'
 import { buttonVariants } from '../../components/ui/Button'
 import { Link } from 'react-router-dom'
 import { UserPlus } from 'lucide-react'

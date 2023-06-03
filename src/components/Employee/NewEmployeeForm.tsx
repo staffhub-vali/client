@@ -1,10 +1,11 @@
 import axios from 'axios'
-import { Logout } from '../../Auth'
 import Input from '../ui/Input'
 import Label from '../ui/Label'
 import Button from '../ui/Button'
+import { Logout } from '../../Auth'
 import { FC, useState } from 'react'
 import Container from '../ui/Container'
+import Notification from '../ui/Notification'
 
 interface NewEmployeeFormProps {}
 
@@ -12,6 +13,8 @@ const NewEmployeeForm: FC<NewEmployeeFormProps> = ({}) => {
 	const [name, setName] = useState<string>('')
 	const [phone, setPhone] = useState<string>('')
 	const [email, setEmail] = useState<string>('')
+	const [error, setError] = useState<string>('')
+	const [message, setMessage] = useState<string>('')
 	const [isLoading, setIsLoading] = useState<boolean>(false)
 
 	const handleSubmit = async (e: React.FormEvent) => {
@@ -37,24 +40,28 @@ const NewEmployeeForm: FC<NewEmployeeFormProps> = ({}) => {
 			setEmail('')
 			setName('')
 			setPhone('')
-			console.log(response.data.message)
+			setError('')
+			setMessage(response.data.message)
 		} catch (error: any) {
 			if (error.response.status === 401) {
 				Logout()
 			}
 			setIsLoading(false)
-			console.log(error.response.data.message)
+			setMessage('')
+			setError(error.response.data.message)
 		}
 	}
 
 	return (
-		<Container className='p-0'>
+		<Container
+			className='p-0'
+			size={'lg'}>
 			<form
 				onSubmit={handleSubmit}
-				className='center mt-12 flex w-96 flex-col gap-2'>
+				className='center mb-16 mt-12 flex w-96 flex-col gap-2'>
 				<Label
 					className='text-center'
-					id='name'>
+					htmlFor='name'>
 					Name
 				</Label>
 
@@ -69,7 +76,7 @@ const NewEmployeeForm: FC<NewEmployeeFormProps> = ({}) => {
 
 				<Label
 					className='text-center'
-					id='email'>
+					htmlFor='email'>
 					Email
 				</Label>
 
@@ -84,7 +91,7 @@ const NewEmployeeForm: FC<NewEmployeeFormProps> = ({}) => {
 
 				<Label
 					className='text-center'
-					id='phone'>
+					htmlFor='phone'>
 					Phone
 				</Label>
 
@@ -109,6 +116,20 @@ const NewEmployeeForm: FC<NewEmployeeFormProps> = ({}) => {
 					Submit
 				</Button>
 			</form>
+			{error && (
+				<Notification
+					size={'lg'}
+					variant='error'>
+					{error}
+				</Notification>
+			)}
+			{message && (
+				<Notification
+					size={'lg'}
+					variant='success'>
+					{message}
+				</Notification>
+			)}
 		</Container>
 	)
 }

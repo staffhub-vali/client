@@ -39,7 +39,7 @@ const LoginForm: FC<LoginFormProps> = ({ message }) => {
 				className='mt-12 flex w-96 flex-col'>
 				<Label
 					className='text-center'
-					id='Email'>
+					htmlFor='Email'>
 					Email
 				</Label>
 				<Input
@@ -52,7 +52,7 @@ const LoginForm: FC<LoginFormProps> = ({ message }) => {
 				/>
 				<Label
 					className='text-center'
-					id='Password'>
+					htmlFor='Password'>
 					Password
 				</Label>
 				<Input
@@ -87,7 +87,7 @@ const LoginForm: FC<LoginFormProps> = ({ message }) => {
 				<Notification
 					size={'lg'}
 					variant={'success'}
-					className='absolute left-0 right-0 top-28'>
+					position={'top'}>
 					{message}
 				</Notification>
 			)}
@@ -95,7 +95,7 @@ const LoginForm: FC<LoginFormProps> = ({ message }) => {
 				<Notification
 					size={'lg'}
 					variant={'error'}
-					className='absolute left-0 right-0 top-28 '>
+					position={'top'}>
 					{error}
 				</Notification>
 			)}

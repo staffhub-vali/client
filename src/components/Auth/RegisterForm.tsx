@@ -156,7 +156,7 @@ const RegisterForm: FC<RegisterFormProps> = ({ setMessage }) => {
 				<Notification
 					size={'lg'}
 					variant='error'
-					className='absolute bottom-16 left-0 right-0'>
+					position={'bottom'}>
 					{error}
 				</Notification>
 			)}

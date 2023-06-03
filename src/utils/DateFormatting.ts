@@ -50,3 +50,21 @@ export function formatTime(unixTimestamp: number) {
 		return `${hours}:${minutes}`
 	}
 }
+
+export function formatTotal(start: number, end: number) {
+	const totalSeconds = end - start
+	const hours = Math.floor(totalSeconds / 3600)
+	const minutes = Math.floor((totalSeconds % 3600) / 60)
+
+	let result = ''
+
+	if (hours > 0) {
+		result += `${hours}h `
+	}
+
+	if (minutes > 0) {
+		result += `${minutes}min`
+	}
+
+	return result
+}

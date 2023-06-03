@@ -1,5 +1,5 @@
 import { FC } from 'react'
-import { formatDate, formatTime } from '../../utils/DateFormatting'
+import { formatDate, formatTime, formatTotal } from '../../utils/DateFormatting'
 import Container from '../ui/Container'
 
 interface ScheduleTableProps {
@@ -14,6 +14,19 @@ interface ScheduleTableProps {
 
 const ScheduleTable: FC<ScheduleTableProps> = ({ data, setData }) => {
 	const headings = ['Date', 'Start', 'End', 'Total']
+
+	const handleTimeChange = (newTime: string, field: 'start' | 'end', index: number) => {
+		// convert the new time into Unix timestamp
+		const [hour, minute]: any = newTime.split(':')
+		const newDate = new Date(data[index].date * 1000)
+		newDate.setHours(hour)
+		newDate.setMinutes(minute)
+		const newUnixTime = Math.floor(newDate.getTime() / 1000)
+
+		// set the new data
+		const newData = data.map((d, i) => (i === index ? { ...d, [field]: newUnixTime } : d))
+		setData(newData)
+	}
 
 	return (
 		<Container
@@ -43,20 +56,7 @@ const ScheduleTable: FC<ScheduleTableProps> = ({ data, setData }) => {
 										className='rounded bg-transparent py-3 text-center focus:bg-white dark:outline-none dark:ring-slate-100 dark:focus:bg-transparent dark:focus:ring-1'
 										type='text'
 										value={formatTime(item.start)}
-										onChange={(e) => {
-											const newTime = e.target.value
-
-											// convert the new time into Unix timestamp
-											const [hour, minute]: any = newTime.split(':')
-											const newDate = new Date(item.date * 1000)
-											newDate.setHours(hour)
-											newDate.setMinutes(minute)
-											const newStartUnix = Math.floor(newDate.getTime() / 1000)
-
-											// set the new data
-											const newData = data.map((d, i) => (i === index ? { ...d, start: newStartUnix } : d))
-											setData(newData)
-										}}
+										onChange={(e) => handleTimeChange(e.target.value, 'start', index)}
 									/>
 								</td>
 								<td>
@@ -64,30 +64,11 @@ const ScheduleTable: FC<ScheduleTableProps> = ({ data, setData }) => {
 										className='rounded bg-transparent py-3 text-center ring-slate-100 focus:bg-white dark:outline-none dark:focus:bg-transparent dark:focus:ring-1'
 										type='text'
 										value={formatTime(item.end)}
-										onChange={(e) => {
-											const newTime = e.target.value
-
-											// convert the new time into Unix timestamp
-											const [hour, minute]: any = newTime.split(':')
-											const newDate = new Date(item.date * 1000)
-											newDate.setHours(hour)
-											newDate.setMinutes(minute)
-											const newEndUnix = Math.floor(newDate.getTime() / 1000)
-
-											// set the new data
-											const newData = data.map((d, i) => (i === index ? { ...d, end: newEndUnix } : d))
-											setData(newData)
-										}}
+										onChange={(e) => handleTimeChange(e.target.value, 'end', index)}
 									/>
 								</td>
 								{item.start && item.end ? (
-									<td className='py-3'>
-										{`${Math.floor((item.end - item.start) / 3600)}h ${
-											((item.end - item.start) % 3600) / 60 !== 0
-												? `${Math.floor(((item.end - item.start) % 3600) / 60)}min`
-												: ''
-										}`}
-									</td>
+									<td className='py-3'>{formatTotal(item.start, item.end)}</td>
 								) : (
 									<td className='py-2'></td>
 								)}

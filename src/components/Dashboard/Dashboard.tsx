@@ -30,15 +30,12 @@ const Dashboard: FC<DashboardProps> = ({ data }) => {
 				<tbody className='divide-y-2 divide-slate-200 dark:divide-slate-600'>
 					{data.map((item) => (
 						<tr
+							onClick={() => navigate(`/days/${item._id}`)}
 							key={item._id}
 							className='bg-white dark:bg-slate-800 dark:text-slate-300'>
-							{weekDays.map((day, index) => (
-								<td
-									key={index}
-									className='whitespace-nowrap px-4 py-3 text-sm font-medium text-slate-800 dark:text-slate-300'>
-									{formatDate(item.date)}
-								</td>
-							))}
+							<td className='cursor-pointer whitespace-nowrap px-4 py-3 text-sm font-medium text-slate-800 dark:text-slate-300'>
+								{formatDate(item.date)}
+							</td>
 						</tr>
 					))}
 				</tbody>

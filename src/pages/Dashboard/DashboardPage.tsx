@@ -40,7 +40,6 @@ const DashboardPage: FC<DashboardPageProps> = ({}) => {
 				},
 			})
 			setData(response.data)
-			console.log(response.data)
 		} catch (error: any) {
 			if (error.response.status === 401) {
 				Logout()

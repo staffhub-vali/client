@@ -1,4 +1,4 @@
-import { Dispatch, FC, SetStateAction, useState } from 'react'
+import { Dispatch, FC, SetStateAction, useState, FormEvent } from 'react'
 import Heading from '../ui/Heading'
 import { formatDate, formatTime, formatTotal } from '../../utils/DateFormatting'
 import Paragraph from '../ui/Paragraph'
@@ -60,6 +60,24 @@ const WorkDay: FC<WorkDayProps> = ({ workDay, setWorkDay }) => {
 		}
 	}
 
+	const handleSubmit = async (e: React.FormEvent, shiftId: string) => {
+		e.preventDefault()
+		setIsLoading(true)
+		toggleEditMode(shiftId)
+		try {
+			const token = localStorage.getItem('token')
+			await axios.put(`http://localhost:8080/v1/days/${workDay?._id}`, workDay, {
+				headers: {
+					Authorization: `Bearer ${token}`,
+				},
+			})
+			setIsLoading(false)
+		} catch (error) {
+			setIsLoading(false)
+			console.log(error)
+		}
+	}
+
 	return (
 		<>
 			<Heading
@@ -82,8 +100,9 @@ const WorkDay: FC<WorkDayProps> = ({ workDay, setWorkDay }) => {
 								{shift?.employee.name}
 							</Link>
 						</Paragraph>
+
 						{editMode[shift._id] ? (
-							<form>
+							<>
 								<Input
 									type='text'
 									value={formatTime(shift.start)}
@@ -96,7 +115,7 @@ const WorkDay: FC<WorkDayProps> = ({ workDay, setWorkDay }) => {
 									className='m-0 mx-2 w-44 text-center'
 									onChange={(e) => handleTimeChange(e.target.value, 'end', index)}
 								/>
-							</form>
+							</>
 						) : (
 							<Paragraph
 								size={'xl'}
@@ -112,14 +131,17 @@ const WorkDay: FC<WorkDayProps> = ({ workDay, setWorkDay }) => {
 							{formatTotal(shift.start, shift.end)}
 						</Paragraph>
 
-						{editMode[shift._id] ? (
-							<Button
-								size={'sm'}
-								isLoading={isLoading}
-								onClick={() => toggleEditMode(shift._id)}>
-								Save
-							</Button>
-						) : (
+						{editMode[shift._id] && (
+							<form onSubmit={(e) => handleSubmit(e, shift._id)}>
+								<Button
+									size={'sm'}
+									isLoading={isLoading}>
+									Save
+								</Button>
+							</form>
+						)}
+
+						{!editMode[shift._id] && (
 							<Button
 								size={'sm'}
 								isLoading={isLoading}

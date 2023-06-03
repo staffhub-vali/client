@@ -35,12 +35,13 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement>, VariantPr
 }
 
 const Button: FC<ButtonProps> = forwardRef<HTMLButtonElement, ButtonProps>(
-	({ className, children, variant, isLoading, size, ...props }, ref) => {
+	({ className, type, children, variant, isLoading, size, ...props }, ref) => {
 		return (
 			<button
-				className={cn(buttonVariants({ variant, size, className }))}
 				ref={ref}
+				type={type}
 				disabled={isLoading}
+				className={cn(buttonVariants({ variant, size, className }))}
 				{...props}>
 				{isLoading ? <Loader2 className=' h-6 w-6 animate-spin' /> : children}
 			</button>

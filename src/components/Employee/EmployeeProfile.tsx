@@ -87,7 +87,7 @@ const EmployeeProfile: FC<EmployeeProfileProps> = ({ data, setEdit }) => {
 								className='my-2 bg-slate-400 text-white hover:bg-slate-400 dark:bg-slate-400 dark:text-white dark:hover:bg-slate-400'
 								isLoading={isLoading}
 								onClick={() => setShowModal(false)}>
-								Cancel
+								No
 							</Button>
 						</div>
 					</Modal>

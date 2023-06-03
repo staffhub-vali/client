@@ -7,6 +7,7 @@ import Calendar from 'react-calendar'
 import Container from '../ui/Container'
 import 'react-calendar/dist/Calendar.css'
 import ScheduleTable from './ScheduleTable'
+import Notification from '../ui/Notification'
 import SearchEmployees from './SearchEmployees'
 import { formatMonth } from '../../utils/DateFormatting'
 
@@ -38,7 +39,8 @@ const ScheduleMaker: FC<ScheduleMakerProps> = ({
 	const [data, setData] = useState<any[]>([])
 	const [value, setValue] = useState(new Date())
 	const [isLoading, setIsLoading] = useState<boolean>(false)
-
+	const [error, setError] = useState<string>('')
+	const [message, setMessage] = useState<string>('')
 	const [month, setMonth] = useState(() => {
 		const month = currentDate.getMonth() + 2
 		return `${currentDate.getFullYear()}-${month < 10 ? `0${month}` : month}`
@@ -61,13 +63,16 @@ const ScheduleMaker: FC<ScheduleMakerProps> = ({
 				},
 			)
 			setIsLoading(false)
-			console.log(response.data.message)
+			setError('')
+			setMessage(response.data.message)
 		} catch (error: any) {
 			setIsLoading(false)
 			if (error.response.status === 401) {
 				Logout()
 			}
 			console.error(error)
+			setMessage('')
+			setError(error.response.data.message)
 		}
 	}
 
@@ -147,6 +152,21 @@ const ScheduleMaker: FC<ScheduleMakerProps> = ({
 					</div>
 				)}
 			</div>
+			{message && (
+				<Notification
+					size={'lg'}
+					position={'bottom'}>
+					{message}
+				</Notification>
+			)}
+			{error && (
+				<Notification
+					size={'lg'}
+					variant={'error'}
+					position={'bottom'}>
+					{error}
+				</Notification>
+			)}
 		</Container>
 	)
 }

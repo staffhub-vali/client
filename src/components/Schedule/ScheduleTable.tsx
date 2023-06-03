@@ -19,12 +19,12 @@ const ScheduleTable: FC<ScheduleTableProps> = ({ data, setData }) => {
 		<Container
 			size={'lg'}
 			className='h-[32rem] overflow-x-hidden rounded border-2 p-0 dark:border-slate-500'>
-			<table className='w-full divide-y-2 divide-slate-200 overflow-scroll rounded bg-white text-center text-lg shadow-md dark:divide-slate-600  dark:bg-slate-800'>
+			<table className='w-full divide-y-2 divide-slate-200 overflow-scroll rounded bg-white text-center text-xl  shadow-md dark:divide-slate-600 dark:bg-slate-800'>
 				<thead>
 					<tr className='sticky top-0 bg-white dark:bg-slate-800 '>
 						{headings.map((heading, index) => (
 							<th
-								className='py-2 font-semibold'
+								className='py-4 font-semibold'
 								key={index}>
 								{heading}
 							</th>
@@ -37,10 +37,10 @@ const ScheduleTable: FC<ScheduleTableProps> = ({ data, setData }) => {
 							<tr
 								key={index}
 								className={index % 2 === 0 ? 'bg-slate-50 dark:bg-slate-700' : 'bg-white dark:bg-slate-800'}>
-								<td className='py-2'>{formatDate(item.date)}</td>
+								<td className='py-3'>{formatDate(item.date)}</td>
 								<td>
 									<input
-										className='rounded bg-transparent py-2 text-center focus:bg-white dark:outline-none dark:ring-slate-100 dark:focus:bg-transparent dark:focus:ring-1'
+										className='rounded bg-transparent py-3 text-center focus:bg-white dark:outline-none dark:ring-slate-100 dark:focus:bg-transparent dark:focus:ring-1'
 										type='text'
 										value={formatTime(item.start)}
 										onChange={(e) => {
@@ -61,7 +61,7 @@ const ScheduleTable: FC<ScheduleTableProps> = ({ data, setData }) => {
 								</td>
 								<td>
 									<input
-										className='rounded bg-transparent py-2 text-center ring-slate-100 focus:bg-white dark:outline-none dark:focus:bg-transparent dark:focus:ring-1'
+										className='rounded bg-transparent py-3 text-center ring-slate-100 focus:bg-white dark:outline-none dark:focus:bg-transparent dark:focus:ring-1'
 										type='text'
 										value={formatTime(item.end)}
 										onChange={(e) => {
@@ -81,7 +81,7 @@ const ScheduleTable: FC<ScheduleTableProps> = ({ data, setData }) => {
 									/>
 								</td>
 								{item.start && item.end ? (
-									<td className='py-2'>
+									<td className='py-3'>
 										{`${Math.floor((item.end - item.start) / 3600)}h ${
 											((item.end - item.start) % 3600) / 60 !== 0
 												? `${Math.floor(((item.end - item.start) % 3600) / 60)}min`

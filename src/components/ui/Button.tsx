@@ -16,6 +16,7 @@ export const buttonVariants = cva(
 
 				link: 'bg-transparent dark:bg-transparent text-slate-900 dark:text-slate-100',
 				danger: 'bg-red-400 hover:bg-rose-500 text-white',
+				cancel: "bg-slate-400 text-white hover:bg-slate-400 dark:bg-slate-400 dark:text-white dark:hover:bg-slate-400'",
 			},
 			size: {
 				default: 'h-10 py-2 px-4 min-w-[8rem]',
@@ -43,7 +44,7 @@ const Button: FC<ButtonProps> = forwardRef<HTMLButtonElement, ButtonProps>(
 				disabled={isLoading}
 				className={cn(buttonVariants({ variant, size, className }))}
 				{...props}>
-				{isLoading ? <Loader2 className=' h-6 w-6 animate-spin' /> : children}
+				{isLoading ? <Loader2 className=' h-4 w-4 animate-spin' /> : children}
 			</button>
 		)
 	},

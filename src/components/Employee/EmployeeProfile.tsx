@@ -1,5 +1,5 @@
 import axios from 'axios'
-import Modal from 'react-modal'
+import Modal from '../ui/Modal'
 import Button from '../ui/Button'
 import Heading from '../ui/Heading'
 import Paragraph from '../ui/Paragraph'
@@ -72,26 +72,12 @@ const EmployeeProfile: FC<EmployeeProfileProps> = ({ data, setEdit }) => {
 
 				{showModal && (
 					<Modal
-						isOpen={showModal}
-						style={customStyles}
-						contentLabel='Delete Modal'>
-						Are you sure you want to delete this employee?
-						<div className='mt-2 flex justify-center space-x-2'>
-							<Button
-								className='my-2'
-								variant={'danger'}
-								isLoading={isLoading}
-								onClick={deleteEmployee}>
-								Yes
-							</Button>
-							<Button
-								className='my-2 bg-slate-400 text-white hover:bg-slate-400 dark:bg-slate-400 dark:text-white dark:hover:bg-slate-400'
-								isLoading={isLoading}
-								onClick={() => setShowModal(false)}>
-								No
-							</Button>
-						</div>
-					</Modal>
+						showModal={showModal}
+						isLoading={isLoading}
+						submit={() => deleteEmployee}
+						cancel={() => setShowModal(false)}
+						text={'Are you sure you want to delete this employee?'}
+					/>
 				)}
 			</div>
 		</Container>

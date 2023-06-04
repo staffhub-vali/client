@@ -1,6 +1,6 @@
 import { FC } from 'react'
-import ReactModal from 'react-modal'
 import Button from './Button'
+import ReactModal from 'react-modal'
 
 const customStyles = {
 	content: {
@@ -25,15 +25,14 @@ const Modal: FC<ModalProps> = ({ showModal, isLoading, submit, cancel, text }) =
 	return (
 		<ReactModal
 			isOpen={showModal}
-			style={customStyles}
-			contentLabel='Delete Modal'>
+			style={customStyles}>
 			{text}
 			<div className='mt-2 flex justify-center space-x-2'>
 				<Button
 					className='my-2'
 					variant={'danger'}
-					isLoading={isLoading}
-					onClick={submit}>
+					onClick={submit}
+					isLoading={isLoading}>
 					Yes
 				</Button>
 				<Button

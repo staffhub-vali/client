@@ -1,26 +1,37 @@
-import { Dispatch, FC, SetStateAction, useState, FormEvent } from 'react'
-import Heading from '../ui/Heading'
-import { formatDate, formatTime, formatTotal } from '../../utils/DateFormatting'
-import Paragraph from '../ui/Paragraph'
-import { Link } from 'react-router-dom'
-import Button from '../ui/Button'
-import Input from '../ui/Input'
 import axios from 'axios'
+import Input from '../ui/Input'
+import Button from '../ui/Button'
+import Heading from '../ui/Heading'
+import { FC, useState } from 'react'
+import { Link } from 'react-router-dom'
+import Paragraph from '../ui/Paragraph'
+import Notification from '../ui/Notification'
+import { formatDate, formatTime, formatTotal } from '../../utils/DateFormatting'
 
 interface WorkDayProps {
-	workDay: WorkDay | null
 	setWorkDay: any
+	workDay: WorkDay | null
 }
 
 interface WorkDay {
+	notes: []
 	_id: string
 	date: number
-	notes: []
-	shifts: [{ _id: string; employee: { name: string; _id: string }; start: number; end: number }]
+	shifts: Shift[]
+}
+
+interface Shift {
+	end: number
+	_id: string
+	start: number
+	isLoading: boolean
+	employee: { name: string; _id: string }
 }
 
 const WorkDay: FC<WorkDayProps> = ({ workDay, setWorkDay }) => {
-	const [isLoading, setIsLoading] = useState(false)
+	const [error, setError] = useState<string>('')
+	const [message, setMessage] = useState<string>('')
+	const [isLoading, setIsLoading] = useState<boolean>(false)
 	const [editMode, setEditMode] = useState<{ [key: string]: boolean }>({})
 
 	const toggleEditMode = (shiftId: string) => {
@@ -62,19 +73,33 @@ const WorkDay: FC<WorkDayProps> = ({ workDay, setWorkDay }) => {
 
 	const handleSubmit = async (e: React.FormEvent, shiftId: string) => {
 		e.preventDefault()
-		setIsLoading(true)
-		toggleEditMode(shiftId)
+		const updatedWorkDay: WorkDay | any = { ...workDay }
+
+		// Find the shift with the matching shiftId
+		const shiftIndex = updatedWorkDay.shifts.findIndex((shift: Shift) => shift._id === shiftId)
+		if (shiftIndex !== -1) {
+			updatedWorkDay.shifts[shiftIndex].isLoading = true
+			setWorkDay(updatedWorkDay)
+		}
+
 		try {
 			const token = localStorage.getItem('token')
-			await axios.put(`http://localhost:8080/v1/days/${workDay?._id}`, workDay, {
+			const { data } = await axios.put(`http://localhost:8080/v1/days/${workDay?._id}`, workDay, {
 				headers: {
 					Authorization: `Bearer ${token}`,
 				},
 			})
-			setIsLoading(false)
-		} catch (error) {
-			setIsLoading(false)
-			console.log(error)
+			setError('')
+			setMessage(data.message)
+		} catch (error: any) {
+			setMessage('')
+			setError(error.response.data.message)
+		}
+
+		// Reset the isLoading property after the request is completed
+		if (shiftIndex !== -1) {
+			updatedWorkDay.shifts[shiftIndex].isLoading = false
+			setWorkDay(updatedWorkDay)
 		}
 	}
 
@@ -135,7 +160,7 @@ const WorkDay: FC<WorkDayProps> = ({ workDay, setWorkDay }) => {
 							<form onSubmit={(e) => handleSubmit(e, shift._id)}>
 								<Button
 									size={'sm'}
-									isLoading={isLoading}>
+									isLoading={shift.isLoading}>
 									Save
 								</Button>
 							</form>
@@ -144,7 +169,7 @@ const WorkDay: FC<WorkDayProps> = ({ workDay, setWorkDay }) => {
 						{!editMode[shift._id] && (
 							<Button
 								size={'sm'}
-								isLoading={isLoading}
+								isLoading={shift.isLoading}
 								onClick={() => toggleEditMode(shift._id)}>
 								Edit
 							</Button>
@@ -152,6 +177,20 @@ const WorkDay: FC<WorkDayProps> = ({ workDay, setWorkDay }) => {
 					</div>
 				))}
 			</div>
+			{error && (
+				<Notification
+					size={'lg'}
+					position={'bottom'}>
+					{error}
+				</Notification>
+			)}
+			{message && (
+				<Notification
+					size={'lg'}
+					position={'bottom'}>
+					{message}
+				</Notification>
+			)}
 		</>
 	)
 }

@@ -10,6 +10,7 @@ interface Employee {
 interface SearchEmployeesProps {
 	name: string
 	isOpen: boolean
+	inputSize: string
 	employees: Employee[]
 	setId: (id: string) => void
 	setName: (value: string) => void
@@ -23,6 +24,7 @@ const SearchEmployees: FC<SearchEmployeesProps> = ({
 	name,
 	setName,
 	employees,
+	inputSize,
 }) => {
 	const handleSelect = (option: string, id: string) => {
 		setIsOpen(false)
@@ -40,14 +42,17 @@ const SearchEmployees: FC<SearchEmployeesProps> = ({
 				<Input
 					readOnly
 					type='text'
-					size={'lg'}
+					size={inputSize}
 					value={name}
 					placeholder='Choose an Employee...'
-					className='group m-0 cursor-pointer caret-transparent focus:ring-0 dark:placeholder:text-slate-400'
+					className='group m-0 cursor-pointer px-4 caret-transparent focus:ring-0 dark:placeholder:text-slate-400'
 				/>
 			</div>
 			{isOpen && (
-				<div className='absolute left-0 top-10 z-10 mt-4 w-full rounded bg-white shadow dark:bg-slate-600 dark:text-slate-300'>
+				<div
+					className={`absolute left-0 top-10 z-10 w-full rounded bg-white shadow dark:bg-slate-600 dark:text-slate-300 ${
+						inputSize === 'lg' ? 'mt-4' : 'mt-2'
+					}`}>
 					<ul>
 						{employees.map((employee) => (
 							<li

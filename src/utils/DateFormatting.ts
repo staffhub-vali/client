@@ -40,7 +40,7 @@ export function formatMonth(unixTimestamp: number) {
 	return `${month} ${year}`
 }
 
-export function formatTime(unixTimestamp: number) {
+export function formatTime(unixTimestamp: number | null) {
 	if (unixTimestamp) {
 		const date = new Date(unixTimestamp * 1000)
 
@@ -51,20 +51,22 @@ export function formatTime(unixTimestamp: number) {
 	}
 }
 
-export function formatTotal(start: number, end: number) {
-	const totalSeconds = end - start
-	const hours = Math.floor(totalSeconds / 3600)
-	const minutes = Math.floor((totalSeconds % 3600) / 60)
+export function formatTotal(start: number | null, end: number | null) {
+	if (start && end) {
+		const totalSeconds = end - start
+		const hours = Math.floor(totalSeconds / 3600)
+		const minutes = Math.floor((totalSeconds % 3600) / 60)
 
-	let result = ''
+		let result = ''
 
-	if (hours > 0) {
-		result += `${hours}h `
-	}
+		if (hours > 0) {
+			result += `${hours}h `
+		}
 
-	if (minutes > 0) {
-		result += `${minutes}min`
-	}
+		if (minutes > 0) {
+			result += `${minutes}min`
+		}
 
-	return result
+		return result
+	} else return `${0}h ${0}min`
 }

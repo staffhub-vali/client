@@ -2,7 +2,7 @@ import { FC } from 'react'
 import { clsx } from 'clsx'
 
 interface LabelProps {
-	htmlFor: string
+	htmlFor?: string
 	children: string
 	className?: string
 }

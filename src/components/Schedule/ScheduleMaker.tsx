@@ -26,15 +26,7 @@ interface ScheduleMakerProps {
 	employees: Employee[]
 }
 
-const ScheduleMaker: FC<ScheduleMakerProps> = ({
-	id,
-	name,
-	employees,
-	setName,
-	setId,
-	isOpen,
-	setIsOpen,
-}) => {
+const ScheduleMaker: FC<ScheduleMakerProps> = ({ id, name, employees, setName, setId, isOpen, setIsOpen }) => {
 	const currentDate = new Date()
 	const [data, setData] = useState<any[]>([])
 	const [value, setValue] = useState(new Date())
@@ -108,6 +100,7 @@ const ScheduleMaker: FC<ScheduleMakerProps> = ({
 				<SearchEmployees
 					name={name}
 					setId={setId}
+					inputSize='lg'
 					isOpen={isOpen}
 					setName={setName}
 					employees={employees}
@@ -146,9 +139,7 @@ const ScheduleMaker: FC<ScheduleMakerProps> = ({
 					</>
 				) : (
 					<div className='col-span-6 col-start-6'>
-						<Heading className='font-normal text-slate-500 dark:text-slate-400'>
-							Pick a month and an employee
-						</Heading>
+						<Heading className='font-normal text-slate-500 dark:text-slate-400'>Pick a month and an employee</Heading>
 					</div>
 				)}
 			</div>

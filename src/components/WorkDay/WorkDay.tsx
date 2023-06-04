@@ -1,4 +1,5 @@
 import axios from 'axios'
+import Modal from 'react-modal'
 import Input from '../ui/Input'
 import Button from '../ui/Button'
 import Heading from '../ui/Heading'
@@ -8,7 +9,22 @@ import Paragraph from '../ui/Paragraph'
 import Notification from '../ui/Notification'
 import { formatDate, formatTime, formatTotal } from '../../utils/DateFormatting'
 
+const customStyles = {
+	content: {
+		top: '50%',
+		left: '50%',
+		right: 'auto',
+		bottom: 'auto',
+		marginRight: '-50%',
+		transform: 'translate(-50%, -50%)',
+	},
+}
+
 interface WorkDayProps {
+	error: string
+	setError: any
+	message: string
+	setMessage: any
 	setWorkDay: any
 	workDay: WorkDay | null
 }
@@ -28,9 +44,9 @@ interface Shift {
 	employee: { name: string; _id: string }
 }
 
-const WorkDay: FC<WorkDayProps> = ({ workDay, setWorkDay }) => {
-	const [error, setError] = useState<string>('')
-	const [message, setMessage] = useState<string>('')
+const WorkDay: FC<WorkDayProps> = ({ workDay, setWorkDay, error, setError, message, setMessage }) => {
+	const [showModal, setShowModal] = useState(false)
+
 	const [isLoading, setIsLoading] = useState<boolean>(false)
 	const [editMode, setEditMode] = useState<{ [key: string]: boolean }>({})
 
@@ -71,7 +87,7 @@ const WorkDay: FC<WorkDayProps> = ({ workDay, setWorkDay }) => {
 		}
 	}
 
-	const handleSubmit = async (e: React.FormEvent, shiftId: string) => {
+	const handleEdit = async (e: React.FormEvent, shiftId: string) => {
 		e.preventDefault()
 		const updatedWorkDay: WorkDay | any = { ...workDay }
 
@@ -90,9 +106,11 @@ const WorkDay: FC<WorkDayProps> = ({ workDay, setWorkDay }) => {
 				},
 			})
 			setError('')
+			toggleEditMode(shiftId)
 			setMessage(data.message)
 		} catch (error: any) {
 			setMessage('')
+			toggleEditMode(shiftId)
 			setError(error.response.data.message)
 		}
 
@@ -100,6 +118,28 @@ const WorkDay: FC<WorkDayProps> = ({ workDay, setWorkDay }) => {
 		if (shiftIndex !== -1) {
 			updatedWorkDay.shifts[shiftIndex].isLoading = false
 			setWorkDay(updatedWorkDay)
+		}
+	}
+
+	const handleDelete = async (shiftId: string) => {
+		const token = localStorage.getItem('token')
+		try {
+			setIsLoading(true)
+			const { data } = await axios.delete(
+				`http://localhost:8080/v1/days/${shiftId}?shiftId=${shiftId}&workDayId=${workDay?._id}`,
+				{
+					headers: {
+						Authorization: `Bearer ${token}`,
+					},
+				},
+			)
+			setShowModal(false)
+			setError('')
+			setMessage(data.message)
+		} catch (error: any) {
+			setMessage('')
+			setIsLoading(false)
+			setError(error.response.data.message)
 		}
 	}
 
@@ -157,22 +197,63 @@ const WorkDay: FC<WorkDayProps> = ({ workDay, setWorkDay }) => {
 						</Paragraph>
 
 						{editMode[shift._id] && (
-							<form onSubmit={(e) => handleSubmit(e, shift._id)}>
+							<form
+								className='space-x-2'
+								onSubmit={(e) => handleEdit(e, shift._id)}>
 								<Button
 									size={'sm'}
 									isLoading={shift.isLoading}>
 									Save
 								</Button>
+								<Button
+									size={'sm'}
+									type='button'
+									isLoading={shift.isLoading}
+									onClick={() => toggleEditMode(shift._id)}
+									className=' bg-slate-400 text-white hover:bg-slate-400 dark:bg-slate-400 dark:text-white dark:hover:bg-slate-400'>
+									Cancel
+								</Button>
 							</form>
 						)}
 
 						{!editMode[shift._id] && (
-							<Button
-								size={'sm'}
-								isLoading={shift.isLoading}
-								onClick={() => toggleEditMode(shift._id)}>
-								Edit
-							</Button>
+							<div className='space-x-2'>
+								<Button
+									size={'sm'}
+									isLoading={shift.isLoading}
+									onClick={() => toggleEditMode(shift._id)}>
+									Edit
+								</Button>
+								<Button
+									size={'sm'}
+									variant={'danger'}
+									isLoading={shift.isLoading}
+									onClick={() => setShowModal(true)}>
+									Delete
+								</Button>
+							</div>
+						)}
+						{showModal && (
+							<Modal
+								isOpen={showModal}
+								style={customStyles}
+								contentLabel='Delete Modal'>
+								Are you sure you want to delete this shift?
+								<div className='mt-2 flex justify-center space-x-2'>
+									<Button
+										className='my-2'
+										variant={'danger'}
+										isLoading={isLoading}
+										onClick={() => handleDelete(shift._id)}>
+										Yes
+									</Button>
+									<Button
+										className='my-2 bg-slate-400 text-white hover:bg-slate-400 dark:bg-slate-400 dark:text-white dark:hover:bg-slate-400'
+										onClick={() => setShowModal(false)}>
+										No
+									</Button>
+								</div>
+							</Modal>
 						)}
 					</div>
 				))}

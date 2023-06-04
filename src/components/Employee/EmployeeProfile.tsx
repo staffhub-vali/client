@@ -50,6 +50,7 @@ const EmployeeProfile: FC<EmployeeProfileProps> = ({ data, setEdit }) => {
 			console.log(error)
 		}
 	}
+
 	return (
 		<Container>
 			<Heading size={'sm'}>{data.name}</Heading>

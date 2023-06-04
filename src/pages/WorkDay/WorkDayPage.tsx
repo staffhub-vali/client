@@ -1,17 +1,19 @@
 import axios from 'axios'
 import { Logout } from '../../Auth'
-import { useParams } from 'react-router-dom'
 import { useEffect, useState } from 'react'
+import { useParams } from 'react-router-dom'
 import Container from '../../components/ui/Container'
 import WorkDay from '../../components/WorkDay/WorkDay'
 
 const WorkDayPage = () => {
 	const { id } = useParams()
+	const [error, setError] = useState<string>('')
+	const [message, setMessage] = useState<string>('')
 	const [workDay, setWorkDay] = useState<WorkDay | null>(null)
 
 	useEffect(() => {
 		fetchWorkDay()
-	}, [])
+	}, [message, error])
 
 	const fetchWorkDay = async () => {
 		try {
@@ -33,6 +35,10 @@ const WorkDayPage = () => {
 	return (
 		<Container size={'lg'}>
 			<WorkDay
+				message={message}
+				setMessage={setMessage}
+				error={error}
+				setError={setError}
 				workDay={workDay}
 				setWorkDay={setWorkDay}
 			/>

@@ -34,12 +34,13 @@ const DashboardPage: FC<DashboardPageProps> = ({}) => {
 	const fetchData = async () => {
 		try {
 			const token = localStorage.getItem('token')
-			const response = await axios.get('http://localhost:8080/v1/days', {
+			const { data } = await axios.get('http://localhost:8080/v1/days', {
 				headers: {
 					Authorization: `Bearer ${token}`,
 				},
 			})
-			setData(response.data)
+			data.sort((a: { date: number }, b: { date: number }) => a.date - b.date)
+			setData(data)
 		} catch (error: any) {
 			if (error.response.status === 401) {
 				Logout()

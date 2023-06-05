@@ -1,6 +1,7 @@
 import { FC } from 'react'
 import Button from './Button'
 import ReactModal from 'react-modal'
+import { Check, X } from 'lucide-react'
 
 const customStyles = {
 	content: {
@@ -33,13 +34,13 @@ const Modal: FC<ModalProps> = ({ showModal, loading, submit, cancel, text }) => 
 					variant={'danger'}
 					onClick={submit}
 					loading={loading}>
-					Yes
+					Yes {<Check className='ml-2 h-4 w-4' />}
 				</Button>
 				<Button
 					variant='cancel'
 					className='my-2'
 					onClick={cancel}>
-					No
+					No {<X className='ml-2 h-4 w-4' />}
 				</Button>
 			</div>
 		</ReactModal>

@@ -5,6 +5,7 @@ import Heading from '../ui/Heading'
 import Paragraph from '../ui/Paragraph'
 import Container from '../ui/Container'
 import { Dispatch, FC, SetStateAction, useState } from 'react'
+import { Delete, Pencil } from 'lucide-react'
 
 interface EmployeeProfileProps {
 	data: {
@@ -31,13 +32,13 @@ const customStyles = {
 }
 
 const EmployeeProfile: FC<EmployeeProfileProps> = ({ data, setEdit }) => {
-	const [isLoading, setIsLoading] = useState(false)
+	const [loading, setLoading] = useState(false)
 	const [showModal, setShowModal] = useState(false)
 
 	const deleteEmployee = async () => {
 		const token = localStorage.getItem('token')
 		try {
-			setIsLoading(true)
+			setLoading(true)
 			await axios.delete(`http://localhost:8080/v1/employees/${data._id}?id=${data._id}`, {
 				headers: {
 					Authorization: `Bearer ${token}`,
@@ -46,7 +47,7 @@ const EmployeeProfile: FC<EmployeeProfileProps> = ({ data, setEdit }) => {
 			setShowModal(false)
 			window.location.href = '/employees'
 		} catch (error) {
-			setIsLoading(false)
+			setLoading(false)
 			console.log(error)
 		}
 	}
@@ -62,18 +63,23 @@ const EmployeeProfile: FC<EmployeeProfileProps> = ({ data, setEdit }) => {
 				<Paragraph>Vacation Days: {data.vacationDays}</Paragraph>
 
 				<div className='mt-2 flex space-x-2'>
-					<Button onClick={() => setEdit(true)}>Edit</Button>
 					<Button
+						size={'lg'}
+						onClick={() => setEdit(true)}>
+						Edit {<Pencil className='ml-2 h-5 w-5' />}
+					</Button>
+					<Button
+						size={'lg'}
 						onClick={() => setShowModal(true)}
 						variant={'danger'}>
-						Delete
+						Delete {<Delete className='ml-2 h-5 w-5' />}
 					</Button>
 				</div>
 
 				{showModal && (
 					<Modal
+						loading={loading}
 						showModal={showModal}
-						isLoading={isLoading}
 						submit={() => deleteEmployee}
 						cancel={() => setShowModal(false)}
 						text={'Are you sure you want to delete this employee?'}

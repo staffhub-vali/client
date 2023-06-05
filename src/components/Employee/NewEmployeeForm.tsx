@@ -6,6 +6,7 @@ import { Logout } from '../../Auth'
 import { FC, useState } from 'react'
 import Container from '../ui/Container'
 import Notification from '../ui/Notification'
+import { Check } from 'lucide-react'
 
 interface NewEmployeeFormProps {}
 
@@ -15,12 +16,12 @@ const NewEmployeeForm: FC<NewEmployeeFormProps> = ({}) => {
 	const [email, setEmail] = useState<string>('')
 	const [error, setError] = useState<string>('')
 	const [message, setMessage] = useState<string>('')
-	const [isLoading, setIsLoading] = useState<boolean>(false)
+	const [loading, setLoading] = useState<boolean>(false)
 
 	const handleSubmit = async (e: React.FormEvent) => {
 		try {
 			e.preventDefault()
-			setIsLoading(true)
+			setLoading(true)
 			const token = localStorage.getItem('token')
 
 			const response = await axios.post(
@@ -36,7 +37,7 @@ const NewEmployeeForm: FC<NewEmployeeFormProps> = ({}) => {
 					},
 				},
 			)
-			setIsLoading(false)
+			setLoading(false)
 			setEmail('')
 			setName('')
 			setPhone('')
@@ -46,7 +47,7 @@ const NewEmployeeForm: FC<NewEmployeeFormProps> = ({}) => {
 			if (error.response.status === 401) {
 				Logout()
 			}
-			setIsLoading(false)
+			setLoading(false)
 			setMessage('')
 			setError(error.response.data.message)
 		}
@@ -112,8 +113,8 @@ const NewEmployeeForm: FC<NewEmployeeFormProps> = ({}) => {
 				<Button
 					size={'lg'}
 					className='mx-auto w-fit'
-					isLoading={isLoading}>
-					Submit
+					loading={loading}>
+					Submit {<Check className='ml-2 h-6 w-6 ' />}
 				</Button>
 			</form>
 			{error && (

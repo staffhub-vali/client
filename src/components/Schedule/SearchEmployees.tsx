@@ -44,7 +44,7 @@ const SearchEmployees: FC<SearchEmployeesProps> = ({
 					type='text'
 					size={inputSize}
 					value={name}
-					placeholder='Choose an Employee...'
+					placeholder={'Choose an Employee...'}
 					className='group m-0 cursor-pointer px-4 caret-transparent focus:ring-0 dark:placeholder:text-slate-400'
 				/>
 			</div>

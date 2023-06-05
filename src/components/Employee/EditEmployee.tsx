@@ -5,6 +5,7 @@ import Input from '../ui/Input'
 import Label from '../ui/Label'
 import axios from 'axios'
 import Button from '../ui/Button'
+import { Check, X } from 'lucide-react'
 
 interface EditEmployeeProps {
 	data: {
@@ -26,12 +27,12 @@ const EditEmployee: FC<EditEmployeeProps> = ({ data, setEdit }) => {
 	const [phone, setPhone] = useState(data.phone)
 	const [sickDays, setSickDays] = useState<any>(data.sickDays)
 	const [vacationDays, setVacationDays] = useState<any>(data.vacationDays)
-	const [isLoading, setIsLoading] = useState(false)
+	const [loading, setLoading] = useState(false)
 
 	const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault()
 		try {
-			setIsLoading(true)
+			setLoading(true)
 			const token = localStorage.getItem('token')
 			await axios.put(
 				`http://localhost:8080/v1/employees/${_id}`,
@@ -50,9 +51,9 @@ const EditEmployee: FC<EditEmployeeProps> = ({ data, setEdit }) => {
 				},
 			)
 			setEdit(false)
-			setIsLoading(false)
+			setLoading(false)
 		} catch (error) {
-			setIsLoading(false)
+			setLoading(false)
 			console.log(error)
 		}
 	}
@@ -110,17 +111,17 @@ const EditEmployee: FC<EditEmployeeProps> = ({ data, setEdit }) => {
 				/>
 				<Button
 					size={'lg'}
-					isLoading={isLoading}>
-					Submit
+					loading={loading}>
+					Submit {<Check className='ml-2 h-5 w-5' />}
 				</Button>
 
 				<Button
 					size={'lg'}
 					type='button'
-					isLoading={isLoading}
+					loading={loading}
 					onClick={() => setEdit(false)}
 					className='mx-2 bg-slate-400 text-white hover:bg-slate-400 dark:bg-slate-400 dark:text-white dark:hover:bg-slate-400'>
-					Cancel
+					Cancel {<X className='ml-2 h-5 w-5' />}
 				</Button>
 			</form>
 		</Container>

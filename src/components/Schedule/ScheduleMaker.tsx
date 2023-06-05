@@ -10,6 +10,7 @@ import ScheduleTable from './ScheduleTable'
 import Notification from '../ui/Notification'
 import SearchEmployees from './SearchEmployees'
 import { formatMonth } from '../../utils/DateFormatting'
+import { Check } from 'lucide-react'
 
 interface Employee {
 	_id: string
@@ -30,7 +31,7 @@ const ScheduleMaker: FC<ScheduleMakerProps> = ({ id, name, employees, setName, s
 	const currentDate = new Date()
 	const [data, setData] = useState<any[]>([])
 	const [value, setValue] = useState(new Date())
-	const [isLoading, setIsLoading] = useState<boolean>(false)
+	const [loading, setLoading] = useState<boolean>(false)
 	const [error, setError] = useState<string>('')
 	const [message, setMessage] = useState<string>('')
 	const [month, setMonth] = useState(() => {
@@ -41,7 +42,7 @@ const ScheduleMaker: FC<ScheduleMakerProps> = ({ id, name, employees, setName, s
 	const createSchedule = async () => {
 		const token = localStorage.getItem('token')
 		try {
-			setIsLoading(true)
+			setLoading(true)
 			const response = await axios.post(
 				`http://localhost:8080/v1/roster`,
 				{
@@ -54,11 +55,11 @@ const ScheduleMaker: FC<ScheduleMakerProps> = ({ id, name, employees, setName, s
 					},
 				},
 			)
-			setIsLoading(false)
+			setLoading(false)
 			setError('')
 			setMessage(response.data.message)
 		} catch (error: any) {
-			setIsLoading(false)
+			setLoading(false)
 			if (error.response.status === 401) {
 				Logout()
 			}
@@ -115,9 +116,9 @@ const ScheduleMaker: FC<ScheduleMakerProps> = ({ id, name, employees, setName, s
 				/>
 				<Button
 					size={'lg'}
-					isLoading={isLoading}
+					loading={loading}
 					onClick={createSchedule}>
-					Submit
+					Submit {<Check className='ml-2 h-6 w-6' />}
 				</Button>
 			</div>
 			<div className='col-span-6 col-start-6'>

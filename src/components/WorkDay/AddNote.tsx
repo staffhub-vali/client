@@ -1,6 +1,7 @@
 import axios from 'axios'
-import { FC, useState } from 'react'
 import Button from '../ui/Button'
+import { FC, useState } from 'react'
+import { Check, X } from 'lucide-react'
 
 interface AddNoteProps {
 	workDay: WorkDay | null
@@ -72,11 +73,19 @@ const AddNote: FC<AddNoteProps> = ({
 				onChange={(e) => setNote(e.target.value)}>
 				{note}
 			</textarea>
-			<Button
-				onClick={addNote}
-				className=''>
-				Add Note
-			</Button>
+			<div className='flex space-x-2'>
+				<Button
+					size={'sm'}
+					onClick={addNote}>
+					Add Note {<Check className='ml-2 h-5 w-5' />}
+				</Button>
+				<Button
+					size={'sm'}
+					variant={'cancel'}
+					onClick={() => setShowAddNote(false)}>
+					Cancel {<X className='ml-2 h-5 w-5' />}
+				</Button>
+			</div>
 		</>
 	)
 }

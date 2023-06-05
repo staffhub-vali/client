@@ -3,6 +3,7 @@ import Modal from '../ui/Modal'
 import Input from '../ui/Input'
 import Button from '../ui/Button'
 import { FC, useState } from 'react'
+import { Check, Delete, Pencil, X } from 'lucide-react'
 import Paragraph from '../ui/Paragraph'
 import { Link } from 'react-router-dom'
 import { formatTime, formatTotal } from '../../utils/DateFormatting'
@@ -190,15 +191,15 @@ const Employee: FC<EmployeeProps> = ({
 					onSubmit={(e) => handleEdit(e, shift._id)}>
 					<Button
 						size={'sm'}
-						loading={shift.loading}>
-						Save
-					</Button>
-					<Button
-						size={'sm'}
 						type='button'
 						onClick={() => toggleEditMode(shift._id)}
 						variant={'cancel'}>
-						Cancel
+						Cancel {<X className='ml-2 h-4 w-4' />}
+					</Button>
+					<Button
+						size={'sm'}
+						loading={shift.loading}>
+						Save {<Check className='ml-2 h-4 w-4' />}
 					</Button>
 				</form>
 			)}
@@ -209,13 +210,13 @@ const Employee: FC<EmployeeProps> = ({
 						size={'sm'}
 						loading={shift.loading}
 						onClick={() => toggleEditMode(shift._id)}>
-						Edit
+						Edit {<Pencil className='ml-2 h-4 w-4' />}
 					</Button>
 					<Button
 						size={'sm'}
 						variant={'danger'}
 						onClick={() => setShowModal(true)}>
-						Delete
+						Delete {<Delete className='ml-2 h-4 w-4' />}
 					</Button>
 				</div>
 			)}

@@ -5,6 +5,7 @@ import Button from '../ui/Button'
 import AddShift from './AddShift'
 import Heading from '../ui/Heading'
 import { FC, useState } from 'react'
+import { Clock8, ScrollText } from 'lucide-react'
 import Paragraph from '../ui/Paragraph'
 import Notification from '../ui/Notification'
 import { formatDate } from '../../utils/DateFormatting'
@@ -78,6 +79,7 @@ const WorkDay: FC<WorkDayProps> = ({
 				{workDay && workDay.notes.length > 0 && <Heading size={'sm'}>Notes</Heading>}
 				{workDay &&
 					workDay.notes.length > 0 &&
+					!showAddNote &&
 					workDay.notes.map((note, index) => (
 						<Note
 							note={note}
@@ -100,9 +102,9 @@ const WorkDay: FC<WorkDayProps> = ({
 
 				{workDay && !showAddNote && (
 					<Button
-						onClick={() => setShowAddNote(true)}
-						className=''>
-						Add Note
+						size={'sm'}
+						onClick={() => setShowAddNote(true)}>
+						Add Note {<ScrollText className='ml-2 h-5	 w-5' />}
 					</Button>
 				)}
 
@@ -130,13 +132,12 @@ const WorkDay: FC<WorkDayProps> = ({
 				/>
 			) : (
 				<Button
-					size={'lg'}
 					className='mt-12'
 					onClick={() => {
 						setShowAddShift(true)
 						setShowAddNote(false)
 					}}>
-					New Shift
+					New Shift {<Clock8 className='ml-2 h-5 w-5' />}
 				</Button>
 			)}
 

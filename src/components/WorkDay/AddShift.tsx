@@ -161,13 +161,13 @@ const AddShift: FC<AddShiftProps> = ({ workDay, setShowAddShift, setError, setMe
 					</Paragraph>
 				</div>
 				<div className='mb-1 mt-auto flex space-x-2'>
-					<Button loading={loading}>Create</Button>
 					<Button
 						variant={'cancel'}
 						type='button'
 						onClick={() => setShowAddShift(false)}>
 						Cancel
 					</Button>
+					<Button loading={loading}>Create</Button>
 				</div>
 			</form>
 		</>

@@ -25,21 +25,22 @@ interface Shift {
 }
 
 const DashboardPage: FC<DashboardPageProps> = ({}) => {
+	const [skip, setSkip] = useState<number>(0)
 	const [data, setData] = useState<WorkDay[]>([])
 
 	useEffect(() => {
 		fetchData()
-	}, [])
+	}, [skip])
 
 	const fetchData = async () => {
 		try {
 			const token = localStorage.getItem('token')
-			const { data } = await axios.get('http://localhost:8080/v1/days', {
+			const { data } = await axios.get(`http://localhost:8080/v1/days?skip=${skip}`, {
 				headers: {
 					Authorization: `Bearer ${token}`,
 				},
 			})
-			data.sort((a: { date: number }, b: { date: number }) => a.date - b.date)
+			data.sort((a: WorkDay, b: WorkDay) => a.date - b.date)
 			setData(data)
 		} catch (error: any) {
 			if (error.response.status === 401) {
@@ -51,7 +52,11 @@ const DashboardPage: FC<DashboardPageProps> = ({}) => {
 	return (
 		<Container size={'lg'}>
 			{data.length > 0 ? (
-				<Dashboard data={data} />
+				<Dashboard
+					data={data}
+					skip={skip}
+					setSkip={setSkip}
+				/>
 			) : (
 				<>
 					<Heading

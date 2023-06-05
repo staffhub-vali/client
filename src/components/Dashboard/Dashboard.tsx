@@ -1,4 +1,4 @@
-import { FC } from 'react'
+import { FC, useState, useEffect } from 'react'
 import { WorkDay } from '../../pages/Dashboard/DashboardPage'
 import { formatDate, formatDay } from '../../utils/DateFormatting'
 import { useNavigate } from 'react-router-dom'
@@ -7,12 +7,14 @@ import Paragraph from '../ui/Paragraph'
 
 interface DashboardProps {
 	data: WorkDay[]
+	skip: number
+	setSkip: any
 }
 
-const Dashboard: FC<DashboardProps> = ({ data }) => {
+const Dashboard: FC<DashboardProps> = ({ data, skip, setSkip }) => {
 	const navigate = useNavigate()
 
-	const weekDays: Record<string, WorkDay[]> = {
+	const weekDays: any = {
 		Monday: [],
 		Tuesday: [],
 		Wednesday: [],
@@ -24,32 +26,141 @@ const Dashboard: FC<DashboardProps> = ({ data }) => {
 
 	data.forEach((day) => {
 		weekDays[formatDay(day.date)].push(day)
+		weekDays[formatDay(day.date)].sort((a: WorkDay, b: WorkDay) => a.date - b.date)
 	})
 
-	const renderWeekDay = (day: string) => {
-		return (
-			<div key={day}>
+	const handlePrevPage = () => {
+		setSkip(skip - 7)
+	}
+
+	const handleNextPage = () => {
+		setSkip(skip + 7)
+	}
+
+	return (
+		<div className='flex space-x-24 text-center'>
+			<div>
 				<Heading
-					size='xs'
+					size={'xs'}
 					className='my-6'>
-					{day}
+					Monday
 				</Heading>
-				{weekDays[day].map((day: WorkDay) => (
+				{weekDays.Monday.map((day: WorkDay, index: number) => (
 					<Paragraph
-						size='xl'
+						size={'xl'}
 						key={day._id}
-						onClick={() => navigate(`/days/${day._id}`)}
-						className='cursor-pointer py-2 hover:text-sky-500'>
+						className='cursor-pointer py-2 hover:text-sky-500'
+						onClick={() => navigate(`/days/${day._id}`)}>
 						{formatDate(day.date)}
 					</Paragraph>
 				))}
 			</div>
-		)
-	}
+			<div>
+				<Heading
+					size={'xs'}
+					className='my-6'>
+					Tuesday
+				</Heading>
+				{weekDays.Tuesday.map((day: WorkDay) => (
+					<Paragraph
+						size={'xl'}
+						className='cursor-pointer py-2 hover:text-sky-500'
+						onClick={() => navigate(`/days/${day._id}`)}>
+						{formatDate(day.date)}
+					</Paragraph>
+				))}
+			</div>
+			<div>
+				<Heading
+					size={'xs'}
+					className='my-6'>
+					Wednesday
+				</Heading>
+				{weekDays.Wednesday.map((day: WorkDay) => (
+					<Paragraph
+						size={'xl'}
+						className='cursor-pointer py-2 hover:text-sky-500'
+						onClick={() => navigate(`/days/${day._id}`)}>
+						{formatDate(day.date)}
+					</Paragraph>
+				))}
+			</div>
+			<div>
+				<Heading
+					size={'xs'}
+					className='my-6'>
+					Thursday
+				</Heading>
+				{weekDays.Thursday.map((day: WorkDay) => (
+					<Paragraph
+						size={'xl'}
+						className='cursor-pointer py-2 hover:text-sky-500'
+						onClick={() => navigate(`/days/${day._id}`)}>
+						{formatDate(day.date)}
+					</Paragraph>
+				))}
+			</div>
+			<div>
+				<Heading
+					size={'xs'}
+					className='my-6'>
+					Friday
+				</Heading>
+				{weekDays.Friday.map((day: WorkDay) => (
+					<Paragraph
+						size={'xl'}
+						className='cursor-pointer py-2 hover:text-sky-500'
+						onClick={() => navigate(`/days/${day._id}`)}>
+						{formatDate(day.date)}
+					</Paragraph>
+				))}
+			</div>
+			<div>
+				<Heading
+					size={'xs'}
+					className='my-6'>
+					Saturday
+				</Heading>
+				{weekDays.Saturday.map((day: WorkDay) => (
+					<Paragraph
+						size={'xl'}
+						className='cursor-pointer py-2 hover:text-sky-500'
+						onClick={() => navigate(`/days/${day._id}`)}>
+						{formatDate(day.date)}
+					</Paragraph>
+				))}
+			</div>
+			<div>
+				<Heading
+					size={'xs'}
+					className='my-6'>
+					Sunday
+				</Heading>
+				{weekDays.Sunday.map((day: WorkDay) => (
+					<Paragraph
+						size={'xl'}
+						className='cursor-pointer py-2 hover:text-sky-500'
+						onClick={() => navigate(`/days/${day._id}`)}>
+						{formatDate(day.date)}
+					</Paragraph>
+				))}
+			</div>
+			<div>
+				<div>
+					<button
+						onClick={handlePrevPage}
+						className='mr-1 rounded-lg bg-gray-200 px-3 py-2'>
+						{'<'}
+					</button>
 
-	const daysOfWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
-
-	return <div className='flex space-x-24 text-center'>{daysOfWeek.map(renderWeekDay)}</div>
+					<button
+						onClick={handleNextPage}
+						className='mr-1 rounded-lg bg-gray-200 px-3 py-2'>
+						{'>'}
+					</button>
+				</div>
+			</div>
+		</div>
+	)
 }
-
 export default Dashboard

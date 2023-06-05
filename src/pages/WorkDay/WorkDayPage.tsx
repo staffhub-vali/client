@@ -9,11 +9,12 @@ const WorkDayPage = () => {
 	const { id } = useParams()
 	const [error, setError] = useState<string>('')
 	const [message, setMessage] = useState<string>('')
+	const [loading, setLoading] = useState<boolean>(false)
 	const [workDay, setWorkDay] = useState<WorkDay | null>(null)
 
 	useEffect(() => {
 		fetchWorkDay()
-	}, [message, error])
+	}, [loading])
 
 	const fetchWorkDay = async () => {
 		try {
@@ -35,12 +36,14 @@ const WorkDayPage = () => {
 	return (
 		<Container size={'lg'}>
 			<WorkDay
-				message={message}
-				setMessage={setMessage}
 				error={error}
-				setError={setError}
 				workDay={workDay}
+				message={message}
+				setError={setError}
+				loading={loading}
 				setWorkDay={setWorkDay}
+				setMessage={setMessage}
+				setLoading={setLoading}
 			/>
 		</Container>
 	)

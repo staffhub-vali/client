@@ -4,15 +4,17 @@ import Button from '../ui/Button'
 import AddShift from './AddShift'
 import Heading from '../ui/Heading'
 import { FC, useState } from 'react'
+import { XCircle } from 'lucide-react'
 import Paragraph from '../ui/Paragraph'
 import Notification from '../ui/Notification'
 import { formatDate } from '../../utils/DateFormatting'
+import Modal from '../ui/Modal'
 
 interface Shift {
 	end: number
 	_id: string
 	start: number
-	isLoading: boolean
+	loading: boolean
 	employee: { name: string; _id: string }
 }
 
@@ -23,6 +25,8 @@ interface WorkDayProps {
 	setMessage: any
 	setWorkDay: any
 	workDay: WorkDay | null
+	loading: boolean
+	setLoading: any
 }
 
 interface WorkDay {
@@ -32,10 +36,20 @@ interface WorkDay {
 	shifts: Shift[]
 }
 
-const WorkDay: FC<WorkDayProps> = ({ workDay, setWorkDay, error, setError, message, setMessage }) => {
+const WorkDay: FC<WorkDayProps> = ({
+	workDay,
+	setWorkDay,
+	error,
+	setError,
+	message,
+	setMessage,
+	loading,
+	setLoading,
+}) => {
 	const [note, setNote] = useState<string>('')
-	const [isLoading, setIsLoading] = useState<boolean>(false)
+	const [showModal, setShowModal] = useState<boolean>(false)
 	const [showAddNote, setShowAddNote] = useState<boolean>(false)
+	const [noteIndex, setNoteIndex] = useState<number | null>(null)
 	const [showAddShift, setShowAddShift] = useState<boolean>(false)
 
 	const addNote = async () => {
@@ -44,7 +58,7 @@ const WorkDay: FC<WorkDayProps> = ({ workDay, setWorkDay, error, setError, messa
 			setShowAddShift(false)
 			return
 		}
-		setIsLoading(true)
+		setLoading(true)
 		try {
 			const token = localStorage.getItem('token')
 			const { data } = await axios.post(
@@ -61,12 +75,36 @@ const WorkDay: FC<WorkDayProps> = ({ workDay, setWorkDay, error, setError, messa
 			)
 			setNote('')
 			setError('')
-			setIsLoading(false)
+			setLoading(false)
 			setShowAddNote(false)
 			setMessage(data.message)
 		} catch (error: any) {
 			setMessage('')
-			setIsLoading(false)
+			setLoading(false)
+			setError(error.response.data.message)
+		}
+	}
+
+	const deleteNote = async (index: number | null) => {
+		try {
+			setLoading(true)
+			const token = localStorage.getItem('token')
+			const { data } = await axios.delete(
+				`http://localhost:8080/v1/days/notes/?workDay=${workDay?._id}&index=${index}`,
+				{
+					headers: {
+						Authorization: `Bearer ${token}`,
+					},
+				},
+			)
+			setError('')
+			setLoading(false)
+			setShowModal(false)
+			setMessage(data.message)
+		} catch (error: any) {
+			setMessage('')
+			setLoading(false)
+			setShowModal(false)
 			setError(error.response.data.message)
 		}
 	}
@@ -89,6 +127,8 @@ const WorkDay: FC<WorkDayProps> = ({ workDay, setWorkDay, error, setError, messa
 						shift={shift}
 						index={index}
 						workDay={workDay}
+						loading={loading}
+						setLoading={setLoading}
 						setError={setError}
 						setMessage={setMessage}
 						setWorkDay={setWorkDay}
@@ -99,14 +139,37 @@ const WorkDay: FC<WorkDayProps> = ({ workDay, setWorkDay, error, setError, messa
 				{workDay && workDay.notes.length > 0 && <Heading size={'sm'}>Notes</Heading>}
 				{workDay &&
 					workDay.notes.length > 0 &&
-					workDay.notes.map((note) => (
-						<Paragraph
-							size={'sm'}
-							key={workDay._id}
-							className='mb-4'>
-							{note}
-						</Paragraph>
-					))}{' '}
+					workDay.notes.map((note, index) => (
+						<div className='flex items-center'>
+							<Paragraph
+								size={'sm'}
+								className='w-96'
+								key={workDay._id}>
+								{note}
+							</Paragraph>
+							<Button
+								size={'sm'}
+								variant={'link'}
+								className='min-w-[3rem]'
+								onClick={() => {
+									setShowModal(true)
+									setNoteIndex(index)
+								}}
+								title='Delete note'>
+								{<XCircle />}
+							</Button>
+							{showModal && (
+								<Modal
+									text={'Delete note?'}
+									showModal={showModal}
+									loading={loading}
+									cancel={() => setShowModal(false)}
+									submit={() => deleteNote(noteIndex)}
+								/>
+							)}
+						</div>
+					))}
+
 				{!showAddNote && workDay && workDay.notes.length < 1 && (
 					<Paragraph
 						className='py-12'
@@ -134,6 +197,8 @@ const WorkDay: FC<WorkDayProps> = ({ workDay, setWorkDay, error, setError, messa
 
 			{showAddShift ? (
 				<AddShift
+					loading={loading}
+					setLoading={setLoading}
 					workDay={workDay}
 					setError={setError}
 					setMessage={setMessage}

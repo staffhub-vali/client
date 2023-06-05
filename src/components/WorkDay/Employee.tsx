@@ -14,6 +14,8 @@ interface EmployeeProps {
 	setMessage: any
 	setWorkDay: any
 	workDay: WorkDay | null
+	loading: boolean
+	setLoading: any
 }
 
 interface WorkDay {
@@ -27,14 +29,22 @@ interface Shift {
 	end: number
 	_id: string
 	start: number
-	isLoading: boolean
+	loading?: boolean
 	employee: { name: string; _id: string }
 }
 
-const Employee: FC<EmployeeProps> = ({ shift, index, workDay, setWorkDay, setMessage, setError }) => {
+const Employee: FC<EmployeeProps> = ({
+	shift,
+	index,
+	workDay,
+	setWorkDay,
+	setMessage,
+	setError,
+	loading,
+	setLoading,
+}) => {
 	const [showModal, setShowModal] = useState(false)
 
-	const [isLoading, setIsLoading] = useState<boolean>(false)
 	const [editMode, setEditMode] = useState<{ [key: string]: boolean }>({})
 
 	const toggleEditMode = (shiftId: string) => {
@@ -81,7 +91,7 @@ const Employee: FC<EmployeeProps> = ({ shift, index, workDay, setWorkDay, setMes
 		// Find the shift with the matching shiftId
 		const shiftIndex = updatedWorkDay.shifts.findIndex((shift: Shift) => shift._id === shiftId)
 		if (shiftIndex !== -1) {
-			updatedWorkDay.shifts[shiftIndex].isLoading = true
+			updatedWorkDay.shifts[shiftIndex].loading = true
 			setWorkDay(updatedWorkDay)
 		}
 
@@ -101,9 +111,9 @@ const Employee: FC<EmployeeProps> = ({ shift, index, workDay, setWorkDay, setMes
 			setError(error.response.data.message)
 		}
 
-		// Reset the isLoading property after the request is completed
+		// Reset the loading property after the request is completed
 		if (shiftIndex !== -1) {
-			updatedWorkDay.shifts[shiftIndex].isLoading = false
+			updatedWorkDay.shifts[shiftIndex].loading = false
 			setWorkDay(updatedWorkDay)
 		}
 	}
@@ -111,7 +121,7 @@ const Employee: FC<EmployeeProps> = ({ shift, index, workDay, setWorkDay, setMes
 	const handleDelete = async (shiftId: string) => {
 		const token = localStorage.getItem('token')
 		try {
-			setIsLoading(true)
+			setLoading(true)
 			const { data } = await axios.delete(
 				`http://localhost:8080/v1/days/${shiftId}?shiftId=${shiftId}&workDayId=${workDay?._id}`,
 				{
@@ -125,7 +135,7 @@ const Employee: FC<EmployeeProps> = ({ shift, index, workDay, setWorkDay, setMes
 			setMessage(data.message)
 		} catch (error: any) {
 			setMessage('')
-			setIsLoading(false)
+			setLoading(false)
 			setError(error.response.data.message)
 		}
 	}
@@ -180,7 +190,7 @@ const Employee: FC<EmployeeProps> = ({ shift, index, workDay, setWorkDay, setMes
 					onSubmit={(e) => handleEdit(e, shift._id)}>
 					<Button
 						size={'sm'}
-						isLoading={shift.isLoading}>
+						loading={shift.loading}>
 						Save
 					</Button>
 					<Button
@@ -197,7 +207,7 @@ const Employee: FC<EmployeeProps> = ({ shift, index, workDay, setWorkDay, setMes
 				<div className='space-x-2'>
 					<Button
 						size={'sm'}
-						isLoading={shift.isLoading}
+						loading={shift.loading}
 						onClick={() => toggleEditMode(shift._id)}>
 						Edit
 					</Button>
@@ -212,7 +222,7 @@ const Employee: FC<EmployeeProps> = ({ shift, index, workDay, setWorkDay, setMes
 			{showModal && (
 				<Modal
 					showModal={showModal}
-					isLoading={isLoading}
+					loading={loading}
 					cancel={() => setShowModal(false)}
 					submit={() => handleDelete(shift._id)}
 					text={'Are you sure you want to delete this shift?'}

@@ -20,7 +20,7 @@ interface Shift {
 	end: number
 	_id: string
 	start: number
-	isLoading: boolean
+	loading: boolean
 	employee: { name: string; _id: string }
 }
 
@@ -29,11 +29,12 @@ interface AddShiftProps {
 	setShowAddShift: any
 	setError: any
 	setMessage: any
+	loading: boolean
+	setLoading: any
 }
 
-const AddShift: FC<AddShiftProps> = ({ workDay, setShowAddShift, setError, setMessage }) => {
+const AddShift: FC<AddShiftProps> = ({ workDay, setShowAddShift, setError, setMessage, loading, setLoading }) => {
 	const [name, setName] = useState<string>('')
-	const [isLoading, setIsLoading] = useState<boolean>(false)
 	const [employees, setEmployees] = useState<[]>([])
 	const [end, setEnd] = useState<number | null>(null)
 	const [isOpen, setIsOpen] = useState<boolean>(false)
@@ -75,7 +76,7 @@ const AddShift: FC<AddShiftProps> = ({ workDay, setShowAddShift, setError, setMe
 
 	const handleSubmit = async (e: React.FormEvent) => {
 		e.preventDefault()
-		setIsLoading(true)
+		setLoading(true)
 		try {
 			const token = localStorage.getItem('token')
 			const { data } = await axios.post(
@@ -88,12 +89,12 @@ const AddShift: FC<AddShiftProps> = ({ workDay, setShowAddShift, setError, setMe
 				},
 			)
 			setError('')
-			setIsLoading(false)
+			setLoading(false)
 			setShowAddShift(false)
 			setMessage(data.message)
 		} catch (error: any) {
 			setMessage('')
-			setIsLoading(false)
+			setLoading(false)
 			setError(error.response.data.message)
 		}
 	}
@@ -160,7 +161,7 @@ const AddShift: FC<AddShiftProps> = ({ workDay, setShowAddShift, setError, setMe
 					</Paragraph>
 				</div>
 				<div className='mb-1 mt-auto flex space-x-2'>
-					<Button isLoading={isLoading}>Create</Button>
+					<Button loading={loading}>Create</Button>
 					<Button
 						variant={'cancel'}
 						type='button'

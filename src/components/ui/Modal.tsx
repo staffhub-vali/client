@@ -18,10 +18,10 @@ interface ModalProps {
 	cancel: any
 	submit: any
 	showModal: boolean
-	isLoading: boolean
+	loading: boolean
 }
 
-const Modal: FC<ModalProps> = ({ showModal, isLoading, submit, cancel, text }) => {
+const Modal: FC<ModalProps> = ({ showModal, loading, submit, cancel, text }) => {
 	return (
 		<ReactModal
 			isOpen={showModal}
@@ -32,7 +32,7 @@ const Modal: FC<ModalProps> = ({ showModal, isLoading, submit, cancel, text }) =
 					className='my-2'
 					variant={'danger'}
 					onClick={submit}
-					isLoading={isLoading}>
+					loading={loading}>
 					Yes
 				</Button>
 				<Button

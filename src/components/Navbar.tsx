@@ -103,7 +103,7 @@ const Navbar: FC<NavbarProps> = ({}) => {
 						) : (
 							<Link
 								to='/auth/login'
-								className={`${buttonVariants({ variant: 'outline' })} w-36`}>
+								className={`${buttonVariants({ variant: 'outlineHover' })} w-36`}>
 								Sign In
 							</Link>
 						)}

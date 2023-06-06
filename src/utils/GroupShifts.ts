@@ -22,7 +22,7 @@ const groupShifts = (shifts: Shift[]): Shift[] => {
 		}
 	})
 
-	return groupedShifts
+	return groupedShifts.sort((a, b) => a.start - b.start)
 }
 
 export default groupShifts

@@ -5,7 +5,7 @@ import Heading from '../ui/Heading'
 import Paragraph from '../ui/Paragraph'
 import Container from '../ui/Container'
 import { Dispatch, FC, SetStateAction, useState } from 'react'
-import { Delete, Pencil } from 'lucide-react'
+import { Pencil, Trash2 } from 'lucide-react'
 
 interface EmployeeProfileProps {
 	data: {
@@ -64,15 +64,15 @@ const EmployeeProfile: FC<EmployeeProfileProps> = ({ data, setEdit }) => {
 
 				<div className='mt-2 flex space-x-2'>
 					<Button
-						size={'lg'}
+						size={'sm'}
 						onClick={() => setEdit(true)}>
-						Edit {<Pencil className='ml-2 h-5 w-5' />}
+						Edit {<Pencil className='ml-2 h-4 w-4' />}
 					</Button>
 					<Button
-						size={'lg'}
+						size={'sm'}
 						onClick={() => setShowModal(true)}
 						variant={'danger'}>
-						Delete {<Delete className='ml-2 h-5 w-5' />}
+						Delete {<Trash2 className='ml-2 h-4 w-4' />}
 					</Button>
 				</div>
 

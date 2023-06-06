@@ -109,14 +109,9 @@ const EditEmployee: FC<EditEmployeeProps> = ({ data, setEdit }) => {
 					value={vacationDays}
 					onChange={(e) => setVacationDays(e.target.value)}
 				/>
-				<Button
-					size={'lg'}
-					loading={loading}>
-					Submit {<Check className='ml-2 h-5 w-5' />}
-				</Button>
+				<Button loading={loading}>Submit {<Check className='ml-2 h-5 w-5' />}</Button>
 
 				<Button
-					size={'lg'}
 					type='button'
 					loading={loading}
 					onClick={() => setEdit(false)}

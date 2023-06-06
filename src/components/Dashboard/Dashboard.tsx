@@ -1,13 +1,13 @@
 import { FC } from 'react'
 import Button from '../ui/Button'
-import Paragraph from '../ui/Paragraph'
-import Container from '../ui/Container'
-import { useNavigate } from 'react-router-dom'
-import { formatDate, formatDay, formatTime } from '../../utils/DateFormatting'
-import { ChevronLeft, ChevronRight, User } from 'lucide-react'
-import { WorkDay } from '../../pages/Dashboard/DashboardPage'
 import Heading from '../ui/Heading'
+import Container from '../ui/Container'
+import Paragraph from '../ui/Paragraph'
+import { useNavigate } from 'react-router-dom'
 import groupShifts from '../../utils/GroupShifts'
+import { WorkDay } from '../../pages/Dashboard/DashboardPage'
+import { ChevronLeft, ChevronRight, ScrollText, User } from 'lucide-react'
+import { formatDate, formatDay, formatTime } from '../../utils/DateFormatting'
 
 interface DashboardProps {
 	setSkip: any
@@ -27,21 +27,27 @@ const Dashboard: FC<DashboardProps> = ({ data, skip, setSkip }) => {
 	}
 
 	return (
-		<Container size={'lg'}>
-			<div className='grid grid-cols-7 space-x-6'>
+		<Container
+			size={'lg'}
+			className='p-0 pt-20'>
+			<div className='flex min-h-[36rem] rounded border bg-white shadow'>
 				{data.map((day: WorkDay) => (
 					<div
-						className='flex flex-col items-center'
+						className='flex w-64 flex-col items-center border-x'
 						key={day._id}>
-						<Heading size={'xs'}>{formatDay(day.date)}</Heading>
+						<Heading
+							className='px-3 pt-6'
+							size={'xs'}>
+							{formatDay(day.date)}
+						</Heading>
 						<Paragraph
 							size={'xl'}
-							className=' cursor-pointer border-b-2 px-14 py-2 text-center hover:text-sky-500'
+							className=' w-full cursor-pointer border-b-2 py-2 text-center hover:text-sky-500'
 							onClick={() => navigate(`/days/${day._id}`)}>
 							{day && formatDate(day.date)}
 						</Paragraph>
 
-						<div className='mt-4 flex flex-col items-center'>
+						<div className='mt-4 flex w-full flex-col items-center'>
 							{groupShifts(day.shifts).map((groupedShift) => (
 								<Paragraph
 									title={groupedShift.employee.name}
@@ -54,6 +60,10 @@ const Dashboard: FC<DashboardProps> = ({ data, skip, setSkip }) => {
 								</Paragraph>
 							))}
 						</div>
+
+						<Paragraph className='mb-1 mt-auto flex items-center text-2xl'>
+							{day.notes.length} <ScrollText className='ml-2 h-6 w-6' />
+						</Paragraph>
 					</div>
 				))}
 			</div>

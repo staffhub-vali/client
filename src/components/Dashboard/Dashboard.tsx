@@ -7,25 +7,15 @@ import { formatDate, formatDay, formatTime } from '../../utils/DateFormatting'
 import { ChevronLeft, ChevronRight, User } from 'lucide-react'
 import { WorkDay } from '../../pages/Dashboard/DashboardPage'
 import Heading from '../ui/Heading'
+import groupShifts from '../../utils/GroupShifts'
 
 interface DashboardProps {
 	setSkip: any
 	skip: number
-	count: number
 	data: WorkDay[]
 }
 
-interface Shift {
-	start: number
-	end: number
-	employee: Employee
-}
-
-interface Employee {
-	name: string
-}
-
-const Dashboard: FC<DashboardProps> = ({ data, skip, setSkip, count }) => {
+const Dashboard: FC<DashboardProps> = ({ data, skip, setSkip }) => {
 	const navigate = useNavigate()
 
 	const handlePrevPage = () => {
@@ -35,29 +25,32 @@ const Dashboard: FC<DashboardProps> = ({ data, skip, setSkip, count }) => {
 	const handleNextPage = () => {
 		setSkip(skip + 1)
 	}
-	console.log(data)
+
 	return (
 		<Container size={'lg'}>
 			<div className='grid grid-cols-7 space-x-6'>
 				{data.map((day: WorkDay) => (
-					<div className='flex flex-col items-center'>
+					<div
+						className='flex flex-col items-center'
+						key={day._id}>
 						<Heading size={'xs'}>{formatDay(day.date)}</Heading>
 						<Paragraph
 							size={'xl'}
-							key={day._id}
-							className=' cursor-pointer py-2 text-center hover:text-sky-500'
+							className=' cursor-pointer border-b-2 px-14 py-2 text-center hover:text-sky-500'
 							onClick={() => navigate(`/days/${day._id}`)}>
 							{day && formatDate(day.date)}
 						</Paragraph>
 
-						<div className='flex flex-col items-center'>
-							{day.shifts.map((shift: Shift) => (
+						<div className='mt-4 flex flex-col items-center'>
+							{groupShifts(day.shifts).map((groupedShift) => (
 								<Paragraph
-									title={shift.employee.name}
-									className='flex'>
-									{' '}
-									<User />
-									{formatTime(shift.start) + '-' + formatTime(shift.end)}
+									title={groupedShift.employee.name}
+									className='flex'
+									key={`${groupedShift.start}-${groupedShift.end}`}>
+									<div className='mr-3 flex'>
+										{`${groupedShift.count}`} <User className='font-normal' />
+									</div>
+									{`${formatTime(groupedShift.start)} - ${formatTime(groupedShift.end)}`}
 								</Paragraph>
 							))}
 						</div>
@@ -83,4 +76,5 @@ const Dashboard: FC<DashboardProps> = ({ data, skip, setSkip, count }) => {
 		</Container>
 	)
 }
+
 export default Dashboard

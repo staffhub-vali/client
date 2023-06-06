@@ -1,6 +1,6 @@
 import React, { forwardRef, HTMLAttributes } from 'react'
 import { cva, VariantProps } from 'class-variance-authority'
-import { cn } from '../../utils/helpers'
+import { cn } from '../../utils/TailwindMerge'
 
 interface HeadingProps extends HTMLAttributes<HTMLHeadingElement>, VariantProps<typeof headingVariants> {}
 
@@ -16,18 +16,16 @@ const headingVariants = cva('text-slate-800 dark:text-slate-200 font-bold leadin
 	defaultVariants: { size: 'default' },
 })
 
-const Heading = forwardRef<HTMLHeadingElement, HeadingProps>(
-	({ className, size, children, ...props }, ref) => {
-		return (
-			<p
-				ref={ref}
-				{...props}
-				className={cn(headingVariants({ size, className }))}>
-				{children}
-			</p>
-		)
-	},
-)
+const Heading = forwardRef<HTMLHeadingElement, HeadingProps>(({ className, size, children, ...props }, ref) => {
+	return (
+		<p
+			ref={ref}
+			{...props}
+			className={cn(headingVariants({ size, className }))}>
+			{children}
+		</p>
+	)
+})
 
 Heading.displayName = 'Heading'
 

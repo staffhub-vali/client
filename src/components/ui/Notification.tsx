@@ -1,10 +1,8 @@
 import React, { forwardRef, HTMLAttributes } from 'react'
 import { cva, VariantProps } from 'class-variance-authority'
-import { cn } from '../../utils/helpers'
+import { cn } from '../../utils/TailwindMerge'
 
-interface NotificationProps
-	extends HTMLAttributes<HTMLParagraphElement>,
-		VariantProps<typeof notificationVariants> {}
+interface NotificationProps extends HTMLAttributes<HTMLParagraphElement>, VariantProps<typeof notificationVariants> {}
 
 const notificationVariants = cva('mx-auto w-fit rounded px-4 py-2 text-3xl text-white', {
 	variants: {

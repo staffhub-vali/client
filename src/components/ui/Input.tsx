@@ -1,4 +1,4 @@
-import { cn } from '../../utils/helpers'
+import { cn } from '../../utils/TailwindMerge'
 import { cva, VariantProps } from 'class-variance-authority'
 import { InputHTMLAttributes, FC, forwardRef, ChangeEvent } from 'react'
 

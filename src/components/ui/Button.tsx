@@ -1,5 +1,5 @@
 import { Loader2 } from 'lucide-react'
-import { cn } from '../../utils/helpers'
+import { cn } from '../../utils/TailwindMerge'
 import { ButtonHTMLAttributes, FC, forwardRef } from 'react'
 import { cva, VariantProps } from 'class-variance-authority'
 

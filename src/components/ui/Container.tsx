@@ -1,6 +1,6 @@
 import React, { forwardRef, HTMLAttributes } from 'react'
 import { cva, VariantProps } from 'class-variance-authority'
-import { cn } from '../../utils/helpers'
+import { cn } from '../../utils/TailwindMerge'
 
 interface ContainerProps extends HTMLAttributes<HTMLDivElement>, VariantProps<typeof containerVariants> {}
 
@@ -15,18 +15,16 @@ const containerVariants = cva('p-24 mx-auto flex flex-col items-center text-slat
 	defaultVariants: { size: 'default' },
 })
 
-const Container = forwardRef<HTMLDivElement, ContainerProps>(
-	({ className, size, children, ...props }, ref) => {
-		return (
-			<div
-				ref={ref}
-				{...props}
-				className={cn(containerVariants({ size, className }))}>
-				{children}
-			</div>
-		)
-	},
-)
+const Container = forwardRef<HTMLDivElement, ContainerProps>(({ className, size, children, ...props }, ref) => {
+	return (
+		<div
+			ref={ref}
+			{...props}
+			className={cn(containerVariants({ size, className }))}>
+			{children}
+		</div>
+	)
+})
 
 Container.displayName = 'Container'
 

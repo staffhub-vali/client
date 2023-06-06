@@ -1,13 +1,12 @@
 import axios from 'axios'
-import { FC, useEffect, useState } from 'react'
-import Dashboard from '../../components/Dashboard/Dashboard'
 import { Logout } from '../../Auth'
 import { Link } from 'react-router-dom'
-import { buttonVariants } from '../../components/ui/Button'
 import { CalendarPlus } from 'lucide-react'
+import { FC, useEffect, useState } from 'react'
 import Heading from '../../components/ui/Heading'
-import Paragraph from '../../components/ui/Paragraph'
 import Container from '../../components/ui/Container'
+import { buttonVariants } from '../../components/ui/Button'
+import Dashboard from '../../components/Dashboard/Dashboard'
 
 interface DashboardPageProps {}
 
@@ -22,6 +21,7 @@ interface Shift {
 	end: number
 	start: number
 	employee: { name: string }
+	count: number
 }
 
 const DashboardPage: FC<DashboardPageProps> = ({}) => {
@@ -31,8 +31,6 @@ const DashboardPage: FC<DashboardPageProps> = ({}) => {
 	useEffect(() => {
 		fetchData()
 	}, [skip])
-
-	let count = 0
 
 	const fetchData = async () => {
 		try {
@@ -57,7 +55,6 @@ const DashboardPage: FC<DashboardPageProps> = ({}) => {
 		<Container size={'lg'}>
 			{data.length > 0 ? (
 				<Dashboard
-					count={count}
 					data={data}
 					skip={skip}
 					setSkip={setSkip}

@@ -142,7 +142,7 @@ const Employee: FC<EmployeeProps> = ({
 	}
 	return (
 		<div
-			className='flex items-center justify-between'
+			className='flex items-center justify-between py-6'
 			key={shift._id}>
 			<Paragraph
 				size={'xl'}

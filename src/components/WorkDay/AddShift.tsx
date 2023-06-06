@@ -8,6 +8,7 @@ import { Logout } from '../../Auth'
 import axios from 'axios'
 import Button from '../ui/Button'
 import Heading from '../ui/Heading'
+import { Check, X } from 'lucide-react'
 
 interface WorkDay {
 	notes: []
@@ -100,11 +101,11 @@ const AddShift: FC<AddShiftProps> = ({ workDay, setShowAddShift, setError, setMe
 	}
 
 	return (
-		<>
+		<div className='w-10/12 border-b-2 py-6'>
 			<Heading
-				size={'sm'}
-				className='pb-8 pt-12 text-center'>
-				New Shift
+				size={'xs'}
+				className='text-center font-normal'>
+				Add a New Shift
 			</Heading>
 			<form
 				onSubmit={handleSubmit}
@@ -162,15 +163,20 @@ const AddShift: FC<AddShiftProps> = ({ workDay, setShowAddShift, setError, setMe
 				</div>
 				<div className='mb-1 mt-auto flex space-x-2'>
 					<Button
+						size={'sm'}
 						variant={'cancel'}
 						type='button'
 						onClick={() => setShowAddShift(false)}>
-						Cancel
+						Cancel {<X className='ml-1 h-4 w-4' />}
 					</Button>
-					<Button loading={loading}>Create</Button>
+					<Button
+						size={'sm'}
+						loading={loading}>
+						Create {<Check className='ml-1 h-4 w-4' />}
+					</Button>
 				</div>
 			</form>
-		</>
+		</div>
 	)
 }
 

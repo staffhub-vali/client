@@ -82,13 +82,13 @@ const Note: FC<NoteProps> = ({ note: n, index, workDay, loading, setError, setLo
 	}
 
 	return (
-		<div className='flex items-center'>
+		<div className='flex w-full items-center justify-center'>
 			{editNote ? (
 				<>
 					<Input
 						type='text'
 						value={note}
-						className='m-0'
+						className='m-0 w-fit'
 						onChange={(e) => setNote(e.target.value)}
 					/>
 					<Button
@@ -112,10 +112,9 @@ const Note: FC<NoteProps> = ({ note: n, index, workDay, loading, setError, setLo
 					</Button>
 				</>
 			) : (
-				<>
+				<div className='flex items-center'>
 					<Paragraph
-						size={'sm'}
-						className='w-96'
+						size={'lg'}
 						key={workDay?._id}>
 						{note}
 					</Paragraph>
@@ -151,7 +150,7 @@ const Note: FC<NoteProps> = ({ note: n, index, workDay, loading, setError, setLo
 							submit={() => deleteNote(noteIndex)}
 						/>
 					)}
-				</>
+				</div>
 			)}
 		</div>
 	)

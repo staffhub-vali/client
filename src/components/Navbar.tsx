@@ -97,7 +97,7 @@ const Navbar: FC<NavbarProps> = ({}) => {
 						{user ? (
 							<Link
 								to={'/dashboard'}
-								className={`${buttonVariants({ variant: 'outline' })} w-36`}>
+								className={`${buttonVariants({ variant: 'outlineHover' })} w-36`}>
 								Dashboard
 							</Link>
 						) : (

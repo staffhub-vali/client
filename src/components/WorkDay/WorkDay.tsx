@@ -8,7 +8,7 @@ import { FC, useState } from 'react'
 import { Clock8, ScrollText } from 'lucide-react'
 import Paragraph from '../ui/Paragraph'
 import Notification from '../ui/Notification'
-import { formatDate } from '../../utils/DateFormatting'
+import { formatDate, formatDay } from '../../utils/DateFormatting'
 
 interface Shift {
 	end: number
@@ -51,17 +51,40 @@ const WorkDay: FC<WorkDayProps> = ({
 
 	return (
 		<>
-			<Heading
-				size={'sm'}
-				className='mb-12'>
-				{workDay && formatDate(workDay.date)}
-			</Heading>
+			<div className='flex justify-center space-x-6 '>
+				<div className='mb-12 flex space-x-3'>
+					<Heading size={'sm'}>{workDay && formatDay(workDay.date)}</Heading>
+					<Heading size={'sm'}>{workDay && formatDate(workDay.date)}</Heading>
+				</div>
+				<div className='space-x-1'>
+					<Button
+						size={'sm'}
+						className=''
+						onClick={() => {
+							setShowAddShift(true)
+							setShowAddNote(false)
+						}}>
+						New Shift {<Clock8 className='ml-2 h-5 w-5' />}
+					</Button>
+					<Button
+						size={'sm'}
+						variant={'outline'}
+						onClick={() => setShowAddNote(true)}>
+						Add Note {<ScrollText className='ml-2 h-5 w-5' />}
+					</Button>
+				</div>
+			</div>
 
 			{workDay && workDay.shifts.length < 1 && !showAddShift && (
-				<Heading size={'xs'}> There are currently no shifts for this day. </Heading>
+				<Heading
+					className='mt-20 w-10/12 border-b-2 pb-6 text-center'
+					size={'xs'}>
+					{' '}
+					There are currently no shifts for this day.{' '}
+				</Heading>
 			)}
 
-			<div className='flex flex-col items-center space-y-2 border-b-2 py-6 dark:border-slate-700'>
+			<div className='flex flex-col items-center space-y-2 border-b-2 dark:border-slate-700'>
 				{workDay?.shifts?.map((shift, index) => (
 					<Employee
 						shift={shift}
@@ -75,8 +98,24 @@ const WorkDay: FC<WorkDayProps> = ({
 					/>
 				))}
 			</div>
-			<div className='flex w-10/12 flex-col items-center space-y-6 border-b-2 py-6 dark:border-slate-700'>
-				{workDay && workDay.notes.length > 0 && <Heading size={'sm'}>Notes</Heading>}
+			{showAddShift && (
+				<AddShift
+					loading={loading}
+					setLoading={setLoading}
+					workDay={workDay}
+					setError={setError}
+					setMessage={setMessage}
+					setShowAddShift={setShowAddShift}
+				/>
+			)}
+			<div className='flex w-10/12 flex-col items-center space-y-6 py-6 dark:border-slate-700'>
+				{workDay && workDay.notes.length > 0 && (
+					<Heading
+						className='font-normal'
+						size={'xs'}>
+						Notes
+					</Heading>
+				)}
 				{workDay &&
 					workDay.notes.length > 0 &&
 					!showAddNote &&
@@ -93,19 +132,7 @@ const WorkDay: FC<WorkDayProps> = ({
 					))}
 
 				{workDay && !showAddNote && workDay.notes.length < 1 && (
-					<Paragraph
-						className='py-12'
-						size={'xl'}>
-						There are no notes for this day.
-					</Paragraph>
-				)}
-
-				{workDay && !showAddNote && (
-					<Button
-						size={'sm'}
-						onClick={() => setShowAddNote(true)}>
-						Add Note {<ScrollText className='ml-2 h-5	 w-5' />}
-					</Button>
+					<Paragraph size={'xl'}>There are no notes for this day.</Paragraph>
 				)}
 
 				{showAddNote && (
@@ -120,26 +147,6 @@ const WorkDay: FC<WorkDayProps> = ({
 					/>
 				)}
 			</div>
-
-			{showAddShift ? (
-				<AddShift
-					loading={loading}
-					setLoading={setLoading}
-					workDay={workDay}
-					setError={setError}
-					setMessage={setMessage}
-					setShowAddShift={setShowAddShift}
-				/>
-			) : (
-				<Button
-					className='mt-12'
-					onClick={() => {
-						setShowAddShift(true)
-						setShowAddNote(false)
-					}}>
-					New Shift {<Clock8 className='ml-2 h-5 w-5' />}
-				</Button>
-			)}
 
 			{error && (
 				<Notification

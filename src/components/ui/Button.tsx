@@ -11,7 +11,8 @@ export const buttonVariants = cva(
 				default:
 					'bg-slate-800 text-white hover:bg-slate-700 dark:bg-slate-200 dark:text-slate-900 dark:hover:bg-slate-50',
 
-				outline:
+				outline: 'bg-transparent border-2 border-slate-800 dark:border-slate-300',
+				outlineHover:
 					'bg-slate-800 text-white hover:bg-transparent dark:bg-slate-200 dark:text-slate-900  border hover:text-black border-slate-800 dark:hover:bg-transparent dark:border-slate-200 dark:hover:text-slate-200',
 
 				link: 'bg-transparent dark:bg-transparent text-slate-900 dark:text-slate-100',

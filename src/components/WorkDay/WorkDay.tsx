@@ -131,6 +131,7 @@ const WorkDay: FC<WorkDayProps> = ({
 				{workDay &&
 					workDay.notes.length > 0 &&
 					!showAddNote &&
+					!showAddShift &&
 					workDay.notes.map((note, index) => (
 						<Note
 							note={note}

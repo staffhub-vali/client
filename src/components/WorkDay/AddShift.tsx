@@ -101,7 +101,7 @@ const AddShift: FC<AddShiftProps> = ({ workDay, setShowAddShift, setError, setMe
 	}
 
 	return (
-		<div className='w-10/12 border-b-2 py-6'>
+		<div className='w-10/12 py-6'>
 			<Heading
 				size={'xs'}
 				className='text-center font-normal'>

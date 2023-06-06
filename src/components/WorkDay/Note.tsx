@@ -1,7 +1,7 @@
 import { FC, useState } from 'react'
 import Paragraph from '../ui/Paragraph'
 import Button from '../ui/Button'
-import { Check, XCircle, Edit } from 'lucide-react'
+import { Check, XCircle, Trash2, Pencil } from 'lucide-react'
 import Modal from '../ui/Modal'
 import axios from 'axios'
 import Input from '../ui/Input'
@@ -94,7 +94,7 @@ const Note: FC<NoteProps> = ({ note: n, index, workDay, loading, setError, setLo
 					<Button
 						size={'sm'}
 						variant={'link'}
-						className='min-w-[3rem]'
+						className='w-10 min-w-[3rem]'
 						onClick={() => {
 							setNoteIndex(index)
 							updateNote(index, note)
@@ -105,7 +105,7 @@ const Note: FC<NoteProps> = ({ note: n, index, workDay, loading, setError, setLo
 					<Button
 						size={'sm'}
 						variant={'link'}
-						className='min-w-[3rem]'
+						className='w-10 min-w-[3rem]'
 						onClick={() => setEditNote(false)}
 						title='Cancel'>
 						{<XCircle />}
@@ -115,30 +115,31 @@ const Note: FC<NoteProps> = ({ note: n, index, workDay, loading, setError, setLo
 				<div className='flex items-center'>
 					<Paragraph
 						size={'lg'}
+						className='min-w-[16rem]'
 						key={workDay?._id}>
 						{note}
 					</Paragraph>
 					<Button
 						size={'sm'}
 						variant={'link'}
-						className='min-w-[3rem]'
+						className='w-10 min-w-[3rem]'
 						onClick={() => {
 							setEditNote(true)
 							setNoteIndex(index)
 						}}
 						title='Edit note'>
-						{<Edit />}
+						{<Pencil />}
 					</Button>
 					<Button
 						size={'sm'}
 						variant={'link'}
-						className='min-w-[3rem]'
+						className='w-10 min-w-[3rem]'
 						onClick={() => {
 							setShowModal(true)
 							setNoteIndex(index)
 						}}
 						title='Delete note'>
-						{<XCircle />}
+						{<Trash2 />}
 					</Button>
 
 					{showModal && (

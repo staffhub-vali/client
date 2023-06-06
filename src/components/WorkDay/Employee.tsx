@@ -3,7 +3,7 @@ import Modal from '../ui/Modal'
 import Input from '../ui/Input'
 import Button from '../ui/Button'
 import { FC, useState } from 'react'
-import { Check, Delete, Pencil, X } from 'lucide-react'
+import { Check, Delete, Pencil, Trash2, X } from 'lucide-react'
 import Paragraph from '../ui/Paragraph'
 import { Link } from 'react-router-dom'
 import { formatTime, formatTotal } from '../../utils/DateFormatting'
@@ -142,7 +142,7 @@ const Employee: FC<EmployeeProps> = ({
 	}
 	return (
 		<div
-			className='flex items-center justify-between py-6'
+			className='flex items-center justify-between'
 			key={shift._id}>
 			<Paragraph
 				size={'xl'}
@@ -216,7 +216,7 @@ const Employee: FC<EmployeeProps> = ({
 						size={'sm'}
 						variant={'danger'}
 						onClick={() => setShowModal(true)}>
-						Delete {<Delete className='ml-2 h-4 w-4' />}
+						Delete {<Trash2 className='ml-2 h-4 w-4' />}
 					</Button>
 				</div>
 			)}

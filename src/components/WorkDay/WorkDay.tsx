@@ -51,12 +51,12 @@ const WorkDay: FC<WorkDayProps> = ({
 
 	return (
 		<>
-			<div className='flex justify-center space-x-6 '>
-				<div className='mb-12 flex space-x-3'>
+			<div className='my-6 flex w-10/12 items-center justify-center space-x-10 border-b-2 pb-6 dark:border-slate-700 '>
+				<div className='flex space-x-3'>
 					<Heading size={'sm'}>{workDay && formatDay(workDay.date)}</Heading>
 					<Heading size={'sm'}>{workDay && formatDate(workDay.date)}</Heading>
 				</div>
-				<div className='space-x-1'>
+				<div className='space-x-2'>
 					<Button
 						size={'sm'}
 						className=''
@@ -69,35 +69,40 @@ const WorkDay: FC<WorkDayProps> = ({
 					<Button
 						size={'sm'}
 						variant={'outline'}
-						onClick={() => setShowAddNote(true)}>
+						onClick={() => {
+							setShowAddNote(true)
+							setShowAddShift(false)
+						}}>
 						Add Note {<ScrollText className='ml-2 h-5 w-5' />}
 					</Button>
 				</div>
 			</div>
 
-			{workDay && workDay.shifts.length < 1 && !showAddShift && (
+			{workDay && workDay.shifts.length < 1 && !showAddShift && !showAddNote && (
 				<Heading
-					className='mt-20 w-10/12 border-b-2 pb-6 text-center'
+					className='w-10/12 border-b-2 py-6 text-center font-normal'
 					size={'xs'}>
 					{' '}
 					There are currently no shifts for this day.{' '}
 				</Heading>
 			)}
+			{workDay && workDay.shifts.length > 0 && (
+				<div className='flex w-10/12 flex-col items-center space-y-2 border-b-2 pb-6 dark:border-slate-700'>
+					{workDay?.shifts?.map((shift, index) => (
+						<Employee
+							shift={shift}
+							index={index}
+							loading={loading}
+							workDay={workDay}
+							setError={setError}
+							setMessage={setMessage}
+							setWorkDay={setWorkDay}
+							setLoading={setLoading}
+						/>
+					))}
+				</div>
+			)}
 
-			<div className='flex flex-col items-center space-y-2 border-b-2 dark:border-slate-700'>
-				{workDay?.shifts?.map((shift, index) => (
-					<Employee
-						shift={shift}
-						index={index}
-						loading={loading}
-						workDay={workDay}
-						setError={setError}
-						setMessage={setMessage}
-						setWorkDay={setWorkDay}
-						setLoading={setLoading}
-					/>
-				))}
-			</div>
 			{showAddShift && (
 				<AddShift
 					loading={loading}
@@ -108,12 +113,19 @@ const WorkDay: FC<WorkDayProps> = ({
 					setShowAddShift={setShowAddShift}
 				/>
 			)}
-			<div className='flex w-10/12 flex-col items-center space-y-6 py-6 dark:border-slate-700'>
-				{workDay && workDay.notes.length > 0 && (
+			<div className='flex flex-col items-center space-y-6 py-6'>
+				{workDay && !showAddShift && !showAddNote && (
 					<Heading
 						className='font-normal'
 						size={'xs'}>
 						Notes
+					</Heading>
+				)}
+				{workDay && showAddNote && (
+					<Heading
+						className='font-normal'
+						size={'xs'}>
+						Add a note
 					</Heading>
 				)}
 				{workDay &&
@@ -131,11 +143,11 @@ const WorkDay: FC<WorkDayProps> = ({
 						/>
 					))}
 
-				{workDay && !showAddNote && workDay.notes.length < 1 && (
+				{workDay && !showAddNote && !showAddShift && workDay.notes.length < 1 && (
 					<Paragraph size={'xl'}>There are no notes for this day.</Paragraph>
 				)}
 
-				{showAddNote && (
+				{showAddNote && !showAddShift && (
 					<AddNote
 						workDay={workDay}
 						setError={setError}

@@ -131,7 +131,11 @@ const ScheduleMaker: FC<ScheduleMakerProps> = ({ id, name, employees, setName, s
 								{name} - {formatMonth(data[0].date)}
 							</Heading>
 						) : (
-							<div className='h-12' />
+							<Heading
+								size={'sm'}
+								className='pb-2 text-center'>
+								Choose an employee
+							</Heading>
 						)}
 						<ScheduleTable
 							data={data}

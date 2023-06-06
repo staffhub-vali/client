@@ -14,14 +14,14 @@ interface DashboardPageProps {}
 export interface WorkDay {
 	_id: string
 	date: number
-	shifts: Shift[]
 	notes: string[]
+	shifts: Shift[]
 }
 
 interface Shift {
-	employee: { name: string }
-	start: number
 	end: number
+	start: number
+	employee: { name: string }
 }
 
 const DashboardPage: FC<DashboardPageProps> = ({}) => {
@@ -32,6 +32,8 @@ const DashboardPage: FC<DashboardPageProps> = ({}) => {
 		fetchData()
 	}, [skip])
 
+	let count = 0
+
 	const fetchData = async () => {
 		try {
 			const token = localStorage.getItem('token')
@@ -40,8 +42,10 @@ const DashboardPage: FC<DashboardPageProps> = ({}) => {
 					Authorization: `Bearer ${token}`,
 				},
 			})
-			data.sort((a: WorkDay, b: WorkDay) => a.date - b.date)
-			setData(data)
+
+			if (data.length > 0) {
+				setData(data)
+			}
 		} catch (error: any) {
 			if (error.response.status === 401) {
 				Logout()
@@ -53,6 +57,7 @@ const DashboardPage: FC<DashboardPageProps> = ({}) => {
 		<Container size={'lg'}>
 			{data.length > 0 ? (
 				<Dashboard
+					count={count}
 					data={data}
 					skip={skip}
 					setSkip={setSkip}

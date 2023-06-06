@@ -30,7 +30,7 @@ const EmployeesTable: FC<EmployeesTableProps> = ({ headings, data, searchBar }) 
 					<i className='fa fa-search text-slate-500 dark:text-slate-400' />
 					<Input
 						type='text'
-						size={'lg'}
+						size={''}
 						value={searchText}
 						placeholder='Search for employees...'
 						className='group mb-0 shadow-none focus:ring-0'
@@ -61,7 +61,7 @@ const EmployeesTable: FC<EmployeesTableProps> = ({ headings, data, searchBar }) 
 							{headings.map((heading, index) => (
 								<td
 									key={`row-${index}`}
-									className={`cursor-pointer'} h-14 whitespace-nowrap px-4 py-3`}>
+									className={`cursor-pointer'} h-14 whitespace-nowrap px-4 py-2`}>
 									{row[heading.toLowerCase()]}
 								</td>
 							))}

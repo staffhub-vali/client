@@ -1,10 +1,10 @@
-import React, { forwardRef, HTMLAttributes } from 'react'
+import React, { forwardRef, HTMLAttributes, useEffect, useState } from 'react'
 import { cva, VariantProps } from 'class-variance-authority'
 import { cn } from '../../utils/TailwindMerge'
 
 interface NotificationProps extends HTMLAttributes<HTMLParagraphElement>, VariantProps<typeof notificationVariants> {}
 
-const notificationVariants = cva('mx-auto w-fit rounded px-4 py-2 text-3xl text-white', {
+const notificationVariants = cva('mx-auto fade fade-in w-fit rounded px-4 py-2 text-3xl text-white', {
 	variants: {
 		size: {
 			default: 'text-lg',
@@ -19,11 +19,28 @@ const notificationVariants = cva('mx-auto w-fit rounded px-4 py-2 text-3xl text-
 
 const Notification = forwardRef<HTMLParagraphElement, NotificationProps>(
 	({ className, size, variant, position, children, ...props }, ref) => {
+		const [isVisible, setIsVisible] = useState(false)
+
+		useEffect(() => {
+			const timer = setTimeout(() => {
+				setIsVisible(false)
+			}, 5000)
+
+			return () => clearTimeout(timer)
+		}, [])
+
+		useEffect(() => {
+			const timer = setTimeout(() => {
+				setIsVisible(true)
+			}, 250)
+
+			return () => clearTimeout(timer)
+		}, [])
 		return (
 			<p
 				ref={ref}
 				{...props}
-				className={cn(notificationVariants({ size, variant, position, className }))}>
+				className={cn(notificationVariants({ size, variant, position, className }), { 'opacity-0': !isVisible })}>
 				{children}
 			</p>
 		)

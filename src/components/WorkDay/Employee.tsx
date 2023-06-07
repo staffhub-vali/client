@@ -91,6 +91,7 @@ const Employee: FC<EmployeeProps> = ({
 
 		// Find the shift with the matching shiftId
 		const shiftIndex = updatedWorkDay.shifts.findIndex((shift: Shift) => shift._id === shiftId)
+
 		if (shiftIndex !== -1) {
 			updatedWorkDay.shifts[shiftIndex].loading = true
 			setWorkDay(updatedWorkDay)

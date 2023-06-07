@@ -13,6 +13,7 @@ const EmployeeProfilePage: FC<EmployeeProfilePageProps> = ({}) => {
 	const [edit, setEdit] = useState(false)
 	const [employee, setEmployee] = useState(null)
 	const [shifts, setShifts] = useState([])
+	const [showDropdown, setShowDropdown] = useState<boolean>(false)
 
 	useEffect(() => {
 		fetchShifts()
@@ -52,11 +53,9 @@ const EmployeeProfilePage: FC<EmployeeProfilePageProps> = ({}) => {
 			}
 		}
 	}
-	console.log(shifts)
+
 	return (
-		<Container
-			size={'lg'}
-			className='p-6'>
+		<div onClick={() => showDropdown && setShowDropdown(false)}>
 			{employee && edit ? (
 				<EditEmployee
 					setEdit={setEdit}
@@ -65,13 +64,15 @@ const EmployeeProfilePage: FC<EmployeeProfilePageProps> = ({}) => {
 			) : (
 				employee && (
 					<EmployeeProfile
+						showDropdown={showDropdown}
+						setShowDropdown={setShowDropdown}
 						shifts={shifts}
 						data={employee}
 						setEdit={setEdit}
 					/>
 				)
 			)}
-		</Container>
+		</div>
 	)
 }
 

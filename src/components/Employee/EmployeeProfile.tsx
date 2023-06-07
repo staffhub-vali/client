@@ -6,6 +6,7 @@ import Paragraph from '../ui/Paragraph'
 import Container from '../ui/Container'
 import { Dispatch, FC, SetStateAction, useState } from 'react'
 import { Pencil, Trash2 } from 'lucide-react'
+import { calculateMonthlyHours } from '../../utils/HoursCalculation'
 
 interface EmployeeProfileProps {
 	data: {
@@ -16,22 +17,16 @@ interface EmployeeProfileProps {
 		sickDays: number | string
 		vacationDays: number | string
 	}
-
+	shifts: Shift[]
 	setEdit: Dispatch<SetStateAction<boolean>>
 }
 
-const customStyles = {
-	content: {
-		top: '50%',
-		left: '50%',
-		right: 'auto',
-		bottom: 'auto',
-		marginRight: '-50%',
-		transform: 'translate(-50%, -50%)',
-	},
+interface Shift {
+	start: number
+	end: number
 }
 
-const EmployeeProfile: FC<EmployeeProfileProps> = ({ data, setEdit }) => {
+const EmployeeProfile: FC<EmployeeProfileProps> = ({ data, shifts, setEdit }) => {
 	const [loading, setLoading] = useState(false)
 	const [showModal, setShowModal] = useState(false)
 
@@ -61,6 +56,7 @@ const EmployeeProfile: FC<EmployeeProfileProps> = ({ data, setEdit }) => {
 				<Paragraph>Phone: {data.phone}</Paragraph>
 				<Paragraph>Sick Days: {data.sickDays}</Paragraph>
 				<Paragraph>Vacation Days: {data.vacationDays}</Paragraph>
+				<Paragraph>Total hours for this month: {calculateMonthlyHours(shifts)}</Paragraph>
 
 				<div className='mt-2 flex space-x-2'>
 					<Button

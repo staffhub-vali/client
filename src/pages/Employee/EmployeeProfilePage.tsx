@@ -12,28 +12,47 @@ const EmployeeProfilePage: FC<EmployeeProfilePageProps> = ({}) => {
 	const { id } = useParams()
 	const [edit, setEdit] = useState(false)
 	const [employee, setEmployee] = useState(null)
+	const [shifts, setShifts] = useState([])
 
 	useEffect(() => {
+		fetchShifts()
 		fetchProfile()
-	}, [edit, employee])
+	}, [edit])
 
 	const fetchProfile = async () => {
 		const token = localStorage.getItem('token')
 		try {
-			const response = await axios.get(`http://localhost:8080/v1/employees/${id}`, {
+			const { data } = await axios.get(`http://localhost:8080/v1/employees/${id}`, {
 				headers: {
 					Authorization: `Bearer ${token}`,
 				},
 			})
-			setEmployee(response.data)
+			setEmployee(data)
 		} catch (error: any) {
-			console.error(error)
+			console.log(error)
 			if (error.response.status === 401) {
 				Logout()
 			}
 		}
 	}
 
+	const fetchShifts = async () => {
+		const token = localStorage.getItem('token')
+		try {
+			const { data } = await axios.get(`http://localhost:8080/v1/shifts?employeeId=${id}`, {
+				headers: {
+					Authorization: `Bearer ${token}`,
+				},
+			})
+			setShifts(data)
+		} catch (error: any) {
+			console.log(error)
+			if (error.response.status === 401) {
+				Logout()
+			}
+		}
+	}
+	console.log(shifts)
 	return (
 		<Container
 			size={'lg'}
@@ -46,6 +65,7 @@ const EmployeeProfilePage: FC<EmployeeProfilePageProps> = ({}) => {
 			) : (
 				employee && (
 					<EmployeeProfile
+						shifts={shifts}
 						data={employee}
 						setEdit={setEdit}
 					/>

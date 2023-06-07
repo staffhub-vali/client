@@ -30,28 +30,30 @@ const Dashboard: FC<DashboardProps> = ({ data, skip, setSkip }) => {
 		<Container
 			size={'lg'}
 			className='p-0 pt-20'>
-			<div className='flex min-h-[36rem] rounded border bg-white shadow'>
+			<div className='flex min-h-[36rem] rounded border bg-white shadow dark:border-slate-600 dark:bg-slate-700'>
 				{data.map((day: WorkDay) => (
 					<div
-						className='flex w-64 flex-col items-center border-x'
+						className='flex w-64 flex-col items-center border-x dark:border-slate-600'
 						key={day._id}>
-						<Heading
-							className='px-3 pt-6'
-							size={'xs'}>
-							{formatDay(day.date)}
-						</Heading>
-						<Paragraph
-							size={'xl'}
-							className=' w-full cursor-pointer border-b-2 py-2 text-center hover:text-sky-500'
+						<div
+							className='group w-full cursor-pointer text-center'
 							onClick={() => navigate(`/days/${day._id}`)}>
-							{day && formatDate(day.date)}
-						</Paragraph>
-
+							<Heading
+								className='px-3 pt-6 group-hover:text-sky-500'
+								size={'xs'}>
+								{formatDay(day.date)}
+							</Heading>
+							<Paragraph
+								size={'xl'}
+								className=' w-full cursor-pointer border-b-2 py-2 text-center group-hover:text-sky-500 dark:border-slate-600'>
+								{day && formatDate(day.date)}
+							</Paragraph>
+						</div>
 						<div className='mt-4 flex w-full flex-col items-center'>
 							{groupShifts(day.shifts).map((groupedShift) => (
 								<Paragraph
-									title={groupedShift.employee.name}
 									className='flex'
+									title={groupedShift.employee.name}
 									key={`${groupedShift.start}-${groupedShift.end}`}>
 									<div className='mr-3 flex'>
 										{`${groupedShift.count}`} <User className='font-normal' />
@@ -61,7 +63,7 @@ const Dashboard: FC<DashboardProps> = ({ data, skip, setSkip }) => {
 							))}
 						</div>
 
-						<Paragraph className='mb-1 mt-auto flex items-center text-2xl'>
+						<Paragraph className='mt-auto flex items-center pb-2 text-2xl'>
 							{day.notes.length} <ScrollText className='ml-2 h-6 w-6' />
 						</Paragraph>
 					</div>

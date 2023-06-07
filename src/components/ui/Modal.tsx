@@ -30,6 +30,7 @@ const Modal: FC<ModalProps> = ({ showModal, loading, submit, cancel, text }) => 
 			{text}
 			<div className='mt-2 flex justify-center space-x-2'>
 				<Button
+					size={'sm'}
 					className='my-2'
 					variant={'danger'}
 					onClick={submit}
@@ -37,6 +38,7 @@ const Modal: FC<ModalProps> = ({ showModal, loading, submit, cancel, text }) => 
 					Yes {<Check className='ml-2 h-4 w-4' />}
 				</Button>
 				<Button
+					size={'sm'}
 					variant='cancel'
 					className='my-2'
 					onClick={cancel}>

@@ -63,7 +63,7 @@ const EditEmployee: FC<EditEmployeeProps> = ({ data, setEdit }) => {
 			<Heading size={'sm'}>{data.name}</Heading>
 			<form
 				onSubmit={handleSubmit}
-				className='mt-6 w-2/3'>
+				className='mt-6'>
 				<Label htmlFor='name'>Name</Label>
 				<Input
 					type='text'
@@ -88,22 +88,7 @@ const EditEmployee: FC<EditEmployeeProps> = ({ data, setEdit }) => {
 					value={phone}
 					onChange={(e) => setPhone(e.target.value)}
 				/>
-				<Label htmlFor='sickDays'>Sick Days</Label>
-				<Input
-					type='text'
-					id='sickDays'
-					name='sickDays'
-					value={sickDays}
-					onChange={(e) => setSickDays(e.target.value)}
-				/>
-				<Label htmlFor='vacationDays'>Vacation Days</Label>
-				<Input
-					type='text'
-					id='vacationDays'
-					name='vacationDays'
-					value={vacationDays}
-					onChange={(e) => setVacationDays(e.target.value)}
-				/>
+
 				<Button
 					size={'sm'}
 					loading={loading}>

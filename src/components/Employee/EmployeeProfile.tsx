@@ -4,7 +4,20 @@ import Button from '../ui/Button'
 import Heading from '../ui/Heading'
 import Paragraph from '../ui/Paragraph'
 import Container from '../ui/Container'
-import { Mail, MoreVertical, Pencil, Phone, Trash, Trash2 } from 'lucide-react'
+import {
+	Mail,
+	MoreVertical,
+	Palmtree,
+	Pencil,
+	Phone,
+	Scroll,
+	Sticker,
+	StickyNote,
+	Trash,
+	Trash2,
+	User,
+	User2,
+} from 'lucide-react'
 import { Dispatch, FC, SetStateAction, useState } from 'react'
 import { calculateMonthlyHours } from '../../utils/CalculateHours'
 
@@ -14,7 +27,8 @@ interface EmployeeProfileProps {
 		name: string
 		email: string
 		phone: string
-		sickDays: number | string
+		notes: string[]
+		shiftPreferences: string[]
 		vacationDays: number | string
 	}
 	showDropdown: boolean
@@ -59,14 +73,40 @@ const EmployeeProfile: FC<EmployeeProfileProps> = ({ data, shifts, setEdit, show
 					<MoreVertical />
 				</Button>
 				{showDropdown && (
-					<div className='absolute right-0 mt-2 w-56 rounded-md bg-white shadow-lg  ring-1 ring-black ring-opacity-5 dark:bg-slate-600'>
+					<div className='absolute right-0 mt-2 w-72 rounded-md bg-white shadow-lg  ring-1 ring-black ring-opacity-5 dark:bg-slate-600'>
 						<ul>
 							<li
-								onClick={() => setEdit(true)}
-								className='flex cursor-pointer items-center justify-between border-b px-4 py-3 hover:bg-slate-50 dark:border-slate-500 dark:hover:bg-slate-500'>
-								Edit Information
-								<Pencil className='ml-2' />
+								onClick={() => {
+									setShowDropdown(false)
+								}}
+								className='flex cursor-pointer items-center justify-between px-4 py-3 hover:bg-slate-50 dark:hover:bg-slate-500'>
+								Notes
+								<Scroll className='ml-2' />
 							</li>
+							<li
+								onClick={() => {
+									setShowDropdown(false)
+								}}
+								className='flex cursor-pointer items-center justify-between px-4 py-3 hover:bg-slate-50 dark:hover:bg-slate-500'>
+								Vacation
+								<Palmtree className='ml-2' />
+							</li>
+
+							<li
+								onClick={() => {
+									setShowDropdown(false)
+								}}
+								className='flex cursor-pointer items-center justify-between px-4 py-3 hover:bg-slate-50 dark:hover:bg-slate-500'>
+								Shift Preferences
+								<Sticker className='ml-2' />
+							</li>
+							<li
+								onClick={() => setEdit(true)}
+								className='flex cursor-pointer items-center justify-between px-4 py-3 hover:bg-slate-50  dark:hover:bg-slate-500'>
+								Personal Information
+								<User2 className='ml-2' />
+							</li>
+
 							<li
 								onClick={() => {
 									setShowModal(true)
@@ -80,21 +120,20 @@ const EmployeeProfile: FC<EmployeeProfileProps> = ({ data, shifts, setEdit, show
 					</div>
 				)}
 			</div>
-
-			<div className='w-full border-b pb-4 dark:border-slate-500'>
-				<Heading
-					className='border-b pb-4 text-center dark:border-slate-500'
-					size={'sm'}>
-					{data.name}
-				</Heading>
+			<Heading
+				className='w-full border-b pb-4 text-center dark:border-slate-500'
+				size={'sm'}>
+				{data.name}
+			</Heading>
+			<div className='flex w-full border-b py-6	 dark:border-slate-500'>
 				<Paragraph
 					size={'xl'}
-					className='mx-auto pt-3'>
+					className='mx-auto'>
 					Total hours for this month:
 					<span className='ml-2 font-bold text-blue-500 dark:text-blue-300'>{calculateMonthlyHours(shifts)}</span>
 				</Paragraph>
 				<Paragraph
-					className='mx-auto pt-3'
+					className='mx-auto'
 					size={'xl'}>
 					Vacation days remaining:
 					<span className='ml-2 font-bold text-green-500 dark:text-green-400'>{data.vacationDays}</span>
@@ -114,8 +153,9 @@ const EmployeeProfile: FC<EmployeeProfileProps> = ({ data, shifts, setEdit, show
 				<Heading size={'xs'}>Notes</Heading>
 
 				<div className='flex flex-col py-2'>
-					<Paragraph className='flex'>Very good knowledge of english</Paragraph>
-					<Paragraph className='flex'>Works best under high pressure</Paragraph>
+					{data.notes.map((note, index) => (
+						<Paragraph key={index}>{note}</Paragraph>
+					))}
 				</div>
 			</div>
 			<div className='flex w-full flex-col items-center py-4'>

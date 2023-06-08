@@ -10,15 +10,18 @@ interface EmployeeProfilePageProps {}
 
 const EmployeeProfilePage: FC<EmployeeProfilePageProps> = ({}) => {
 	const { id } = useParams()
-	const [edit, setEdit] = useState(false)
-	const [employee, setEmployee] = useState(null)
 	const [shifts, setShifts] = useState([])
+	const [employee, setEmployee] = useState(null)
+	const [editInfo, setEditInfo] = useState<boolean>(false)
+	const [editNotes, setEditNotes] = useState<boolean>(false)
+	const [editVacation, setEditVacation] = useState<boolean>(false)
+	const [editPreferences, setEditPreferences] = useState<boolean>(false)
 	const [showDropdown, setShowDropdown] = useState<boolean>(false)
 
 	useEffect(() => {
 		fetchShifts()
 		fetchProfile()
-	}, [edit])
+	}, [editInfo])
 
 	const fetchProfile = async () => {
 		const token = localStorage.getItem('token')
@@ -56,9 +59,9 @@ const EmployeeProfilePage: FC<EmployeeProfilePageProps> = ({}) => {
 
 	return (
 		<div onClick={() => showDropdown && setShowDropdown(false)}>
-			{employee && edit ? (
+			{employee && editInfo ? (
 				<EditEmployee
-					setEdit={setEdit}
+					setEdit={setEditInfo}
 					data={employee}
 				/>
 			) : (
@@ -68,7 +71,7 @@ const EmployeeProfilePage: FC<EmployeeProfilePageProps> = ({}) => {
 						setShowDropdown={setShowDropdown}
 						shifts={shifts}
 						data={employee}
-						setEdit={setEdit}
+						setEdit={setEditInfo}
 					/>
 				)
 			)}

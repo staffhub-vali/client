@@ -32,7 +32,7 @@ const Notification = forwardRef<HTMLParagraphElement, NotificationProps>(
 		useEffect(() => {
 			const timer = setTimeout(() => {
 				setIsVisible(true)
-			}, 250)
+			}, 50)
 
 			return () => clearTimeout(timer)
 		}, [])

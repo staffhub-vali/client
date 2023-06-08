@@ -109,7 +109,7 @@ const AddShift: FC<AddShiftProps> = ({ workDay, setShowAddShift, setError, setMe
 			</Heading>
 			<form
 				onSubmit={handleSubmit}
-				className='flex justify-center space-x-12'>
+				className='mt-2 flex justify-center space-x-12'>
 				<div>
 					<Label className='text-center'>Employee</Label>
 					<SearchEmployees

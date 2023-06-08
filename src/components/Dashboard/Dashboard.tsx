@@ -33,19 +33,18 @@ const Dashboard: FC<DashboardProps> = ({ data, skip, setSkip }) => {
 			<div className='flex min-h-[36rem] rounded border bg-white shadow dark:border-slate-600 dark:bg-slate-700'>
 				{data.map((day: WorkDay) => (
 					<div
-						className='flex w-64 flex-col items-center border-x dark:border-slate-600'
-						key={day._id}>
-						<div
-							className='group w-full cursor-pointer text-center'
-							onClick={() => navigate(`/days/${day._id}`)}>
+						className='group flex w-64 cursor-pointer flex-col items-center border-x dark:border-slate-600'
+						key={day._id}
+						onClick={() => navigate(`/days/${day._id}`)}>
+						<div className='w-full text-center'>
 							<Heading
-								className='px-3 pt-6 group-hover:text-sky-500'
+								className='px-3 pt-6 transition-colors duration-75 group-hover:text-sky-500'
 								size={'xs'}>
 								{formatDay(day.date)}
 							</Heading>
 							<Paragraph
 								size={'xl'}
-								className=' w-full cursor-pointer border-b-2 py-2 text-center group-hover:text-sky-500 dark:border-slate-600'>
+								className=' w-full cursor-pointer border-b-2 py-2 text-center group-hover:text-sky-400 dark:border-slate-600'>
 								{day && formatDate(day.date)}
 							</Paragraph>
 						</div>

@@ -43,7 +43,7 @@ body {
 .react-calendar__navigation__label,
 .react-calendar__tile,
 .react-calendar__tile--now {
-	@apply hover:bg-slate-200 focus:bg-slate-300 dark:text-slate-200 dark:hover:bg-slate-600 dark:focus:bg-slate-500 !important;
+	@apply hover:bg-slate-200 focus:bg-slate-200 dark:text-slate-200 dark:hover:bg-slate-600 dark:focus:bg-slate-600 !important;
 }
 
 .react-calendar {

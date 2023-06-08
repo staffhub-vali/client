@@ -83,17 +83,42 @@ const EmployeeProfile: FC<EmployeeProfileProps> = ({ data, shifts, setEdit, show
 
 			<div className='w-full border-b pb-4 dark:border-slate-500'>
 				<Heading
-					className='pb-4 text-center'
+					className='border-b pb-4 text-center dark:border-slate-500'
 					size={'sm'}>
 					{data.name}
 				</Heading>
-				<Paragraph size={'xl'}>Total hours for this month: {calculateMonthlyHours(shifts)}</Paragraph>
+				<Paragraph
+					size={'xl'}
+					className='mx-auto pt-3'>
+					Total hours for this month:
+					<span className='ml-2 font-bold text-blue-500 dark:text-blue-300'>{calculateMonthlyHours(shifts)}</span>
+				</Paragraph>
+				<Paragraph
+					className='mx-auto pt-3'
+					size={'xl'}>
+					Vacation days remaining:
+					<span className='ml-2 font-bold text-green-500 dark:text-green-400'>{data.vacationDays}</span>
+				</Paragraph>
 			</div>
-			<div className='flex w-full justify-center space-x-12 border-b py-6 dark:border-slate-500'>
-				<Paragraph size={'lg'}>Vacation days remaining: {data.vacationDays}</Paragraph>
-				<Paragraph size={'lg'}>Sick leave days this month: {data.sickDays}</Paragraph>
+
+			<div className='flex w-full flex-col items-center border-b py-4 dark:border-slate-500'>
+				<Heading size={'xs'}>Shift Preferences</Heading>
+
+				<div className='flex flex-col py-2'>
+					<Paragraph className='flex'>06:00 - 14:00</Paragraph>
+					<Paragraph className='flex'>08:00 - 16:00</Paragraph>
+				</div>
 			</div>
-			<div className='flex flex-col items-center py-4'>
+
+			<div className='flex w-full flex-col items-center border-b py-4 dark:border-slate-500'>
+				<Heading size={'xs'}>Notes</Heading>
+
+				<div className='flex flex-col py-2'>
+					<Paragraph className='flex'>Very good knowledge of english</Paragraph>
+					<Paragraph className='flex'>Works best under high pressure</Paragraph>
+				</div>
+			</div>
+			<div className='flex w-full flex-col items-center py-4'>
 				<Heading size={'xs'}>Personal Information</Heading>
 
 				<div className='flex space-x-16 py-6'>

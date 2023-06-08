@@ -63,10 +63,9 @@ const EditEmployee: FC<EditEmployeeProps> = ({ data, setEdit }) => {
 			<Heading size={'sm'}>{data.name}</Heading>
 			<form
 				onSubmit={handleSubmit}
-				className='mt-6 w-full'>
+				className='mt-6 w-2/3'>
 				<Label htmlFor='name'>Name</Label>
 				<Input
-					size='lg'
 					type='text'
 					id='name'
 					name='name'
@@ -75,7 +74,6 @@ const EditEmployee: FC<EditEmployeeProps> = ({ data, setEdit }) => {
 				/>
 				<Label htmlFor='email'>Email</Label>
 				<Input
-					size='lg'
 					type='text'
 					id='email'
 					name='email'
@@ -84,7 +82,6 @@ const EditEmployee: FC<EditEmployeeProps> = ({ data, setEdit }) => {
 				/>
 				<Label htmlFor='phone'>Phone</Label>
 				<Input
-					size='lg'
 					type='text'
 					id='phone'
 					name='phone'
@@ -93,7 +90,6 @@ const EditEmployee: FC<EditEmployeeProps> = ({ data, setEdit }) => {
 				/>
 				<Label htmlFor='sickDays'>Sick Days</Label>
 				<Input
-					size='lg'
 					type='text'
 					id='sickDays'
 					name='sickDays'
@@ -102,16 +98,20 @@ const EditEmployee: FC<EditEmployeeProps> = ({ data, setEdit }) => {
 				/>
 				<Label htmlFor='vacationDays'>Vacation Days</Label>
 				<Input
-					size='lg'
 					type='text'
 					id='vacationDays'
 					name='vacationDays'
 					value={vacationDays}
 					onChange={(e) => setVacationDays(e.target.value)}
 				/>
-				<Button loading={loading}>Submit {<Check className='ml-2 h-5 w-5' />}</Button>
+				<Button
+					size={'sm'}
+					loading={loading}>
+					Submit {<Check className='ml-2 h-5 w-5' />}
+				</Button>
 
 				<Button
+					size={'sm'}
 					type='button'
 					loading={loading}
 					onClick={() => setEdit(false)}

@@ -60,14 +60,10 @@ const NewEmployeeForm: FC<NewEmployeeFormProps> = ({}) => {
 			<form
 				onSubmit={handleSubmit}
 				className='center mb-16 mt-12 flex w-96 flex-col gap-2'>
-				<Label
-					className='text-center'
-					htmlFor='name'>
-					Name
-				</Label>
+				<Label htmlFor='name'>Name</Label>
 
 				<Input
-					size='lg'
+					placeholder='Employee name...'
 					id='name'
 					type='text'
 					name='name'
@@ -75,14 +71,10 @@ const NewEmployeeForm: FC<NewEmployeeFormProps> = ({}) => {
 					onChange={(e) => setName(e.target.value)}
 				/>
 
-				<Label
-					className='text-center'
-					htmlFor='email'>
-					Email
-				</Label>
+				<Label htmlFor='email'>Email</Label>
 
 				<Input
-					size='lg'
+					placeholder='Employee email address...'
 					id='email'
 					type='text'
 					name='email'
@@ -90,14 +82,10 @@ const NewEmployeeForm: FC<NewEmployeeFormProps> = ({}) => {
 					onChange={(e) => setEmail(e.target.value)}
 				/>
 
-				<Label
-					className='text-center'
-					htmlFor='phone'>
-					Phone
-				</Label>
+				<Label htmlFor='phone'>Phone</Label>
 
 				<Input
-					size='lg'
+					placeholder='Employee phone number...'
 					onChange={(e) => {
 						const re = /^[0-9+\s]*$/
 						if (re.test(e.target.value)) {
@@ -111,10 +99,9 @@ const NewEmployeeForm: FC<NewEmployeeFormProps> = ({}) => {
 				/>
 
 				<Button
-					size={'lg'}
 					className='mx-auto w-fit'
 					loading={loading}>
-					Submit {<Check className='ml-2 h-6 w-6 ' />}
+					Submit {<Check className='ml-2 h-5 w-5 ' />}
 				</Button>
 			</form>
 			{error && (

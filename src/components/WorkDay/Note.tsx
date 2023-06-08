@@ -122,7 +122,7 @@ const Note: FC<NoteProps> = ({ note: n, index, workDay, loading, setError, setLo
 					<Button
 						size={'sm'}
 						variant={'link'}
-						className='w-10 min-w-[3rem]'
+						className='w-16 min-w-0 rounded-full p-5 hover:bg-slate-200'
 						onClick={() => {
 							setEditNote(true)
 							setNoteIndex(index)
@@ -133,7 +133,7 @@ const Note: FC<NoteProps> = ({ note: n, index, workDay, loading, setError, setLo
 					<Button
 						size={'sm'}
 						variant={'link'}
-						className='w-10 min-w-[3rem]'
+						className='w-16 min-w-0 rounded-full p-5 hover:bg-slate-200'
 						onClick={() => {
 							setShowModal(true)
 							setNoteIndex(index)

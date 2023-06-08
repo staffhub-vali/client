@@ -80,7 +80,7 @@ const WorkDay: FC<WorkDayProps> = ({
 
 			{workDay && workDay.shifts.length < 1 && !showAddShift && !showAddNote && (
 				<Heading
-					className='w-10/12 border-b-2 py-6 text-center font-normal'
+					className='w-10/12 border-b-2 py-6 text-center font-normal dark:border-slate-700'
 					size={'xs'}>
 					{' '}
 					There are currently no shifts for this day.{' '}

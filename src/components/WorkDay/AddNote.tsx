@@ -2,6 +2,7 @@ import axios from 'axios'
 import Button from '../ui/Button'
 import { FC, useState } from 'react'
 import { Check, X } from 'lucide-react'
+import Input from '../ui/Input'
 
 interface AddNoteProps {
 	workDay: WorkDay | null
@@ -63,30 +64,29 @@ const AddNote: FC<AddNoteProps> = ({
 		}
 	}
 	return (
-		<>
-			<textarea
+		<div className='flex space-x-2'>
+			<Input
+				type='text'
 				name='note'
-				rows={5}
-				cols={50}
-				className='resize-none rounded p-2 shadow'
 				placeholder='Anything to note?'
-				onChange={(e) => setNote(e.target.value)}>
-				{note}
-			</textarea>
-			<div className='flex space-x-2'>
-				<Button
-					size={'sm'}
-					onClick={addNote}>
-					Add Note {<Check className='ml-2 h-5 w-5' />}
-				</Button>
-				<Button
-					size={'sm'}
-					variant={'cancel'}
-					onClick={() => setShowAddNote(false)}>
-					Cancel {<X className='ml-2 h-5 w-5' />}
-				</Button>
-			</div>
-		</>
+				onChange={(e) => setNote(e.target.value)}
+				value={note}
+			/>
+
+			<Button
+				size={'sm'}
+				className='w-44'
+				onClick={addNote}>
+				Add Note {<Check className='ml-2 h-5 w-5' />}
+			</Button>
+			<Button
+				size={'sm'}
+				className='w-44'
+				variant={'cancel'}
+				onClick={() => setShowAddNote(false)}>
+				Cancel {<X className='ml-2 h-5 w-5' />}
+			</Button>
+		</div>
 	)
 }
 

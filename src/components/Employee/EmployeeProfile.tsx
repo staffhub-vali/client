@@ -34,7 +34,9 @@ interface EmployeeProfileProps {
 	showDropdown: boolean
 	setShowDropdown: Dispatch<SetStateAction<boolean>>
 	shifts: Shift[]
-	setEdit: Dispatch<SetStateAction<boolean>>
+	setEditInfo: Dispatch<SetStateAction<boolean>>
+	setEditNotes: Dispatch<SetStateAction<boolean>>
+	setEditPreferences: Dispatch<SetStateAction<boolean>>
 }
 
 interface Shift {
@@ -42,7 +44,15 @@ interface Shift {
 	end: number
 }
 
-const EmployeeProfile: FC<EmployeeProfileProps> = ({ data, shifts, setEdit, showDropdown, setShowDropdown }) => {
+const EmployeeProfile: FC<EmployeeProfileProps> = ({
+	data,
+	shifts,
+	setEditInfo,
+	setEditNotes,
+	setEditPreferences,
+	showDropdown,
+	setShowDropdown,
+}) => {
 	const [loading, setLoading] = useState<boolean>(false)
 	const [showModal, setShowModal] = useState<boolean>(false)
 
@@ -77,6 +87,7 @@ const EmployeeProfile: FC<EmployeeProfileProps> = ({ data, shifts, setEdit, show
 						<ul>
 							<li
 								onClick={() => {
+									setEditNotes(true)
 									setShowDropdown(false)
 								}}
 								className='flex cursor-pointer items-center justify-between px-4 py-3 hover:bg-slate-50 dark:hover:bg-slate-500'>
@@ -101,7 +112,7 @@ const EmployeeProfile: FC<EmployeeProfileProps> = ({ data, shifts, setEdit, show
 								<Sticker className='ml-2' />
 							</li>
 							<li
-								onClick={() => setEdit(true)}
+								onClick={() => setEditInfo(true)}
 								className='flex cursor-pointer items-center justify-between px-4 py-3 hover:bg-slate-50  dark:hover:bg-slate-500'>
 								Personal Information
 								<User2 className='ml-2' />

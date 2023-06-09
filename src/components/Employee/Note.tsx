@@ -1,4 +1,4 @@
-import { FC, useState } from 'react'
+import { FC, useState, SetStateAction, Dispatch } from 'react'
 import Paragraph from '../ui/Paragraph'
 import Button from '../ui/Button'
 import { Check, XCircle, Trash2, Pencil } from 'lucide-react'
@@ -10,18 +10,18 @@ interface NoteProps {
 	note: string
 	index: number
 	loading: boolean
-	workDay: WorkDay
-	setError: any
-	setLoading: any
-	setMessage: any
+	employee: Employee
+	setError: Dispatch<SetStateAction<string>>
+	setLoading: Dispatch<SetStateAction<boolean>>
+	setMessage: Dispatch<SetStateAction<string>>
 }
 
-interface WorkDay {
-	notes: []
+interface Employee {
+	notes: string[]
 	_id: string
 }
 
-const Note: FC<NoteProps> = ({ note: n, index, workDay, loading, setError, setLoading, setMessage }) => {
+const Note: FC<NoteProps> = ({ note: n, index, employee, loading, setError, setLoading, setMessage }) => {
 	const [note, setNote] = useState<string>(n)
 	const [editNote, setEditNote] = useState<boolean>(false)
 	const [showModal, setShowModal] = useState<boolean>(false)
@@ -32,7 +32,7 @@ const Note: FC<NoteProps> = ({ note: n, index, workDay, loading, setError, setLo
 			setLoading(true)
 			const token = localStorage.getItem('token')
 			const { data } = await axios.delete(
-				`http://localhost:8080/v1/days/notes/?workDay=${workDay?._id}&index=${index}`,
+				`http://localhost:8080/v1/employees/notes/?employeeId=${employee?._id}&index=${index}`,
 				{
 					headers: {
 						Authorization: `Bearer ${token}`,
@@ -56,11 +56,11 @@ const Note: FC<NoteProps> = ({ note: n, index, workDay, loading, setError, setLo
 			setLoading(true)
 			const token = localStorage.getItem('token')
 			const { data } = await axios.put(
-				`http://localhost:8080/v1/days/notes`,
+				`http://localhost:8080/v1/employees/notes`,
 				{
 					note: note,
 					index: index,
-					workDayId: workDay?._id,
+					employeeId: employee?._id,
 				},
 				{
 					headers: {
@@ -116,7 +116,7 @@ const Note: FC<NoteProps> = ({ note: n, index, workDay, loading, setError, setLo
 					<Paragraph
 						size={'lg'}
 						className='min-w-[16rem]'
-						key={workDay?._id}>
+						key={employee?._id}>
 						{note}
 					</Paragraph>
 					<Button

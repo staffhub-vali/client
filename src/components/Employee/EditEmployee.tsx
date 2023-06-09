@@ -66,16 +66,16 @@ const EditEmployee: FC<EditEmployeeProps> = ({ data, setEdit }) => {
 				className='mt-6'>
 				<Label htmlFor='name'>Name</Label>
 				<Input
-					type='text'
 					id='name'
+					type='text'
 					name='name'
 					value={name}
 					onChange={(e) => setName(e.target.value)}
 				/>
 				<Label htmlFor='email'>Email</Label>
 				<Input
-					type='text'
 					id='email'
+					type='text'
 					name='email'
 					value={email}
 					onChange={(e) => setEmail(e.target.value)}

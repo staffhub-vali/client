@@ -1,15 +1,20 @@
 import axios from 'axios'
 import { Logout } from '../../Auth'
-import EditEmployee from '../../components/Employee/EditEmployee'
 import { useParams } from 'react-router-dom'
 import { FC, useEffect, useState } from 'react'
-import Container from '../../components/ui/Container'
+import EditNotes from '../../components/Employee/EditNotes'
+import EditEmployee from '../../components/Employee/EditEmployee'
 import EmployeeProfile from '../../components/Employee/EmployeeProfile'
+import EditShiftPreferences from '../../components/Employee/EditShiftPreferences'
+import Notification from '../../components/ui/Notification'
 
 interface EmployeeProfilePageProps {}
 
 const EmployeeProfilePage: FC<EmployeeProfilePageProps> = ({}) => {
 	const { id } = useParams()
+	const [loading, setLoading] = useState<boolean>(false)
+	const [error, setError] = useState<string>('')
+	const [message, setMessage] = useState<string>('')
 	const [shifts, setShifts] = useState([])
 	const [employee, setEmployee] = useState(null)
 	const [editInfo, setEditInfo] = useState<boolean>(false)
@@ -21,7 +26,7 @@ const EmployeeProfilePage: FC<EmployeeProfilePageProps> = ({}) => {
 	useEffect(() => {
 		fetchShifts()
 		fetchProfile()
-	}, [editInfo])
+	}, [loading])
 
 	const fetchProfile = async () => {
 		const token = localStorage.getItem('token')
@@ -59,21 +64,54 @@ const EmployeeProfilePage: FC<EmployeeProfilePageProps> = ({}) => {
 
 	return (
 		<div onClick={() => showDropdown && setShowDropdown(false)}>
-			{employee && editInfo ? (
+			{employee && editInfo && (
 				<EditEmployee
-					setEdit={setEditInfo}
 					data={employee}
+					setEdit={setEditInfo}
 				/>
-			) : (
-				employee && (
-					<EmployeeProfile
-						showDropdown={showDropdown}
-						setShowDropdown={setShowDropdown}
-						shifts={shifts}
-						data={employee}
-						setEdit={setEditInfo}
-					/>
-				)
+			)}
+			{employee && editPreferences && (
+				<EditShiftPreferences
+					data={employee}
+					setEdit={setEditPreferences}
+				/>
+			)}
+			{employee && editNotes && (
+				<EditNotes
+					loading={loading}
+					setError={setError}
+					setLoading={setLoading}
+					setMessage={setMessage}
+					employee={employee}
+					setEdit={setEditNotes}
+				/>
+			)}
+			{employee && !editInfo && !editNotes && (
+				<EmployeeProfile
+					shifts={shifts}
+					data={employee}
+					setEditNotes={setEditNotes}
+					setEditInfo={setEditInfo}
+					setEditPreferences={setEditPreferences}
+					showDropdown={showDropdown}
+					setShowDropdown={setShowDropdown}
+				/>
+			)}
+
+			{message && (
+				<Notification
+					size={'lg'}
+					position={'bottom'}>
+					{message}
+				</Notification>
+			)}
+			{error && (
+				<Notification
+					size={'lg'}
+					variant={'error'}
+					position={'bottom'}>
+					{error}
+				</Notification>
 			)}
 		</div>
 	)

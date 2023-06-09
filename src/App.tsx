@@ -43,6 +43,10 @@ function App() {
 						element={<EmployeeProfilePage />}
 					/>
 					<Route
+						path='/employees/:id/:edit'
+						element={<EmployeeProfilePage />}
+					/>
+					<Route
 						path='/employees/new'
 						element={<NewEmployeePage />}
 					/>

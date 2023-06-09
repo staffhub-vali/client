@@ -4,22 +4,10 @@ import Button from '../ui/Button'
 import Heading from '../ui/Heading'
 import Paragraph from '../ui/Paragraph'
 import Container from '../ui/Container'
-import {
-	Mail,
-	MoreVertical,
-	Palmtree,
-	Pencil,
-	Phone,
-	Scroll,
-	Sticker,
-	StickyNote,
-	Trash,
-	Trash2,
-	User,
-	User2,
-} from 'lucide-react'
+import { useNavigate } from 'react-router-dom'
 import { Dispatch, FC, SetStateAction, useState } from 'react'
 import { calculateMonthlyHours } from '../../utils/CalculateHours'
+import { Mail, MoreVertical, Palmtree, Phone, Scroll, Sticker, Trash2, User2 } from 'lucide-react'
 
 interface EmployeeProfileProps {
 	employee: {
@@ -33,10 +21,7 @@ interface EmployeeProfileProps {
 	}
 	shifts: Shift[]
 	showDropdown: boolean
-	setEditNotes: Dispatch<SetStateAction<boolean>>
 	setShowDropdown: Dispatch<SetStateAction<boolean>>
-	setEditPersonalInfo: Dispatch<SetStateAction<boolean>>
-	setEditShiftPreferences: Dispatch<SetStateAction<boolean>>
 }
 
 interface Shift {
@@ -44,15 +29,8 @@ interface Shift {
 	end: number
 }
 
-const EmployeeProfile: FC<EmployeeProfileProps> = ({
-	employee,
-	shifts,
-	setEditPersonalInfo,
-	setEditNotes,
-	setEditShiftPreferences,
-	showDropdown,
-	setShowDropdown,
-}) => {
+const EmployeeProfile: FC<EmployeeProfileProps> = ({ shifts, employee, showDropdown, setShowDropdown }) => {
+	const navigate = useNavigate()
 	const [loading, setLoading] = useState<boolean>(false)
 	const [showModal, setShowModal] = useState<boolean>(false)
 
@@ -89,8 +67,8 @@ const EmployeeProfile: FC<EmployeeProfileProps> = ({
 						<ul>
 							<li
 								onClick={() => {
-									setEditNotes(true)
 									setShowDropdown(false)
+									navigate(`/employees/${employee._id}/notes`)
 								}}
 								className='flex cursor-pointer items-center justify-between px-4 py-3 hover:bg-slate-50 dark:hover:bg-slate-500'>
 								Notes
@@ -99,6 +77,7 @@ const EmployeeProfile: FC<EmployeeProfileProps> = ({
 							<li
 								onClick={() => {
 									setShowDropdown(false)
+									navigate(`/employees/${employee._id}/vacation`)
 								}}
 								className='flex cursor-pointer items-center justify-between px-4 py-3 hover:bg-slate-50 dark:hover:bg-slate-500'>
 								Vacation
@@ -108,14 +87,14 @@ const EmployeeProfile: FC<EmployeeProfileProps> = ({
 							<li
 								onClick={() => {
 									setShowDropdown(false)
-									setEditShiftPreferences(true)
+									navigate(`/employees/${employee._id}/preferences`)
 								}}
 								className='flex cursor-pointer items-center justify-between px-4 py-3 hover:bg-slate-50 dark:hover:bg-slate-500'>
 								Shift Preferences
 								<Sticker className='ml-2' />
 							</li>
 							<li
-								onClick={() => setEditPersonalInfo(true)}
+								onClick={() => navigate(`/employees/${employee._id}/about`)}
 								className='flex cursor-pointer items-center justify-between px-4 py-3 hover:bg-slate-50  dark:hover:bg-slate-500'>
 								Personal Information
 								<User2 className='ml-2' />

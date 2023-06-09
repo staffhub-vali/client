@@ -2,9 +2,10 @@ import axios from 'axios'
 import { Dispatch, FC, SetStateAction, useState } from 'react'
 import Container from '../../../ui/Container'
 import Button from '../../../ui/Button'
-import { Check, PlusCircle } from 'lucide-react'
+import { Check, Plus, PlusCircle, Scroll, X } from 'lucide-react'
 import Input from '../../../ui/Input'
 import ShiftPreference from './ShiftPreference'
+import Heading from '../../../ui/Heading'
 
 interface ShiftPreferencesListProps {
 	employee: {
@@ -17,7 +18,6 @@ interface ShiftPreferencesListProps {
 		vacationDays: number | string
 	}
 	loading: boolean
-	setEdit: Dispatch<SetStateAction<boolean>>
 	setError: Dispatch<SetStateAction<string>>
 	setMessage: Dispatch<SetStateAction<string>>
 	setLoading: Dispatch<SetStateAction<boolean>>
@@ -25,7 +25,7 @@ interface ShiftPreferencesListProps {
 
 const ShiftPreferencesList: FC<ShiftPreferencesListProps> = ({
 	employee,
-	setEdit,
+
 	loading,
 	setError,
 	setLoading,
@@ -64,43 +64,74 @@ const ShiftPreferencesList: FC<ShiftPreferencesListProps> = ({
 
 	return (
 		<Container>
+			<div className='flex items-center space-x-8'>
+				<Heading size={'sm'}>Shift preferences</Heading>
+				{showAddShiftPreference ? (
+					<Button
+						size={'sm'}
+						className='w-48 min-w-0'
+						onClick={() => setShowAddShiftPreference(false)}
+						variant={'outline'}>
+						Cancel
+						<X className='ml-2 h-5 w-5' />
+					</Button>
+				) : (
+					<Button
+						size={'sm'}
+						className='w-48'
+						onClick={() => setShowAddShiftPreference(true)}
+						variant={'outline'}>
+						New Shift Preference
+						<Plus className='ml-2 h-5 w-5' />
+					</Button>
+				)}
+			</div>
+
 			{!showAddShiftPreference && (
-				<Button
-					onClick={() => setShowAddShiftPreference(true)}
-					variant={'outline'}>
-					New Shift Preference
-					<PlusCircle className='ml-2 h-5 w-5' />
-				</Button>
+				<div className='mt-32'>
+					{employee.shiftPreferences.length > 0 ? (
+						employee.shiftPreferences.map((shiftPreference, index) => (
+							<ShiftPreference
+								key={index}
+								index={index}
+								loading={loading}
+								employee={employee}
+								setError={setError}
+								setMessage={setMessage}
+								setLoading={setLoading}
+								shiftPreference={shiftPreference}
+							/>
+						))
+					) : (
+						<>
+							{!showAddShiftPreference && (
+								<Heading
+									className='font-normal'
+									size={'xs'}>
+									There are no shift preferences for this employee.
+								</Heading>
+							)}
+						</>
+					)}
+				</div>
 			)}
 			{showAddShiftPreference && (
 				<form
 					onSubmit={addShiftPreference}
-					className='flex w-2/3 space-x-1'>
+					className='mt-32 flex w-2/3 space-x-4'>
 					<Input
 						type='text'
 						value={shiftPreference}
 						placeholder=' Add a shift preference...'
 						onChange={(e) => setShiftPreference(e.target.value)}
 					/>
-					<Button className='shadow-md'>
-						Add <Check className='ml-2 h-5 w-5' />
+					<Button
+						className='w-16 min-w-0'
+						variant={'link'}>
+						<Check className='scale-110' />
 					</Button>
 				</form>
 			)}
-			<>
-				{employee.shiftPreferences.map((shiftPreference, index) => (
-					<ShiftPreference
-						key={index}
-						index={index}
-						loading={loading}
-						employee={employee}
-						setError={setError}
-						setLoading={setLoading}
-						setMessage={setMessage}
-						shiftPreference={shiftPreference}
-					/>
-				))}
-			</>
 		</Container>
 	)
 }

@@ -2,10 +2,11 @@ import { Dispatch, FC, SetStateAction, useState } from 'react'
 import Container from '../../../ui/Container'
 import Paragraph from '../../../ui/Paragraph'
 import Button from '../../../ui/Button'
-import { Check, PlusCircle } from 'lucide-react'
+import { Check, CheckCircle, CheckCircle2, PlusCircle, Scroll, X } from 'lucide-react'
 import Input from '../../../ui/Input'
 import axios from 'axios'
 import Note from './Note'
+import Heading from '../../../ui/Heading'
 
 interface NotesListProps {
 	employee: {
@@ -18,13 +19,12 @@ interface NotesListProps {
 		vacationDays: number | string
 	}
 	loading: boolean
-	setEdit: Dispatch<SetStateAction<boolean>>
 	setError: Dispatch<SetStateAction<string>>
 	setMessage: Dispatch<SetStateAction<string>>
 	setLoading: Dispatch<SetStateAction<boolean>>
 }
 
-const NotesList: FC<NotesListProps> = ({ employee, setEdit, loading, setLoading, setError, setMessage }) => {
+const NotesList: FC<NotesListProps> = ({ employee, loading, setLoading, setError, setMessage }) => {
 	const [note, setNote] = useState<string>('')
 	const [showAddNote, setShowAddNote] = useState<boolean>(false)
 
@@ -58,43 +58,74 @@ const NotesList: FC<NotesListProps> = ({ employee, setEdit, loading, setLoading,
 
 	return (
 		<Container>
+			<div className='flex items-center space-x-8'>
+				<Heading size={'sm'}>Notes</Heading>
+				{showAddNote ? (
+					<Button
+						size={'sm'}
+						className='w-36'
+						onClick={() => setShowAddNote(false)}
+						variant={'outline'}>
+						Cancel
+						<X className='ml-2 h-5 w-5' />
+					</Button>
+				) : (
+					<Button
+						size={'sm'}
+						className='w-36'
+						onClick={() => setShowAddNote(true)}
+						variant={'outline'}>
+						New Note
+						<Scroll className='ml-2 h-5 w-5' />
+					</Button>
+				)}
+			</div>
+
 			{!showAddNote && (
-				<Button
-					onClick={() => setShowAddNote(true)}
-					variant={'outline'}>
-					New Note
-					<PlusCircle className='ml-2 h-5 w-5' />
-				</Button>
+				<div className='mt-32'>
+					{employee.notes.length > 0 ? (
+						employee.notes.map((note, index) => (
+							<Note
+								employee={employee}
+								loading={loading}
+								setLoading={setLoading}
+								setError={setError}
+								setMessage={setMessage}
+								note={note}
+								index={index}
+								key={index}
+							/>
+						))
+					) : (
+						<>
+							{!showAddNote && (
+								<Heading
+									className='font-normal'
+									size={'xs'}>
+									There are no notes for this employee.
+								</Heading>
+							)}
+						</>
+					)}
+				</div>
 			)}
 			{showAddNote && (
 				<form
 					onSubmit={addNote}
-					className='flex w-2/3 space-x-1'>
+					className='mt-32 flex w-2/3 space-x-4'>
 					<Input
 						type='text'
 						value={note}
 						placeholder=' Add a note...'
 						onChange={(e) => setNote(e.target.value)}
 					/>
-					<Button className='shadow-md'>
-						Add <Check className='ml-2 h-5 w-5' />
+					<Button
+						className='w-16 min-w-0'
+						variant={'link'}>
+						<Check className='scale-110' />
 					</Button>
 				</form>
 			)}
-			<>
-				{employee.notes.map((note, index) => (
-					<Note
-						employee={employee}
-						loading={loading}
-						setLoading={setLoading}
-						setError={setError}
-						setMessage={setMessage}
-						note={note}
-						index={index}
-						key={index}
-					/>
-				))}
-			</>
 		</Container>
 	)
 }

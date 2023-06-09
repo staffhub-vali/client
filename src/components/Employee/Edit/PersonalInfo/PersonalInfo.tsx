@@ -6,6 +6,7 @@ import Heading from '../../../ui/Heading'
 import Container from '../../../ui/Container'
 import { Check, X } from 'lucide-react'
 import { Dispatch, FC, FormEvent, SetStateAction, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 interface PersonalInfoProps {
 	employee: {
@@ -16,11 +17,11 @@ interface PersonalInfoProps {
 		sickDays: number | string
 		vacationDays: number | string
 	}
-	setEdit: Dispatch<SetStateAction<boolean>>
 }
 
-const PersonalInfo: FC<PersonalInfoProps> = ({ employee, setEdit }) => {
+const PersonalInfo: FC<PersonalInfoProps> = ({ employee }) => {
 	const { _id } = employee
+	const navigate = useNavigate()
 	const [name, setName] = useState<string>(employee.name)
 	const [email, setEmail] = useState<string>(employee.email)
 	const [phone, setPhone] = useState<string>(employee.phone)
@@ -45,7 +46,6 @@ const PersonalInfo: FC<PersonalInfoProps> = ({ employee, setEdit }) => {
 					},
 				},
 			)
-			setEdit(false)
 			setLoading(false)
 		} catch (error) {
 			setLoading(false)
@@ -93,8 +93,7 @@ const PersonalInfo: FC<PersonalInfoProps> = ({ employee, setEdit }) => {
 				<Button
 					size={'sm'}
 					type='button'
-					loading={loading}
-					onClick={() => setEdit(false)}
+					onClick={() => navigate(`/employees/${employee._id}`)}
 					className='mx-2 bg-slate-400 text-white hover:bg-slate-400 dark:bg-slate-400 dark:text-white dark:hover:bg-slate-400'>
 					Cancel {<X className='ml-2 h-5 w-5' />}
 				</Button>

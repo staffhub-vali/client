@@ -1,6 +1,6 @@
 import axios from 'axios'
 import { Logout } from '../../Auth'
-import { useParams } from 'react-router-dom'
+import { useLocation, useParams } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import Notification from '../../components/ui/Notification'
 import NotesList from '../../components/Employee/Edit/Notes/NotesList'
@@ -15,11 +15,18 @@ const EmployeeProfilePage = () => {
 	const [error, setError] = useState<string>('')
 	const [message, setMessage] = useState<string>('')
 	const [loading, setLoading] = useState<boolean>(false)
-	const [editPersonalInfo, setEditPersonalInfo] = useState<boolean>(false)
 	const [editNotes, setEditNotes] = useState<boolean>(false)
 	const [editVacation, setEditVacation] = useState<boolean>(false)
 	const [showDropdown, setShowDropdown] = useState<boolean>(false)
+	const [editPersonalInfo, setEditPersonalInfo] = useState<boolean>(false)
 	const [editShiftPreferences, setEditShiftPreferences] = useState<boolean>(false)
+
+	const location = useLocation()
+
+	const isNotes: boolean = location.pathname.includes('/notes')
+	const isAbout: boolean = location.pathname.includes('/about')
+	const isVacation: boolean = location.pathname.includes('/vacation')
+	const isPreferences: boolean = location.pathname.includes('/preferences')
 
 	useEffect(() => {
 		fetchShifts()
@@ -62,39 +69,29 @@ const EmployeeProfilePage = () => {
 
 	return (
 		<div onClick={() => showDropdown && setShowDropdown(false)}>
-			{employee && editPersonalInfo && (
-				<PersonalInfo
-					employee={employee}
-					setEdit={setEditPersonalInfo}
-				/>
-			)}
-			{employee && editShiftPreferences && (
+			{employee && isAbout && <PersonalInfo employee={employee} />}
+			{employee && isPreferences && (
 				<ShiftPreferencesList
 					loading={loading}
 					setError={setError}
 					employee={employee}
 					setMessage={setMessage}
 					setLoading={setLoading}
-					setEdit={setEditShiftPreferences}
 				/>
 			)}
-			{employee && editNotes && (
+			{employee && isNotes && (
 				<NotesList
 					loading={loading}
 					setError={setError}
 					setLoading={setLoading}
 					setMessage={setMessage}
 					employee={employee}
-					setEdit={setEditNotes}
 				/>
 			)}
-			{employee && !editPersonalInfo && !editNotes && !editShiftPreferences && (
+			{employee && !isNotes && !isAbout && !isPreferences && (
 				<EmployeeProfile
 					shifts={shifts}
 					employee={employee}
-					setEditNotes={setEditNotes}
-					setEditPersonalInfo={setEditPersonalInfo}
-					setEditShiftPreferences={setEditShiftPreferences}
 					showDropdown={showDropdown}
 					setShowDropdown={setShowDropdown}
 				/>

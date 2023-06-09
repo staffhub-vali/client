@@ -36,11 +36,11 @@ const Navbar: FC<NavbarProps> = ({}) => {
 						<div className='flex w-36 items-center justify-between'>
 							<Link
 								to='/'
-								className={`${buttonVariants({ variant: 'link' })} scale-110 `}>
+								className={`${buttonVariants({ variant: 'link' })} w-10 min-w-0 `}>
 								<img
-									src='../logo.svg'
+									src='../../logo.svg'
 									alt='logo'
-									className='h-10 scale-150 invert dark:invert-0'
+									className='scale-75 invert dark:invert-0'
 								/>
 							</Link>
 							{sun && (
@@ -81,15 +81,14 @@ const Navbar: FC<NavbarProps> = ({}) => {
 						{user && (
 							<div className='flex items-center space-x-4'>
 								<Link
-									to='/employees'
-									className={`${buttonVariants({ variant: 'link' })} w-36`}>
-									Employees
-								</Link>
-
-								<Link
 									to='/schedules/new'
 									className={`${buttonVariants({ variant: 'link' })} w-36`}>
 									New Schedule
+								</Link>
+								<Link
+									to='/employees'
+									className={`${buttonVariants({ variant: 'link' })} w-36`}>
+									Employees
 								</Link>
 							</div>
 						)}

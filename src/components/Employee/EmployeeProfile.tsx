@@ -22,7 +22,7 @@ import { Dispatch, FC, SetStateAction, useState } from 'react'
 import { calculateMonthlyHours } from '../../utils/CalculateHours'
 
 interface EmployeeProfileProps {
-	data: {
+	employee: {
 		_id: string
 		name: string
 		email: string
@@ -33,10 +33,10 @@ interface EmployeeProfileProps {
 	}
 	shifts: Shift[]
 	showDropdown: boolean
-	setEditInfo: Dispatch<SetStateAction<boolean>>
 	setEditNotes: Dispatch<SetStateAction<boolean>>
 	setShowDropdown: Dispatch<SetStateAction<boolean>>
-	setEditPreferences: Dispatch<SetStateAction<boolean>>
+	setEditPersonalInfo: Dispatch<SetStateAction<boolean>>
+	setEditShiftPreferences: Dispatch<SetStateAction<boolean>>
 }
 
 interface Shift {
@@ -45,11 +45,11 @@ interface Shift {
 }
 
 const EmployeeProfile: FC<EmployeeProfileProps> = ({
-	data,
+	employee,
 	shifts,
-	setEditInfo,
+	setEditPersonalInfo,
 	setEditNotes,
-	setEditPreferences,
+	setEditShiftPreferences,
 	showDropdown,
 	setShowDropdown,
 }) => {
@@ -60,7 +60,7 @@ const EmployeeProfile: FC<EmployeeProfileProps> = ({
 		const token = localStorage.getItem('token')
 		try {
 			setLoading(true)
-			await axios.delete(`http://localhost:8080/v1/employees/${data._id}?id=${data._id}`, {
+			await axios.delete(`http://localhost:8080/v1/employees/${employee._id}?id=${employee._id}`, {
 				headers: {
 					Authorization: `Bearer ${token}`,
 				},
@@ -74,7 +74,9 @@ const EmployeeProfile: FC<EmployeeProfileProps> = ({
 	}
 
 	return (
-		<Container className='mt-40 rounded bg-white px-2 py-4 shadow dark:bg-slate-700'>
+		<Container
+			size={'lg'}
+			className='mt-40 w-10/12 rounded bg-white px-2 py-4 shadow dark:bg-slate-700'>
 			<div className='relative ml-auto'>
 				<Button
 					className='ml-auto min-w-0 rounded-full hover:bg-slate-50 dark:hover:bg-slate-600'
@@ -106,13 +108,14 @@ const EmployeeProfile: FC<EmployeeProfileProps> = ({
 							<li
 								onClick={() => {
 									setShowDropdown(false)
+									setEditShiftPreferences(true)
 								}}
 								className='flex cursor-pointer items-center justify-between px-4 py-3 hover:bg-slate-50 dark:hover:bg-slate-500'>
 								Shift Preferences
 								<Sticker className='ml-2' />
 							</li>
 							<li
-								onClick={() => setEditInfo(true)}
+								onClick={() => setEditPersonalInfo(true)}
 								className='flex cursor-pointer items-center justify-between px-4 py-3 hover:bg-slate-50  dark:hover:bg-slate-500'>
 								Personal Information
 								<User2 className='ml-2' />
@@ -134,7 +137,7 @@ const EmployeeProfile: FC<EmployeeProfileProps> = ({
 			<Heading
 				className='w-full border-b pb-4 text-center dark:border-slate-500'
 				size={'sm'}>
-				{data.name}
+				{employee.name}
 			</Heading>
 			<div className='flex w-full border-b py-6	 dark:border-slate-500'>
 				<Paragraph
@@ -147,7 +150,7 @@ const EmployeeProfile: FC<EmployeeProfileProps> = ({
 					className='mx-auto'
 					size={'xl'}>
 					Vacation days remaining:
-					<span className='ml-2 font-bold text-green-500 dark:text-green-400'>{data.vacationDays}</span>
+					<span className='ml-2 font-bold text-green-500 dark:text-green-400'>{employee.vacationDays}</span>
 				</Paragraph>
 			</div>
 
@@ -155,8 +158,13 @@ const EmployeeProfile: FC<EmployeeProfileProps> = ({
 				<Heading size={'xs'}>Shift Preferences</Heading>
 
 				<div className='flex flex-col py-2'>
-					<Paragraph className='flex'>06:00 - 14:00</Paragraph>
-					<Paragraph className='flex'>08:00 - 16:00</Paragraph>
+					{employee.shiftPreferences.length > 0 ? (
+						employee.shiftPreferences.map((shiftPreference, index) => (
+							<Paragraph key={index}>{shiftPreference}</Paragraph>
+						))
+					) : (
+						<Paragraph>There are no shift preferences for this employee.</Paragraph>
+					)}
 				</div>
 			</div>
 
@@ -164,9 +172,11 @@ const EmployeeProfile: FC<EmployeeProfileProps> = ({
 				<Heading size={'xs'}>Notes</Heading>
 
 				<div className='flex flex-col py-2'>
-					{data.notes.map((note, index) => (
-						<Paragraph key={index}>{note}</Paragraph>
-					))}
+					{employee.notes.length > 0 ? (
+						employee.notes.map((note, index) => <Paragraph key={index}>{note}</Paragraph>)
+					) : (
+						<Paragraph>There are no notes for this employee.</Paragraph>
+					)}
 				</div>
 			</div>
 			<div className='flex w-full flex-col items-center py-4'>
@@ -174,11 +184,11 @@ const EmployeeProfile: FC<EmployeeProfileProps> = ({
 
 				<div className='flex space-x-16 py-6'>
 					<Paragraph className='flex'>
-						<Mail className='mr-2' /> {data.email}
+						<Mail className='mr-2' /> {employee.email}
 					</Paragraph>
 					<Paragraph className='flex'>
 						<Phone className='mr-2' />
-						{data.phone}
+						{employee.phone}
 					</Paragraph>
 				</div>
 			</div>

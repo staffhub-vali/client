@@ -1,14 +1,14 @@
 import axios from 'axios'
-import Input from '../ui/Input'
-import Label from '../ui/Label'
-import Button from '../ui/Button'
-import Heading from '../ui/Heading'
-import Container from '../ui/Container'
+import Input from '../../../ui/Input'
+import Label from '../../../ui/Label'
+import Button from '../../../ui/Button'
+import Heading from '../../../ui/Heading'
+import Container from '../../../ui/Container'
 import { Check, X } from 'lucide-react'
 import { Dispatch, FC, FormEvent, SetStateAction, useState } from 'react'
 
-interface EditEmployeeProps {
-	data: {
+interface PersonalInfoProps {
+	employee: {
 		_id: string
 		name: string
 		email: string
@@ -19,11 +19,11 @@ interface EditEmployeeProps {
 	setEdit: Dispatch<SetStateAction<boolean>>
 }
 
-const EditEmployee: FC<EditEmployeeProps> = ({ data, setEdit }) => {
-	const { _id } = data
-	const [name, setName] = useState<string>(data.name)
-	const [email, setEmail] = useState<string>(data.email)
-	const [phone, setPhone] = useState<string>(data.phone)
+const PersonalInfo: FC<PersonalInfoProps> = ({ employee, setEdit }) => {
+	const { _id } = employee
+	const [name, setName] = useState<string>(employee.name)
+	const [email, setEmail] = useState<string>(employee.email)
+	const [phone, setPhone] = useState<string>(employee.phone)
 	const [loading, setLoading] = useState<boolean>(false)
 
 	const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
@@ -55,7 +55,7 @@ const EditEmployee: FC<EditEmployeeProps> = ({ data, setEdit }) => {
 
 	return (
 		<Container>
-			<Heading size={'sm'}>{data.name}</Heading>
+			<Heading size={'sm'}>{employee.name}</Heading>
 			<form
 				onSubmit={handleSubmit}
 				className='mt-6'>
@@ -103,4 +103,4 @@ const EditEmployee: FC<EditEmployeeProps> = ({ data, setEdit }) => {
 	)
 }
 
-export default EditEmployee
+export default PersonalInfo

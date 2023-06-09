@@ -1,4 +1,4 @@
-import React, { forwardRef, HTMLAttributes, useEffect, useState } from 'react'
+import { forwardRef, HTMLAttributes, useEffect, useState } from 'react'
 import { cva, VariantProps } from 'class-variance-authority'
 import { cn } from '../../utils/TailwindMerge'
 
@@ -19,7 +19,7 @@ const notificationVariants = cva('mx-auto fade fade-in w-fit rounded px-4 py-2 t
 
 const Notification = forwardRef<HTMLParagraphElement, NotificationProps>(
 	({ className, size, variant, position, children, ...props }, ref) => {
-		const [isVisible, setIsVisible] = useState(false)
+		const [isVisible, setIsVisible] = useState<boolean>(false)
 
 		useEffect(() => {
 			const timer = setTimeout(() => {

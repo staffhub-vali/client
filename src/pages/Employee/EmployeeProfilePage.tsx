@@ -2,11 +2,11 @@ import axios from 'axios'
 import { Logout } from '../../Auth'
 import { useParams } from 'react-router-dom'
 import { useEffect, useState } from 'react'
-import EditNotes from '../../components/Employee/EditNotes'
-import EditEmployee from '../../components/Employee/EditEmployee'
-import EmployeeProfile from '../../components/Employee/EmployeeProfile'
-import EditShiftPreferences from '../../components/Employee/EditShiftPreferences'
 import Notification from '../../components/ui/Notification'
+import NotesList from '../../components/Employee/Edit/Notes/NotesList'
+import EmployeeProfile from '../../components/Employee/EmployeeProfile'
+import PersonalInfo from '../../components/Employee/Edit/PersonalInfo/PersonalInfo'
+import ShiftPreferencesList from '../../components/Employee/Edit/ShiftPreferences/ShiftPreferencesList'
 
 const EmployeeProfilePage = () => {
 	const { id } = useParams()
@@ -15,11 +15,11 @@ const EmployeeProfilePage = () => {
 	const [error, setError] = useState<string>('')
 	const [message, setMessage] = useState<string>('')
 	const [loading, setLoading] = useState<boolean>(false)
-	const [editInfo, setEditInfo] = useState<boolean>(false)
+	const [editPersonalInfo, setEditPersonalInfo] = useState<boolean>(false)
 	const [editNotes, setEditNotes] = useState<boolean>(false)
 	const [editVacation, setEditVacation] = useState<boolean>(false)
 	const [showDropdown, setShowDropdown] = useState<boolean>(false)
-	const [editPreferences, setEditPreferences] = useState<boolean>(false)
+	const [editShiftPreferences, setEditShiftPreferences] = useState<boolean>(false)
 
 	useEffect(() => {
 		fetchShifts()
@@ -62,20 +62,24 @@ const EmployeeProfilePage = () => {
 
 	return (
 		<div onClick={() => showDropdown && setShowDropdown(false)}>
-			{employee && editInfo && (
-				<EditEmployee
-					data={employee}
-					setEdit={setEditInfo}
+			{employee && editPersonalInfo && (
+				<PersonalInfo
+					employee={employee}
+					setEdit={setEditPersonalInfo}
 				/>
 			)}
-			{employee && editPreferences && (
-				<EditShiftPreferences
-					data={employee}
-					setEdit={setEditPreferences}
+			{employee && editShiftPreferences && (
+				<ShiftPreferencesList
+					loading={loading}
+					setError={setError}
+					employee={employee}
+					setMessage={setMessage}
+					setLoading={setLoading}
+					setEdit={setEditShiftPreferences}
 				/>
 			)}
 			{employee && editNotes && (
-				<EditNotes
+				<NotesList
 					loading={loading}
 					setError={setError}
 					setLoading={setLoading}
@@ -84,13 +88,13 @@ const EmployeeProfilePage = () => {
 					setEdit={setEditNotes}
 				/>
 			)}
-			{employee && !editInfo && !editNotes && (
+			{employee && !editPersonalInfo && !editNotes && !editShiftPreferences && (
 				<EmployeeProfile
 					shifts={shifts}
-					data={employee}
+					employee={employee}
 					setEditNotes={setEditNotes}
-					setEditInfo={setEditInfo}
-					setEditPreferences={setEditPreferences}
+					setEditPersonalInfo={setEditPersonalInfo}
+					setEditShiftPreferences={setEditShiftPreferences}
 					showDropdown={showDropdown}
 					setShowDropdown={setShowDropdown}
 				/>

@@ -1,13 +1,13 @@
 import { Dispatch, FC, SetStateAction, useState } from 'react'
-import Container from '../ui/Container'
-import Paragraph from '../ui/Paragraph'
-import Button from '../ui/Button'
+import Container from '../../../ui/Container'
+import Paragraph from '../../../ui/Paragraph'
+import Button from '../../../ui/Button'
 import { Check, PlusCircle } from 'lucide-react'
-import Input from '../ui/Input'
+import Input from '../../../ui/Input'
 import axios from 'axios'
 import Note from './Note'
 
-interface EditNotesProps {
+interface NotesListProps {
 	employee: {
 		_id: string
 		name: string
@@ -24,7 +24,7 @@ interface EditNotesProps {
 	setLoading: Dispatch<SetStateAction<boolean>>
 }
 
-const EditNotes: FC<EditNotesProps> = ({ employee, setEdit, loading, setLoading, setError, setMessage }) => {
+const NotesList: FC<NotesListProps> = ({ employee, setEdit, loading, setLoading, setError, setMessage }) => {
 	const [note, setNote] = useState<string>('')
 	const [showAddNote, setShowAddNote] = useState<boolean>(false)
 
@@ -99,4 +99,4 @@ const EditNotes: FC<EditNotesProps> = ({ employee, setEdit, loading, setLoading,
 	)
 }
 
-export default EditNotes
+export default NotesList

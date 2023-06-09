@@ -3,8 +3,18 @@ import Heading from '../ui/Heading'
 import EmployeesTable from './EmployeesTable'
 
 interface EmployeesListProps {
-	data: Record<string, string>[]
+	data: Employee[]
 	headings: string[]
+}
+
+interface Employee {
+	_id: string
+	name: string
+	email: string
+	phone: string
+	notes: string[]
+	shiftPreferences: string[]
+	vacationDays: number | string
 }
 
 const EmployeesList: FC<EmployeesListProps> = ({ data, headings }) => {

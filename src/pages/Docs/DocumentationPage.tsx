@@ -1,10 +1,7 @@
-import { FC } from 'react'
-import Container from '../../components/ui/Container'
 import Heading from '../../components/ui/Heading'
+import Container from '../../components/ui/Container'
 
-interface DocumentationPageProps {}
-
-const DocumentationPage: FC<DocumentationPageProps> = ({}) => {
+const DocumentationPage = () => {
 	return (
 		<Container>
 			<Heading>Documentation</Heading>

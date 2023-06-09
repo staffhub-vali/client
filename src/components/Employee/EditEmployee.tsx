@@ -1,11 +1,11 @@
-import { Dispatch, FC, FormEvent, SetStateAction, useState } from 'react'
-import Container from '../ui/Container'
-import Heading from '../ui/Heading'
+import axios from 'axios'
 import Input from '../ui/Input'
 import Label from '../ui/Label'
-import axios from 'axios'
 import Button from '../ui/Button'
+import Heading from '../ui/Heading'
+import Container from '../ui/Container'
 import { Check, X } from 'lucide-react'
+import { Dispatch, FC, FormEvent, SetStateAction, useState } from 'react'
 
 interface EditEmployeeProps {
 	data: {
@@ -16,18 +16,15 @@ interface EditEmployeeProps {
 		sickDays: number | string
 		vacationDays: number | string
 	}
-
 	setEdit: Dispatch<SetStateAction<boolean>>
 }
 
 const EditEmployee: FC<EditEmployeeProps> = ({ data, setEdit }) => {
 	const { _id } = data
-	const [name, setName] = useState(data.name)
-	const [email, setEmail] = useState(data.email)
-	const [phone, setPhone] = useState(data.phone)
-	const [sickDays, setSickDays] = useState<any>(data.sickDays)
-	const [vacationDays, setVacationDays] = useState<any>(data.vacationDays)
-	const [loading, setLoading] = useState(false)
+	const [name, setName] = useState<string>(data.name)
+	const [email, setEmail] = useState<string>(data.email)
+	const [phone, setPhone] = useState<string>(data.phone)
+	const [loading, setLoading] = useState<boolean>(false)
 
 	const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault()
@@ -41,8 +38,6 @@ const EditEmployee: FC<EditEmployeeProps> = ({ data, setEdit }) => {
 					name,
 					email,
 					phone,
-					sickDays,
-					vacationDays,
 				},
 				{
 					headers: {

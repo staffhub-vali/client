@@ -4,7 +4,7 @@ import Employee from './Employee'
 import Button from '../ui/Button'
 import AddShift from './AddShift'
 import Heading from '../ui/Heading'
-import { FC, useState } from 'react'
+import { Dispatch, FC, SetStateAction, useState } from 'react'
 import { Clock8, ScrollText } from 'lucide-react'
 import Paragraph from '../ui/Paragraph'
 import Notification from '../ui/Notification'
@@ -20,17 +20,17 @@ interface Shift {
 
 interface WorkDayProps {
 	error: string
-	setError: any
 	message: string
-	setMessage: any
-	setWorkDay: any
-	workDay: WorkDay | null
 	loading: boolean
-	setLoading: any
+	workDay: WorkDay
+	setError: Dispatch<SetStateAction<string>>
+	setMessage: Dispatch<SetStateAction<string>>
+	setWorkDay: Dispatch<SetStateAction<WorkDay>>
+	setLoading: Dispatch<SetStateAction<boolean>>
 }
 
 interface WorkDay {
-	notes: []
+	notes: string[]
 	_id: string
 	date: number
 	shifts: Shift[]
@@ -53,8 +53,8 @@ const WorkDay: FC<WorkDayProps> = ({
 		<>
 			<div className='my-6 flex w-10/12 items-center justify-center space-x-10 border-b-2 pb-6 dark:border-slate-700 '>
 				<div className='flex space-x-3'>
-					<Heading size={'sm'}>{workDay && formatDay(workDay.date)}</Heading>
-					<Heading size={'sm'}>{workDay && formatDate(workDay.date)}</Heading>
+					<Heading size={'sm'}>{formatDay(workDay.date)}</Heading>
+					<Heading size={'sm'}>{formatDate(workDay.date)}</Heading>
 				</div>
 				<div className='space-x-2'>
 					<Button
@@ -78,7 +78,7 @@ const WorkDay: FC<WorkDayProps> = ({
 				</div>
 			</div>
 
-			{workDay && workDay.shifts.length < 1 && !showAddShift && !showAddNote && (
+			{workDay.shifts.length < 1 && !showAddShift && !showAddNote && (
 				<Heading
 					className='w-10/12 border-b-2 py-6 text-center font-normal dark:border-slate-700'
 					size={'xs'}>
@@ -86,7 +86,7 @@ const WorkDay: FC<WorkDayProps> = ({
 					There are currently no shifts for this day.{' '}
 				</Heading>
 			)}
-			{workDay && workDay.shifts.length > 0 && (
+			{workDay.shifts.length > 0 && (
 				<div className='flex w-10/12 flex-col items-center space-y-2 border-b-2 pb-6 dark:border-slate-700'>
 					{workDay?.shifts?.map((shift, index) => (
 						<Employee
@@ -128,8 +128,7 @@ const WorkDay: FC<WorkDayProps> = ({
 						Add a note
 					</Heading>
 				)}
-				{workDay &&
-					workDay.notes.length > 0 &&
+				{workDay.notes.length > 0 &&
 					!showAddNote &&
 					!showAddShift &&
 					workDay.notes.map((note, index) => (
@@ -144,7 +143,7 @@ const WorkDay: FC<WorkDayProps> = ({
 						/>
 					))}
 
-				{workDay && !showAddNote && !showAddShift && workDay.notes.length < 1 && (
+				{!showAddNote && !showAddShift && workDay.notes.length < 1 && (
 					<Paragraph size={'xl'}>There are no notes for this day.</Paragraph>
 				)}
 

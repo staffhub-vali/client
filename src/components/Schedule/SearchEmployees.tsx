@@ -1,4 +1,4 @@
-import { FC } from 'react'
+import { Dispatch, FC, SetStateAction } from 'react'
 import Container from '../ui/Container'
 import Input from '../ui/Input'
 
@@ -12,9 +12,9 @@ interface SearchEmployeesProps {
 	isOpen: boolean
 	inputSize: string
 	employees: Employee[]
-	setId: (id: string) => void
-	setName: (value: string) => void
-	setIsOpen: (isOpen: boolean) => void
+	setId: Dispatch<SetStateAction<string>>
+	setName: Dispatch<SetStateAction<string>>
+	setIsOpen: Dispatch<SetStateAction<boolean>>
 }
 
 const SearchEmployees: FC<SearchEmployeesProps> = ({

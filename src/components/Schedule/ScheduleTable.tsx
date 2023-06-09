@@ -1,15 +1,17 @@
-import { FC } from 'react'
+import { Dispatch, FC, SetStateAction } from 'react'
 import { formatDate, formatTime, formatTotal } from '../../utils/DateFormatting'
 import Container from '../ui/Container'
 
 interface ScheduleTableProps {
-	data: Array<{
-		date: number
-		start: number
-		end: number
-		total: number
-	}>
-	setData: any
+	data: WorkDay[]
+	setData: Dispatch<SetStateAction<WorkDay[]>>
+}
+
+interface WorkDay {
+	start?: number
+	end?: number
+	total?: number
+	date: number
 }
 
 const ScheduleTable: FC<ScheduleTableProps> = ({ data, setData }) => {
@@ -17,13 +19,15 @@ const ScheduleTable: FC<ScheduleTableProps> = ({ data, setData }) => {
 
 	const handleTimeChange = (newTime: string, field: 'start' | 'end', index: number) => {
 		// convert the new time into Unix timestamp
-		const [hour, minute]: any = newTime.split(':')
-		const newDate = new Date(data[index].date * 1000)
+
+		const [hour, minute]: string[] = newTime.split(':')
+		const newDate: any = new Date(data[index].date * 1000)
+
 		newDate.setHours(hour)
 		newDate.setMinutes(minute)
+
 		const newUnixTime = Math.floor(newDate.getTime() / 1000)
 
-		// set the new data
 		const newData = data.map((d, i) => (i === index ? { ...d, [field]: newUnixTime } : d))
 		setData(newData)
 	}

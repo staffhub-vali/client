@@ -5,23 +5,23 @@ import Heading from '../ui/Heading'
 import Paragraph from '../ui/Paragraph'
 import Container from '../ui/Container'
 import Notification from '../ui/Notification'
-import { FC, useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
+import { Dispatch, FC, SetStateAction, useEffect, useState } from 'react'
 
 interface RegisterFormProps {
-	setMessage: React.Dispatch<React.SetStateAction<null>>
+	setMessage: Dispatch<SetStateAction<string>>
 }
 
 const RegisterForm: FC<RegisterFormProps> = ({ setMessage }) => {
 	const navigate = useNavigate()
-	const [name, setName] = useState('')
-	const [firstName, setFirstName] = useState('')
-	const [lastName, setLastName] = useState('')
-	const [email, setEmail] = useState('')
-	const [password, setPassword] = useState('')
-	const [confirmPassword, setConfirmPassword] = useState('')
-	const [error, setError] = useState('')
-	const [isLoading, setIsLoading] = useState(false)
+	const [name, setName] = useState<string>('')
+	const [loading, setLoading] = useState(false)
+	const [email, setEmail] = useState<string>('')
+	const [error, setError] = useState<string>('')
+	const [lastName, setLastName] = useState<string>('')
+	const [password, setPassword] = useState<string>('')
+	const [firstName, setFirstName] = useState<string>('')
+	const [confirmPassword, setConfirmPassword] = useState<string>('')
 
 	useEffect(() => {
 		setName(`${firstName} ${lastName}`)
@@ -29,25 +29,25 @@ const RegisterForm: FC<RegisterFormProps> = ({ setMessage }) => {
 
 	const handleSubmit = async (e: React.FormEvent) => {
 		e.preventDefault()
-		setIsLoading(true)
+		setLoading(true)
 		if (password === confirmPassword) {
 			try {
-				const response = await axios.post('http://localhost:8080/v1/auth/register', {
+				const { data } = await axios.post('http://localhost:8080/v1/auth/register', {
 					name: name,
 					email: email,
 					password: password,
 				})
 
-				setMessage(response.data.message)
-				setIsLoading(false)
+				setMessage(data.message)
+				setLoading(false)
 				navigate('/auth/login')
 			} catch (error: any) {
 				console.log(error)
-				setIsLoading(false)
+				setLoading(false)
 				setError('An error occurred. Please try again later.')
 			}
 		} else {
-			setIsLoading(false)
+			setLoading(false)
 			setError('Passwords do not match.')
 		}
 	}
@@ -134,7 +134,7 @@ const RegisterForm: FC<RegisterFormProps> = ({ setMessage }) => {
 				</Paragraph>
 				<div className='mt-6 flex flex-col items-center'>
 					<Button
-						isLoading={isLoading}
+						loading={loading}
 						size={'lg'}>
 						Sign Up
 					</Button>

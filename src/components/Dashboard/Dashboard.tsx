@@ -1,4 +1,4 @@
-import { FC } from 'react'
+import { Dispatch, FC, SetStateAction } from 'react'
 import Button from '../ui/Button'
 import Heading from '../ui/Heading'
 import Container from '../ui/Container'
@@ -10,9 +10,9 @@ import { ChevronLeft, ChevronRight, ScrollText, User } from 'lucide-react'
 import { formatDate, formatDay, formatTime } from '../../utils/DateFormatting'
 
 interface DashboardProps {
-	setSkip: any
 	skip: number
 	data: WorkDay[]
+	setSkip: Dispatch<SetStateAction<number>>
 }
 
 const Dashboard: FC<DashboardProps> = ({ data, skip, setSkip }) => {

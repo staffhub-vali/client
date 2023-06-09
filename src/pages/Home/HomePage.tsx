@@ -1,11 +1,9 @@
 import axios from 'axios'
-import { FC, useEffect } from 'react'
-import Container from '../../components/ui/Container'
+import { useEffect } from 'react'
 import Heading from '../../components/ui/Heading'
+import Container from '../../components/ui/Container'
 
-interface HomePageProps {}
-
-const HomePage: FC<HomePageProps> = ({}) => {
+const HomePage = () => {
 	const token = localStorage.getItem('token')
 	useEffect(() => {
 		axios

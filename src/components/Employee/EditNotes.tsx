@@ -17,10 +17,8 @@ interface EditNotesProps {
 		shiftPreferences: string[]
 		vacationDays: number | string
 	}
-
-	setEdit: Dispatch<SetStateAction<boolean>>
-
 	loading: boolean
+	setEdit: Dispatch<SetStateAction<boolean>>
 	setError: Dispatch<SetStateAction<string>>
 	setMessage: Dispatch<SetStateAction<string>>
 	setLoading: Dispatch<SetStateAction<boolean>>
@@ -57,7 +55,7 @@ const EditNotes: FC<EditNotesProps> = ({ employee, setEdit, loading, setLoading,
 			setLoading(false)
 		}
 	}
-	console.log(employee.notes)
+
 	return (
 		<Container>
 			{!showAddNote && (

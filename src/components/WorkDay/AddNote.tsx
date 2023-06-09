@@ -1,21 +1,21 @@
 import axios from 'axios'
 import Button from '../ui/Button'
-import { FC, useState } from 'react'
+import { Dispatch, FC, SetStateAction, useState } from 'react'
 import { Check, X } from 'lucide-react'
 import Input from '../ui/Input'
 
 interface AddNoteProps {
-	workDay: WorkDay | null
-	setLoading: any
-	setError: any
-	setMessage: any
 	showAddNote: boolean
-	setShowAddNote: any
-	setShowAddShift: any
+	workDay: WorkDay | null
+	setError: Dispatch<SetStateAction<string>>
+	setMessage: Dispatch<SetStateAction<string>>
+	setLoading: Dispatch<SetStateAction<boolean>>
+	setShowAddNote: Dispatch<SetStateAction<boolean>>
+	setShowAddShift: Dispatch<SetStateAction<boolean>>
 }
 
 interface WorkDay {
-	notes: []
+	notes: string[]
 	_id: string
 	date: number
 }

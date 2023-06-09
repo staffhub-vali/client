@@ -10,24 +10,24 @@ import { Link } from 'react-router-dom'
 import Notification from '../ui/Notification'
 
 interface LoginFormProps {
-	message: string | null
+	message: string
 }
 
 const LoginForm: FC<LoginFormProps> = ({ message }) => {
 	const [error, setError] = useState<string>('')
 	const [email, setEmail] = useState<string>('')
 	const [password, setPassword] = useState<string>('')
-	const [isLoading, setIsLoading] = useState<boolean>(false)
+	const [loading, setLoading] = useState<boolean>(false)
 
 	const handleSubmit = async (e: React.FormEvent) => {
 		e.preventDefault()
-		setIsLoading(true)
+		setLoading(true)
 		try {
 			await Login(email, password)
 		} catch (error: any) {
 			setError(error.response.data.message)
 		} finally {
-			setIsLoading(false)
+			setLoading(false)
 		}
 	}
 
@@ -66,7 +66,7 @@ const LoginForm: FC<LoginFormProps> = ({ message }) => {
 
 				<Button
 					className='mx-auto mb-3 mt-1 w-fit'
-					isLoading={isLoading}
+					loading={loading}
 					size={'lg'}>
 					Sign In
 				</Button>

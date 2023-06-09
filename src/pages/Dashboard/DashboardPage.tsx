@@ -2,13 +2,11 @@ import axios from 'axios'
 import { Logout } from '../../Auth'
 import { Link } from 'react-router-dom'
 import { CalendarPlus } from 'lucide-react'
-import { FC, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import Heading from '../../components/ui/Heading'
 import Container from '../../components/ui/Container'
 import { buttonVariants } from '../../components/ui/Button'
 import Dashboard from '../../components/Dashboard/Dashboard'
-
-interface DashboardPageProps {}
 
 export interface WorkDay {
 	_id: string
@@ -20,11 +18,11 @@ export interface WorkDay {
 interface Shift {
 	end: number
 	start: number
-	employee: { name: string }
 	count: number
+	employee: { name: string }
 }
 
-const DashboardPage: FC<DashboardPageProps> = ({}) => {
+const DashboardPage = () => {
 	const [skip, setSkip] = useState<number>(0)
 	const [data, setData] = useState<WorkDay[]>([])
 

@@ -2,25 +2,25 @@ import axios from 'axios'
 import Modal from '../ui/Modal'
 import Input from '../ui/Input'
 import Button from '../ui/Button'
-import { FC, useState } from 'react'
-import { Check, Pencil, Trash2, X } from 'lucide-react'
 import Paragraph from '../ui/Paragraph'
 import { Link } from 'react-router-dom'
+import { Check, Pencil, Trash2, X } from 'lucide-react'
+import { Dispatch, FC, SetStateAction, useState } from 'react'
 import { formatTime, formatTotal } from '../../utils/DateFormatting'
 
 interface EmployeeProps {
 	shift: Shift
 	index: number
-	setError: any
-	setMessage: any
-	setWorkDay: any
-	workDay: WorkDay | null
 	loading: boolean
-	setLoading: any
+	workDay: WorkDay
+	setError: Dispatch<SetStateAction<string>>
+	setMessage: Dispatch<SetStateAction<string>>
+	setWorkDay: Dispatch<SetStateAction<WorkDay>>
+	setLoading: Dispatch<SetStateAction<boolean>>
 }
 
 interface WorkDay {
-	notes: []
+	notes: string[]
 	_id: string
 	date: number
 	shifts: Shift[]
@@ -30,7 +30,7 @@ interface Shift {
 	end: number
 	_id: string
 	start: number
-	loading?: boolean
+	loading: boolean
 	employee: { name: string; _id: string }
 }
 
@@ -67,14 +67,16 @@ const Employee: FC<EmployeeProps> = ({
 	const handleTimeChange = (newTime: string, field: 'start' | 'end', index: number) => {
 		if (workDay) {
 			// convert the new time into Unix timestamp
-			const [hour, minute]: any = newTime.split(':')
-			const newDate = new Date(workDay.date * 1000)
+			const [hour, minute]: string[] = newTime.split(':')
+			const newDate: any = new Date(workDay.date * 1000)
+
 			newDate.setHours(hour)
 			newDate.setMinutes(minute)
+
 			const newUnixTime = Math.floor(newDate.getTime() / 1000)
 
-			// set the new data
 			const newShifts = workDay?.shifts.map((d, i) => (i === index ? { ...d, [field]: newUnixTime } : d))
+
 			const newWorkDay = {
 				_id: workDay._id,
 				shifts: newShifts,

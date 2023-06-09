@@ -7,11 +7,11 @@ import { FC, useEffect, useState } from 'react'
 interface NavbarProps {}
 
 const Navbar: FC<NavbarProps> = ({}) => {
-	const [sun, setSun] = useState(true)
-	const [moon, setMoon] = useState(false)
+	const user = localStorage.getItem('user')
 	const theme = localStorage.getItem('theme')
-	const [mobile, setMobile] = useState(false)
-	const user = localStorage.getItem('user') as Object
+	const [sun, setSun] = useState<boolean>(true)
+	const [moon, setMoon] = useState<boolean>(false)
+	const [mobile, setMobile] = useState<boolean>(false)
 
 	useEffect(() => {
 		if (!theme) {

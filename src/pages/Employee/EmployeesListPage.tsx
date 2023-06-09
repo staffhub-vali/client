@@ -1,14 +1,12 @@
 import axios from 'axios'
 import { Logout } from '../../Auth'
-import { FC, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import EmployeesList from '../../components/Employee/EmployeesList'
 import Container from '../../components/ui/Container'
 
-interface EmployeesListPageProps {}
-
 const headings = ['Name', 'Email', 'Phone']
 
-const EmployeesListPage: FC<EmployeesListPageProps> = ({}) => {
+const EmployeesListPage = () => {
 	const [data, setData] = useState([])
 
 	useEffect(() => {
@@ -18,12 +16,12 @@ const EmployeesListPage: FC<EmployeesListPageProps> = ({}) => {
 	const fetchEmployees = async () => {
 		const token = localStorage.getItem('token')
 		try {
-			const response = await axios.get('http://localhost:8080/v1/employees', {
+			const { data } = await axios.get('http://localhost:8080/v1/employees', {
 				headers: {
 					Authorization: `Bearer ${token}`,
 				},
 			})
-			setData(response.data)
+			setData(data)
 		} catch (error: any) {
 			console.error(error)
 			if (error.response.status === 401) {

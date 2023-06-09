@@ -2,7 +2,8 @@ import axios from 'axios'
 import Button from '../ui/Button'
 import Heading from '../ui/Heading'
 import { Logout } from '../../Auth'
-import { FC, useState } from 'react'
+import { Check } from 'lucide-react'
+import { Dispatch, FC, SetStateAction, useState } from 'react'
 import Calendar from 'react-calendar'
 import Container from '../ui/Container'
 import 'react-calendar/dist/Calendar.css'
@@ -10,7 +11,6 @@ import ScheduleTable from './ScheduleTable'
 import Notification from '../ui/Notification'
 import SearchEmployees from './SearchEmployees'
 import { formatMonth } from '../../utils/DateFormatting'
-import { Check } from 'lucide-react'
 
 interface Employee {
 	_id: string
@@ -19,21 +19,29 @@ interface Employee {
 
 interface ScheduleMakerProps {
 	id: string
-	setId: (id: string) => void
 	name: string
-	setName: (name: string) => void
 	isOpen: boolean
-	setIsOpen: (isOpen: boolean) => void
 	employees: Employee[]
+	setId: Dispatch<SetStateAction<string>>
+	setName: Dispatch<SetStateAction<string>>
+	setIsOpen: Dispatch<SetStateAction<boolean>>
+}
+
+interface WorkDay {
+	start?: number
+	end?: number
+	total?: number
+	date: number
 }
 
 const ScheduleMaker: FC<ScheduleMakerProps> = ({ id, name, employees, setName, setId, isOpen, setIsOpen }) => {
 	const currentDate = new Date()
-	const [data, setData] = useState<any[]>([])
-	const [value, setValue] = useState(new Date())
-	const [loading, setLoading] = useState<boolean>(false)
 	const [error, setError] = useState<string>('')
+	const [value, setValue] = useState(new Date())
+	const [data, setData] = useState<WorkDay[]>([])
 	const [message, setMessage] = useState<string>('')
+	const [loading, setLoading] = useState<boolean>(false)
+
 	const [month, setMonth] = useState(() => {
 		const month = currentDate.getMonth() + 2
 		return `${currentDate.getFullYear()}-${month < 10 ? `0${month}` : month}`
@@ -76,12 +84,12 @@ const ScheduleMaker: FC<ScheduleMakerProps> = ({ id, name, employees, setName, s
 		setData(() => updateMonthData(date))
 	}
 
-	const updateMonthData = (date: Date) => {
+	const updateMonthData = (date: Date): WorkDay[] => {
 		const year = date.getFullYear()
 		const monthIndex = date.getMonth()
 		const daysInMonth = new Date(year, monthIndex + 1, 0).getDate()
 
-		const data = new Array(daysInMonth).fill(null).map((_, index) => {
+		const data: WorkDay[] = new Array(daysInMonth).fill(null).map((_, index) => {
 			const day = index + 1
 			const dateUnixTimestamp = new Date(year, monthIndex, day).getTime() / 1000
 

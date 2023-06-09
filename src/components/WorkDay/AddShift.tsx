@@ -1,6 +1,6 @@
 import Input from '../ui/Input'
 import Label from '../ui/Label'
-import { FC, useEffect, useState } from 'react'
+import { Dispatch, FC, SetStateAction, useEffect, useState } from 'react'
 import Paragraph from '../ui/Paragraph'
 import SearchEmployees from '../Schedule/SearchEmployees'
 import { formatTime, formatTotal } from '../../utils/DateFormatting'
@@ -11,7 +11,7 @@ import Heading from '../ui/Heading'
 import { Check, X } from 'lucide-react'
 
 interface WorkDay {
-	notes: []
+	notes: string[]
 	_id: string
 	date: number
 	shifts: Shift[]
@@ -26,21 +26,21 @@ interface Shift {
 }
 
 interface AddShiftProps {
-	workDay: WorkDay | null
-	setShowAddShift: any
-	setError: any
-	setMessage: any
 	loading: boolean
-	setLoading: any
+	workDay: WorkDay | null
+	setError: Dispatch<SetStateAction<string>>
+	setMessage: Dispatch<SetStateAction<string>>
+	setLoading: Dispatch<SetStateAction<boolean>>
+	setShowAddShift: Dispatch<SetStateAction<boolean>>
 }
 
 const AddShift: FC<AddShiftProps> = ({ workDay, setShowAddShift, setError, setMessage, loading, setLoading }) => {
 	const [name, setName] = useState<string>('')
 	const [employees, setEmployees] = useState<[]>([])
-	const [end, setEnd] = useState<number | null>(null)
 	const [isOpen, setIsOpen] = useState<boolean>(false)
-	const [start, setStart] = useState<number | null>(null)
 	const [employeeId, setEmployeeId] = useState<string>('')
+	const [end, setEnd] = useState<number | undefined>(undefined)
+	const [start, setStart] = useState<number | undefined>(undefined)
 
 	useEffect(() => {
 		fetchEmployees()
@@ -65,8 +65,8 @@ const AddShift: FC<AddShiftProps> = ({ workDay, setShowAddShift, setError, setMe
 	const handleTimeChange = (newTime: string, field: 'start' | 'end') => {
 		// convert the new time into Unix timestamp
 		if (workDay) {
-			const [hour, minute]: any = newTime.split(':')
-			const newDate = new Date(workDay.date * 1000)
+			const [hour, minute]: string[] = newTime.split(':')
+			const newDate: any = new Date(workDay.date * 1000)
 			newDate.setHours(hour)
 			newDate.setMinutes(minute)
 			const newUnixTime = Math.floor(newDate.getTime() / 1000)

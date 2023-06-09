@@ -1,27 +1,25 @@
 import axios from 'axios'
 import { Logout } from '../../Auth'
 import { useParams } from 'react-router-dom'
-import { FC, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import EditNotes from '../../components/Employee/EditNotes'
 import EditEmployee from '../../components/Employee/EditEmployee'
 import EmployeeProfile from '../../components/Employee/EmployeeProfile'
 import EditShiftPreferences from '../../components/Employee/EditShiftPreferences'
 import Notification from '../../components/ui/Notification'
 
-interface EmployeeProfilePageProps {}
-
-const EmployeeProfilePage: FC<EmployeeProfilePageProps> = ({}) => {
+const EmployeeProfilePage = () => {
 	const { id } = useParams()
-	const [loading, setLoading] = useState<boolean>(false)
-	const [error, setError] = useState<string>('')
-	const [message, setMessage] = useState<string>('')
 	const [shifts, setShifts] = useState([])
 	const [employee, setEmployee] = useState(null)
+	const [error, setError] = useState<string>('')
+	const [message, setMessage] = useState<string>('')
+	const [loading, setLoading] = useState<boolean>(false)
 	const [editInfo, setEditInfo] = useState<boolean>(false)
 	const [editNotes, setEditNotes] = useState<boolean>(false)
 	const [editVacation, setEditVacation] = useState<boolean>(false)
-	const [editPreferences, setEditPreferences] = useState<boolean>(false)
 	const [showDropdown, setShowDropdown] = useState<boolean>(false)
+	const [editPreferences, setEditPreferences] = useState<boolean>(false)
 
 	useEffect(() => {
 		fetchShifts()

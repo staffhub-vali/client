@@ -1,20 +1,18 @@
-import { FC, useEffect, useState } from 'react'
-import ScheduleMaker from '../../components/Schedule/ScheduleMaker'
 import axios from 'axios'
 import { Logout } from '../../Auth'
-import { buttonVariants } from '../../components/ui/Button'
 import { Link } from 'react-router-dom'
 import { UserPlus } from 'lucide-react'
-import Container from '../../components/ui/Container'
+import { FC, useEffect, useState } from 'react'
 import Heading from '../../components/ui/Heading'
+import Container from '../../components/ui/Container'
+import { buttonVariants } from '../../components/ui/Button'
+import ScheduleMaker from '../../components/Schedule/ScheduleMaker'
 
-interface NewSchedulePageProps {}
-
-const NewSchedulePage: FC<NewSchedulePageProps> = ({}) => {
-	const [id, setId] = useState('')
-	const [name, setName] = useState('')
-	const [isOpen, setIsOpen] = useState(false)
+const NewSchedulePage = () => {
+	const [id, setId] = useState<string>('')
+	const [name, setName] = useState<string>('')
 	const [employees, setEmployees] = useState([])
+	const [isOpen, setIsOpen] = useState<boolean>(false)
 
 	useEffect(() => {
 		fetchEmployees()
@@ -23,12 +21,12 @@ const NewSchedulePage: FC<NewSchedulePageProps> = ({}) => {
 	const fetchEmployees = async () => {
 		try {
 			const token = localStorage.getItem('token')
-			const response = await axios.get('http://localhost:8080/v1/employees', {
+			const { data } = await axios.get('http://localhost:8080/v1/employees', {
 				headers: {
 					Authorization: `Bearer ${token}`,
 				},
 			})
-			setEmployees(response.data)
+			setEmployees(data)
 		} catch (error: any) {
 			console.log(error)
 			if (error.response.status === 401) {

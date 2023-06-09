@@ -31,11 +31,11 @@ interface EmployeeProfileProps {
 		shiftPreferences: string[]
 		vacationDays: number | string
 	}
-	showDropdown: boolean
-	setShowDropdown: Dispatch<SetStateAction<boolean>>
 	shifts: Shift[]
+	showDropdown: boolean
 	setEditInfo: Dispatch<SetStateAction<boolean>>
 	setEditNotes: Dispatch<SetStateAction<boolean>>
+	setShowDropdown: Dispatch<SetStateAction<boolean>>
 	setEditPreferences: Dispatch<SetStateAction<boolean>>
 }
 

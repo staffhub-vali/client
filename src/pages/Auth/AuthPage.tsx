@@ -8,10 +8,10 @@ interface AuthPageProps {}
 
 const AuthPage: FC<AuthPageProps> = ({}) => {
 	const location = useLocation()
-	const [message, setMessage] = useState(null)
+	const [message, setMessage] = useState<string>('')
 
-	const isLoginForm = location.pathname.includes('/login')
-	const isRegisterForm = location.pathname.includes('/register')
+	const isLoginForm: boolean = location.pathname.includes('/login')
+	const isRegisterForm: boolean = location.pathname.includes('/register')
 
 	return (
 		<Container size={'lg'}>

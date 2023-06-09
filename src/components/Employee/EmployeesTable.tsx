@@ -7,15 +7,26 @@ import { buttonVariants } from '../../components/ui/Button'
 import { UserPlus } from 'lucide-react'
 
 interface EmployeesTableProps {
+	data: Employee[]
 	headings: string[]
 	searchBar?: boolean
-	data: any
+}
+
+interface Employee {
+	_id: string
+	name: string
+	email: string
+	phone: string
+	notes: string[]
+	shiftPreferences: string[]
+	vacationDays: number | string
+	[key: string]: any
 }
 
 const EmployeesTable: FC<EmployeesTableProps> = ({ headings, data, searchBar }) => {
 	const [searchText, setSearchText] = useState<string>('')
 
-	const filteredData = data.filter((row: any) => {
+	const filteredData = data.filter((row) => {
 		const values = Object.values(row).join('').toLowerCase()
 		return values.includes(searchText.toLowerCase())
 	})
@@ -62,7 +73,7 @@ const EmployeesTable: FC<EmployeesTableProps> = ({ headings, data, searchBar }) 
 				</thead>
 
 				<tbody className='divide-y-2 divide-slate-200 dark:divide-slate-600'>
-					{filteredData.map((row: any, index: number) => (
+					{filteredData.map((row, index) => (
 						<tr
 							onClick={() => navigate(`/${path}/${row._id}`)}
 							key={`row-${index}`}

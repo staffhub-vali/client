@@ -1,4 +1,4 @@
-import { FC, useState } from 'react'
+import { Dispatch, FC, SetStateAction, useState } from 'react'
 import Paragraph from '../ui/Paragraph'
 import Button from '../ui/Button'
 import { Check, XCircle, Trash2, Pencil } from 'lucide-react'
@@ -11,13 +11,13 @@ interface NoteProps {
 	index: number
 	loading: boolean
 	workDay: WorkDay
-	setError: any
-	setLoading: any
-	setMessage: any
+	setError: Dispatch<SetStateAction<string>>
+	setMessage: Dispatch<SetStateAction<string>>
+	setLoading: Dispatch<SetStateAction<boolean>>
 }
 
 interface WorkDay {
-	notes: []
+	notes: string[]
 	_id: string
 }
 

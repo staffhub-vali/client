@@ -1,10 +1,10 @@
-import { FC, useState, SetStateAction, Dispatch } from 'react'
-import Paragraph from '../ui/Paragraph'
-import Button from '../ui/Button'
-import { Check, XCircle, Trash2, Pencil } from 'lucide-react'
-import Modal from '../ui/Modal'
 import axios from 'axios'
+import Modal from '../ui/Modal'
 import Input from '../ui/Input'
+import Button from '../ui/Button'
+import Paragraph from '../ui/Paragraph'
+import { Check, XCircle, Trash2, Pencil } from 'lucide-react'
+import { FC, useState, SetStateAction, Dispatch } from 'react'
 
 interface NoteProps {
 	note: string

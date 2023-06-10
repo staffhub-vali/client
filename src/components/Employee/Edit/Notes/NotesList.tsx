@@ -19,9 +19,9 @@ interface NotesListProps {
 		vacationDays: number | string
 	}
 	loading: boolean
-	setError: Dispatch<SetStateAction<string>>
-	setMessage: Dispatch<SetStateAction<string>>
 	setLoading: Dispatch<SetStateAction<boolean>>
+	setError: Dispatch<SetStateAction<string | null>>
+	setMessage: Dispatch<SetStateAction<string | null>>
 }
 
 const NotesList: FC<NotesListProps> = ({ employee, loading, setLoading, setError, setMessage }) => {

@@ -11,9 +11,9 @@ interface ShiftPreferenceProps {
 	loading: boolean
 	employee: Employee
 	shiftPreference: string
-	setError: Dispatch<SetStateAction<string>>
-	setMessage: Dispatch<SetStateAction<string>>
 	setLoading: Dispatch<SetStateAction<boolean>>
+	setError: Dispatch<SetStateAction<string | null>>
+	setMessage: Dispatch<SetStateAction<string | null>>
 }
 
 interface Employee {

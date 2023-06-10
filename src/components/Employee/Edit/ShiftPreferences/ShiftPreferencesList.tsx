@@ -2,7 +2,7 @@ import axios from 'axios'
 import { Dispatch, FC, SetStateAction, useState } from 'react'
 import Container from '../../../ui/Container'
 import Button from '../../../ui/Button'
-import { Check, Plus, PlusCircle, Scroll, X } from 'lucide-react'
+import { Check, Plus, X } from 'lucide-react'
 import Input from '../../../ui/Input'
 import ShiftPreference from './ShiftPreference'
 import Heading from '../../../ui/Heading'
@@ -18,14 +18,13 @@ interface ShiftPreferencesListProps {
 		vacationDays: number | string
 	}
 	loading: boolean
-	setError: Dispatch<SetStateAction<string>>
-	setMessage: Dispatch<SetStateAction<string>>
+	setError: Dispatch<SetStateAction<string | null>>
+	setMessage: Dispatch<SetStateAction<string | null>>
 	setLoading: Dispatch<SetStateAction<boolean>>
 }
 
 const ShiftPreferencesList: FC<ShiftPreferencesListProps> = ({
 	employee,
-
 	loading,
 	setError,
 	setLoading,

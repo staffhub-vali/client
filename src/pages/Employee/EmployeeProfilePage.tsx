@@ -7,14 +7,14 @@ import NotesList from '../../components/Employee/Edit/Notes/NotesList'
 import EmployeeProfile from '../../components/Employee/EmployeeProfile'
 import PersonalInfo from '../../components/Employee/Edit/PersonalInfo/PersonalInfo'
 import ShiftPreferencesList from '../../components/Employee/Edit/ShiftPreferences/ShiftPreferencesList'
-import VacationPlanner from '../../components/Employee/Edit/Vacation/VacationPlanner'
+import VacationList from '../../components/Employee/Edit/Vacation/VacationList'
 
 const EmployeeProfilePage = () => {
 	const { id } = useParams()
 	const [shifts, setShifts] = useState([])
 	const [employee, setEmployee] = useState(null)
-	const [error, setError] = useState<string>('')
-	const [message, setMessage] = useState<string>('')
+	const [error, setError] = useState<string | null>('')
+	const [message, setMessage] = useState<string | null>('')
 	const [loading, setLoading] = useState<boolean>(false)
 	const [showDropdown, setShowDropdown] = useState<boolean>(false)
 
@@ -101,7 +101,7 @@ const EmployeeProfilePage = () => {
 				/>
 			)}
 			{employee && isVacation && (
-				<VacationPlanner
+				<VacationList
 					loading={loading}
 					setError={setError}
 					employee={employee}

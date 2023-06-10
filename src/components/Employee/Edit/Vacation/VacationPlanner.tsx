@@ -1,17 +1,18 @@
-import Calendar from 'react-calendar'
-import Heading from '../../../ui/Heading'
-import Container from '../../../ui/Container'
-import Paragraph from '../../../ui/Paragraph'
-import { Dispatch, FC, SetStateAction, useEffect, useState } from 'react'
-import Button from '../../../ui/Button'
 import axios from 'axios'
+import Calendar from 'react-calendar'
+import Button from '../../../ui/Button'
+import Heading from '../../../ui/Heading'
+import Paragraph from '../../../ui/Paragraph'
+import { FC, useState, useEffect, Dispatch, SetStateAction } from 'react'
+import { Check } from 'lucide-react'
 
 interface VacationPlannerProps {
 	loading: boolean
 	employee: Employee
-	setError: Dispatch<SetStateAction<string>>
-	setMessage: Dispatch<SetStateAction<string>>
 	setLoading: Dispatch<SetStateAction<boolean>>
+	setShowPlanner: Dispatch<SetStateAction<boolean>>
+	setError: Dispatch<SetStateAction<string | null>>
+	setMessage: Dispatch<SetStateAction<string | null>>
 }
 
 interface Employee {
@@ -20,14 +21,35 @@ interface Employee {
 	email: string
 	phone: string
 	notes: string[]
-	shiftPreferences: string[]
 	vacationDays: number
+	shiftPreferences: string[]
 }
-const VacationPlanner: FC<VacationPlannerProps> = ({ loading, setLoading, employee, setMessage, setError }) => {
+
+const VacationPlanner: FC<VacationPlannerProps> = ({
+	loading,
+	setLoading,
+	employee,
+	setMessage,
+	setError,
+	setShowPlanner,
+}) => {
 	const [end, setEnd] = useState(new Date())
 	const [start, setStart] = useState(new Date())
 	const [daysPlanned, setDaysPlanned] = useState(0)
 	const [daysRemaining, setDaysRemaining] = useState(employee.vacationDays)
+
+	const calculateTotalDays = () => {
+		const millisecondsPerDay = 24 * 60 * 60 * 1000
+		const totalDays = Math.ceil((end.getTime() - start.getTime()) / millisecondsPerDay) + 1
+		if (employee.vacationDays - totalDays >= 0) {
+			setDaysPlanned(totalDays)
+			setDaysRemaining(employee.vacationDays - totalDays)
+		}
+	}
+
+	useEffect(() => {
+		calculateTotalDays()
+	}, [start, end])
 
 	const handleStartChange: any = (date: Date) => {
 		const newStart = date
@@ -52,32 +74,21 @@ const VacationPlanner: FC<VacationPlannerProps> = ({ loading, setLoading, employ
 			setEnd(newEnd)
 			setDaysPlanned(newTotalDays)
 			setDaysRemaining(employee.vacationDays - newTotalDays)
-		} else setError("You can't plan that many dayss.")
+		} else setError("You can't plan that many days.")
 	}
-
-	const calculateTotalDays = () => {
-		const millisecondsPerDay = 24 * 60 * 60 * 1000
-		const totalDays = Math.ceil((end.getTime() - start.getTime()) / millisecondsPerDay) + 1
-		if (employee.vacationDays - totalDays >= 0) {
-			setDaysPlanned(totalDays)
-			setDaysRemaining(employee.vacationDays - totalDays)
-		}
-	}
-
-	useEffect(() => {
-		calculateTotalDays()
-	}, [start, end])
 
 	const handleSubmit = async (e: React.FormEvent) => {
 		e.preventDefault()
 		setLoading(true)
 		try {
 			const token = localStorage.getItem('token')
-			const { data } = await axios.put(
-				`http://localhost:8080/v1/employees/${employee._id}/vacation`,
+			const { data } = await axios.post(
+				'http://localhost:8080/v1/employees/vacation',
 				{
-					start: start,
-					end: end,
+					employeeId: employee._id,
+					start: start.getTime(),
+					end: end.getTime(),
+					daysRemaining: daysRemaining,
 				},
 				{
 					headers: {
@@ -86,6 +97,9 @@ const VacationPlanner: FC<VacationPlannerProps> = ({ loading, setLoading, employ
 				},
 			)
 			setLoading(false)
+			setEnd(new Date())
+			setStart(new Date())
+			setShowPlanner(false)
 			setMessage(data.message)
 		} catch (error: any) {
 			setError(error.data.response.message)
@@ -93,8 +107,7 @@ const VacationPlanner: FC<VacationPlannerProps> = ({ loading, setLoading, employ
 	}
 
 	return (
-		<Container>
-			<Heading size={'sm'}>{employee.name}</Heading>
+		<>
 			<Paragraph
 				size={'xl'}
 				className='mt-6'>
@@ -105,8 +118,7 @@ const VacationPlanner: FC<VacationPlannerProps> = ({ loading, setLoading, employ
 				className='mt-2 text-green-500 dark:text-green-400'>
 				{daysRemaining}
 			</Heading>
-
-			<div className='mt-12 flex space-x-12'>
+			<div className='mt-12 flex space-x-24'>
 				<div>
 					<Heading
 						className='mb-2 text-center font-normal'
@@ -132,16 +144,20 @@ const VacationPlanner: FC<VacationPlannerProps> = ({ loading, setLoading, employ
 			</div>
 			<Heading
 				size={'sm'}
-				className='mt-6'>
+				className='mt-10'>
 				Days planned: {daysPlanned}
 			</Heading>
 
 			<form
 				className='mt-6'
 				onSubmit={handleSubmit}>
-				<Button>Submit</Button>
+				<Button
+					size={'sm'}
+					loading={loading}>
+					Submit <Check className='ml-2 h-5 w-5' />
+				</Button>
 			</form>
-		</Container>
+		</>
 	)
 }
 

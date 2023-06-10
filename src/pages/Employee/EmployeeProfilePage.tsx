@@ -7,6 +7,7 @@ import NotesList from '../../components/Employee/Edit/Notes/NotesList'
 import EmployeeProfile from '../../components/Employee/EmployeeProfile'
 import PersonalInfo from '../../components/Employee/Edit/PersonalInfo/PersonalInfo'
 import ShiftPreferencesList from '../../components/Employee/Edit/ShiftPreferences/ShiftPreferencesList'
+import VacationPlanner from '../../components/Employee/Edit/Vacation/VacationPlanner'
 
 const EmployeeProfilePage = () => {
 	const { id } = useParams()
@@ -15,11 +16,7 @@ const EmployeeProfilePage = () => {
 	const [error, setError] = useState<string>('')
 	const [message, setMessage] = useState<string>('')
 	const [loading, setLoading] = useState<boolean>(false)
-	const [editNotes, setEditNotes] = useState<boolean>(false)
-	const [editVacation, setEditVacation] = useState<boolean>(false)
 	const [showDropdown, setShowDropdown] = useState<boolean>(false)
-	const [editPersonalInfo, setEditPersonalInfo] = useState<boolean>(false)
-	const [editShiftPreferences, setEditShiftPreferences] = useState<boolean>(false)
 
 	const location = useLocation()
 
@@ -32,6 +29,21 @@ const EmployeeProfilePage = () => {
 		fetchShifts()
 		fetchProfile()
 	}, [loading])
+
+	useEffect(() => {
+		let timeoutId: any = null
+
+		clearTimeout(timeoutId)
+
+		timeoutId = setTimeout(() => {
+			setError(null)
+			setMessage(null)
+		}, 7000)
+
+		return () => {
+			clearTimeout(timeoutId)
+		}
+	}, [error, message])
 
 	const fetchProfile = async () => {
 		const token = localStorage.getItem('token')
@@ -88,7 +100,16 @@ const EmployeeProfilePage = () => {
 					employee={employee}
 				/>
 			)}
-			{employee && !isNotes && !isAbout && !isPreferences && (
+			{employee && isVacation && (
+				<VacationPlanner
+					loading={loading}
+					setError={setError}
+					employee={employee}
+					setMessage={setMessage}
+					setLoading={setLoading}
+				/>
+			)}
+			{employee && !isNotes && !isAbout && !isPreferences && !isVacation && (
 				<EmployeeProfile
 					shifts={shifts}
 					employee={employee}

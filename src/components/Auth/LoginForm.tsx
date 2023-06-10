@@ -38,30 +38,32 @@ const LoginForm: FC<LoginFormProps> = ({ message }) => {
 				onSubmit={handleSubmit}
 				className='mt-12 flex w-96 flex-col'>
 				<Label
-					className='text-center'
-					htmlFor='Email'>
+					htmlFor='Email'
+					className='text-center'>
 					Email
 				</Label>
 				<Input
 					size='lg'
-					onChange={(e) => setEmail(e.target.value)}
-					value={email}
-					type='email'
 					id='Email'
+					type='email'
 					name='email'
+					value={email}
+					placeholder='Your email address..'
+					onChange={(e) => setEmail(e.target.value)}
 				/>
 				<Label
-					className='text-center'
-					htmlFor='Password'>
+					htmlFor='Password'
+					className='text-center'>
 					Password
 				</Label>
 				<Input
 					size='lg'
-					onChange={(e) => setPassword(e.target.value)}
-					value={password}
-					type='password'
 					id='Password'
+					type='password'
 					name='password'
+					value={password}
+					placeholder='Your password..'
+					onChange={(e) => setPassword(e.target.value)}
 				/>
 
 				<Button

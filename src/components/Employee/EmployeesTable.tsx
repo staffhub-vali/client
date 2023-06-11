@@ -1,10 +1,10 @@
 import Input from '../ui/Input'
 import { FC, useState } from 'react'
 import Container from '../ui/Container'
-import { useNavigate } from 'react-router-dom'
 import { Link } from 'react-router-dom'
-import { buttonVariants } from '../../components/ui/Button'
 import { UserPlus } from 'lucide-react'
+import { useNavigate } from 'react-router-dom'
+import { buttonVariants } from '../../components/ui/Button'
 
 interface EmployeesTableProps {
 	data: Employee[]
@@ -18,9 +18,9 @@ interface Employee {
 	email: string
 	phone: string
 	notes: string[]
+	[key: string]: any
 	shiftPreferences: string[]
 	vacationDays: number | string
-	[key: string]: any
 }
 
 const EmployeesTable: FC<EmployeesTableProps> = ({ headings, data, searchBar }) => {
@@ -37,13 +37,13 @@ const EmployeesTable: FC<EmployeesTableProps> = ({ headings, data, searchBar }) 
 		<Container
 			className='p-6'
 			size={'lg'}>
-			<div className='mb-4 flex items-center space-x-12'>
+			<div className='mt-6 flex items-center space-x-12'>
 				{searchBar && (
-					<div className='mx-auto flex w-full items-center rounded-lg bg-white px-2 focus-within:shadow dark:bg-slate-700'>
+					<div className='mx-auto flex w-full items-center rounded-lg bg-white px-2 ring-slate-800  focus-within:ring-2 dark:bg-slate-700'>
 						<i className='fa fa-search text-slate-500 dark:text-slate-400' />
 						<Input
 							type='text'
-							size={''}
+							size={'default'}
 							value={searchText}
 							placeholder='Search for employees...'
 							className='group mb-0 shadow-none focus:ring-0'
@@ -52,18 +52,18 @@ const EmployeesTable: FC<EmployeesTableProps> = ({ headings, data, searchBar }) 
 					</div>
 				)}
 				<Link
-					className={`${buttonVariants({ variant: 'default', size: 'sm' })} w-64`}
+					className={`${buttonVariants({ variant: 'default', size: 'default' })} w-64`}
 					to={'/employees/new'}>
 					New Employee {<UserPlus className='ml-2 h-5 w-5' />}
 				</Link>
 			</div>
-			<table className='w-4/5 divide-y-2 divide-slate-200 border-2 bg-white text-center text-lg dark:divide-slate-600 dark:border-slate-600 dark:bg-slate-700'>
+			<table className='mt-6 w-3/5 divide-y-2 divide-slate-200 border-2 bg-white text-center dark:divide-slate-600 dark:border-slate-600 dark:bg-slate-700'>
 				<thead>
 					<tr>
 						{headings.map((heading, index) => (
 							<th
 								key={`heading-${index}`}
-								className='whitespace-nowrap px-4 py-3 font-medium '>
+								className='whitespace-nowrap px-8 py-3 font-bold '>
 								{heading}
 							</th>
 						))}
@@ -80,7 +80,7 @@ const EmployeesTable: FC<EmployeesTableProps> = ({ headings, data, searchBar }) 
 							{headings.map((heading, index) => (
 								<td
 									key={`employee-${index}`}
-									className={`cursor-pointer'} h-14 whitespace-nowrap px-4 py-2`}>
+									className={`cursor-pointer'} whitespace-nowrap px-8 py-3`}>
 									{employee[heading.toLowerCase()]}
 								</td>
 							))}

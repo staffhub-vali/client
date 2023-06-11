@@ -17,7 +17,7 @@ const Modal: FC<ModalProps> = ({ showModal, loading, submit, cancel, text }) => 
 		<ReactModal
 			isOpen={showModal}
 			className='fixed inset-0 flex items-center justify-center bg-[rgba(0,0,0,0.6)]'>
-			<div className='mx-auto h-56 w-[42rem] rounded-md bg-white p-6 text-center shadow-lg'>
+			<div className='mx-auto h-56 w-[42rem] rounded-md bg-white p-6 text-center shadow-lg dark:bg-slate-700'>
 				<Heading
 					size={'xs'}
 					className='mt-8 font-normal'>

@@ -50,7 +50,7 @@ const SearchEmployees: FC<SearchEmployeesProps> = ({
 			</div>
 			{isOpen && (
 				<div
-					className={`absolute left-0 top-10 z-10 w-full rounded bg-white shadow dark:bg-slate-600 dark:text-slate-300 ${
+					className={`absolute left-0 top-10 z-10 w-full rounded bg-white shadow-md dark:bg-slate-600 dark:text-slate-300 ${
 						inputSize === 'lg' ? 'mt-4' : 'mt-2'
 					}`}>
 					<ul>

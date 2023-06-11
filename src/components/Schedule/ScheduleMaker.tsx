@@ -49,7 +49,6 @@ const ScheduleMaker: FC<ScheduleMakerProps> = ({ id, name, employees, setName, s
 
 	const createSchedule = async () => {
 		setLoading(true)
-
 		try {
 			const token = localStorage.getItem('token')
 			const { data } = await axios.post(
@@ -76,6 +75,7 @@ const ScheduleMaker: FC<ScheduleMakerProps> = ({ id, name, employees, setName, s
 	}
 
 	const handleMonthChange: any = (date: Date) => {
+		setValue(date)
 		const year = date.getFullYear()
 		const month = date.getMonth() + 1
 		setMonth(`${year}-${month < 10 ? `0${month}` : month}`)
@@ -102,8 +102,8 @@ const ScheduleMaker: FC<ScheduleMakerProps> = ({ id, name, employees, setName, s
 	return (
 		<Container
 			size={'lg'}
-			className=' grid grid-cols-12 px-0 py-12 '>
-			<div className='col-span-4 col-start-2 mt-14 flex w-fit flex-col items-center space-y-4'>
+			className='flex flex-row justify-evenly p-0'>
+			<div className='mt-16 flex h-[36rem] flex-col items-center space-y-4'>
 				<SearchEmployees
 					name={name}
 					setId={setId}
@@ -127,20 +127,20 @@ const ScheduleMaker: FC<ScheduleMakerProps> = ({ id, name, employees, setName, s
 					Submit {<Check className='ml-2 h-6 w-6' />}
 				</Button>
 			</div>
-			<div className='col-span-6 col-start-6'>
+			<div className='mt-16 h-[36rem] w-[82rem]'>
 				{schedule.length > 0 ? (
 					<>
 						{name ? (
 							<Heading
 								size={'sm'}
-								className='pb-2 text-center'>
+								className='mb-2 text-center'>
 								{name} - {formatMonth(schedule[0].date)}
 							</Heading>
 						) : (
 							<Heading
 								size={'sm'}
-								className='pb-2 text-center'>
-								Choose an employee
+								className='mb-2 text-center'>
+								Choose an employee.
 							</Heading>
 						)}
 						<ScheduleTable
@@ -149,9 +149,11 @@ const ScheduleMaker: FC<ScheduleMakerProps> = ({ id, name, employees, setName, s
 						/>
 					</>
 				) : (
-					<div className='col-span-6 col-start-6'>
-						<Heading className='font-normal text-slate-500 dark:text-slate-400'>Pick a month and an employee</Heading>
-					</div>
+					<Heading
+						size={'sm'}
+						className='mt-48 text-center font-normal text-slate-500 dark:text-slate-400'>
+						Pick a month and an employee.
+					</Heading>
 				)}
 			</div>
 			{message && (

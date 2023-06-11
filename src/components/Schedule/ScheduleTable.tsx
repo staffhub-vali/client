@@ -33,15 +33,13 @@ const ScheduleTable: FC<ScheduleTableProps> = ({ data, setData }) => {
 	}
 
 	return (
-		<Container
-			size={'lg'}
-			className='h-[32rem] overflow-x-hidden rounded border-2 p-0 dark:border-slate-500'>
+		<div className='h-[32rem] overflow-x-hidden rounded border-2 dark:border-slate-500'>
 			<table className='w-full divide-y-2 divide-slate-200 overflow-scroll rounded bg-white text-center text-xl  shadow-md dark:divide-slate-600 dark:bg-slate-800'>
 				<thead>
 					<tr className='sticky top-0 bg-white dark:bg-slate-800 '>
 						{headings.map((heading, index) => (
 							<th
-								className='py-4 font-semibold'
+								className='px-8 py-4 font-semibold'
 								key={index}>
 								{heading}
 							</th>
@@ -54,7 +52,7 @@ const ScheduleTable: FC<ScheduleTableProps> = ({ data, setData }) => {
 							<tr
 								key={index}
 								className={index % 2 === 0 ? 'bg-slate-50 dark:bg-slate-700' : 'bg-white dark:bg-slate-800'}>
-								<td className='py-3'>{formatDate(item.date)}</td>
+								<td className='px-8 py-3'>{formatDate(item.date)}</td>
 								<td>
 									<input
 										className='rounded bg-transparent py-3 text-center focus:bg-white dark:outline-none dark:ring-slate-100 dark:focus:bg-transparent dark:focus:ring-1'
@@ -72,16 +70,16 @@ const ScheduleTable: FC<ScheduleTableProps> = ({ data, setData }) => {
 									/>
 								</td>
 								{item.start && item.end ? (
-									<td className='py-3'>{formatTotal(item.start, item.end)}</td>
+									<td className='px-8 py-3'>{formatTotal(item.start, item.end)}</td>
 								) : (
-									<td className='py-2'></td>
+									<td className='px-8 py-3'></td>
 								)}
 							</tr>
 						)
 					})}
 				</tbody>
 			</table>
-		</Container>
+		</div>
 	)
 }
 

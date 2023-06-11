@@ -5,6 +5,7 @@ import Button from '../../../ui/Button'
 import Paragraph from '../../../ui/Paragraph'
 import { formatDate } from '../../../../utils/DateFormatting'
 import { FC, useState, SetStateAction, Dispatch, useEffect } from 'react'
+import { Logout } from '../../../../Auth'
 
 interface VacationProps {
 	index: number
@@ -54,16 +55,16 @@ const Vacation: FC<VacationProps> = ({
 					},
 				},
 			)
-			setError('')
-			setShowModal(false)
-			setAmount((prev) => prev + data.totalDays)
 			setMessage(data.message)
+			setAmount((prev) => prev + data.totalDays)
 		} catch (error: any) {
-			setMessage('')
-			setShowModal(false)
 			setError(error.response.data.message)
+			if (error.response.status === 401) {
+				Logout()
+			}
 		} finally {
 			setLoading(false)
+			setShowModal(false)
 		}
 	}
 

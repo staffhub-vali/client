@@ -3,7 +3,7 @@ import Input from '../ui/Input'
 import Label from '../ui/Label'
 import Button from '../ui/Button'
 import { Logout } from '../../Auth'
-import { FC, useState } from 'react'
+import { FC, useEffect, useState } from 'react'
 import Container from '../ui/Container'
 import Notification from '../ui/Notification'
 import { Check } from 'lucide-react'
@@ -14,17 +14,32 @@ const NewEmployeeForm: FC<NewEmployeeFormProps> = ({}) => {
 	const [name, setName] = useState<string>('')
 	const [phone, setPhone] = useState<string>('')
 	const [email, setEmail] = useState<string>('')
-	const [error, setError] = useState<string>('')
-	const [message, setMessage] = useState<string>('')
 	const [loading, setLoading] = useState<boolean>(false)
+	const [error, setError] = useState<string | null>(null)
+	const [message, setMessage] = useState<string | null>(null)
+
+	useEffect(() => {
+		let timeoutId: any = null
+
+		clearTimeout(timeoutId)
+
+		timeoutId = setTimeout(() => {
+			setError(null)
+			setMessage(null)
+		}, 7000)
+
+		return () => {
+			clearTimeout(timeoutId)
+		}
+	}, [loading])
 
 	const handleSubmit = async (e: React.FormEvent) => {
+		e.preventDefault()
+		setLoading(true)
 		try {
-			e.preventDefault()
-			setLoading(true)
 			const token = localStorage.getItem('token')
 
-			const response = await axios.post(
+			const { data } = await axios.post(
 				'http://localhost:8080/v1/employees',
 				{
 					name: name,
@@ -37,19 +52,18 @@ const NewEmployeeForm: FC<NewEmployeeFormProps> = ({}) => {
 					},
 				},
 			)
-			setLoading(false)
+
 			setEmail('')
 			setName('')
 			setPhone('')
-			setError('')
-			setMessage(response.data.message)
+			setMessage(data.message)
 		} catch (error: any) {
+			setError(error.response.data.message)
 			if (error.response.status === 401) {
 				Logout()
 			}
+		} finally {
 			setLoading(false)
-			setMessage('')
-			setError(error.response.data.message)
 		}
 	}
 

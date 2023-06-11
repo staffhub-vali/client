@@ -2,17 +2,7 @@ import { FC } from 'react'
 import Button from './Button'
 import ReactModal from 'react-modal'
 import { Check, X } from 'lucide-react'
-
-const customStyles = {
-	content: {
-		top: '50%',
-		left: '50%',
-		right: 'auto',
-		bottom: 'auto',
-		marginRight: '-50%',
-		transform: 'translate(-50%, -50%)',
-	},
-}
+import Heading from './Heading'
 
 interface ModalProps {
 	text: string
@@ -26,24 +16,28 @@ const Modal: FC<ModalProps> = ({ showModal, loading, submit, cancel, text }) => 
 	return (
 		<ReactModal
 			isOpen={showModal}
-			style={customStyles}>
-			{text}
-			<div className='mt-2 flex justify-center space-x-2'>
-				<Button
-					size={'sm'}
-					className='my-2'
-					variant={'danger'}
-					onClick={submit}
-					loading={loading}>
-					Yes {<Check className='ml-2 h-4 w-4' />}
-				</Button>
-				<Button
-					size={'sm'}
-					variant='cancel'
-					className='my-2'
-					onClick={cancel}>
-					No {<X className='ml-2 h-4 w-4' />}
-				</Button>
+			className='fixed inset-0 flex items-center justify-center bg-[rgba(0,0,0,0.6)]'>
+			<div className='mx-auto h-56 w-[42rem] rounded-md bg-white p-6 text-center shadow-lg'>
+				<Heading
+					size={'xs'}
+					className='mt-8 font-normal'>
+					{text}
+				</Heading>
+				<div className='mt-6 flex h-full justify-center space-x-2'>
+					<Button
+						size='default'
+						variant='danger'
+						onClick={submit}
+						loading={loading}>
+						Yes <Check className='ml-2 h-5 w-5' />
+					</Button>
+					<Button
+						size='default'
+						variant='outline'
+						onClick={cancel}>
+						No <X className='ml-2 h-5 w-5' />
+					</Button>
+				</div>
 			</div>
 		</ReactModal>
 	)

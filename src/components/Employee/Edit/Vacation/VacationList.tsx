@@ -7,6 +7,7 @@ import Container from '../../../ui/Container'
 import VacationPlanner from './VacationPlanner'
 import { Check, FileDigit, Palmtree, X } from 'lucide-react'
 import { Dispatch, FC, SetStateAction, useState } from 'react'
+import { Logout } from '../../../../Auth'
 
 interface VacationListProps {
 	loading: boolean
@@ -59,6 +60,9 @@ const VacationList: FC<VacationListProps> = ({ loading, setLoading, employee, se
 			setShowChangeAmount(false)
 		} catch (error: any) {
 			setError(error.data.response.message)
+			if (error.response.status === 401) {
+				Logout()
+			}
 		} finally {
 			setLoading(false)
 		}

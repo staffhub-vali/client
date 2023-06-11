@@ -7,16 +7,17 @@ import { Link } from 'react-router-dom'
 import { Check, Pencil, Trash2, X } from 'lucide-react'
 import { Dispatch, FC, SetStateAction, useState } from 'react'
 import { formatTime, formatTotal } from '../../utils/DateFormatting'
+import { Logout } from '../../Auth'
 
 interface EmployeeProps {
 	shift: Shift
 	index: number
 	loading: boolean
 	workDay: WorkDay
-	setError: Dispatch<SetStateAction<string>>
-	setMessage: Dispatch<SetStateAction<string>>
 	setWorkDay: Dispatch<SetStateAction<WorkDay>>
 	setLoading: Dispatch<SetStateAction<boolean>>
+	setError: Dispatch<SetStateAction<string | null>>
+	setMessage: Dispatch<SetStateAction<string | null>>
 }
 
 interface WorkDay {
@@ -89,6 +90,8 @@ const Employee: FC<EmployeeProps> = ({
 
 	const handleEdit = async (e: React.FormEvent, shiftId: string) => {
 		e.preventDefault()
+		setLoading(true)
+
 		const updatedWorkDay: WorkDay | any = { ...workDay }
 
 		// Find the shift with the matching shiftId
@@ -106,13 +109,15 @@ const Employee: FC<EmployeeProps> = ({
 					Authorization: `Bearer ${token}`,
 				},
 			})
-			setError('')
-			toggleEditMode(shiftId)
 			setMessage(data.message)
 		} catch (error: any) {
-			setMessage('')
-			toggleEditMode(shiftId)
 			setError(error.response.data.message)
+			if (error.response.status === 401) {
+				Logout()
+			}
+		} finally {
+			setLoading(false)
+			toggleEditMode(shiftId)
 		}
 
 		// Reset the loading property after the request is completed
@@ -134,13 +139,15 @@ const Employee: FC<EmployeeProps> = ({
 					},
 				},
 			)
-			setShowModal(false)
-			setError('')
 			setMessage(data.message)
 		} catch (error: any) {
-			setMessage('')
-			setLoading(false)
 			setError(error.response.data.message)
+			if (error.response.status === 401) {
+				Logout()
+			}
+		} finally {
+			setLoading(false)
+			setShowModal(false)
 		}
 	}
 	return (
@@ -196,7 +203,7 @@ const Employee: FC<EmployeeProps> = ({
 						size={'sm'}
 						type='button'
 						onClick={() => toggleEditMode(shift._id)}
-						variant={'cancel'}>
+						variant={'outline'}>
 						Cancel {<X className='ml-2 h-4 w-4' />}
 					</Button>
 					<Button

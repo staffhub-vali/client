@@ -5,6 +5,7 @@ import Heading from '../../../ui/Heading'
 import Paragraph from '../../../ui/Paragraph'
 import { FC, useState, useEffect, Dispatch, SetStateAction } from 'react'
 import { Check } from 'lucide-react'
+import { Logout } from '../../../../Auth'
 
 interface VacationPlannerProps {
 	loading: boolean
@@ -106,6 +107,9 @@ const VacationPlanner: FC<VacationPlannerProps> = ({
 			setMessage(data.message)
 		} catch (error: any) {
 			setError(error.response.data.message)
+			if (error.response.status === 401) {
+				Logout()
+			}
 		} finally {
 			setLoading(false)
 		}

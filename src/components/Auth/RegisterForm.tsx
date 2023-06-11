@@ -9,15 +9,17 @@ import { Link, useNavigate } from 'react-router-dom'
 import { Dispatch, FC, SetStateAction, useEffect, useState } from 'react'
 
 interface RegisterFormProps {
-	setMessage: Dispatch<SetStateAction<string>>
+	loading: boolean
+	error: string | null
+	setLoading: Dispatch<SetStateAction<boolean>>
+	setError: Dispatch<SetStateAction<string | null>>
+	setMessage: Dispatch<SetStateAction<string | null>>
 }
 
-const RegisterForm: FC<RegisterFormProps> = ({ setMessage }) => {
+const RegisterForm: FC<RegisterFormProps> = ({ setMessage, loading, setLoading, setError, error }) => {
 	const navigate = useNavigate()
 	const [name, setName] = useState<string>('')
-	const [loading, setLoading] = useState(false)
 	const [email, setEmail] = useState<string>('')
-	const [error, setError] = useState<string>('')
 	const [lastName, setLastName] = useState<string>('')
 	const [password, setPassword] = useState<string>('')
 	const [firstName, setFirstName] = useState<string>('')
@@ -39,12 +41,11 @@ const RegisterForm: FC<RegisterFormProps> = ({ setMessage }) => {
 				})
 
 				setMessage(data.message)
-				setLoading(false)
 				navigate('/auth/login')
 			} catch (error: any) {
-				console.log(error)
+				setError(error.response.data.message)
+			} finally {
 				setLoading(false)
-				setError('An error occurred. Please try again later.')
 			}
 		} else {
 			setLoading(false)

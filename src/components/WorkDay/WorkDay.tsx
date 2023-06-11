@@ -19,14 +19,14 @@ interface Shift {
 }
 
 interface WorkDayProps {
-	error: string
-	message: string
 	loading: boolean
 	workDay: WorkDay
-	setError: Dispatch<SetStateAction<string>>
-	setMessage: Dispatch<SetStateAction<string>>
+	error: string | null
+	message: string | null
 	setWorkDay: Dispatch<SetStateAction<WorkDay>>
 	setLoading: Dispatch<SetStateAction<boolean>>
+	setError: Dispatch<SetStateAction<string | null>>
+	setMessage: Dispatch<SetStateAction<string | null>>
 }
 
 interface WorkDay {

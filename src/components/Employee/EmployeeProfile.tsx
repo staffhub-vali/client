@@ -43,11 +43,11 @@ const EmployeeProfile: FC<EmployeeProfileProps> = ({ shifts, employee, showDropd
 					Authorization: `Bearer ${token}`,
 				},
 			})
-			setShowModal(false)
 			window.location.href = '/employees'
 		} catch (error) {
 			console.log(error)
 		} finally {
+			setShowModal(false)
 			setLoading(false)
 		}
 	}

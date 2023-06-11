@@ -7,6 +7,7 @@ import Container from '../../../ui/Container'
 import { Check, X } from 'lucide-react'
 import { Dispatch, FC, FormEvent, SetStateAction, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { Logout } from '../../../../Auth'
 
 interface PersonalInfoProps {
 	employee: {
@@ -17,22 +18,25 @@ interface PersonalInfoProps {
 		sickDays: number | string
 		vacationDays: number | string
 	}
+	loading: boolean
+	setLoading: Dispatch<SetStateAction<boolean>>
+	setError: Dispatch<SetStateAction<string | null>>
+	setMessage: Dispatch<SetStateAction<string | null>>
 }
 
-const PersonalInfo: FC<PersonalInfoProps> = ({ employee }) => {
+const PersonalInfo: FC<PersonalInfoProps> = ({ employee, loading, setLoading, setMessage, setError }) => {
 	const { _id } = employee
 	const navigate = useNavigate()
 	const [name, setName] = useState<string>(employee.name)
 	const [email, setEmail] = useState<string>(employee.email)
 	const [phone, setPhone] = useState<string>(employee.phone)
-	const [loading, setLoading] = useState<boolean>(false)
 
 	const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault()
 		try {
 			setLoading(true)
 			const token = localStorage.getItem('token')
-			await axios.put(
+			const { data } = await axios.put(
 				`http://localhost:8080/v1/employees/${_id}`,
 				{
 					id: _id,
@@ -46,10 +50,14 @@ const PersonalInfo: FC<PersonalInfoProps> = ({ employee }) => {
 					},
 				},
 			)
+			setMessage(data.message)
+		} catch (error: any) {
+			setError(error.response.data.message)
+			if (error.response.status === 401) {
+				Logout()
+			}
+		} finally {
 			setLoading(false)
-		} catch (error) {
-			setLoading(false)
-			console.log(error)
 		}
 	}
 

@@ -6,6 +6,7 @@ import { Check, Plus, X } from 'lucide-react'
 import Input from '../../../ui/Input'
 import ShiftPreference from './ShiftPreference'
 import Heading from '../../../ui/Heading'
+import { Logout } from '../../../../Auth'
 
 interface ShiftPreferencesListProps {
 	employee: {
@@ -34,8 +35,9 @@ const ShiftPreferencesList: FC<ShiftPreferencesListProps> = ({
 	const [showAddShiftPreference, setShowAddShiftPreference] = useState<boolean>(false)
 
 	const addShiftPreference = async (e: React.FormEvent) => {
-		setLoading(true)
 		e.preventDefault()
+		setLoading(true)
+
 		try {
 			const token = localStorage.getItem('token')
 			const { data } = await axios.post(
@@ -52,12 +54,14 @@ const ShiftPreferencesList: FC<ShiftPreferencesListProps> = ({
 			)
 			setShiftPreference('')
 			setMessage(data.message)
-			setShowAddShiftPreference(false)
-			setLoading(false)
 		} catch (error: any) {
-			setShowAddShiftPreference(false)
 			setError(error.response.data.message)
+			if (error.response.status === 401) {
+				Logout()
+			}
+		} finally {
 			setLoading(false)
+			setShowAddShiftPreference(false)
 		}
 	}
 

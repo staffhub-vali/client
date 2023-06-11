@@ -22,9 +22,9 @@ interface Shift {
 
 const WorkDayPage = () => {
 	const { id } = useParams()
-	const [error, setError] = useState<string>('')
-	const [message, setMessage] = useState<string>('')
 	const [loading, setLoading] = useState<boolean>(false)
+	const [error, setError] = useState<string | null>(null)
+	const [message, setMessage] = useState<string | null>(null)
 	const [workDay, setWorkDay] = useState<WorkDayProps>({
 		_id: '',
 		date: 0,
@@ -34,6 +34,21 @@ const WorkDayPage = () => {
 
 	useEffect(() => {
 		fetchWorkDay()
+	}, [loading])
+
+	useEffect(() => {
+		let timeoutId: any = null
+
+		clearTimeout(timeoutId)
+
+		timeoutId = setTimeout(() => {
+			setError(null)
+			setMessage(null)
+		}, 7000)
+
+		return () => {
+			clearTimeout(timeoutId)
+		}
 	}, [loading])
 
 	const fetchWorkDay = async () => {
@@ -49,7 +64,6 @@ const WorkDayPage = () => {
 			if (error.response.status === 401) {
 				Logout()
 			}
-			console.log(error)
 		}
 	}
 

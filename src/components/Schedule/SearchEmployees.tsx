@@ -1,6 +1,6 @@
-import { Dispatch, FC, SetStateAction } from 'react'
-import Container from '../ui/Container'
 import Input from '../ui/Input'
+import Container from '../ui/Container'
+import { Dispatch, FC, SetStateAction } from 'react'
 
 interface Employee {
 	_id: string
@@ -18,11 +18,11 @@ interface SearchEmployeesProps {
 }
 
 const SearchEmployees: FC<SearchEmployeesProps> = ({
+	name,
 	setId,
 	isOpen,
-	setIsOpen,
-	name,
 	setName,
+	setIsOpen,
 	employees,
 	inputSize,
 }) => {

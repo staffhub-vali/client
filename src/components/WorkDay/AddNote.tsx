@@ -3,15 +3,16 @@ import Button from '../ui/Button'
 import { Dispatch, FC, SetStateAction, useState } from 'react'
 import { Check, X } from 'lucide-react'
 import Input from '../ui/Input'
+import { Logout } from '../../Auth'
 
 interface AddNoteProps {
 	showAddNote: boolean
 	workDay: WorkDay | null
-	setError: Dispatch<SetStateAction<string>>
-	setMessage: Dispatch<SetStateAction<string>>
 	setLoading: Dispatch<SetStateAction<boolean>>
+	setError: Dispatch<SetStateAction<string | null>>
 	setShowAddNote: Dispatch<SetStateAction<boolean>>
 	setShowAddShift: Dispatch<SetStateAction<boolean>>
+	setMessage: Dispatch<SetStateAction<string | null>>
 }
 
 interface WorkDay {
@@ -52,15 +53,15 @@ const AddNote: FC<AddNoteProps> = ({
 					},
 				},
 			)
-			setNote('')
-			setError('')
-			setLoading(false)
 			setShowAddNote(false)
 			setMessage(data.message)
 		} catch (error: any) {
-			setMessage('')
-			setLoading(false)
 			setError(error.response.data.message)
+			if (error.response.status === 401) {
+				Logout()
+			}
+		} finally {
+			setLoading(false)
 		}
 	}
 	return (
@@ -82,7 +83,7 @@ const AddNote: FC<AddNoteProps> = ({
 			<Button
 				size={'sm'}
 				className='w-44'
-				variant={'cancel'}
+				variant={'outline'}
 				onClick={() => setShowAddNote(false)}>
 				Cancel {<X className='ml-2 h-5 w-5' />}
 			</Button>

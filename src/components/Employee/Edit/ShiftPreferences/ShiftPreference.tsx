@@ -5,6 +5,7 @@ import Button from '../../../ui/Button'
 import Paragraph from '../../../ui/Paragraph'
 import { Check, XCircle, Trash2, Pencil } from 'lucide-react'
 import { FC, useState, SetStateAction, Dispatch } from 'react'
+import { Logout } from '../../../../Auth'
 
 interface ShiftPreferenceProps {
 	index: number
@@ -17,8 +18,8 @@ interface ShiftPreferenceProps {
 }
 
 interface Employee {
-	notes: string[]
 	_id: string
+	notes: string[]
 }
 
 const ShiftPreference: FC<ShiftPreferenceProps> = ({
@@ -47,15 +48,15 @@ const ShiftPreference: FC<ShiftPreferenceProps> = ({
 					},
 				},
 			)
-			setError('')
-			setLoading(false)
-			setShowModal(false)
 			setMessage(data.message)
 		} catch (error: any) {
-			setMessage('')
+			setError(error.response.data.message)
+			if (error.response.status === 401) {
+				Logout()
+			}
+		} finally {
 			setLoading(false)
 			setShowModal(false)
-			setError(error.response.data.message)
 		}
 	}
 

@@ -7,6 +7,7 @@ import Input from '../../../ui/Input'
 import axios from 'axios'
 import Note from './Note'
 import Heading from '../../../ui/Heading'
+import { Logout } from '../../../../Auth'
 
 interface NotesListProps {
 	employee: {
@@ -29,8 +30,8 @@ const NotesList: FC<NotesListProps> = ({ employee, loading, setLoading, setError
 	const [showAddNote, setShowAddNote] = useState<boolean>(false)
 
 	const addNote = async (e: React.FormEvent) => {
-		setLoading(true)
 		e.preventDefault()
+		setLoading(true)
 		try {
 			const token = localStorage.getItem('token')
 			const { data } = await axios.post(
@@ -45,14 +46,15 @@ const NotesList: FC<NotesListProps> = ({ employee, loading, setLoading, setError
 					},
 				},
 			)
-			setNote('')
 			setMessage(data.message)
-			setShowAddNote(false)
-			setLoading(false)
 		} catch (error: any) {
-			setShowAddNote(false)
 			setError(error.response.data.message)
+			if (error.response.status === 401) {
+				Logout()
+			}
+		} finally {
 			setLoading(false)
+			setShowAddNote(false)
 		}
 	}
 

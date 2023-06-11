@@ -26,14 +26,12 @@ interface Employee {
 const EmployeesTable: FC<EmployeesTableProps> = ({ headings, data, searchBar }) => {
 	const [searchText, setSearchText] = useState<string>('')
 
-	const filteredData = data.filter((row) => {
-		const values = Object.values(row).join('').toLowerCase()
+	const filteredData = data.filter((employee) => {
+		const values = Object.values(employee).join('').toLowerCase()
 		return values.includes(searchText.toLowerCase())
 	})
 
 	const navigate = useNavigate()
-
-	const path = window.location.pathname.split('/').pop()
 
 	return (
 		<Container
@@ -73,17 +71,17 @@ const EmployeesTable: FC<EmployeesTableProps> = ({ headings, data, searchBar }) 
 				</thead>
 
 				<tbody className='divide-y-2 divide-slate-200 dark:divide-slate-600'>
-					{filteredData.map((row, index) => (
+					{filteredData.map((employee, index) => (
 						<tr
-							onClick={() => navigate(`/${path}/${row._id}`)}
-							key={`row-${index}`}
+							onClick={() => navigate(`/employees/${employee._id}`)}
+							key={`employee-${index}`}
 							className={` cursor-pointer duration-75 hover:bg-slate-200 dark:hover:bg-slate-600
 							${index % 2 === 0 ? 'bg-slate-50 dark:bg-slate-800 ' : 'bg-white dark:bg-slate-700'}`}>
 							{headings.map((heading, index) => (
 								<td
-									key={`row-${index}`}
+									key={`employee-${index}`}
 									className={`cursor-pointer'} h-14 whitespace-nowrap px-4 py-2`}>
-									{row[heading.toLowerCase()]}
+									{employee[heading.toLowerCase()]}
 								</td>
 							))}
 						</tr>

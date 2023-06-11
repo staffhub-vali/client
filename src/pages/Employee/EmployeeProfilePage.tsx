@@ -14,9 +14,9 @@ const EmployeeProfilePage = () => {
 	const { id } = useParams()
 	const [shifts, setShifts] = useState([])
 	const [employee, setEmployee] = useState(null)
-	const [error, setError] = useState<string | null>('')
-	const [message, setMessage] = useState<string | null>('')
 	const [loading, setLoading] = useState<boolean>(false)
+	const [error, setError] = useState<string | null>(null)
+	const [message, setMessage] = useState<string | null>(null)
 	const [showDropdown, setShowDropdown] = useState<boolean>(false)
 
 	const location = useLocation()
@@ -45,7 +45,7 @@ const EmployeeProfilePage = () => {
 		return () => {
 			clearTimeout(timeoutId)
 		}
-	}, [error, message])
+	}, [loading])
 
 	const fetchProfile = async () => {
 		const token = localStorage.getItem('token')
@@ -83,7 +83,15 @@ const EmployeeProfilePage = () => {
 
 	return (
 		<div onClick={() => showDropdown && setShowDropdown(false)}>
-			{employee && isAbout && <PersonalInfo employee={employee} />}
+			{employee && isAbout && (
+				<PersonalInfo
+					loading={loading}
+					employee={employee}
+					setError={setError}
+					setLoading={setLoading}
+					setMessage={setMessage}
+				/>
+			)}
 			{employee && isPreferences && (
 				<ShiftPreferencesList
 					loading={loading}

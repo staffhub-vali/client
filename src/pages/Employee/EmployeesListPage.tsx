@@ -1,8 +1,8 @@
 import axios from 'axios'
 import { Logout } from '../../Auth'
 import { useEffect, useState } from 'react'
-import EmployeesList from '../../components/Employee/EmployeesList'
 import Container from '../../components/ui/Container'
+import EmployeesList from '../../components/Employee/EmployeesList'
 
 const headings = ['Name', 'Email', 'Phone']
 
@@ -23,7 +23,6 @@ const EmployeesListPage = () => {
 			})
 			setData(data)
 		} catch (error: any) {
-			console.error(error)
 			if (error.response.status === 401) {
 				Logout()
 			}

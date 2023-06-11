@@ -8,10 +8,10 @@ interface ScheduleTableProps {
 }
 
 interface WorkDay {
-	start?: number
 	end?: number
-	total?: number
 	date: number
+	start?: number
+	total?: number
 }
 
 const ScheduleTable: FC<ScheduleTableProps> = ({ data, setData }) => {

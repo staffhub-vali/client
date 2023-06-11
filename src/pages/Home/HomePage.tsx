@@ -4,8 +4,8 @@ import Heading from '../../components/ui/Heading'
 import Container from '../../components/ui/Container'
 
 const HomePage = () => {
-	const token = localStorage.getItem('token')
 	useEffect(() => {
+		const token = localStorage.getItem('token')
 		axios
 			.get('http://localhost:8080/v1/auth/verify', {
 				headers: {

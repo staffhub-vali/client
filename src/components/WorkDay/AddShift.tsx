@@ -28,10 +28,10 @@ interface Shift {
 interface AddShiftProps {
 	loading: boolean
 	workDay: WorkDay | null
-	setError: Dispatch<SetStateAction<string>>
-	setMessage: Dispatch<SetStateAction<string>>
 	setLoading: Dispatch<SetStateAction<boolean>>
+	setError: Dispatch<SetStateAction<string | null>>
 	setShowAddShift: Dispatch<SetStateAction<boolean>>
+	setMessage: Dispatch<SetStateAction<string | null>>
 }
 
 const AddShift: FC<AddShiftProps> = ({ workDay, setShowAddShift, setError, setMessage, loading, setLoading }) => {
@@ -56,12 +56,13 @@ const AddShift: FC<AddShiftProps> = ({ workDay, setShowAddShift, setError, setMe
 			})
 			setEmployees(response.data)
 		} catch (error: any) {
-			console.log(error)
+			setError(error.response.data.message)
 			if (error.response.status === 401) {
 				Logout()
 			}
 		}
 	}
+
 	const handleTimeChange = (newTime: string, field: 'start' | 'end') => {
 		// convert the new time into Unix timestamp
 		if (workDay) {
@@ -89,14 +90,15 @@ const AddShift: FC<AddShiftProps> = ({ workDay, setShowAddShift, setError, setMe
 					},
 				},
 			)
-			setError('')
-			setLoading(false)
 			setShowAddShift(false)
 			setMessage(data.message)
 		} catch (error: any) {
-			setMessage('')
-			setLoading(false)
 			setError(error.response.data.message)
+			if (error.response.status === 401) {
+				Logout()
+			}
+		} finally {
+			setLoading(false)
 		}
 	}
 
@@ -164,7 +166,7 @@ const AddShift: FC<AddShiftProps> = ({ workDay, setShowAddShift, setError, setMe
 				<div className='mb-1 mt-auto flex space-x-2'>
 					<Button
 						size={'sm'}
-						variant={'cancel'}
+						variant={'outline'}
 						type='button'
 						onClick={() => setShowAddShift(false)}>
 						Cancel {<X className='ml-1 h-4 w-4' />}

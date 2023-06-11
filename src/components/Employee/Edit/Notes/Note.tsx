@@ -5,6 +5,7 @@ import Button from '../../../ui/Button'
 import Paragraph from '../../../ui/Paragraph'
 import { Check, XCircle, Trash2, Pencil } from 'lucide-react'
 import { FC, useState, SetStateAction, Dispatch } from 'react'
+import { Logout } from '../../../../Auth'
 
 interface NoteProps {
 	note: string
@@ -28,8 +29,8 @@ const Note: FC<NoteProps> = ({ note: n, index, employee, loading, setError, setL
 	const [noteIndex, setNoteIndex] = useState<number | null>(null)
 
 	const deleteNote = async (index: number | null) => {
+		setLoading(true)
 		try {
-			setLoading(true)
 			const token = localStorage.getItem('token')
 			const { data } = await axios.delete(
 				`http://localhost:8080/v1/employees/notes/?employeeId=${employee?._id}&index=${index}`,
@@ -39,21 +40,21 @@ const Note: FC<NoteProps> = ({ note: n, index, employee, loading, setError, setL
 					},
 				},
 			)
-			setError('')
-			setLoading(false)
-			setShowModal(false)
 			setMessage(data.message)
 		} catch (error: any) {
-			setMessage('')
+			setError(error.response.data.message)
+			if (error.response.status === 401) {
+				Logout()
+			}
+		} finally {
 			setLoading(false)
 			setShowModal(false)
-			setError(error.response.data.message)
 		}
 	}
 
 	const updateNote = async (index: number | null, note: string) => {
+		setLoading(true)
 		try {
-			setLoading(true)
 			const token = localStorage.getItem('token')
 			const { data } = await axios.put(
 				`http://localhost:8080/v1/employees/notes`,
@@ -68,16 +69,17 @@ const Note: FC<NoteProps> = ({ note: n, index, employee, loading, setError, setL
 					},
 				},
 			)
-			setError('')
-			setLoading(false)
+
 			setEditNote(false)
-			setShowModal(false)
 			setMessage(data.message)
 		} catch (error: any) {
-			setMessage('')
+			setError(error.response.data.message)
+			if (error.response.status === 401) {
+				Logout()
+			}
+		} finally {
 			setLoading(false)
 			setShowModal(false)
-			setError(error.response.data.message)
 		}
 	}
 

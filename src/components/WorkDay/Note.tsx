@@ -5,20 +5,21 @@ import { Check, XCircle, Trash2, Pencil } from 'lucide-react'
 import Modal from '../ui/Modal'
 import axios from 'axios'
 import Input from '../ui/Input'
+import { Logout } from '../../Auth'
 
 interface NoteProps {
 	note: string
 	index: number
 	loading: boolean
 	workDay: WorkDay
-	setError: Dispatch<SetStateAction<string>>
-	setMessage: Dispatch<SetStateAction<string>>
 	setLoading: Dispatch<SetStateAction<boolean>>
+	setError: Dispatch<SetStateAction<string | null>>
+	setMessage: Dispatch<SetStateAction<string | null>>
 }
 
 interface WorkDay {
-	notes: string[]
 	_id: string
+	notes: string[]
 }
 
 const Note: FC<NoteProps> = ({ note: n, index, workDay, loading, setError, setLoading, setMessage }) => {
@@ -39,15 +40,15 @@ const Note: FC<NoteProps> = ({ note: n, index, workDay, loading, setError, setLo
 					},
 				},
 			)
-			setError('')
-			setLoading(false)
-			setShowModal(false)
 			setMessage(data.message)
 		} catch (error: any) {
-			setMessage('')
+			setError(error.response.data.message)
+			if (error.response.status === 401) {
+				Logout()
+			}
+		} finally {
 			setLoading(false)
 			setShowModal(false)
-			setError(error.response.data.message)
 		}
 	}
 
@@ -68,21 +69,22 @@ const Note: FC<NoteProps> = ({ note: n, index, workDay, loading, setError, setLo
 					},
 				},
 			)
-			setError('')
-			setLoading(false)
 			setEditNote(false)
-			setShowModal(false)
 			setMessage(data.message)
 		} catch (error: any) {
-			setMessage('')
+			setLoading(false)
+			setError(error.response.data.message)
+			if (error.response.status === 401) {
+				Logout()
+			}
+		} finally {
 			setLoading(false)
 			setShowModal(false)
-			setError(error.response.data.message)
 		}
 	}
 
 	return (
-		<div className='flex w-full items-center justify-center'>
+		<div className='flex w-full items-center justify-center rounded-md bg-white px-3 py-1 shadow'>
 			{editNote ? (
 				<>
 					<Input
@@ -115,7 +117,7 @@ const Note: FC<NoteProps> = ({ note: n, index, workDay, loading, setError, setLo
 				<div className='flex items-center'>
 					<Paragraph
 						size={'lg'}
-						className='min-w-[16rem]'
+						className='min-w-[16rem] rounded-md bg-white px-4 py-2'
 						key={workDay?._id}>
 						{note}
 					</Paragraph>

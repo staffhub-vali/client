@@ -3,21 +3,23 @@ import Label from '../ui/Label'
 import Button from '../ui/Button'
 import { Login } from '../../Auth'
 import Heading from '../ui/Heading'
-import { FC, useState } from 'react'
+import { Dispatch, FC, SetStateAction, useState } from 'react'
 import Paragraph from '../ui/Paragraph'
 import Container from '../ui/Container'
 import { Link } from 'react-router-dom'
 import Notification from '../ui/Notification'
 
 interface LoginFormProps {
-	message: string
+	loading: boolean
+	error: string | null
+	message: string | null
+	setLoading: Dispatch<SetStateAction<boolean>>
+	setError: Dispatch<SetStateAction<string | null>>
 }
 
-const LoginForm: FC<LoginFormProps> = ({ message }) => {
-	const [error, setError] = useState<string>('')
+const LoginForm: FC<LoginFormProps> = ({ message, error, setError, loading, setLoading }) => {
 	const [email, setEmail] = useState<string>('')
 	const [password, setPassword] = useState<string>('')
-	const [loading, setLoading] = useState<boolean>(false)
 
 	const handleSubmit = async (e: React.FormEvent) => {
 		e.preventDefault()

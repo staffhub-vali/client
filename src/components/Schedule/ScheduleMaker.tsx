@@ -36,11 +36,11 @@ interface WorkDay {
 
 const ScheduleMaker: FC<ScheduleMakerProps> = ({ id, name, employees, setName, setId, isOpen, setIsOpen }) => {
 	const currentDate = new Date()
-	const [error, setError] = useState<string>('')
 	const [value, setValue] = useState(new Date())
-	const [data, setData] = useState<WorkDay[]>([])
-	const [message, setMessage] = useState<string>('')
 	const [loading, setLoading] = useState<boolean>(false)
+	const [schedule, setSchedule] = useState<WorkDay[]>([])
+	const [error, setError] = useState<string | null>(null)
+	const [message, setMessage] = useState<string | null>(null)
 
 	const [month, setMonth] = useState(() => {
 		const month = currentDate.getMonth() + 2
@@ -48,14 +48,15 @@ const ScheduleMaker: FC<ScheduleMakerProps> = ({ id, name, employees, setName, s
 	})
 
 	const createSchedule = async () => {
-		const token = localStorage.getItem('token')
+		setLoading(true)
+
 		try {
-			setLoading(true)
-			const response = await axios.post(
+			const token = localStorage.getItem('token')
+			const { data } = await axios.post(
 				`http://localhost:8080/v1/roster`,
 				{
 					id,
-					data,
+					data: schedule,
 				},
 				{
 					headers: {
@@ -63,17 +64,14 @@ const ScheduleMaker: FC<ScheduleMakerProps> = ({ id, name, employees, setName, s
 					},
 				},
 			)
-			setLoading(false)
-			setError('')
-			setMessage(response.data.message)
+			setMessage(data.message)
 		} catch (error: any) {
-			setLoading(false)
+			setError(error.response.data.message)
 			if (error.response.status === 401) {
 				Logout()
 			}
-			console.error(error)
-			setMessage('')
-			setError(error.response.data.message)
+		} finally {
+			setLoading(false)
 		}
 	}
 
@@ -81,7 +79,7 @@ const ScheduleMaker: FC<ScheduleMakerProps> = ({ id, name, employees, setName, s
 		const year = date.getFullYear()
 		const month = date.getMonth() + 1
 		setMonth(`${year}-${month < 10 ? `0${month}` : month}`)
-		setData(() => updateMonthData(date))
+		setSchedule(() => updateMonthData(date))
 	}
 
 	const updateMonthData = (date: Date): WorkDay[] => {
@@ -130,13 +128,13 @@ const ScheduleMaker: FC<ScheduleMakerProps> = ({ id, name, employees, setName, s
 				</Button>
 			</div>
 			<div className='col-span-6 col-start-6'>
-				{data.length > 0 ? (
+				{schedule.length > 0 ? (
 					<>
 						{name ? (
 							<Heading
 								size={'sm'}
 								className='pb-2 text-center'>
-								{name} - {formatMonth(data[0].date)}
+								{name} - {formatMonth(schedule[0].date)}
 							</Heading>
 						) : (
 							<Heading
@@ -146,8 +144,8 @@ const ScheduleMaker: FC<ScheduleMakerProps> = ({ id, name, employees, setName, s
 							</Heading>
 						)}
 						<ScheduleTable
-							data={data}
-							setData={setData}
+							data={schedule}
+							setData={setSchedule}
 						/>
 					</>
 				) : (

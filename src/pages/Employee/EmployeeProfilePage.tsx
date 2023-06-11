@@ -8,6 +8,7 @@ import EmployeeProfile from '../../components/Employee/EmployeeProfile'
 import PersonalInfo from '../../components/Employee/Edit/PersonalInfo/PersonalInfo'
 import ShiftPreferencesList from '../../components/Employee/Edit/ShiftPreferences/ShiftPreferencesList'
 import VacationList from '../../components/Employee/Edit/Vacation/VacationList'
+import Schedule from '../../components/Employee/Edit/Schedule/Schedule'
 
 const EmployeeProfilePage = () => {
 	const { id } = useParams()
@@ -23,6 +24,7 @@ const EmployeeProfilePage = () => {
 	const isNotes: boolean = location.pathname.includes('/notes')
 	const isAbout: boolean = location.pathname.includes('/about')
 	const isVacation: boolean = location.pathname.includes('/vacation')
+	const isSchedule: boolean = location.pathname.includes('/schedule')
 	const isPreferences: boolean = location.pathname.includes('/preferences')
 
 	useEffect(() => {
@@ -109,7 +111,17 @@ const EmployeeProfilePage = () => {
 					setLoading={setLoading}
 				/>
 			)}
-			{employee && !isNotes && !isAbout && !isPreferences && !isVacation && (
+			{employee && isSchedule && (
+				<Schedule
+					shifts={shifts}
+					loading={loading}
+					setError={setError}
+					employee={employee}
+					setMessage={setMessage}
+					setLoading={setLoading}
+				/>
+			)}
+			{employee && !isNotes && !isAbout && !isPreferences && !isVacation && !isSchedule && (
 				<EmployeeProfile
 					shifts={shifts}
 					employee={employee}

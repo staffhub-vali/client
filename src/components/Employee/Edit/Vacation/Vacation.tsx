@@ -1,17 +1,17 @@
 import axios from 'axios'
 import Modal from '../../../ui/Modal'
-import Input from '../../../ui/Input'
+import { Trash2 } from 'lucide-react'
 import Button from '../../../ui/Button'
 import Paragraph from '../../../ui/Paragraph'
-import { Check, XCircle, Trash2 } from 'lucide-react'
-import { FC, useState, SetStateAction, Dispatch, useEffect } from 'react'
 import { formatDate } from '../../../../utils/DateFormatting'
+import { FC, useState, SetStateAction, Dispatch, useEffect } from 'react'
 
 interface VacationProps {
 	index: number
 	loading: boolean
 	employee: Employee
 	vacation: { start: number; end: number }
+	setAmount: Dispatch<SetStateAction<number>>
 	setLoading: Dispatch<SetStateAction<boolean>>
 	setError: Dispatch<SetStateAction<string | null>>
 	setMessage: Dispatch<SetStateAction<string | null>>
@@ -22,12 +22,20 @@ interface Employee {
 	vacations: [{ start: number | string; end: number | string }]
 }
 
-const Vacation: FC<VacationProps> = ({ vacation: v, index, employee, loading, setError, setLoading, setMessage }) => {
-	const [editVacation, setEditVacation] = useState<boolean>(false)
-	const [showModal, setShowModal] = useState<boolean>(false)
-	const [vacationIndex, setVacationIndex] = useState<number | null>(null)
+const Vacation: FC<VacationProps> = ({
+	vacation: v,
+	index,
+	employee,
+	loading,
+	setError,
+	setLoading,
+	setMessage,
+	setAmount,
+}) => {
 	const [end, setEnd] = useState<number | string>(v.end)
+	const [showModal, setShowModal] = useState<boolean>(false)
 	const [start, setStart] = useState<number | string>(v.start)
+	const [vacationIndex, setVacationIndex] = useState<number | null>(null)
 	const [vacation, setVacation] = useState<{ start: number | string; end: number | string }>(v)
 
 	useEffect(() => {
@@ -47,44 +55,15 @@ const Vacation: FC<VacationProps> = ({ vacation: v, index, employee, loading, se
 				},
 			)
 			setError('')
-			setLoading(false)
 			setShowModal(false)
+			setAmount((prev) => prev + data.totalDays)
 			setMessage(data.message)
 		} catch (error: any) {
 			setMessage('')
-			setLoading(false)
 			setShowModal(false)
 			setError(error.response.data.message)
-		}
-	}
-
-	const updateVacation = async (index: number | null, vacation: { start: number | string; end: number | string }) => {
-		try {
-			setLoading(true)
-			const token = localStorage.getItem('token')
-			const { data } = await axios.put(
-				`http://localhost:8080/v1/employees/vacation`,
-				{
-					vacation: vacation,
-					index: index,
-					employeeId: employee?._id,
-				},
-				{
-					headers: {
-						Authorization: `Bearer ${token}`,
-					},
-				},
-			)
-			setError('')
+		} finally {
 			setLoading(false)
-			setEditVacation(false)
-			setShowModal(false)
-			setMessage(data.message)
-		} catch (error: any) {
-			setMessage('')
-			setLoading(false)
-			setShowModal(false)
-			setError(error.response.data.message)
 		}
 	}
 

@@ -9,6 +9,7 @@ import { Check } from 'lucide-react'
 interface VacationPlannerProps {
 	loading: boolean
 	employee: Employee
+	setAmount: Dispatch<SetStateAction<number>>
 	setLoading: Dispatch<SetStateAction<boolean>>
 	setShowPlanner: Dispatch<SetStateAction<boolean>>
 	setError: Dispatch<SetStateAction<string | null>>
@@ -32,6 +33,7 @@ const VacationPlanner: FC<VacationPlannerProps> = ({
 	setMessage,
 	setError,
 	setShowPlanner,
+	setAmount,
 }) => {
 	const [end, setEnd] = useState(new Date())
 	const [start, setStart] = useState(new Date())
@@ -89,6 +91,7 @@ const VacationPlanner: FC<VacationPlannerProps> = ({
 					start: start.getTime(),
 					end: end.getTime(),
 					daysRemaining: daysRemaining,
+					daysPlanned: daysPlanned,
 				},
 				{
 					headers: {
@@ -96,27 +99,36 @@ const VacationPlanner: FC<VacationPlannerProps> = ({
 					},
 				},
 			)
-			setLoading(false)
 			setEnd(new Date())
 			setStart(new Date())
 			setShowPlanner(false)
+			setAmount(daysRemaining)
 			setMessage(data.message)
 		} catch (error: any) {
-			setError(error.data.response.message)
+			setError(error.response.data.message)
+		} finally {
+			setLoading(false)
 		}
 	}
 
 	return (
 		<>
-			<Paragraph
-				size={'xl'}
-				className='mt-6'>
-				Vacation days remaining
-			</Paragraph>
+			<div className='items-auto mt-12 flex w-full justify-center space-x-2 border-b-2 pb-3 dark:border-slate-700'>
+				<Heading
+					size={'xs'}
+					className='font-normal'>
+					Vacation days remaining:
+				</Heading>
+				<Heading
+					size={'xs'}
+					className=' text-green-500 dark:text-green-400'>
+					{daysRemaining}
+				</Heading>
+			</div>
 			<Heading
-				size={'xs'}
-				className='mt-2 text-green-500 dark:text-green-400'>
-				{daysRemaining}
+				size={'sm'}
+				className='mt-10'>
+				Days planned: {daysPlanned}
 			</Heading>
 			<div className='mt-12 flex space-x-24'>
 				<div>
@@ -142,11 +154,6 @@ const VacationPlanner: FC<VacationPlannerProps> = ({
 					/>
 				</div>
 			</div>
-			<Heading
-				size={'sm'}
-				className='mt-10'>
-				Days planned: {daysPlanned}
-			</Heading>
 
 			<form
 				className='mt-6'

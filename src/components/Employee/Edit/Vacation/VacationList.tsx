@@ -1,13 +1,12 @@
+import axios from 'axios'
+import Vacation from './Vacation'
+import Input from '../../../ui/Input'
+import Button from '../../../ui/Button'
 import Heading from '../../../ui/Heading'
 import Container from '../../../ui/Container'
-import { Dispatch, FC, SetStateAction, useState } from 'react'
 import VacationPlanner from './VacationPlanner'
-import { Check, CheckCircle, CheckCircle2, FileDigit, Hash, Palmtree, X } from 'lucide-react'
-import Button from '../../../ui/Button'
-import Vacation from './Vacation'
-import Paragraph from '../../../ui/Paragraph'
-import Input from '../../../ui/Input'
-import axios from 'axios'
+import { Check, FileDigit, Palmtree, X } from 'lucide-react'
+import { Dispatch, FC, SetStateAction, useState } from 'react'
 
 interface VacationListProps {
 	loading: boolean
@@ -35,9 +34,11 @@ const VacationList: FC<VacationListProps> = ({ loading, setLoading, employee, se
 
 	const updateAmount = async (e: React.FormEvent) => {
 		e.preventDefault()
+
 		if (employee.vacationDays === amount) {
 			return setShowChangeAmount(false)
 		}
+
 		setLoading(true)
 		try {
 			const token = localStorage.getItem('token')
@@ -53,17 +54,18 @@ const VacationList: FC<VacationListProps> = ({ loading, setLoading, employee, se
 					},
 				},
 			)
-			setLoading(false)
+
 			setMessage(data.message)
 			setShowChangeAmount(false)
 		} catch (error: any) {
-			setLoading(false)
 			setError(error.data.response.message)
+		} finally {
+			setLoading(false)
 		}
 	}
 
 	return (
-		<Container>
+		<Container size={'lg'}>
 			<Heading
 				size={'sm'}
 				className='mb-6'>
@@ -87,7 +89,7 @@ const VacationList: FC<VacationListProps> = ({ loading, setLoading, employee, se
 						</Button>
 						{showChangeAmount ? (
 							<Button
-								className='w-64'
+								className='w-56'
 								size={'sm'}
 								variant={'outline'}
 								onClick={() => setShowChangeAmount(false)}>
@@ -96,11 +98,11 @@ const VacationList: FC<VacationListProps> = ({ loading, setLoading, employee, se
 							</Button>
 						) : (
 							<Button
-								className='w-64'
+								className='w-56'
 								size={'sm'}
 								variant={'outline'}
 								onClick={() => setShowChangeAmount(true)}>
-								Change vacation days amount
+								Change vacation amount
 								<FileDigit className='ml-2' />
 							</Button>
 						)}
@@ -108,15 +110,15 @@ const VacationList: FC<VacationListProps> = ({ loading, setLoading, employee, se
 				)}
 			</div>
 			{!showPlanner && (
-				<div className='w-full border-b-2 pb-3 dark:border-slate-700'>
-					<Paragraph
-						size={'xl'}
-						className='mt-6'>
-						Vacation days remaining:
-					</Paragraph>
+				<div className='items-auto mt-12 flex w-full justify-center space-x-2 border-b-2 pb-3 dark:border-slate-700'>
 					<Heading
-						size={'sm'}
-						className='mt-2 text-center text-green-500 dark:text-green-400'>
+						size={'xs'}
+						className='font-normal'>
+						Vacation days remaining:
+					</Heading>
+					<Heading
+						size={'xs'}
+						className=' text-green-500 dark:text-green-400'>
 						{employee.vacationDays}
 					</Heading>
 				</div>
@@ -126,6 +128,7 @@ const VacationList: FC<VacationListProps> = ({ loading, setLoading, employee, se
 					loading={loading}
 					employee={employee}
 					setError={setError}
+					setAmount={setAmount}
 					setMessage={setMessage}
 					setLoading={setLoading}
 					setShowPlanner={setShowPlanner}
@@ -147,6 +150,7 @@ const VacationList: FC<VacationListProps> = ({ loading, setLoading, employee, se
 							vacation={vacation}
 							employee={employee}
 							setError={setError}
+							setAmount={setAmount}
 							setLoading={setLoading}
 							setMessage={setMessage}
 						/>
@@ -158,7 +162,7 @@ const VacationList: FC<VacationListProps> = ({ loading, setLoading, employee, se
 					<Heading
 						className='mt-16'
 						size={'xs'}>
-						This employee has no vacations.
+						This employee has no planned vacations.
 					</Heading>
 				)
 			)}
@@ -169,6 +173,7 @@ const VacationList: FC<VacationListProps> = ({ loading, setLoading, employee, se
 					<Input
 						type='text'
 						value={amount}
+						className='text-center'
 						onChange={(e) => setAmount(Number(e.target.value))}
 					/>
 					<Button

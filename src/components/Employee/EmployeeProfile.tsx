@@ -7,7 +7,7 @@ import Container from '../ui/Container'
 import { useNavigate } from 'react-router-dom'
 import { Dispatch, FC, SetStateAction, useState } from 'react'
 import { calculateMonthlyHours } from '../../utils/CalculateHours'
-import { Mail, MoreVertical, Palmtree, Phone, Scroll, Sticker, Trash2, User2 } from 'lucide-react'
+import { Calendar, Mail, MoreVertical, Palmtree, Phone, Scroll, Sticker, Trash2, User2 } from 'lucide-react'
 
 interface EmployeeProfileProps {
 	employee: {
@@ -46,8 +46,9 @@ const EmployeeProfile: FC<EmployeeProfileProps> = ({ shifts, employee, showDropd
 			setShowModal(false)
 			window.location.href = '/employees'
 		} catch (error) {
-			setLoading(false)
 			console.log(error)
+		} finally {
+			setLoading(false)
 		}
 	}
 
@@ -74,6 +75,7 @@ const EmployeeProfile: FC<EmployeeProfileProps> = ({ shifts, employee, showDropd
 								Notes
 								<Scroll className='ml-2' />
 							</li>
+
 							<li
 								onClick={() => {
 									setShowDropdown(false)
@@ -82,6 +84,16 @@ const EmployeeProfile: FC<EmployeeProfileProps> = ({ shifts, employee, showDropd
 								className='flex cursor-pointer items-center justify-between px-4 py-3 hover:bg-slate-50 dark:hover:bg-slate-500'>
 								Vacation
 								<Palmtree className='ml-2' />
+							</li>
+
+							<li
+								onClick={() => {
+									setShowDropdown(false)
+									navigate(`/employees/${employee._id}/schedule`)
+								}}
+								className='flex cursor-pointer items-center justify-between px-4 py-3 hover:bg-slate-50 dark:hover:bg-slate-500'>
+								Schedule
+								<Calendar className='ml-2' />
 							</li>
 
 							<li

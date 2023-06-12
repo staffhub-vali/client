@@ -2,12 +2,12 @@ import axios from 'axios'
 import { Logout } from '../../Auth'
 import { Link } from 'react-router-dom'
 import { UserPlus } from 'lucide-react'
-import { FC, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import Heading from '../../components/ui/Heading'
+import Spinner from '../../components/ui/Spinner'
 import Container from '../../components/ui/Container'
 import { buttonVariants } from '../../components/ui/Button'
 import ScheduleMaker from '../../components/Schedule/ScheduleMaker'
-import Spinner from '../../components/ui/Spinner'
 
 const NewSchedulePage = () => {
 	const [id, setId] = useState<string>('')
@@ -15,6 +15,7 @@ const NewSchedulePage = () => {
 	const [employees, setEmployees] = useState([])
 	const [isOpen, setIsOpen] = useState<boolean>(false)
 	const [loading, setLoading] = useState<boolean>(true)
+	const [shiftPreferences, setShiftPreferences] = useState<string[]>([])
 
 	useEffect(() => {
 		fetchEmployees()
@@ -45,15 +46,20 @@ const NewSchedulePage = () => {
 			{loading ? (
 				<Spinner />
 			) : employees.length > 0 ? (
-				<ScheduleMaker
-					id={id}
-					name={name}
-					setId={setId}
-					isOpen={isOpen}
-					setName={setName}
-					employees={employees}
-					setIsOpen={setIsOpen}
-				/>
+				<>
+					<Heading size={'sm'}>New Schedule</Heading>
+					<ScheduleMaker
+						id={id}
+						name={name}
+						setId={setId}
+						isOpen={isOpen}
+						setName={setName}
+						employees={employees}
+						setIsOpen={setIsOpen}
+						shiftPreferences={shiftPreferences}
+						setShiftPreferences={setShiftPreferences}
+					/>
+				</>
 			) : (
 				<>
 					<Heading

@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom'
 import { UserPlus } from 'lucide-react'
 import { useNavigate } from 'react-router-dom'
 import { buttonVariants } from '../../components/ui/Button'
+import Heading from '../ui/Heading'
 
 interface EmployeesTableProps {
 	data: Employee[]
@@ -37,6 +38,7 @@ const EmployeesTable: FC<EmployeesTableProps> = ({ headings, data, searchBar }) 
 		<Container
 			className='p-6'
 			size={'lg'}>
+			<Heading size={'sm'}>Employees ({data.length})</Heading>
 			<div className='mt-6 flex items-center space-x-12'>
 				{searchBar && (
 					<div className='mx-auto flex w-full items-center rounded-lg bg-white px-2 ring-slate-800  focus-within:ring-2 dark:bg-slate-700'>
@@ -57,7 +59,8 @@ const EmployeesTable: FC<EmployeesTableProps> = ({ headings, data, searchBar }) 
 					New Employee {<UserPlus className='ml-2 h-5 w-5' />}
 				</Link>
 			</div>
-			<table className='mt-6 w-3/5 divide-y-2 divide-slate-200 border-2 bg-white text-center dark:divide-slate-600 dark:border-slate-600 dark:bg-slate-700'>
+
+			<table className='mt-4 w-4/5 divide-y-2 divide-slate-200 border-2 bg-white text-center dark:divide-slate-600 dark:border-slate-600 dark:bg-slate-700'>
 				<thead>
 					<tr>
 						{headings.map((heading, index) => (

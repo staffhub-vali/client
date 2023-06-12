@@ -112,7 +112,7 @@ const AddShift: FC<AddShiftProps> = ({ workDay, setShowAddShift, setError, setMe
 			<form
 				onSubmit={handleSubmit}
 				className='mt-2 flex justify-center space-x-12'>
-				<div>
+				<div className='mt-auto flex flex-col'>
 					<Label className='text-center'>Employee</Label>
 					<SearchEmployees
 						name={name}
@@ -122,10 +122,11 @@ const AddShift: FC<AddShiftProps> = ({ workDay, setShowAddShift, setError, setMe
 						employees={employees}
 						setIsOpen={setIsOpen}
 						setId={setEmployeeId}
+						noMargin={true}
 					/>
 				</div>
 				<div className='flex space-x-3'>
-					<div className='flex flex-col'>
+					<div className='mt-auto flex flex-col'>
 						<Label
 							htmlFor='start'
 							className='text-center'>
@@ -140,7 +141,7 @@ const AddShift: FC<AddShiftProps> = ({ workDay, setShowAddShift, setError, setMe
 						/>
 					</div>
 
-					<div className='flex flex-col'>
+					<div className='mt-auto flex flex-col'>
 						<Label
 							htmlFor='end'
 							className='text-center'>
@@ -155,7 +156,7 @@ const AddShift: FC<AddShiftProps> = ({ workDay, setShowAddShift, setError, setMe
 						/>
 					</div>
 				</div>
-				<div className='flex flex-col'>
+				<div className='mt-auto flex flex-col'>
 					<Label className='text-center'>Total</Label>
 					<Paragraph
 						size={'xl'}

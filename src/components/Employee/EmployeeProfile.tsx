@@ -101,38 +101,49 @@ const EmployeeProfile: FC<EmployeeProfileProps> = ({ shifts, employee, showDropd
 					/>
 				)}
 			</div>
-			<div className='space-y-4 border-b pb-4 dark:border-slate-500'>
+			<div className='space-y-6 border-b pb-8 dark:border-slate-500'>
 				<Heading
-					className='w-full text-center'
+					className=' text-center'
 					size={'sm'}>
 					{employee.name}
 				</Heading>
-				<div className='flex justify-center space-x-6'>
-					<Paragraph className='flex'>
-						<Mail className='mr-2' /> {employee.email}
-					</Paragraph>
-					<Paragraph className='flex'>
-						<Phone className='mr-2' />
-						{employee.phone}
-					</Paragraph>
-				</div>
+
 				<Paragraph
-					size={'xl'}
+					size={'lg'}
 					className='mx-auto'>
 					Total hours for this month:
 					<span className='ml-2 font-bold text-blue-500 dark:text-blue-300'>{calculateMonthlyHours(shifts)}</span>
 				</Paragraph>
+				<div className='flex justify-center space-x-8'>
+					<Paragraph
+						size={'xl'}
+						className='flex'>
+						<Mail className='mr-2' /> {employee.email}
+					</Paragraph>
+					<Paragraph
+						size={'xl'}
+						className='flex'>
+						<Phone className='mr-2' />
+						{employee.phone}
+					</Paragraph>
+				</div>
+			</div>
+
+			<div className='flex w-full flex-col items-center border-b py-4 dark:border-slate-500'>
+				<Heading size={'xs'}>Notes</Heading>
+
+				<div className='flex flex-col py-2'>
+					{employee.notes.length > 0 ? (
+						employee.notes.map((note, index) => <Paragraph key={index}>{note}</Paragraph>)
+					) : (
+						<Paragraph>There are no notes for this employee.</Paragraph>
+					)}
+				</div>
 			</div>
 
 			<div className='flex w-full flex-col items-center border-b py-4 dark:border-slate-500'>
 				<Heading size={'xs'}>Vacation</Heading>
 				<div className='flex flex-col space-y-2 py-2'>
-					<Paragraph
-						size={'xl'}
-						className='mx-auto'>
-						Vacation days remaining:
-						<span className='ml-2 font-bold text-green-500 dark:text-green-400'>{employee.vacationDays}</span>
-					</Paragraph>
 					<Paragraph
 						size={'xl'}
 						className='mx-auto font-medium'>
@@ -141,7 +152,7 @@ const EmployeeProfile: FC<EmployeeProfileProps> = ({ shifts, employee, showDropd
 				</div>
 			</div>
 
-			<div className='flex w-full flex-col items-center border-b py-4 dark:border-slate-500'>
+			<div className='flex w-full flex-col items-center py-4'>
 				<Heading size={'xs'}>Shift Preferences</Heading>
 
 				<div className='flex flex-col py-2'>
@@ -151,18 +162,6 @@ const EmployeeProfile: FC<EmployeeProfileProps> = ({ shifts, employee, showDropd
 						))
 					) : (
 						<Paragraph>There are no shift preferences for this employee.</Paragraph>
-					)}
-				</div>
-			</div>
-
-			<div className='flex w-full flex-col items-center py-4 dark:border-slate-500'>
-				<Heading size={'xs'}>Notes</Heading>
-
-				<div className='flex flex-col py-2'>
-					{employee.notes.length > 0 ? (
-						employee.notes.map((note, index) => <Paragraph key={index}>{note}</Paragraph>)
-					) : (
-						<Paragraph>There are no notes for this employee.</Paragraph>
 					)}
 				</div>
 			</div>

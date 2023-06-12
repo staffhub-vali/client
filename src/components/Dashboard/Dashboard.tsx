@@ -6,7 +6,7 @@ import Paragraph from '../ui/Paragraph'
 import { useNavigate } from 'react-router-dom'
 import groupShifts from '../../utils/GroupShifts'
 import { WorkDay } from '../../pages/Dashboard/DashboardPage'
-import { ChevronLeft, ChevronRight, ScrollText, User } from 'lucide-react'
+import { ChevronLeft, ChevronRight, ScrollText, User, X } from 'lucide-react'
 import { formatDate, formatDay, formatTime } from '../../utils/DateFormatting'
 
 interface DashboardProps {
@@ -29,7 +29,7 @@ const Dashboard: FC<DashboardProps> = ({ data, skip, setSkip }) => {
 	return (
 		<Container
 			size={'lg'}
-			className='p-0 pt-20'>
+			className='dashboard p-0 pt-20'>
 			<div className='flex min-h-[36rem] rounded border bg-white shadow dark:border-slate-600 dark:bg-slate-700'>
 				{data.map((day: WorkDay) => (
 					<div
@@ -49,17 +49,24 @@ const Dashboard: FC<DashboardProps> = ({ data, skip, setSkip }) => {
 							</Paragraph>
 						</div>
 						<div className='mt-4 flex w-full flex-col items-center'>
-							{groupShifts(day.shifts).map((groupedShift) => (
-								<Paragraph
-									className='flex'
-									title={groupedShift.employee.name}
-									key={`${groupedShift.start}-${groupedShift.end}`}>
-									<div className='mr-3 flex'>
-										{`${groupedShift.count}`} <User className='font-normal' />
-									</div>
-									{`${formatTime(groupedShift.start)} - ${formatTime(groupedShift.end)}`}
+							{groupShifts(day.shifts).length > 0 ? (
+								groupShifts(day.shifts).map((groupedShift) => (
+									<Paragraph
+										className='flex items-center'
+										title={groupedShift.employee.name}
+										key={`${groupedShift.start}-${groupedShift.end}`}>
+										<div className='mr-3 flex'>
+											{`${groupedShift.count}`} <User className='font-normal' />
+										</div>
+										{`${formatTime(groupedShift.start)} - ${formatTime(groupedShift.end)}`}
+									</Paragraph>
+								))
+							) : (
+								<Paragraph className='flex items-center'>
+									<X className='mr-2' />
+									No Shifts
 								</Paragraph>
-							))}
+							)}
 						</div>
 
 						<Paragraph className='mt-auto flex items-center pb-2 text-2xl'>
@@ -72,16 +79,18 @@ const Dashboard: FC<DashboardProps> = ({ data, skip, setSkip }) => {
 			<div className='mt-12'>
 				<Button
 					variant={'link'}
+					title='Previous Week'
 					onClick={handlePrevPage}
-					className='mr-1 rounded-lg bg-gray-200 px-3 py-2 hover:bg-gray-300'>
-					{<ChevronLeft />}
+					className='mr-1 rounded-lg bg-slate-200 px-3 py-2 hover:bg-slate-300 dark:bg-slate-700 dark:hover:bg-slate-600'>
+					{<ChevronLeft size={36} />}
 				</Button>
 
 				<Button
 					variant={'link'}
+					title='Next Week'
 					onClick={handleNextPage}
-					className='mr-1 rounded-lg bg-gray-200 px-3 py-2 hover:bg-gray-300'>
-					{<ChevronRight />}
+					className='mr-1 rounded-lg bg-slate-200 px-3 py-2 hover:bg-slate-300 dark:bg-slate-700 dark:hover:bg-slate-600'>
+					{<ChevronRight size={36} />}
 				</Button>
 			</div>
 		</Container>

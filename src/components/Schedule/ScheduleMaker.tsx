@@ -15,6 +15,7 @@ import { formatMonth } from '../../utils/DateFormatting'
 interface Employee {
 	_id: string
 	name: string
+	shiftPreferences: string[]
 }
 
 interface ScheduleMakerProps {
@@ -22,9 +23,11 @@ interface ScheduleMakerProps {
 	name: string
 	isOpen: boolean
 	employees: Employee[]
+	shiftPreferences: string[]
 	setId: Dispatch<SetStateAction<string>>
 	setName: Dispatch<SetStateAction<string>>
 	setIsOpen: Dispatch<SetStateAction<boolean>>
+	setShiftPreferences: Dispatch<SetStateAction<string[]>>
 }
 
 interface WorkDay {
@@ -34,9 +37,19 @@ interface WorkDay {
 	date: number
 }
 
-const ScheduleMaker: FC<ScheduleMakerProps> = ({ id, name, employees, setName, setId, isOpen, setIsOpen }) => {
+const ScheduleMaker: FC<ScheduleMakerProps> = ({
+	id,
+	name,
+	employees,
+	setName,
+	setId,
+	isOpen,
+	setIsOpen,
+	shiftPreferences,
+	setShiftPreferences,
+}) => {
 	const currentDate = new Date()
-	const [value, setValue] = useState(new Date())
+	const [value, setValue] = useState<Date | null>(null)
 	const [loading, setLoading] = useState<boolean>(false)
 	const [schedule, setSchedule] = useState<WorkDay[]>([])
 	const [error, setError] = useState<string | null>(null)
@@ -112,6 +125,7 @@ const ScheduleMaker: FC<ScheduleMakerProps> = ({ id, name, employees, setName, s
 					setName={setName}
 					employees={employees}
 					setIsOpen={setIsOpen}
+					setShiftPreferences={setShiftPreferences}
 				/>
 				<Calendar
 					value={value}
@@ -132,14 +146,14 @@ const ScheduleMaker: FC<ScheduleMakerProps> = ({ id, name, employees, setName, s
 					<>
 						{name ? (
 							<Heading
-								size={'sm'}
-								className='mb-2 text-center'>
+								size={'xs'}
+								className='mb-2 text-center font-normal'>
 								{name} - {formatMonth(schedule[0].date)}
 							</Heading>
 						) : (
 							<Heading
-								size={'sm'}
-								className='mb-2 text-center'>
+								size={'xs'}
+								className='mb-2 text-center font-normal'>
 								Choose an employee.
 							</Heading>
 						)}
@@ -147,6 +161,21 @@ const ScheduleMaker: FC<ScheduleMakerProps> = ({ id, name, employees, setName, s
 							data={schedule}
 							setData={setSchedule}
 						/>
+						{shiftPreferences.length > 0
+							? shiftPreferences.map((preference) => (
+									<Heading
+										size={'xs'}
+										className='mt-4 text-center font-normal'>
+										{preference}
+									</Heading>
+							  ))
+							: name && (
+									<Heading
+										size={'xs'}
+										className='mt-4 text-center font-normal'>
+										This employee has no shift preferences.
+									</Heading>
+							  )}
 					</>
 				) : (
 					<Heading

@@ -1,8 +1,10 @@
 import { FC } from 'react'
 import Heading from '../ui/Heading'
 import EmployeesTable from './EmployeesTable'
+import Spinner from '../ui/Spinner'
 
 interface EmployeesListProps {
+	loading: boolean
 	data: Employee[]
 	headings: string[]
 }
@@ -17,10 +19,12 @@ interface Employee {
 	vacationDays: number | string
 }
 
-const EmployeesList: FC<EmployeesListProps> = ({ data, headings }) => {
+const EmployeesList: FC<EmployeesListProps> = ({ data, headings, loading }) => {
 	return (
 		<>
-			{data.length > 0 ? (
+			{loading ? (
+				<Spinner />
+			) : data.length > 0 ? (
 				<EmployeesTable
 					data={data}
 					searchBar={true}

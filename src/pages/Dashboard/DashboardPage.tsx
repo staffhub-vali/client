@@ -7,6 +7,7 @@ import Heading from '../../components/ui/Heading'
 import Container from '../../components/ui/Container'
 import { buttonVariants } from '../../components/ui/Button'
 import Dashboard from '../../components/Dashboard/Dashboard'
+import Spinner from '../../components/ui/Spinner'
 
 export interface WorkDay {
 	_id: string
@@ -25,6 +26,7 @@ interface Shift {
 const DashboardPage = () => {
 	const [skip, setSkip] = useState<number>(0)
 	const [data, setData] = useState<WorkDay[]>([])
+	const [loading, setLoading] = useState<boolean>(true)
 
 	useEffect(() => {
 		fetchData()
@@ -46,12 +48,16 @@ const DashboardPage = () => {
 			if (error.response.status === 401) {
 				Logout()
 			}
+		} finally {
+			setLoading(false)
 		}
 	}
 
 	return (
 		<Container size={'lg'}>
-			{data.length > 0 ? (
+			{loading ? (
+				<Spinner />
+			) : data.length > 0 ? (
 				<Dashboard
 					data={data}
 					skip={skip}

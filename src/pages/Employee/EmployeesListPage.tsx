@@ -8,6 +8,7 @@ const headings = ['Name', 'Email', 'Phone']
 
 const EmployeesListPage = () => {
 	const [data, setData] = useState([])
+	const [loading, setLoading] = useState(true)
 
 	useEffect(() => {
 		fetchEmployees()
@@ -26,6 +27,8 @@ const EmployeesListPage = () => {
 			if (error.response.status === 401) {
 				Logout()
 			}
+		} finally {
+			setLoading(false)
 		}
 	}
 
@@ -33,6 +36,7 @@ const EmployeesListPage = () => {
 		<Container size={'lg'}>
 			<EmployeesList
 				data={data}
+				loading={loading}
 				headings={headings}
 			/>
 		</Container>

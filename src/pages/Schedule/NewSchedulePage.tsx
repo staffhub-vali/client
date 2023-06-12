@@ -7,12 +7,14 @@ import Heading from '../../components/ui/Heading'
 import Container from '../../components/ui/Container'
 import { buttonVariants } from '../../components/ui/Button'
 import ScheduleMaker from '../../components/Schedule/ScheduleMaker'
+import Spinner from '../../components/ui/Spinner'
 
 const NewSchedulePage = () => {
 	const [id, setId] = useState<string>('')
 	const [name, setName] = useState<string>('')
 	const [employees, setEmployees] = useState([])
 	const [isOpen, setIsOpen] = useState<boolean>(false)
+	const [loading, setLoading] = useState<boolean>(true)
 
 	useEffect(() => {
 		fetchEmployees()
@@ -31,6 +33,8 @@ const NewSchedulePage = () => {
 			if (error.response.status === 401) {
 				Logout()
 			}
+		} finally {
+			setLoading(false)
 		}
 	}
 
@@ -38,7 +42,9 @@ const NewSchedulePage = () => {
 		<Container
 			size={'lg'}
 			onClick={() => (isOpen ? setIsOpen(false) : null)}>
-			{employees.length > 0 ? (
+			{loading ? (
+				<Spinner />
+			) : employees.length > 0 ? (
 				<ScheduleMaker
 					id={id}
 					name={name}
@@ -58,7 +64,10 @@ const NewSchedulePage = () => {
 					<Heading size={'xs'}>Click below if you wish to create an employee.</Heading>
 					<Link
 						to='/employees/new'
-						className={`${buttonVariants({ variant: 'default', size: 'lg' })} mt-6`}>
+						className={`${buttonVariants({
+							variant: 'default',
+							size: 'lg',
+						})} mt-6`}>
 						New Employee {<UserPlus className='ml-2' />}
 					</Link>
 				</>

@@ -54,8 +54,9 @@ const EmployeesTable: FC<EmployeesTableProps> = ({ headings, data, searchBar }) 
 					</div>
 				)}
 				<Link
-					className={`${buttonVariants({ variant: 'default', size: 'default' })} w-64`}
-					to={'/employees/new'}>
+					to={'/employees/new'}
+					title='Add a new employee'
+					className={`${buttonVariants({ variant: 'default', size: 'default' })} w-64`}>
 					New Employee {<UserPlus className='ml-2 h-5 w-5' />}
 				</Link>
 			</div>

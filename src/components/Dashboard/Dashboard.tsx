@@ -1,10 +1,10 @@
-import { Dispatch, FC, SetStateAction } from 'react'
 import Button from '../ui/Button'
 import Heading from '../ui/Heading'
 import Container from '../ui/Container'
 import Paragraph from '../ui/Paragraph'
 import { useNavigate } from 'react-router-dom'
 import groupShifts from '../../utils/GroupShifts'
+import { Dispatch, FC, SetStateAction } from 'react'
 import { WorkDay } from '../../pages/Dashboard/DashboardPage'
 import { ChevronLeft, ChevronRight, ScrollText, User, X } from 'lucide-react'
 import { formatDate, formatDay, formatTime } from '../../utils/DateFormatting'
@@ -53,7 +53,7 @@ const Dashboard: FC<DashboardProps> = ({ data, skip, setSkip }) => {
 								groupShifts(day.shifts).map((groupedShift) => (
 									<Paragraph
 										className='flex items-center'
-										title={groupedShift.employee.name}
+										title={`${day.shifts.length} ${day.shifts.length === 1 ? 'shift' : 'shifts'} `}
 										key={`${groupedShift.start}-${groupedShift.end}`}>
 										<div className='mr-3 flex'>
 											{`${groupedShift.count}`} <User className='font-normal' />

@@ -47,7 +47,6 @@ const NewSchedulePage = () => {
 				<Spinner />
 			) : employees.length > 0 ? (
 				<>
-					<Heading size={'sm'}>New Schedule</Heading>
 					<ScheduleMaker
 						id={id}
 						name={name}

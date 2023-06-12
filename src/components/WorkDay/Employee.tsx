@@ -160,7 +160,6 @@ const Employee: FC<EmployeeProps> = ({
 				<Link
 					className='hover:text-sky-500'
 					to={`/employees/${shift.employee._id}`}>
-					{' '}
 					{shift?.employee.name}
 				</Link>
 			</Paragraph>
@@ -169,12 +168,14 @@ const Employee: FC<EmployeeProps> = ({
 				<>
 					<Input
 						type='text'
+						title='Shift start'
 						value={formatTime(shift.start)}
 						className='m-0 mx-2 w-44 text-center'
 						onChange={(e) => handleTimeChange(e.target.value, 'start', index)}
 					/>
 					<Input
 						type='text'
+						title='Shift end'
 						value={formatTime(shift.end)}
 						className='m-0 mx-2 w-44 text-center'
 						onChange={(e) => handleTimeChange(e.target.value, 'end', index)}
@@ -202,12 +203,14 @@ const Employee: FC<EmployeeProps> = ({
 					<Button
 						size={'sm'}
 						type='button'
+						title='Cancel editing'
 						onClick={() => toggleEditMode(shift._id)}
 						variant={'outline'}>
 						Cancel {<X className='ml-2 h-4 w-4' />}
 					</Button>
 					<Button
 						size={'sm'}
+						title='Save changes'
 						loading={shift.loading}>
 						Save {<Check className='ml-2 h-4 w-4' />}
 					</Button>
@@ -218,6 +221,7 @@ const Employee: FC<EmployeeProps> = ({
 				<div className='space-x-2'>
 					<Button
 						size={'sm'}
+						title='Edit Shift'
 						loading={shift.loading}
 						onClick={() => toggleEditMode(shift._id)}>
 						Edit {<Pencil className='ml-2 h-4 w-4' />}
@@ -225,6 +229,7 @@ const Employee: FC<EmployeeProps> = ({
 					<Button
 						size={'sm'}
 						variant={'danger'}
+						title='Delete Shift'
 						onClick={() => setShowModal(true)}>
 						Delete {<Trash2 className='ml-2 h-4 w-4' />}
 					</Button>

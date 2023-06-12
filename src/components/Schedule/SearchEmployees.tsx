@@ -43,7 +43,7 @@ const SearchEmployees: FC<SearchEmployeesProps> = ({
 
 	return (
 		<Container
-			className={`relative mt-12 p-0 text-lg ${noMargin && 'mt-0'}`}
+			className={`relative mt-12 p-0 pt-0.5 text-lg ${noMargin && 'mt-0'}`}
 			size={'lg'}>
 			<div
 				className='group w-full cursor-pointer rounded bg-white shadow hover:shadow-md dark:bg-slate-700 dark:shadow-slate-950 '

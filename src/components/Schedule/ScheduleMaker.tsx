@@ -11,6 +11,7 @@ import ScheduleTable from './ScheduleTable'
 import Notification from '../ui/Notification'
 import SearchEmployees from './SearchEmployees'
 import { formatMonth } from '../../utils/DateFormatting'
+import Paragraph from '../ui/Paragraph'
 
 interface Employee {
 	_id: string
@@ -116,7 +117,7 @@ const ScheduleMaker: FC<ScheduleMakerProps> = ({
 		<Container
 			size={'lg'}
 			className='flex flex-row justify-evenly p-0'>
-			<div className='mt-16 flex h-[36rem] flex-col items-center space-y-4'>
+			<div className='mt-2 flex h-[36rem] flex-col items-center space-y-4'>
 				<SearchEmployees
 					name={name}
 					setId={setId}
@@ -137,11 +138,13 @@ const ScheduleMaker: FC<ScheduleMakerProps> = ({
 				<Button
 					size={'lg'}
 					loading={loading}
+					className='w-full'
+					title='Create schedule'
 					onClick={createSchedule}>
 					Submit {<Check className='ml-2 h-6 w-6' />}
 				</Button>
 			</div>
-			<div className='mt-16 h-[36rem] w-[82rem]'>
+			<div className='mt-4 h-[36rem] w-[82rem]'>
 				{schedule.length > 0 ? (
 					<>
 						{name ? (
@@ -161,21 +164,32 @@ const ScheduleMaker: FC<ScheduleMakerProps> = ({
 							data={schedule}
 							setData={setSchedule}
 						/>
-						{shiftPreferences.length > 0
-							? shiftPreferences.map((preference) => (
-									<Heading
-										size={'xs'}
-										className='mt-4 text-center font-normal'>
-										{preference}
-									</Heading>
-							  ))
-							: name && (
-									<Heading
-										size={'xs'}
-										className='mt-4 text-center font-normal'>
-										This employee has no shift preferences.
-									</Heading>
-							  )}
+						{shiftPreferences.length > 0 ? (
+							<div className='mt-4 rounded-md border border-slate-300 pb-2 shadow-lg'>
+								<Heading
+									size={'xs'}
+									className='mb-4 rounded-t-md border-b-2 border-slate-300 bg-white py-2 text-center font-normal'>
+									Shift preferences:
+								</Heading>
+								<div className='flex flex-wrap justify-evenly'>
+									{shiftPreferences.map((preference) => (
+										<Paragraph
+											size={'xl'}
+											className='mb-2 h-fit w-[27.2rem] rounded-md bg-white p-1 text-center font-normal shadow-md'>
+											{preference}
+										</Paragraph>
+									))}
+								</div>
+							</div>
+						) : (
+							name && (
+								<Heading
+									size={'xs'}
+									className='mt-4 text-center font-normal'>
+									This employee has no shift preferences.
+								</Heading>
+							)
+						)}
 					</>
 				) : (
 					<Heading

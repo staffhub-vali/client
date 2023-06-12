@@ -136,6 +136,7 @@ const AddShift: FC<AddShiftProps> = ({ workDay, setShowAddShift, setError, setMe
 							type='text'
 							value={formatTime(start)}
 							name='start'
+							placeholder='Start time'
 							className='m-0 text-center text-lg'
 							onChange={(e) => handleTimeChange(e.target.value, 'start')}
 						/>
@@ -150,6 +151,7 @@ const AddShift: FC<AddShiftProps> = ({ workDay, setShowAddShift, setError, setMe
 						<Input
 							name='end'
 							type='text'
+							placeholder='End time'
 							value={formatTime(end)}
 							className='m-0 text-center text-lg'
 							onChange={(e) => handleTimeChange(e.target.value, 'end')}
@@ -167,14 +169,15 @@ const AddShift: FC<AddShiftProps> = ({ workDay, setShowAddShift, setError, setMe
 				<div className='mb-1 mt-auto flex space-x-2'>
 					<Button
 						size={'sm'}
-						variant={'outline'}
 						type='button'
+						variant={'outline'}
 						onClick={() => setShowAddShift(false)}>
 						Cancel {<X className='ml-1 h-4 w-4' />}
 					</Button>
 					<Button
 						size={'sm'}
-						loading={loading}>
+						loading={loading}
+						title='Create shift'>
 						Create {<Check className='ml-1 h-4 w-4' />}
 					</Button>
 				</div>

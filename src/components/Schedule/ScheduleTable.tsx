@@ -1,6 +1,5 @@
 import { Dispatch, FC, SetStateAction } from 'react'
 import { formatDate, formatTime, formatTotal } from '../../utils/DateFormatting'
-import Container from '../ui/Container'
 
 interface ScheduleTableProps {
 	data: WorkDay[]
@@ -33,8 +32,8 @@ const ScheduleTable: FC<ScheduleTableProps> = ({ data, setData }) => {
 	}
 
 	return (
-		<div className='h-[32rem] overflow-x-hidden rounded border-2 dark:border-slate-500'>
-			<table className='w-full divide-y-2 divide-slate-200 overflow-scroll rounded bg-white text-center text-xl  shadow-md dark:divide-slate-600 dark:bg-slate-800'>
+		<div className='h-[32rem] overflow-x-hidden rounded border-2 border-slate-300 shadow-md dark:border-slate-500'>
+			<table className='w-full divide-y-2 divide-slate-300 overflow-scroll rounded bg-white text-center text-xl  shadow-md dark:divide-slate-600 dark:bg-slate-800'>
 				<thead>
 					<tr className='sticky top-0 bg-white dark:bg-slate-800 '>
 						{headings.map((heading, index) => (
@@ -46,33 +45,39 @@ const ScheduleTable: FC<ScheduleTableProps> = ({ data, setData }) => {
 						))}
 					</tr>
 				</thead>
-				<tbody className='divide-y-2 divide-slate-200 dark:divide-slate-600 '>
+				<tbody className='divide-y-2 divide-slate-300 dark:divide-slate-600 '>
 					{data.map((item, index) => {
 						return (
 							<tr
 								key={index}
-								className={index % 2 === 0 ? 'bg-slate-50 dark:bg-slate-700' : 'bg-white dark:bg-slate-800'}>
+								className={index % 2 === 0 ? 'bg-slate-100 dark:bg-slate-700' : 'bg-white dark:bg-slate-800'}>
 								<td className='px-8 py-3'>{formatDate(item.date)}</td>
 								<td>
 									<input
-										className='rounded bg-transparent py-3 text-center focus:bg-white dark:outline-none dark:ring-slate-100 dark:focus:bg-transparent dark:focus:ring-1'
 										type='text'
 										value={formatTime(item.start)}
 										onChange={(e) => handleTimeChange(e.target.value, 'start', index)}
+										className='rounded bg-transparent py-3 text-center focus:bg-white dark:outline-none dark:ring-slate-100 dark:focus:bg-transparent dark:focus:ring-1'
 									/>
 								</td>
 								<td>
 									<input
-										className='rounded bg-transparent py-3 text-center ring-slate-100 focus:bg-white dark:outline-none dark:focus:bg-transparent dark:focus:ring-1'
-										type='text'
 										value={formatTime(item.end)}
 										onChange={(e) => handleTimeChange(e.target.value, 'end', index)}
+										className='rounded bg-transparent py-3 text-center ring-slate-100 focus:bg-white dark:outline-none dark:focus:bg-transparent dark:focus:ring-1'
+										type='text'
 									/>
 								</td>
 								{item.start && item.end ? (
-									<td className='px-8 py-3'>{formatTotal(item.start, item.end)}</td>
+									<td
+										title='Total hours in shift'
+										className='px-8 py-3'>
+										{formatTotal(item.start, item.end)}
+									</td>
 								) : (
-									<td className='px-8 py-3'></td>
+									<td
+										title='Total hours in shift'
+										className='px-8 py-3'></td>
 								)}
 							</tr>
 						)

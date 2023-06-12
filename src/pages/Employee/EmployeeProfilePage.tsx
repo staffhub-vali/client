@@ -9,6 +9,7 @@ import PersonalInfo from '../../components/Employee/Edit/PersonalInfo/PersonalIn
 import ShiftPreferencesList from '../../components/Employee/Edit/ShiftPreferences/ShiftPreferencesList'
 import VacationList from '../../components/Employee/Edit/Vacation/VacationList'
 import Schedule from '../../components/Employee/Edit/Schedule/Schedule'
+import Container from '../../components/ui/Container'
 
 const EmployeeProfilePage = () => {
 	const { id } = useParams()
@@ -40,7 +41,7 @@ const EmployeeProfilePage = () => {
 		timeoutId = setTimeout(() => {
 			setError(null)
 			setMessage(null)
-		}, 7000)
+		}, 4000)
 
 		return () => {
 			clearTimeout(timeoutId)
@@ -82,7 +83,10 @@ const EmployeeProfilePage = () => {
 	}
 
 	return (
-		<div onClick={() => showDropdown && setShowDropdown(false)}>
+		<Container
+			size={'lg'}
+			className='p-0'
+			onClick={() => showDropdown && setShowDropdown(false)}>
 			{employee && isAbout && (
 				<PersonalInfo
 					loading={loading}
@@ -153,7 +157,7 @@ const EmployeeProfilePage = () => {
 					{error}
 				</Notification>
 			)}
-		</div>
+		</Container>
 	)
 }
 

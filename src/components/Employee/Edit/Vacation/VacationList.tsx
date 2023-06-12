@@ -113,8 +113,8 @@ const VacationList: FC<VacationListProps> = ({ loading, setLoading, employee, se
 					</>
 				)}
 			</div>
-			{!showPlanner && (
-				<div className='items-auto mt-12 flex w-full justify-center space-x-2 border-b-2 pb-3 dark:border-slate-700'>
+			{!showPlanner && !showChangeAmount && (
+				<div className='items-auto mt-12 flex w-full justify-center space-x-2 border-b-2 pb-4 dark:border-slate-700'>
 					<Heading
 						size={'xs'}
 						className='font-normal'>
@@ -126,6 +126,23 @@ const VacationList: FC<VacationListProps> = ({ loading, setLoading, employee, se
 						{employee.vacationDays}
 					</Heading>
 				</div>
+			)}
+			{showChangeAmount && (
+				<form
+					onSubmit={updateAmount}
+					className='mt-12 flex w-full items-center justify-center space-x-2 border-b-2 pb-2 dark:border-slate-700'>
+					<Input
+						type='text'
+						value={amount}
+						className='m-0 w-fit text-center text-xl font-bold'
+						onChange={(e) => setAmount(Number(e.target.value))}
+					/>
+					<Button
+						size={'sm'}
+						variant={'link'}>
+						<Check className=' h-8 w-8' />
+					</Button>
+				</form>
 			)}
 			{showPlanner && (
 				<VacationPlanner
@@ -169,23 +186,6 @@ const VacationList: FC<VacationListProps> = ({ loading, setLoading, employee, se
 						This employee has no planned vacations.
 					</Heading>
 				)
-			)}
-			{showChangeAmount && (
-				<form
-					onSubmit={updateAmount}
-					className='mt-12 flex space-x-2'>
-					<Input
-						type='text'
-						value={amount}
-						className='text-center'
-						onChange={(e) => setAmount(Number(e.target.value))}
-					/>
-					<Button
-						size={'sm'}
-						variant={'link'}>
-						<Check className=' h-6 w-6' />
-					</Button>
-				</form>
 			)}
 		</Container>
 	)

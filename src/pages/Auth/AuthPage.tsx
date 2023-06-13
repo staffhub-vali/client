@@ -25,7 +25,7 @@ const AuthPage: FC<AuthPageProps> = ({}) => {
 		return () => {
 			clearTimeout(timeoutId)
 		}
-	}, [loading])
+	}, [error, message])
 
 	const isLoginForm: boolean = location.pathname.includes('/login')
 	const isRegisterForm: boolean = location.pathname.includes('/register')

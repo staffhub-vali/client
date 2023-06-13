@@ -31,7 +31,7 @@ const NewEmployeeForm: FC<NewEmployeeFormProps> = ({}) => {
 		return () => {
 			clearTimeout(timeoutId)
 		}
-	}, [loading])
+	}, [error, message])
 
 	const handleSubmit = async (e: React.FormEvent) => {
 		e.preventDefault()

@@ -49,7 +49,7 @@ const WorkDayPage = () => {
 		return () => {
 			clearTimeout(timeoutId)
 		}
-	}, [loading])
+	}, [error, message])
 
 	const fetchWorkDay = async () => {
 		try {

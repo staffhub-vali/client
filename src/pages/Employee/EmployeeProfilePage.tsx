@@ -46,7 +46,7 @@ const EmployeeProfilePage = () => {
 		return () => {
 			clearTimeout(timeoutId)
 		}
-	}, [loading])
+	}, [error, message])
 
 	const fetchProfile = async () => {
 		const token = localStorage.getItem('token')

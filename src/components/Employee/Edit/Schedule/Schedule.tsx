@@ -1,7 +1,7 @@
 import Heading from '../../../ui/Heading'
 import Container from '../../../ui/Container'
 import { Dispatch, FC, SetStateAction, useState } from 'react'
-import { formatDate, formatMonth, formatTime } from '../../../../utils/DateFormatting'
+import { formatDate, formatDay, formatMonth, formatTime } from '../../../../utils/DateFormatting'
 import { calculateMonthlyHours, calculateTotalHours } from '../../../../utils/CalculateHours'
 import Paragraph from '../../../ui/Paragraph'
 import { Link, useNavigate } from 'react-router-dom'
@@ -97,15 +97,19 @@ const Schedule: FC<ScheduleProps> = ({ loading, setError, setMessage, employee, 
 								onClick={() => navigate(`/days/${shift.workDay._id}`)}
 								className={`group flex w-[48rem] cursor-pointer items-center space-y-4 border-b-2 ${
 									index % 2 === 0 ? 'bg-slate-50' : 'bg-white'
-								} py-4 pt-2`}>
-								<Paragraph
-									className='mx-auto mt-auto group-hover:text-sky-500'
-									size={'xl'}>
-									{formatDate(shift.workDay.date)}
-								</Paragraph>
+								} py-2`}>
+								<div className='mx-auto flex flex-col items-center group-hover:text-sky-500'>
+									{formatDay(shift.workDay.date)}
+									<Paragraph
+										className='group-hover:text-sky-500'
+										size={'xl'}>
+										{formatDate(shift.workDay.date)}
+									</Paragraph>
+								</div>
+
 								<Paragraph
 									size={'xl'}
-									className='mx-auto group-hover:text-sky-500'>
+									className='mx-auto pb-2 group-hover:text-sky-500'>
 									{formatTime(shift.start)} - {formatTime(shift.end)}
 								</Paragraph>
 							</div>

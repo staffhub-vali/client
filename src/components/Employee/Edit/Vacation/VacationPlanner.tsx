@@ -1,11 +1,11 @@
 import axios from 'axios'
+import { Check } from 'lucide-react'
 import Calendar from 'react-calendar'
 import Button from '../../../ui/Button'
-import Heading from '../../../ui/Heading'
-import Paragraph from '../../../ui/Paragraph'
-import { FC, useState, useEffect, Dispatch, SetStateAction } from 'react'
-import { Check } from 'lucide-react'
 import { Logout } from '../../../../Auth'
+import Heading from '../../../ui/Heading'
+import 'react-calendar/dist/Calendar.css'
+import { FC, useState, useEffect, Dispatch, SetStateAction } from 'react'
 
 interface VacationPlannerProps {
 	loading: boolean
@@ -44,10 +44,9 @@ const VacationPlanner: FC<VacationPlannerProps> = ({
 	const calculateTotalDays = () => {
 		const millisecondsPerDay = 24 * 60 * 60 * 1000
 		const totalDays = Math.ceil((end.getTime() - start.getTime()) / millisecondsPerDay) + 1
-		if (employee.vacationDays - totalDays >= 0) {
-			setDaysPlanned(totalDays)
-			setDaysRemaining(employee.vacationDays - totalDays)
-		}
+
+		setDaysPlanned(totalDays)
+		setDaysRemaining(employee.vacationDays - totalDays)
 	}
 
 	useEffect(() => {
@@ -56,28 +55,38 @@ const VacationPlanner: FC<VacationPlannerProps> = ({
 
 	const handleStartChange: any = (date: Date) => {
 		const newStart = date
-		const newEnd = end
 		const millisecondsPerDay = 24 * 60 * 60 * 1000
-		const newTotalDays = Math.ceil((newEnd.getTime() - newStart.getTime()) / millisecondsPerDay) + 1
+		const newTotalDays = Math.ceil((end.getTime() - newStart.getTime()) / millisecondsPerDay) + 1
 
-		if (employee.vacationDays - newTotalDays >= 0 && newTotalDays <= 25) {
-			setStart(newStart)
-			setDaysPlanned(newTotalDays)
-			setDaysRemaining(employee.vacationDays - newTotalDays)
-		} else setError("You can't plan that many days.")
+		if (newStart > end) {
+			return setError('Start date must be before end date.')
+		}
+
+		if (employee.vacationDays - newTotalDays < 0) {
+			return setError("You can't plan that many days.")
+		}
+
+		setStart(newStart)
+		setDaysPlanned(newTotalDays)
+		setDaysRemaining(employee.vacationDays - newTotalDays)
 	}
 
 	const handleEndChange: any = (date: Date) => {
-		const newStart = start
 		const newEnd = date
 		const millisecondsPerDay = 24 * 60 * 60 * 1000
-		const newTotalDays = Math.ceil((newEnd.getTime() - newStart.getTime()) / millisecondsPerDay) + 1
+		const newTotalDays = Math.ceil((newEnd.getTime() - start.getTime()) / millisecondsPerDay) + 1
 
-		if (employee.vacationDays - newTotalDays >= 0 && newTotalDays <= 25) {
-			setEnd(newEnd)
-			setDaysPlanned(newTotalDays)
-			setDaysRemaining(employee.vacationDays - newTotalDays)
-		} else setError("You can't plan that many days.")
+		if (newEnd < start) {
+			return setError('End date must be after start date.')
+		}
+
+		if (employee.vacationDays - newTotalDays < 0) {
+			return setError("You can't plan that many days.")
+		}
+
+		setEnd(newEnd)
+		setDaysPlanned(newTotalDays)
+		setDaysRemaining(employee.vacationDays - newTotalDays)
 	}
 
 	const handleSubmit = async (e: React.FormEvent) => {
@@ -134,7 +143,7 @@ const VacationPlanner: FC<VacationPlannerProps> = ({
 				className='mt-10'>
 				Days planned: {daysPlanned}
 			</Heading>
-			<div className='mt-12 flex space-x-24'>
+			<div className='mt-12 flex h-96 space-x-24'>
 				<div>
 					<Heading
 						className='mb-2 text-center font-normal'
@@ -160,12 +169,12 @@ const VacationPlanner: FC<VacationPlannerProps> = ({
 			</div>
 
 			<form
-				className='mt-6'
+				className=''
 				onSubmit={handleSubmit}>
 				<Button
-					size={'sm'}
+					size={'lg'}
 					loading={loading}>
-					Submit <Check className='ml-2 h-5 w-5' />
+					Submit <Check className='ml-2' />
 				</Button>
 			</form>
 		</>

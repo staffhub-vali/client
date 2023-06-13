@@ -4,7 +4,7 @@ import Container from '../ui/Container'
 import Paragraph from '../ui/Paragraph'
 import { useNavigate } from 'react-router-dom'
 import groupShifts from '../../utils/GroupShifts'
-import { Dispatch, FC, SetStateAction } from 'react'
+import { Dispatch, FC, SetStateAction, useEffect } from 'react'
 import { WorkDay } from '../../pages/Dashboard/DashboardPage'
 import { ChevronLeft, ChevronRight, ScrollText, User, X } from 'lucide-react'
 import { formatDate, formatDay, formatTime } from '../../utils/DateFormatting'
@@ -12,19 +12,48 @@ import { formatDate, formatDay, formatTime } from '../../utils/DateFormatting'
 interface DashboardProps {
 	skip: number
 	data: WorkDay[]
+	emptyData: boolean
+	nextPageLimit: boolean
+	prevPageLimit: boolean
 	setSkip: Dispatch<SetStateAction<number>>
+	setPrevPageLimit: Dispatch<SetStateAction<boolean>>
+	setNextPageLimit: Dispatch<SetStateAction<boolean>>
 }
 
-const Dashboard: FC<DashboardProps> = ({ data, skip, setSkip }) => {
+const Dashboard: FC<DashboardProps> = ({
+	data,
+	skip,
+	setSkip,
+	emptyData,
+	nextPageLimit,
+	prevPageLimit,
+	setNextPageLimit,
+	setPrevPageLimit,
+}) => {
 	const navigate = useNavigate()
 
 	const handlePrevPage = () => {
-		setSkip(skip - 1)
+		!prevPageLimit && setSkip(skip - 1)
 	}
 
 	const handleNextPage = () => {
-		setSkip(skip + 1)
+		!nextPageLimit && setSkip(skip + 1)
 	}
+
+	useEffect(() => {
+		if (data.length === 7) {
+			setNextPageLimit(false)
+			setPrevPageLimit(false)
+		}
+
+		if (emptyData && skip > 0) {
+			setNextPageLimit(true)
+		}
+
+		if (emptyData && skip < 0) {
+			setPrevPageLimit(true)
+		}
+	}, [data])
 
 	return (
 		<Container

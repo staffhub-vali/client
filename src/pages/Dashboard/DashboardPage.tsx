@@ -8,6 +8,7 @@ import Container from '../../components/ui/Container'
 import { buttonVariants } from '../../components/ui/Button'
 import Dashboard from '../../components/Dashboard/Dashboard'
 import Spinner from '../../components/ui/Spinner'
+import Notification from '../../components/ui/Notification'
 
 export interface WorkDay {
 	_id: string
@@ -26,7 +27,11 @@ interface Shift {
 const DashboardPage = () => {
 	const [skip, setSkip] = useState<number>(0)
 	const [data, setData] = useState<WorkDay[]>([])
+	const [error, setError] = useState<string | null>(null)
 	const [loading, setLoading] = useState<boolean>(true)
+	const [emptyData, setEmptyData] = useState<boolean>(false)
+	const [prevPageLimit, setPrevPageLimit] = useState<boolean>(false)
+	const [nextPageLimit, setNextPageLimit] = useState<boolean>(false)
 
 	useEffect(() => {
 		fetchData()
@@ -35,16 +40,19 @@ const DashboardPage = () => {
 	const fetchData = async () => {
 		try {
 			const token = localStorage.getItem('token')
-			const { data } = await axios.get(`http://localhost:8080/v1/days?skip=${skip}`, {
+			const response = await axios.get(`http://localhost:8080/v1/days?skip=${skip}`, {
 				headers: {
 					Authorization: `Bearer ${token}`,
 				},
 			})
 
-			if (data.length > 0) {
-				setData(data)
-			}
+			setData(response.data.workDays)
+
+			if (response.data.length === 0) {
+				setEmptyData(true)
+			} else setEmptyData(false)
 		} catch (error: any) {
+			setError(error.response.data.message)
 			if (error.response.status === 401) {
 				Logout()
 			}
@@ -62,6 +70,11 @@ const DashboardPage = () => {
 					data={data}
 					skip={skip}
 					setSkip={setSkip}
+					emptyData={emptyData}
+					prevPageLimit={prevPageLimit}
+					nextPageLimit={nextPageLimit}
+					setPrevPageLimit={setPrevPageLimit}
+					setNextPageLimit={setNextPageLimit}
 				/>
 			) : (
 				<>
@@ -77,6 +90,13 @@ const DashboardPage = () => {
 						New Schedule {<CalendarPlus className='ml-2' />}
 					</Link>
 				</>
+			)}
+			{error && (
+				<Notification
+					variant={'error'}
+					position={'top'}>
+					{error}
+				</Notification>
 			)}
 		</Container>
 	)

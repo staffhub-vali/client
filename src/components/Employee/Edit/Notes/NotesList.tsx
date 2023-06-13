@@ -60,14 +60,14 @@ const NotesList: FC<NotesListProps> = ({ employee, loading, setLoading, setError
 
 	return (
 		<Container>
-			<div className='flex items-center space-x-8'>
+			<div className='flex w-full items-center justify-center space-x-8 border-b-2 pb-4 dark:border-slate-600'>
 				<Heading size={'sm'}>Notes</Heading>
 				{showAddNote ? (
 					<Button
 						size={'sm'}
 						className='w-36'
-						onClick={() => setShowAddNote(false)}
-						variant={'outline'}>
+						variant={'outline'}
+						onClick={() => setShowAddNote(false)}>
 						Cancel
 						<X className='ml-2 h-5 w-5' />
 					</Button>

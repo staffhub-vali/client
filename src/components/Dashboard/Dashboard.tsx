@@ -68,10 +68,11 @@ const Dashboard: FC<DashboardProps> = ({ data, skip, setSkip }) => {
 								</Paragraph>
 							)}
 						</div>
-
-						<Paragraph className='mt-auto flex items-center pb-2 text-2xl'>
-							{day.notes.length} <ScrollText className='ml-2 h-6 w-6' />
-						</Paragraph>
+						{day.notes.length > 0 && (
+							<Paragraph className='mt-auto flex items-center pb-2 text-2xl'>
+								{day.notes.length} <ScrollText className='ml-2 h-6 w-6' />
+							</Paragraph>
+						)}
 					</div>
 				))}
 			</div>

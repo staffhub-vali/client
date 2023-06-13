@@ -1,15 +1,15 @@
 import axios from 'axios'
 import { Logout } from '../../Auth'
-import { useLocation, useParams } from 'react-router-dom'
 import { useEffect, useState } from 'react'
+import Container from '../../components/ui/Container'
+import { useLocation, useParams } from 'react-router-dom'
 import Notification from '../../components/ui/Notification'
 import NotesList from '../../components/Employee/Edit/Notes/NotesList'
 import EmployeeProfile from '../../components/Employee/EmployeeProfile'
+import Schedule from '../../components/Employee/Edit/Schedule/Schedule'
+import VacationList from '../../components/Employee/Edit/Vacation/VacationList'
 import PersonalInfo from '../../components/Employee/Edit/PersonalInfo/PersonalInfo'
 import ShiftPreferencesList from '../../components/Employee/Edit/ShiftPreferences/ShiftPreferencesList'
-import VacationList from '../../components/Employee/Edit/Vacation/VacationList'
-import Schedule from '../../components/Employee/Edit/Schedule/Schedule'
-import Container from '../../components/ui/Container'
 
 const EmployeeProfilePage = () => {
 	const { id } = useParams()

@@ -84,32 +84,32 @@ const Note: FC<NoteProps> = ({ note: n, index, employee, loading, setError, setL
 	}
 
 	return (
-		<div className='flex w-full items-center justify-center'>
+		<div className='flex w-full items-center justify-center rounded-md bg-white px-3 py-1 shadow dark:bg-slate-700'>
 			{editNote ? (
 				<>
 					<Input
 						type='text'
 						value={note}
-						className='m-0 w-fit'
 						onChange={(e) => setNote(e.target.value)}
+						className='m-0 w-96 text-xl shadow-none focus:ring-0'
 					/>
 					<Button
 						size={'sm'}
 						variant={'link'}
-						className='w-10 min-w-[3rem]'
+						title='Save changes'
+						className='w-16 min-w-0'
 						onClick={() => {
 							setNoteIndex(index)
 							updateNote(index, note)
-						}}
-						title='Save changes'>
+						}}>
 						{<Check />}
 					</Button>
 					<Button
 						size={'sm'}
+						title='Cancel'
 						variant={'link'}
-						className='w-10 min-w-[3rem]'
-						onClick={() => setEditNote(false)}
-						title='Cancel'>
+						className='w-16 min-w-0'
+						onClick={() => setEditNote(false)}>
 						{<XCircle />}
 					</Button>
 				</>
@@ -117,14 +117,14 @@ const Note: FC<NoteProps> = ({ note: n, index, employee, loading, setError, setL
 				<div className='flex items-center'>
 					<Paragraph
 						size={'lg'}
-						className='min-w-[16rem]'
-						key={employee?._id}>
+						key={employee?._id}
+						className='w-96 min-w-[16rem] rounded-md bg-white px-2 py-2 text-left dark:bg-slate-700'>
 						{note}
 					</Paragraph>
 					<Button
 						size={'sm'}
 						variant={'link'}
-						className='w-16 min-w-0 rounded-full p-5 hover:bg-slate-200'
+						className='w-16 min-w-0 rounded-full p-5 hover:bg-slate-100'
 						onClick={() => {
 							setEditNote(true)
 							setNoteIndex(index)
@@ -135,7 +135,7 @@ const Note: FC<NoteProps> = ({ note: n, index, employee, loading, setError, setL
 					<Button
 						size={'sm'}
 						variant={'link'}
-						className='w-16 min-w-0 rounded-full p-5 hover:bg-slate-200'
+						className='w-16 min-w-0 rounded-full p-5 hover:bg-slate-100'
 						onClick={() => {
 							setShowModal(true)
 							setNoteIndex(index)

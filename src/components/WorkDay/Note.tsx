@@ -72,7 +72,6 @@ const Note: FC<NoteProps> = ({ note: n, index, workDay, loading, setError, setLo
 			setEditNote(false)
 			setMessage(data.message)
 		} catch (error: any) {
-			setLoading(false)
 			setError(error.response.data.message)
 			if (error.response.status === 401) {
 				Logout()
@@ -84,19 +83,19 @@ const Note: FC<NoteProps> = ({ note: n, index, workDay, loading, setError, setLo
 	}
 
 	return (
-		<div className='flex w-full items-center justify-center rounded-md bg-white px-3 py-1 shadow'>
+		<div className='flex w-full items-center justify-center rounded-md bg-white px-3 py-1 shadow dark:bg-slate-700'>
 			{editNote ? (
 				<>
 					<Input
 						type='text'
 						value={note}
-						className='m-0 w-fit'
+						className='m-0 w-96 text-xl shadow-none focus:ring-0'
 						onChange={(e) => setNote(e.target.value)}
 					/>
 					<Button
 						size={'sm'}
 						variant={'link'}
-						className='w-10 min-w-[3rem]'
+						className='w-16 min-w-0'
 						onClick={() => {
 							setNoteIndex(index)
 							updateNote(index, note)
@@ -107,7 +106,7 @@ const Note: FC<NoteProps> = ({ note: n, index, workDay, loading, setError, setLo
 					<Button
 						size={'sm'}
 						variant={'link'}
-						className='w-10 min-w-[3rem]'
+						className='w-16 min-w-0'
 						onClick={() => setEditNote(false)}
 						title='Cancel'>
 						{<XCircle />}
@@ -117,7 +116,7 @@ const Note: FC<NoteProps> = ({ note: n, index, workDay, loading, setError, setLo
 				<div className='flex items-center'>
 					<Paragraph
 						size={'lg'}
-						className='min-w-[16rem] rounded-md bg-white px-4 py-2'
+						className='w-96 min-w-[16rem] rounded-md bg-white px-2 py-2 text-left dark:bg-slate-700'
 						key={workDay?._id}>
 						{note}
 					</Paragraph>

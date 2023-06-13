@@ -1,9 +1,9 @@
 import axios from 'axios'
-import Button from '../ui/Button'
-import { Dispatch, FC, SetStateAction, useState } from 'react'
-import { Check, X } from 'lucide-react'
 import Input from '../ui/Input'
+import Button from '../ui/Button'
 import { Logout } from '../../Auth'
+import { Check, X } from 'lucide-react'
+import { Dispatch, FC, SetStateAction, useState } from 'react'
 
 interface AddNoteProps {
 	showAddNote: boolean
@@ -67,25 +67,38 @@ const AddNote: FC<AddNoteProps> = ({
 	return (
 		<div className='flex space-x-2'>
 			<Input
+				size={'lg'}
 				type='text'
 				name='note'
+				className='w-96'
 				placeholder='Anything to note?'
 				onChange={(e) => setNote(e.target.value)}
 				value={note}
 			/>
 
 			<Button
-				size={'sm'}
-				className='w-44'
+				title='Add note'
+				variant={'link'}
+				className=' min-w-0'
 				onClick={addNote}>
-				Add Note {<Check className='ml-2 h-5 w-5' />}
+				{
+					<Check
+						size={40}
+						className='mt-2'
+					/>
+				}
 			</Button>
 			<Button
-				size={'sm'}
-				className='w-44'
-				variant={'outline'}
+				title='Cancel'
+				variant={'link'}
+				className=' min-w-0'
 				onClick={() => setShowAddNote(false)}>
-				Cancel {<X className='ml-2 h-5 w-5' />}
+				{
+					<X
+						size={40}
+						className='mt-2'
+					/>
+				}
 			</Button>
 		</div>
 	)

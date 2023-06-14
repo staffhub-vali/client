@@ -42,7 +42,7 @@ const AddNote: FC<AddNoteProps> = ({
 		try {
 			const token = localStorage.getItem('token')
 			const { data } = await axios.post(
-				'http://localhost:8080/v1/days/notes',
+				`${import.meta.env.VITE_BASE_URL}/days/notes`,
 				{
 					day: workDay?._id,
 					note: note,

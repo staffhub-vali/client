@@ -17,7 +17,7 @@ const EmployeesListPage = () => {
 	const fetchEmployees = async () => {
 		const token = localStorage.getItem('token')
 		try {
-			const { data } = await axios.get('http://localhost:8080/v1/employees', {
+			const { data } = await axios.get(`${import.meta.env.VITE_BASE_URL}/employees`, {
 				headers: {
 					Authorization: `Bearer ${token}`,
 				},

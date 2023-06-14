@@ -24,7 +24,7 @@ const NewSchedulePage = () => {
 	const fetchEmployees = async () => {
 		try {
 			const token = localStorage.getItem('token')
-			const { data } = await axios.get('http://localhost:8080/v1/employees', {
+			const { data } = await axios.get(`${import.meta.env.VITE_BASE_URL}/employees`, {
 				headers: {
 					Authorization: `Bearer ${token}`,
 				},
@@ -64,7 +64,7 @@ const NewSchedulePage = () => {
 					<Heading
 						className='mb-2 mt-6'
 						size={'sm'}>
-						You do not currently have any employees on your account.
+						You do not currently have any employees on your account to create a schedule.
 					</Heading>
 					<Heading size={'xs'}>Click below if you wish to create an employee.</Heading>
 					<Link

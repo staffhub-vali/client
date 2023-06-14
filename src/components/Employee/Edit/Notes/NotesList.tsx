@@ -34,7 +34,7 @@ const NotesList: FC<NotesListProps> = ({ employee, loading, setLoading, setError
 		try {
 			const token = localStorage.getItem('token')
 			const { data } = await axios.post(
-				`http://localhost:8080/v1/employees/notes`,
+				`${import.meta.env.VITE_BASE_URL}/employees/notes`,
 				{
 					note: note,
 					employeeId: employee._id,

@@ -66,7 +66,7 @@ const ScheduleMaker: FC<ScheduleMakerProps> = ({
 		try {
 			const token = localStorage.getItem('token')
 			const { data } = await axios.post(
-				`http://localhost:8080/v1/roster`,
+				`${import.meta.env.VITE_BASE_URL}/roster`,
 				{
 					id,
 					data: schedule,

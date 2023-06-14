@@ -48,7 +48,7 @@ const Vacation: FC<VacationProps> = ({
 			setLoading(true)
 			const token = localStorage.getItem('token')
 			const { data } = await axios.delete(
-				`http://localhost:8080/v1/employees/vacation/?employeeId=${employee?._id}&index=${index}`,
+				`${import.meta.env.VITE_BASE_URL}/employees/vacation/?employeeId=${employee?._id}&index=${index}`,
 				{
 					headers: {
 						Authorization: `Bearer ${token}`,

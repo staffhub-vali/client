@@ -95,7 +95,7 @@ const VacationPlanner: FC<VacationPlannerProps> = ({
 		try {
 			const token = localStorage.getItem('token')
 			const { data } = await axios.post(
-				'http://localhost:8080/v1/employees/vacation',
+				`${import.meta.env.VITE_BASE_URL}/employees/vacation`,
 				{
 					employeeId: employee._id,
 					start: start.getTime(),

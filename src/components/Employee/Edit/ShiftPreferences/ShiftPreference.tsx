@@ -41,7 +41,7 @@ const ShiftPreference: FC<ShiftPreferenceProps> = ({
 			setLoading(true)
 			const token = localStorage.getItem('token')
 			const { data } = await axios.delete(
-				`http://localhost:8080/v1/employees/preferences/?employeeId=${employee?._id}&index=${index}`,
+				`${import.meta.env.VITE_BASE_URL}/employees/preferences/?employeeId=${employee?._id}&index=${index}`,
 				{
 					headers: {
 						Authorization: `Bearer ${token}`,
@@ -65,7 +65,7 @@ const ShiftPreference: FC<ShiftPreferenceProps> = ({
 			setLoading(true)
 			const token = localStorage.getItem('token')
 			const { data } = await axios.put(
-				`http://localhost:8080/v1/employees/preferences`,
+				`${import.meta.env.VITE_BASE_URL}/employees/preferences`,
 				{
 					shiftPreference: shiftPreference,
 					index: index,

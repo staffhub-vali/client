@@ -104,7 +104,7 @@ const Employee: FC<EmployeeProps> = ({
 
 		try {
 			const token = localStorage.getItem('token')
-			const { data } = await axios.put(`http://localhost:8080/v1/days/${workDay?._id}`, workDay, {
+			const { data } = await axios.put(`${import.meta.env.VITE_BASE_URL}/days/${workDay?._id}`, workDay, {
 				headers: {
 					Authorization: `Bearer ${token}`,
 				},
@@ -132,7 +132,7 @@ const Employee: FC<EmployeeProps> = ({
 		try {
 			setLoading(true)
 			const { data } = await axios.delete(
-				`http://localhost:8080/v1/days/${shiftId}?shiftId=${shiftId}&workDayId=${workDay?._id}`,
+				`${import.meta.env.VITE_BASE_URL}/days/${shiftId}?shiftId=${shiftId}&workDayId=${workDay?._id}`,
 				{
 					headers: {
 						Authorization: `Bearer ${token}`,

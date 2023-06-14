@@ -44,7 +44,7 @@ const VacationList: FC<VacationListProps> = ({ loading, setLoading, employee, se
 		try {
 			const token = localStorage.getItem('token')
 			const { data } = await axios.put(
-				`http://localhost:8080/v1/employees/vacation`,
+				`${import.meta.env.VITE_BASE_URL}/employees/employees/vacation`,
 				{
 					employeeId: employee._id,
 					amount: amount,

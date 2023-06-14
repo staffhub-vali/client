@@ -1,7 +1,8 @@
 /// <reference types="vite/client" />
 
 interface ImportMetaEnv {
-	VITE_GOOGLE_CLIENT_ID: any
+	VITE_GOOGLE_CLIENT_ID: string
+	VITE_BASE_URL: string
 }
 
 interface ImportMeta {

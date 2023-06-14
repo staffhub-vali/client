@@ -49,7 +49,7 @@ const AddShift: FC<AddShiftProps> = ({ workDay, setShowAddShift, setError, setMe
 	const fetchEmployees = async () => {
 		try {
 			const token = localStorage.getItem('token')
-			const response = await axios.get('http://localhost:8080/v1/employees', {
+			const response = await axios.get(`${import.meta.env.VITE_BASE_URL}/employees`, {
 				headers: {
 					Authorization: `Bearer ${token}`,
 				},
@@ -82,7 +82,7 @@ const AddShift: FC<AddShiftProps> = ({ workDay, setShowAddShift, setError, setMe
 		try {
 			const token = localStorage.getItem('token')
 			const { data } = await axios.post(
-				'http://localhost:8080/v1/shifts',
+				`${import.meta.env.VITE_BASE_URL}/employees/shifts`,
 				{ workDayId: workDay?._id, start: start, end: end, employeeId: employeeId },
 				{
 					headers: {

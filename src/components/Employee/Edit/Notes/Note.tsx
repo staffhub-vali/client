@@ -33,7 +33,7 @@ const Note: FC<NoteProps> = ({ note: n, index, employee, loading, setError, setL
 		try {
 			const token = localStorage.getItem('token')
 			const { data } = await axios.delete(
-				`http://localhost:8080/v1/employees/notes/?employeeId=${employee?._id}&index=${index}`,
+				`${import.meta.env.VITE_BASE_URL}/employees/notes/?employeeId=${employee?._id}&index=${index}`,
 				{
 					headers: {
 						Authorization: `Bearer ${token}`,
@@ -57,7 +57,7 @@ const Note: FC<NoteProps> = ({ note: n, index, employee, loading, setError, setL
 		try {
 			const token = localStorage.getItem('token')
 			const { data } = await axios.put(
-				`http://localhost:8080/v1/employees/notes`,
+				`${import.meta.env.VITE_BASE_URL}/employees/notes`,
 				{
 					note: note,
 					index: index,

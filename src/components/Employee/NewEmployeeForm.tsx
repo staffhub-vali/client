@@ -48,7 +48,7 @@ const NewEmployeeForm = () => {
 			const token = localStorage.getItem('token')
 
 			const { data } = await axios.post(
-				'http://localhost:8080/v1/employees',
+				`${import.meta.env.VITE_BASE_URL}/employees`,
 				{
 					name: name,
 					phone: phone,

@@ -40,7 +40,7 @@ const DashboardPage = () => {
 	const fetchData = async () => {
 		try {
 			const token = localStorage.getItem('token')
-			const response = await axios.get(`http://localhost:8080/v1/days?skip=${skip}`, {
+			const response = await axios.get(`${import.meta.env.VITE_BASE_URL}/days?skip=${skip}`, {
 				headers: {
 					Authorization: `Bearer ${token}`,
 				},

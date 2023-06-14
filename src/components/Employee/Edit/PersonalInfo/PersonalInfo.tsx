@@ -37,7 +37,7 @@ const PersonalInfo: FC<PersonalInfoProps> = ({ employee, loading, setLoading, se
 			setLoading(true)
 			const token = localStorage.getItem('token')
 			const { data } = await axios.put(
-				`http://localhost:8080/v1/employees/${_id}`,
+				`${import.meta.env.VITE_BASE_URL}/employees/${_id}`,
 				{
 					id: _id,
 					name,

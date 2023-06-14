@@ -54,7 +54,7 @@ const WorkDayPage = () => {
 	const fetchWorkDay = async () => {
 		try {
 			const token = localStorage.getItem('token')
-			const { data } = await axios.get(`http://localhost:8080/v1/days/${id}`, {
+			const { data } = await axios.get(`${import.meta.env.VITE_BASE_URL}/days/${id}`, {
 				headers: {
 					Authorization: `Bearer ${token}`,
 				},

@@ -41,7 +41,7 @@ const ShiftPreferencesList: FC<ShiftPreferencesListProps> = ({
 		try {
 			const token = localStorage.getItem('token')
 			const { data } = await axios.post(
-				`http://localhost:8080/v1/employees/preferences`,
+				`${import.meta.env.VITE_BASE_URL}/employees/preferences`,
 				{
 					shiftPreference: shiftPreference,
 					employeeId: employee._id,

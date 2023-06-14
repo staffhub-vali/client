@@ -51,7 +51,7 @@ const EmployeeProfilePage = () => {
 	const fetchProfile = async () => {
 		const token = localStorage.getItem('token')
 		try {
-			const { data } = await axios.get(`http://localhost:8080/v1/employees/${id}`, {
+			const { data } = await axios.get(`${import.meta.env.VITE_BASE_URL}/employees/${id}`, {
 				headers: {
 					Authorization: `Bearer ${token}`,
 				},
@@ -68,7 +68,7 @@ const EmployeeProfilePage = () => {
 	const fetchShifts = async () => {
 		const token = localStorage.getItem('token')
 		try {
-			const { data } = await axios.get(`http://localhost:8080/v1/shifts?employeeId=${id}`, {
+			const { data } = await axios.get(`${import.meta.env.VITE_BASE_URL}/shifts?employeeId=${id}`, {
 				headers: {
 					Authorization: `Bearer ${token}`,
 				},

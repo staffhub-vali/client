@@ -68,7 +68,7 @@ const EmployeeProfile: FC<EmployeeProfileProps> = ({ shifts, employee, showDropd
 		const token = localStorage.getItem('token')
 		try {
 			setLoading(true)
-			await axios.delete(`http://localhost:8080/v1/employees/${employee._id}?id=${employee._id}`, {
+			await axios.delete(`${import.meta.env.VITE_BASE_URL}/employees/${employee._id}?id=${employee._id}`, {
 				headers: {
 					Authorization: `Bearer ${token}`,
 				},

@@ -1,6 +1,6 @@
+import { cn } from '../../utils/TailwindMerge.ts'
 import React, { forwardRef, HTMLAttributes } from 'react'
 import { cva, VariantProps } from 'class-variance-authority'
-import { cn } from '../../utils/TailwindMerge'
 
 interface ParagraphProps extends HTMLAttributes<HTMLParagraphElement>, VariantProps<typeof paragraphVariants> {}
 

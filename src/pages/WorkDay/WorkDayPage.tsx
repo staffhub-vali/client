@@ -1,9 +1,9 @@
 import axios from 'axios'
-import { Logout } from '../../Auth'
+import { Logout } from '../../Auth.tsx'
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
-import Container from '../../components/ui/Container'
-import WorkDay from '../../components/WorkDay/WorkDay'
+import Container from '../../components/ui/Container.tsx'
+import WorkDay from '../../components/WorkDay/WorkDay.tsx'
 
 interface WorkDayProps {
 	notes: string[]

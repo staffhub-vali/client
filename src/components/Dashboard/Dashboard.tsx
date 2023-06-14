@@ -1,13 +1,13 @@
-import Button from '../ui/Button'
-import Heading from '../ui/Heading'
-import Container from '../ui/Container'
-import Paragraph from '../ui/Paragraph'
+import Button from '../ui/Button.tsx'
+import Heading from '../ui/Heading.tsx'
+import Container from '../ui/Container.tsx'
+import Paragraph from '../ui/Paragraph.tsx'
 import { useNavigate } from 'react-router-dom'
-import groupShifts from '../../utils/GroupShifts'
+import groupShifts from '../../utils/GroupShifts.ts'
 import { Dispatch, FC, SetStateAction, useEffect } from 'react'
-import { WorkDay } from '../../pages/Dashboard/DashboardPage'
+import { WorkDay } from '../../pages/Dashboard/DashboardPage.tsx'
 import { ChevronLeft, ChevronRight, ScrollText, User, X } from 'lucide-react'
-import { formatDate, formatDay, formatTime } from '../../utils/DateFormatting'
+import { formatDate, formatDay, formatTime } from '../../utils/DateFormatting.ts'
 
 interface DashboardProps {
 	skip: number

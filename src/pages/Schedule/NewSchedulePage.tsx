@@ -1,13 +1,13 @@
 import axios from 'axios'
-import { Logout } from '../../Auth'
+import { Logout } from '../../Auth.tsx'
 import { Link } from 'react-router-dom'
 import { UserPlus } from 'lucide-react'
 import { useEffect, useState } from 'react'
-import Heading from '../../components/ui/Heading'
-import Spinner from '../../components/ui/Spinner'
-import Container from '../../components/ui/Container'
-import { buttonVariants } from '../../components/ui/Button'
-import ScheduleMaker from '../../components/Schedule/ScheduleMaker'
+import Heading from '../../components/ui/Heading.tsx'
+import Spinner from '../../components/ui/Spinner.tsx'
+import Container from '../../components/ui/Container.tsx'
+import { buttonVariants } from '../../components/ui/Button.tsx'
+import ScheduleMaker from '../../components/Schedule/ScheduleMaker.tsx'
 
 const NewSchedulePage = () => {
 	const [id, setId] = useState<string>('')

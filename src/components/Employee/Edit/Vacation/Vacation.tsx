@@ -1,11 +1,11 @@
 import axios from 'axios'
-import Modal from '../../../ui/Modal'
 import { Trash2 } from 'lucide-react'
-import Button from '../../../ui/Button'
-import Paragraph from '../../../ui/Paragraph'
-import { formatDate } from '../../../../utils/DateFormatting'
+import Modal from '../../../ui/Modal.tsx'
+import Button from '../../../ui/Button.tsx'
+import { Logout } from '../../../../Auth.tsx'
+import Paragraph from '../../../ui/Paragraph.tsx'
+import { formatDate } from '../../../../utils/DateFormatting.ts'
 import { FC, useState, SetStateAction, Dispatch, useEffect } from 'react'
-import { Logout } from '../../../../Auth'
 
 interface VacationProps {
 	index: number

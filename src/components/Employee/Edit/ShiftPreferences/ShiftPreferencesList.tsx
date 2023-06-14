@@ -1,12 +1,12 @@
 import axios from 'axios'
-import { Dispatch, FC, SetStateAction, useState } from 'react'
-import Container from '../../../ui/Container'
-import Button from '../../../ui/Button'
+import Input from '../../../ui/Input.tsx'
+import Button from '../../../ui/Button.tsx'
 import { Check, Plus, X } from 'lucide-react'
-import Input from '../../../ui/Input'
-import ShiftPreference from './ShiftPreference'
-import Heading from '../../../ui/Heading'
-import { Logout } from '../../../../Auth'
+import Heading from '../../../ui/Heading.tsx'
+import { Logout } from '../../../../Auth.tsx'
+import Container from '../../../ui/Container.tsx'
+import ShiftPreference from './ShiftPreference.tsx'
+import { Dispatch, FC, SetStateAction, useState } from 'react'
 
 interface ShiftPreferencesListProps {
 	employee: {

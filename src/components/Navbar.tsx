@@ -1,7 +1,7 @@
-import { Logout } from '../Auth'
-import { themeSwitch } from '../main'
+import { Logout } from '../Auth.tsx'
 import { Link } from 'react-router-dom'
-import { buttonVariants } from './ui/Button'
+import { themeSwitch } from '../main.tsx'
+import { buttonVariants } from './ui/Button.tsx'
 import { FC, useEffect, useState } from 'react'
 
 interface NavbarProps {}

@@ -1,14 +1,14 @@
 import axios from 'axios'
-import { Logout } from '../../Auth'
+import { Logout } from '../../Auth.tsx'
 import { Link } from 'react-router-dom'
 import { CalendarPlus } from 'lucide-react'
 import { useEffect, useState } from 'react'
-import Heading from '../../components/ui/Heading'
-import Container from '../../components/ui/Container'
-import { buttonVariants } from '../../components/ui/Button'
-import Dashboard from '../../components/Dashboard/Dashboard'
-import Spinner from '../../components/ui/Spinner'
-import Notification from '../../components/ui/Notification'
+import Heading from '../../components/ui/Heading.tsx'
+import Spinner from '../../components/ui/Spinner.tsx'
+import Container from '../../components/ui/Container.tsx'
+import { buttonVariants } from '../../components/ui/Button.tsx'
+import Notification from '../../components/ui/Notification.tsx'
+import Dashboard from '../../components/Dashboard/Dashboard.tsx'
 
 export interface WorkDay {
 	_id: string

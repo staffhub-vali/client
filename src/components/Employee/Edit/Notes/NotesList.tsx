@@ -1,13 +1,12 @@
-import { Dispatch, FC, SetStateAction, useState } from 'react'
-import Container from '../../../ui/Container'
-import Paragraph from '../../../ui/Paragraph'
-import Button from '../../../ui/Button'
-import { Check, CheckCircle, CheckCircle2, PlusCircle, Scroll, X } from 'lucide-react'
-import Input from '../../../ui/Input'
 import axios from 'axios'
-import Note from './Note'
-import Heading from '../../../ui/Heading'
-import { Logout } from '../../../../Auth'
+import Note from './Note.tsx'
+import Input from '../../../ui/Input.tsx'
+import Button from '../../../ui/Button.tsx'
+import Heading from '../../../ui/Heading.tsx'
+import { Logout } from '../../../../Auth.tsx'
+import { Check, Scroll, X } from 'lucide-react'
+import Container from '../../../ui/Container.tsx'
+import { Dispatch, FC, SetStateAction, useState } from 'react'
 
 interface NotesListProps {
 	employee: {

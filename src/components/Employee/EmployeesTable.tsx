@@ -1,11 +1,11 @@
-import Input from '../ui/Input'
+import Input from '../ui/Input.tsx'
 import { FC, useState } from 'react'
-import Container from '../ui/Container'
 import { Link } from 'react-router-dom'
 import { UserPlus } from 'lucide-react'
+import Heading from '../ui/Heading.tsx'
+import Container from '../ui/Container.tsx'
 import { useNavigate } from 'react-router-dom'
-import { buttonVariants } from '../../components/ui/Button'
-import Heading from '../ui/Heading'
+import { buttonVariants } from '../../components/ui/Button.tsx'
 
 interface EmployeesTableProps {
 	data: Employee[]

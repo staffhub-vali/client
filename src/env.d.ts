@@ -1,9 +1,9 @@
 /// <reference types="vite/client" />
 
 interface ImportMetaEnv {
-	readonly VITE_APP_GOOGLE_CLIENT_ID: string
+	VITE_GOOGLE_CLIENT_ID: any
 }
 
 interface ImportMeta {
-	readonly env: ImportMetaEnv
+	env: ImportMetaEnv
 }

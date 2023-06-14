@@ -1,12 +1,12 @@
 import axios from 'axios'
-import Input from '../ui/Input'
-import Label from '../ui/Label'
-import Button from '../ui/Button'
-import { Logout } from '../../Auth'
-import { FC, useEffect, useState } from 'react'
-import Container from '../ui/Container'
-import Notification from '../ui/Notification'
+import Input from '../ui/Input.tsx'
+import Label from '../ui/Label.tsx'
 import { Check } from 'lucide-react'
+import Button from '../ui/Button.tsx'
+import { Logout } from '../../Auth.tsx'
+import Container from '../ui/Container.tsx'
+import { FC, useEffect, useState } from 'react'
+import Notification from '../ui/Notification.tsx'
 
 interface NewEmployeeFormProps {}
 

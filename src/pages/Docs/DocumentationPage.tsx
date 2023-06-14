@@ -1,5 +1,5 @@
-import Heading from '../../components/ui/Heading'
-import Container from '../../components/ui/Container'
+import Heading from '../../components/ui/Heading.tsx'
+import Container from '../../components/ui/Container.tsx'
 
 const DocumentationPage = () => {
 	return (

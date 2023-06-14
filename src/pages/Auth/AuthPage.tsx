@@ -1,8 +1,8 @@
 import { FC, useEffect, useState } from 'react'
 import { useLocation } from 'react-router-dom'
-import LoginForm from '../../components/Auth/LoginForm'
-import RegisterForm from '../../components/Auth/RegisterForm'
-import Container from '../../components/ui/Container'
+import Container from '../../components/ui/Container.tsx'
+import LoginForm from '../../components/Auth/LoginForm.tsx'
+import RegisterForm from '../../components/Auth/RegisterForm.tsx'
 
 interface AuthPageProps {}
 

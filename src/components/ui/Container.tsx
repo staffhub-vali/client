@@ -1,6 +1,6 @@
+import { cn } from '../../utils/TailwindMerge.ts'
 import React, { forwardRef, HTMLAttributes } from 'react'
 import { cva, VariantProps } from 'class-variance-authority'
-import { cn } from '../../utils/TailwindMerge'
 
 interface ContainerProps extends HTMLAttributes<HTMLDivElement>, VariantProps<typeof containerVariants> {}
 

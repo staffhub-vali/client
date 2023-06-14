@@ -1,7 +1,7 @@
 import axios from 'axios'
-import Input from '../ui/Input'
-import Button from '../ui/Button'
-import { Logout } from '../../Auth'
+import Input from '../ui/Input.tsx'
+import Button from '../ui/Button.tsx'
+import { Logout } from '../../Auth.tsx'
 import { Check, X } from 'lucide-react'
 import { Dispatch, FC, SetStateAction, useState } from 'react'
 

@@ -1,9 +1,9 @@
 import axios from 'axios'
+import { Logout } from '../../Auth.tsx'
 import { useEffect, useState } from 'react'
-import Heading from '../../components/ui/Heading'
-import Container from '../../components/ui/Container'
-import { Logout } from '../../Auth'
-import Spinner from '../../components/ui/Spinner'
+import Heading from '../../components/ui/Heading.tsx'
+import Spinner from '../../components/ui/Spinner.tsx'
+import Container from '../../components/ui/Container.tsx'
 
 const HomePage = () => {
 	const [loading, setLoading] = useState(true)

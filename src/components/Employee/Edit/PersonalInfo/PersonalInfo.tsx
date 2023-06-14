@@ -1,13 +1,13 @@
 import axios from 'axios'
-import Input from '../../../ui/Input'
-import Label from '../../../ui/Label'
-import Button from '../../../ui/Button'
-import Heading from '../../../ui/Heading'
-import Container from '../../../ui/Container'
 import { Check, X } from 'lucide-react'
-import { Dispatch, FC, FormEvent, SetStateAction, useState } from 'react'
+import Input from '../../../ui/Input.tsx'
+import Label from '../../../ui/Label.tsx'
+import Button from '../../../ui/Button.tsx'
+import Heading from '../../../ui/Heading.tsx'
 import { useNavigate } from 'react-router-dom'
-import { Logout } from '../../../../Auth'
+import { Logout } from '../../../../Auth.tsx'
+import Container from '../../../ui/Container.tsx'
+import { Dispatch, FC, FormEvent, SetStateAction, useState } from 'react'
 
 interface PersonalInfoProps {
 	employee: {

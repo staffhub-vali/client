@@ -1,6 +1,6 @@
 import React, { forwardRef, HTMLAttributes } from 'react'
 import { cva, VariantProps } from 'class-variance-authority'
-import { cn } from '../../utils/TailwindMerge'
+import { cn } from '../../utils/TailwindMerge.ts'
 
 interface HeadingProps extends HTMLAttributes<HTMLHeadingElement>, VariantProps<typeof headingVariants> {}
 

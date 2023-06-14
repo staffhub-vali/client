@@ -1,13 +1,13 @@
 import axios from 'axios'
-import Modal from '../ui/Modal'
-import Input from '../ui/Input'
-import Button from '../ui/Button'
-import Paragraph from '../ui/Paragraph'
+import Modal from '../ui/Modal.tsx'
+import Input from '../ui/Input.tsx'
+import Button from '../ui/Button.tsx'
 import { Link } from 'react-router-dom'
+import { Logout } from '../../Auth.tsx'
+import Paragraph from '../ui/Paragraph.tsx'
 import { Check, Pencil, Trash2, X } from 'lucide-react'
 import { Dispatch, FC, SetStateAction, useState } from 'react'
-import { formatTime, formatTotal } from '../../utils/DateFormatting'
-import { Logout } from '../../Auth'
+import { formatTime, formatTotal } from '../../utils/DateFormatting.ts'
 
 interface EmployeeProps {
 	shift: Shift

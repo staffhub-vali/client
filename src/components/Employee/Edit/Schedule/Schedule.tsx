@@ -1,11 +1,11 @@
-import Heading from '../../../ui/Heading'
-import Container from '../../../ui/Container'
-import { Dispatch, FC, SetStateAction, useState } from 'react'
-import { formatDate, formatDay, formatMonth, formatTime } from '../../../../utils/DateFormatting'
-import { calculateMonthlyHours, calculateTotalHours } from '../../../../utils/CalculateHours'
-import Paragraph from '../../../ui/Paragraph'
+import { Calendar } from 'react-calendar'
+import Heading from '../../../ui/Heading.tsx'
+import Container from '../../../ui/Container.tsx'
+import Paragraph from '../../../ui/Paragraph.tsx'
 import { Link, useNavigate } from 'react-router-dom'
-import Calendar from 'react-calendar'
+import { Dispatch, FC, SetStateAction, useState } from 'react'
+import { calculateMonthlyHours, calculateTotalHours } from '../../../../utils/CalculateHours.ts'
+import { formatDate, formatDay, formatMonth, formatTime } from '../../../../utils/DateFormatting.ts'
 
 interface ScheduleProps {
 	employee: {

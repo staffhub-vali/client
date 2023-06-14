@@ -1,10 +1,10 @@
 import axios from 'axios'
 import { Check } from 'lucide-react'
-import Calendar from 'react-calendar'
-import Button from '../../../ui/Button'
-import { Logout } from '../../../../Auth'
-import Heading from '../../../ui/Heading'
 import 'react-calendar/dist/Calendar.css'
+import { Calendar } from 'react-calendar'
+import Button from '../../../ui/Button.tsx'
+import { Logout } from '../../../../Auth.tsx'
+import Heading from '../../../ui/Heading.tsx'
 import { FC, useState, useEffect, Dispatch, SetStateAction } from 'react'
 
 interface VacationPlannerProps {
@@ -168,9 +168,7 @@ const VacationPlanner: FC<VacationPlannerProps> = ({
 				</div>
 			</div>
 
-			<form
-				className=''
-				onSubmit={handleSubmit}>
+			<form onSubmit={handleSubmit}>
 				<Button
 					size={'lg'}
 					loading={loading}>

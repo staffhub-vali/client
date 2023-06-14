@@ -1,14 +1,14 @@
-import Input from '../ui/Input'
-import Label from '../ui/Label'
-import { Dispatch, FC, SetStateAction, useEffect, useState } from 'react'
-import Paragraph from '../ui/Paragraph'
-import SearchEmployees from '../Schedule/SearchEmployees'
-import { formatTime, formatTotal } from '../../utils/DateFormatting'
-import { Logout } from '../../Auth'
 import axios from 'axios'
-import Button from '../ui/Button'
-import Heading from '../ui/Heading'
+import Input from '../ui/Input.tsx'
+import Label from '../ui/Label.tsx'
+import Button from '../ui/Button.tsx'
+import { Logout } from '../../Auth.tsx'
+import Heading from '../ui/Heading.tsx'
 import { Check, X } from 'lucide-react'
+import Paragraph from '../ui/Paragraph.tsx'
+import SearchEmployees from '../Schedule/SearchEmployees.tsx'
+import { formatTime, formatTotal } from '../../utils/DateFormatting.ts'
+import { Dispatch, FC, SetStateAction, useEffect, useState } from 'react'
 
 interface WorkDay {
 	notes: string[]

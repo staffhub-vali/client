@@ -1,8 +1,8 @@
 import { FC } from 'react'
-import Button from './Button'
+import Button from './Button.tsx'
+import Heading from './Heading.tsx'
 import ReactModal from 'react-modal'
 import { Check, X } from 'lucide-react'
-import Heading from './Heading'
 
 interface ModalProps {
 	text: string

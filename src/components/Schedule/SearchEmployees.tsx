@@ -1,5 +1,5 @@
-import Input from '../ui/Input'
-import Container from '../ui/Container'
+import Input from '../ui/Input.tsx'
+import Container from '../ui/Container.tsx'
 import { Dispatch, FC, SetStateAction } from 'react'
 
 interface Employee {

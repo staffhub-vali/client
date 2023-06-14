@@ -1,13 +1,12 @@
 import axios from 'axios'
-import Modal from '../ui/Modal'
-import Button from '../ui/Button'
-import Heading from '../ui/Heading'
-import Paragraph from '../ui/Paragraph'
-import Container from '../ui/Container'
+import Modal from '../ui/Modal.tsx'
+import Button from '../ui/Button.tsx'
+import Dropdown from './Dropdown.tsx'
+import Heading from '../ui/Heading.tsx'
+import Paragraph from '../ui/Paragraph.tsx'
 import { Mail, MoreVertical, Phone } from 'lucide-react'
 import { Dispatch, FC, SetStateAction, useState } from 'react'
-import { calculateMonthlyHours } from '../../utils/CalculateHours'
-import Dropdown from './Dropdown'
+import { calculateMonthlyHours } from '../../utils/CalculateHours.ts'
 
 interface EmployeeProfileProps {
 	shifts: Shift[]

@@ -1,13 +1,13 @@
 import axios from 'axios'
-import Vacation from './Vacation'
-import Input from '../../../ui/Input'
-import Button from '../../../ui/Button'
-import Heading from '../../../ui/Heading'
-import Container from '../../../ui/Container'
-import VacationPlanner from './VacationPlanner'
+import Vacation from './Vacation.tsx'
+import Input from '../../../ui/Input.tsx'
+import Button from '../../../ui/Button.tsx'
+import Heading from '../../../ui/Heading.tsx'
+import { Logout } from '../../../../Auth.tsx'
+import Container from '../../../ui/Container.tsx'
+import VacationPlanner from './VacationPlanner.tsx'
 import { Check, FileDigit, Palmtree, X } from 'lucide-react'
 import { Dispatch, FC, SetStateAction, useState } from 'react'
-import { Logout } from '../../../../Auth'
 
 interface VacationListProps {
 	loading: boolean

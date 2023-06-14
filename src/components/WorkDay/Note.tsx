@@ -1,11 +1,11 @@
-import { Dispatch, FC, SetStateAction, useState } from 'react'
-import Paragraph from '../ui/Paragraph'
-import Button from '../ui/Button'
-import { Check, XCircle, Trash2, Pencil } from 'lucide-react'
-import Modal from '../ui/Modal'
 import axios from 'axios'
-import Input from '../ui/Input'
-import { Logout } from '../../Auth'
+import Modal from '../ui/Modal.tsx'
+import Input from '../ui/Input.tsx'
+import Button from '../ui/Button.tsx'
+import { Logout } from '../../Auth.tsx'
+import Paragraph from '../ui/Paragraph.tsx'
+import { Check, XCircle, Trash2, Pencil } from 'lucide-react'
+import { Dispatch, FC, SetStateAction, useState } from 'react'
 
 interface NoteProps {
 	note: string

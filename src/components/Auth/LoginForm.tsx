@@ -1,13 +1,17 @@
-import Input from '../ui/Input'
-import Label from '../ui/Label'
-import Button from '../ui/Button'
-import { Login } from '../../Auth'
-import Heading from '../ui/Heading'
-import { Dispatch, FC, SetStateAction, useState } from 'react'
-import Paragraph from '../ui/Paragraph'
-import Container from '../ui/Container'
+import Input from '../ui/Input.tsx'
+import Label from '../ui/Label.tsx'
+import Button from '../ui/Button.tsx'
+import { Login } from '../../Auth.tsx'
+import Heading from '../ui/Heading.tsx'
 import { Link } from 'react-router-dom'
-import Notification from '../ui/Notification'
+import Container from '../ui/Container.tsx'
+import Paragraph from '../ui/Paragraph.tsx'
+import Notification from '../ui/Notification.tsx'
+import { googleLogout } from '@react-oauth/google'
+import { useGoogleLogin } from '@react-oauth/google'
+import { Dispatch, FC, SetStateAction, useState } from 'react'
+import { GoogleLogin, useGoogleOneTapLogin } from '@react-oauth/google'
+import axios from 'axios'
 
 interface LoginFormProps {
 	loading: boolean
@@ -21,6 +25,10 @@ const LoginForm: FC<LoginFormProps> = ({ message, error, setError, loading, setL
 	const [email, setEmail] = useState<string>('')
 	const [password, setPassword] = useState<string>('')
 
+	const login = useGoogleLogin({
+		onSuccess: (tokenResponse) => console.log(tokenResponse),
+	})
+
 	const handleSubmit = async (e: React.FormEvent) => {
 		e.preventDefault()
 		setLoading(true)
@@ -30,6 +38,14 @@ const LoginForm: FC<LoginFormProps> = ({ message, error, setError, loading, setL
 			setError(error.response.data.message)
 		} finally {
 			setLoading(false)
+		}
+	}
+
+	const handleLogin = async (credentialResponse: any) => {
+		try {
+			await axios.post('http://localhost:8080/v1/auth/login', credentialResponse)
+		} catch (error) {
+			console.log(error)
 		}
 	}
 
@@ -86,6 +102,17 @@ const LoginForm: FC<LoginFormProps> = ({ message, error, setError, loading, setL
 					</Link>
 				</Paragraph>
 			</form>
+
+			<div className='mt-6'>
+				<GoogleLogin
+					onSuccess={(credentialResponse) => {
+						handleLogin(credentialResponse)
+					}}
+					onError={() => {
+						console.log('Login Failed')
+					}}
+				/>
+			</div>
 
 			{message && (
 				<Notification

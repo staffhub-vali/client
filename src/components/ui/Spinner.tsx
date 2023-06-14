@@ -1,5 +1,5 @@
 import { Loader, Loader2 } from 'lucide-react'
-import { cn } from '../../utils/TailwindMerge'
+import { cn } from '../../utils/TailwindMerge.ts'
 import { forwardRef, HTMLAttributes } from 'react'
 import { cva, VariantProps } from 'class-variance-authority'
 

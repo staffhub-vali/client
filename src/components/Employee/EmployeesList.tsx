@@ -1,7 +1,7 @@
 import { FC } from 'react'
-import Heading from '../ui/Heading'
-import EmployeesTable from './EmployeesTable'
-import Spinner from '../ui/Spinner'
+import Heading from '../ui/Heading.tsx'
+import Spinner from '../ui/Spinner.tsx'
+import EmployeesTable from './EmployeesTable.tsx'
 
 interface EmployeesListProps {
 	loading: boolean

@@ -1,5 +1,5 @@
 import { Dispatch, FC, SetStateAction } from 'react'
-import { formatDate, formatTime, formatTotal } from '../../utils/DateFormatting'
+import { formatDate, formatTime, formatTotal } from '../../utils/DateFormatting.ts'
 
 interface ScheduleTableProps {
 	data: WorkDay[]

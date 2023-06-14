@@ -1,8 +1,8 @@
 import axios from 'axios'
-import { Logout } from '../../Auth'
+import { Logout } from '../../Auth.tsx'
 import { useEffect, useState } from 'react'
-import Container from '../../components/ui/Container'
-import EmployeesList from '../../components/Employee/EmployeesList'
+import Container from '../../components/ui/Container.tsx'
+import EmployeesList from '../../components/Employee/EmployeesList.tsx'
 
 const headings = ['Name', 'Email', 'Phone']
 

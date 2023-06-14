@@ -1,13 +1,10 @@
 import axios from 'axios'
 
-export const Login = async (email: string, password: string): Promise<void> => {
+export const Login = async (credentials: any): Promise<void> => {
 	try {
-		const { data } = await axios.post('http://localhost:8080/v1/auth/login', {
-			email: email,
-			password: password,
-		})
-		localStorage.setItem('user', JSON.stringify(data.user))
-		localStorage.setItem('token', data.token)
+		const { data } = await axios.post('http://localhost:8080/v1/auth/login', credentials)
+
+		localStorage.setItem('token', data)
 		window.location.href = '/'
 	} catch (error: any) {
 		console.log(error)
@@ -16,7 +13,6 @@ export const Login = async (email: string, password: string): Promise<void> => {
 }
 
 export const Logout = () => {
-	localStorage.setItem('user', '')
 	localStorage.setItem('token', '')
 	window.location.href = '/auth/login'
 }

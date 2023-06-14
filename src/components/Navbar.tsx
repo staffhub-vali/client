@@ -7,7 +7,7 @@ import { FC, useEffect, useState } from 'react'
 interface NavbarProps {}
 
 const Navbar: FC<NavbarProps> = ({}) => {
-	const user = localStorage.getItem('user')
+	const token = localStorage.getItem('token')
 	const theme = localStorage.getItem('theme')
 	const [sun, setSun] = useState<boolean>(true)
 	const [moon, setMoon] = useState<boolean>(false)
@@ -78,7 +78,7 @@ const Navbar: FC<NavbarProps> = ({}) => {
 								</p>
 							)}
 						</div>
-						{user && (
+						{token && (
 							<div className='flex items-center space-x-4'>
 								<Link
 									to='/schedules/new'
@@ -93,7 +93,7 @@ const Navbar: FC<NavbarProps> = ({}) => {
 							</div>
 						)}
 
-						{user ? (
+						{token ? (
 							<Link
 								to={'/dashboard'}
 								className={`${buttonVariants({ variant: 'outlineHover' })} w-36`}>
@@ -116,7 +116,7 @@ const Navbar: FC<NavbarProps> = ({}) => {
 					{mobile && (
 						<div className='block border-t-2 bg-white py-2 sm:hidden'>
 							<div className='flex flex-col'>
-								{user && (
+								{token && (
 									<>
 										<Link
 											to='/dashboard'
@@ -135,7 +135,7 @@ const Navbar: FC<NavbarProps> = ({}) => {
 										</Link>
 									</>
 								)}
-								{user ? (
+								{token ? (
 									<Link
 										to=''
 										onClick={Logout}

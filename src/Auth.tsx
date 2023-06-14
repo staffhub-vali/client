@@ -14,5 +14,5 @@ export const Login = async (credentials: any): Promise<void> => {
 
 export const Logout = () => {
 	localStorage.setItem('token', '')
-	window.location.href = '/auth/login'
+	window.location.href = '/login'
 }

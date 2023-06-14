@@ -39,7 +39,6 @@ interface Vacation {
 const EmployeeProfile: FC<EmployeeProfileProps> = ({ shifts, employee, showDropdown, setShowDropdown }) => {
 	const [loading, setLoading] = useState<boolean>(false)
 	const [showModal, setShowModal] = useState<boolean>(false)
-	const [isOnVacation, setIsOnVacation] = useState<boolean>(false)
 
 	const checkEmployeeVacation = (employee: Employee) => {
 		const currentDate: any = Date.now()
@@ -169,7 +168,7 @@ const EmployeeProfile: FC<EmployeeProfileProps> = ({ shifts, employee, showDropd
 				<Modal
 					loading={loading}
 					showModal={showModal}
-					submit={() => deleteEmployee}
+					submit={deleteEmployee}
 					cancel={() => setShowModal(false)}
 					text={'Are you sure you want to delete this employee?'}
 				/>

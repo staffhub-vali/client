@@ -5,18 +5,20 @@ import { Check } from 'lucide-react'
 import Button from '../ui/Button.tsx'
 import { Logout } from '../../Auth.tsx'
 import Container from '../ui/Container.tsx'
-import { FC, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import Notification from '../ui/Notification.tsx'
+import { useNavigate } from 'react-router-dom'
 
-interface NewEmployeeFormProps {}
-
-const NewEmployeeForm: FC<NewEmployeeFormProps> = ({}) => {
+const NewEmployeeForm = () => {
 	const [name, setName] = useState<string>('')
 	const [phone, setPhone] = useState<string>('')
 	const [email, setEmail] = useState<string>('')
+	const [address, setAddress] = useState<string>('')
 	const [loading, setLoading] = useState<boolean>(false)
 	const [error, setError] = useState<string | null>(null)
 	const [message, setMessage] = useState<string | null>(null)
+
+	const navigate = useNavigate()
 
 	useEffect(() => {
 		let timeoutId: any = null
@@ -26,7 +28,7 @@ const NewEmployeeForm: FC<NewEmployeeFormProps> = ({}) => {
 		timeoutId = setTimeout(() => {
 			setError(null)
 			setMessage(null)
-		}, 7000)
+		}, 4000)
 
 		return () => {
 			clearTimeout(timeoutId)
@@ -35,7 +37,13 @@ const NewEmployeeForm: FC<NewEmployeeFormProps> = ({}) => {
 
 	const handleSubmit = async (e: React.FormEvent) => {
 		e.preventDefault()
+
+		if (!name || !phone || !email || !address) {
+			return setError('All fields are required.')
+		}
+
 		setLoading(true)
+
 		try {
 			const token = localStorage.getItem('token')
 
@@ -45,6 +53,7 @@ const NewEmployeeForm: FC<NewEmployeeFormProps> = ({}) => {
 					name: name,
 					phone: phone,
 					email: email,
+					address: address,
 				},
 				{
 					headers: {
@@ -52,11 +61,10 @@ const NewEmployeeForm: FC<NewEmployeeFormProps> = ({}) => {
 					},
 				},
 			)
-
-			setEmail('')
-			setName('')
-			setPhone('')
 			setMessage(data.message)
+			setTimeout(() => {
+				navigate('/employees')
+			}, 1000)
 		} catch (error: any) {
 			setError(error.response.data.message)
 			if (error.response.status === 401) {
@@ -73,48 +81,65 @@ const NewEmployeeForm: FC<NewEmployeeFormProps> = ({}) => {
 			size={'lg'}>
 			<form
 				onSubmit={handleSubmit}
-				className='center mb-16 mt-12 flex w-96 flex-col gap-2'>
-				<Label htmlFor='name'>Name</Label>
+				className='center mb-16 mt-12 flex w-2/3 flex-col gap-2'>
+				<Label htmlFor='name'>Employee Name</Label>
 
 				<Input
-					placeholder='Employee name...'
 					id='name'
 					type='text'
 					name='name'
+					size={'lg'}
 					value={name}
 					onChange={(e) => setName(e.target.value)}
+					placeholder='Enter the name of the employee'
 				/>
 
-				<Label htmlFor='email'>Email</Label>
+				<Label htmlFor='email'>Employee Email</Label>
 
 				<Input
-					placeholder='Employee email address...'
 					id='email'
 					type='text'
+					size={'lg'}
 					name='email'
 					value={email}
 					onChange={(e) => setEmail(e.target.value)}
+					placeholder='Enter the email of the employee'
 				/>
 
-				<Label htmlFor='phone'>Phone</Label>
+				<Label htmlFor='phone'>Employee Phone</Label>
 
 				<Input
-					placeholder='Employee phone number...'
+					size={'lg'}
+					id='phone'
+					type='text'
+					name='phone'
+					value={phone}
 					onChange={(e) => {
 						const re = /^[0-9+\s]*$/
 						if (re.test(e.target.value)) {
 							setPhone(e.target.value)
 						}
 					}}
-					value={phone}
+					placeholder='Enter the phone number of the employee'
+				/>
+
+				<Label htmlFor='address'>Employee Address</Label>
+
+				<Input
+					size={'lg'}
 					type='text'
-					id='phone'
-					name='phone'
+					id='address'
+					name='address'
+					value={address}
+					onChange={(e) => setAddress(e.target.value)}
+					placeholder='Enter the address of the employee'
 				/>
 
 				<Button
-					className='mx-auto w-fit'
-					loading={loading}>
+					size={'lg'}
+					loading={loading}
+					className='mx-auto'
+					title='Save information and create employee'>
 					Submit {<Check className='ml-2 h-5 w-5 ' />}
 				</Button>
 			</form>

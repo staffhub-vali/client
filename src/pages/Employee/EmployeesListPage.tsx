@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react'
 import Container from '../../components/ui/Container.tsx'
 import EmployeesList from '../../components/Employee/EmployeesList.tsx'
 
-const headings = ['Name', 'Email', 'Phone']
+const headings = ['Name', 'Email', 'Phone', 'Address']
 
 const EmployeesListPage = () => {
 	const [data, setData] = useState([])

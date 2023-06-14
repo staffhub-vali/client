@@ -1,30 +1,18 @@
-import Input from '../ui/Input.tsx'
-import Label from '../ui/Label.tsx'
-import Button from '../ui/Button.tsx'
 import { Login } from '../../Auth.tsx'
 import Heading from '../ui/Heading.tsx'
-import { Link } from 'react-router-dom'
 import Container from '../ui/Container.tsx'
-import Paragraph from '../ui/Paragraph.tsx'
+import { GoogleLogin } from '@react-oauth/google'
 import Notification from '../ui/Notification.tsx'
-import { googleLogout } from '@react-oauth/google'
-import { useGoogleLogin } from '@react-oauth/google'
-import { Dispatch, FC, SetStateAction, useState } from 'react'
-import { GoogleLogin, useGoogleOneTapLogin } from '@react-oauth/google'
-import axios from 'axios'
+import { Dispatch, FC, SetStateAction } from 'react'
 
 interface LoginFormProps {
-	loading: boolean
 	error: string | null
 	message: string | null
 	setLoading: Dispatch<SetStateAction<boolean>>
 	setError: Dispatch<SetStateAction<string | null>>
 }
 
-const LoginForm: FC<LoginFormProps> = ({ message, error, setError, loading, setLoading }) => {
-	const [email, setEmail] = useState<string>('')
-	const [password, setPassword] = useState<string>('')
-
+const LoginForm: FC<LoginFormProps> = ({ message, error, setError, setLoading }) => {
 	const handleSubmit = async (credentials: any) => {
 		setLoading(true)
 		try {

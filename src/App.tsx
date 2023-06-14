@@ -5,7 +5,7 @@ import PageNotFound from './pages/PageNotFound.tsx'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 
 const HomePage = lazy(() => import('./pages/Home/HomePage.tsx'))
-const AuthPage = lazy(() => import('./pages/Auth/AuthPage.tsx'))
+const LoginPage = lazy(() => import('./pages/Auth/LoginPage.tsx'))
 const WorkDayPage = lazy(() => import('./pages/WorkDay/WorkDayPage.tsx'))
 const DashboardPage = lazy(() => import('./pages/Dashboard/DashboardPage.tsx'))
 const NewEmployeePage = lazy(() => import('./pages/Employee/NewEmployeePage.tsx'))
@@ -34,8 +34,8 @@ function App() {
 								element={<HomePage />}
 							/>
 							<Route
-								path='/auth/:authForm'
-								element={<AuthPage />}
+								path='/login'
+								element={<LoginPage />}
 							/>
 							<Route
 								path='/days/:id'

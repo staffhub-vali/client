@@ -44,7 +44,7 @@ const WorkDayPage = () => {
 		timeoutId = setTimeout(() => {
 			setError(null)
 			setMessage(null)
-		}, 7000)
+		}, 4000)
 
 		return () => {
 			clearTimeout(timeoutId)

@@ -3,6 +3,7 @@ import { Logout } from '../../Auth.tsx'
 import { useEffect, useState } from 'react'
 import Heading from '../../components/ui/Heading.tsx'
 import Spinner from '../../components/ui/Spinner.tsx'
+import Button from '../../components/ui/Button.tsx'
 import Container from '../../components/ui/Container.tsx'
 
 const HomePage = () => {
@@ -34,11 +35,19 @@ const HomePage = () => {
 			{loading ? (
 				<Spinner />
 			) : (
-				<Heading
-					size={'sm'}
-					className='mt-6'>
-					Home
-				</Heading>
+				<>
+					<Heading
+						size={'sm'}
+						className='mt-6'>
+						Home
+					</Heading>
+
+					<Button
+						className='mt-6'
+						onClick={Logout}>
+						Logout
+					</Button>
+				</>
 			)}
 		</Container>
 	)

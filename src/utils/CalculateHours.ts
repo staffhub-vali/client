@@ -29,10 +29,14 @@ export const calculateMonthlyHours = (shifts: Shift[]) => {
 
 export const calculateTotalHours = (shifts: Shift[]) => {
 	const totalHours = shifts.reduce((acc: number, shift: Shift) => {
-		const start = shift.start
-		const end = shift.end
-		const hours = (end - start) / 3600
-		return acc + hours
+		if (shift.start && shift.end) {
+			const start = shift.start
+			const end = shift.end
+			const hours = (end - start) / 3600
+			return acc + hours
+		} else {
+			return acc // Skip shifts without start and end properties
+		}
 	}, 0)
 	return totalHours
 }

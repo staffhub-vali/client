@@ -138,10 +138,16 @@ const ScheduleMaker: FC<ScheduleMakerProps> = ({
 				<Button
 					size={'lg'}
 					loading={loading}
-					className='w-full'
+					className='w-full text-2xl'
 					title='Create schedule'
 					onClick={createSchedule}>
-					Submit {<Check className='ml-2 h-6 w-6' />}
+					Create schedule{' '}
+					{
+						<Check
+							size={30}
+							className='ml-10'
+						/>
+					}
 				</Button>
 			</div>
 			<div className='mt-4 h-[36rem] w-[82rem]'>

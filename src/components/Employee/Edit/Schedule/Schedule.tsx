@@ -65,11 +65,16 @@ const Schedule: FC<ScheduleProps> = ({ loading, setError, setMessage, employee, 
 	const navigate = useNavigate()
 
 	const [value, setValue] = useState(new Date())
-	const [filteredShifts, setFilteredShifts] = useState<Shift[]>(shifts)
 	const [month, setMonth] = useState<string | null>(null)
+	const [filteredShifts, setFilteredShifts] = useState<Shift[]>(shifts)
+
+	const [mergedData, setMergedData] = useState([])
 
 	const handleMonthChange: any = (date: Date) => {
+		const monthData = updateMonthData(date)
+
 		setValue(date)
+		updateMonthData(date)
 		setMonth(formatMonth(value.getTime() / 1000))
 		const filteredShifts = shifts.filter((shift) => {
 			const startTimestamp = shift.start
@@ -79,7 +84,44 @@ const Schedule: FC<ScheduleProps> = ({ loading, setError, setMessage, employee, 
 			return startMonth === date.getMonth()
 		})
 
-		setFilteredShifts(filteredShifts.sort((a, b) => a.workDay.date - b.workDay.date))
+		setFilteredShifts(filteredShifts.sort((a, b) => a.date - b.date))
+
+		setMergedData(combineArrays(monthData, filteredShifts))
+	}
+
+	const updateMonthData = (date: Date) => {
+		const year = date.getFullYear()
+		const monthIndex = date.getMonth()
+		const daysInMonth = new Date(year, monthIndex + 1, 0).getDate()
+
+		const data = new Array(daysInMonth).fill(null).map((_, index) => {
+			const day = index + 1
+			const dateUnixTimestamp = new Date(year, monthIndex, day).getTime() / 1000
+
+			return {
+				date: dateUnixTimestamp,
+			}
+		})
+
+		return data
+	}
+
+	function combineArrays(emptyDays: any, shifts: any) {
+		const combinedArray = emptyDays.map((day: any) => {
+			const matchingDateShift = shifts.find((shift: any) => shift.workDay.date === day.date)
+			if (matchingDateShift) {
+				return {
+					_id: matchingDateShift.workDay._id,
+					date: matchingDateShift.workDay.date,
+					start: matchingDateShift.start,
+					end: matchingDateShift.end,
+				}
+			} else {
+				return day
+			}
+		})
+
+		return combinedArray
 	}
 
 	const MyDocument = () => (
@@ -90,16 +132,28 @@ const Schedule: FC<ScheduleProps> = ({ loading, setError, setMessage, employee, 
 				style={styles.page}>
 				<View style={styles.title}>
 					<Text>
-						{employee.name} - {month} ({calculateTotalHours(filteredShifts)}h)
+						{employee.name} - {month} ({calculateTotalHours(mergedData)}h)
 					</Text>
 				</View>
-				{filteredShifts.map((shift) => (
-					<View style={styles.section}>
-						<Text style={styles.shift}>{formatDate(shift.workDay.date)}</Text>
-						<Text style={styles.shift}>
-							{formatTime(shift.start)} - {formatTime(shift.end)}
-						</Text>
-						<Text style={styles.shift}>{formatTotal(shift.start, shift.end)}</Text>
+				{mergedData.map((shift: { date: number; _id: string; start: number; end: number }) => (
+					<View
+						key={shift._id}
+						style={styles.section}>
+						<Text style={styles.shift}>{formatDate(shift.date)}</Text>
+
+						{shift.start && shift.end ? (
+							<>
+								<Text style={styles.shift}>
+									{formatTime(shift.start)} - {formatTime(shift.end)}
+								</Text>
+								<Text style={styles.shift}>{formatTotal(shift.start, shift.end)}</Text>
+							</>
+						) : (
+							<>
+								<Text style={styles.shift}></Text>
+								<Text style={styles.shift}></Text>
+							</>
+						)}
 					</View>
 				))}
 			</Page>
@@ -156,26 +210,32 @@ const Schedule: FC<ScheduleProps> = ({ loading, setError, setMessage, employee, 
 						</Heading>
 					)}
 					{filteredShifts.length > 0 &&
-						filteredShifts.map((shift, index) => (
+						mergedData.map((shift: { date: number; _id: string; start: number; end: number }, index) => (
 							<div
 								key={shift._id}
-								onClick={() => navigate(`/days/${shift.workDay._id}`)}
-								className={`group flex w-[48rem] cursor-pointer items-center space-y-4 border-b-2 dark:border-slate-500 ${
+								onClick={() => shift._id && navigate(`/days/${shift._id}`)}
+								className={`${
+									shift._id && 'group cursor-pointer '
+								} flex w-[48rem] items-center space-y-4 border-b-2 dark:border-slate-500 ${
 									index % 2 === 0 ? 'bg-slate-50 dark:bg-slate-700' : 'bg-white dark:bg-slate-800'
 								} py-2`}>
 								<div className='mx-auto flex flex-col items-center group-hover:text-sky-500 dark:group-hover:text-sky-400'>
-									{formatDay(shift.workDay.date)}
+									{formatDay(shift.date)}
 									<Paragraph
 										className='group-hover:text-sky-500 dark:group-hover:text-sky-400'
 										size={'xl'}>
-										{formatDate(shift.workDay.date)}
+										{formatDate(shift.date)}
 									</Paragraph>
 								</div>
 
 								<Paragraph
 									size={'xl'}
-									className='mx-auto pb-2 group-hover:text-sky-500 dark:group-hover:text-sky-400'>
-									{formatTime(shift.start)} - {formatTime(shift.end)}
+									className='mx-auto w-48 pb-2 group-hover:text-sky-500 dark:group-hover:text-sky-400'>
+									{shift.start && (
+										<>
+											{formatTime(shift.start)} - {formatTime(shift.end)}
+										</>
+									)}
 								</Paragraph>
 							</div>
 						))}

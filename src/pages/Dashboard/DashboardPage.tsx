@@ -62,7 +62,9 @@ const DashboardPage = () => {
 	}
 
 	return (
-		<Container size={'lg'}>
+		<Container
+			size={'lg'}
+			className='overflow-y-hidden'>
 			{loading ? (
 				<Spinner />
 			) : data.length > 0 ? (

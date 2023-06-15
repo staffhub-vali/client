@@ -117,7 +117,7 @@ const ScheduleMaker: FC<ScheduleMakerProps> = ({
 		<Container
 			size={'lg'}
 			className='flex flex-row justify-evenly p-0'>
-			<div className='mt-2 flex h-[36rem] flex-col items-center space-y-4'>
+			<div className='slide-in-bottom mt-2 flex h-[36rem] flex-col items-center space-y-4'>
 				<SearchEmployees
 					name={name}
 					setId={setId}
@@ -200,7 +200,7 @@ const ScheduleMaker: FC<ScheduleMakerProps> = ({
 				) : (
 					<Heading
 						size={'sm'}
-						className='mt-48 text-center font-normal text-slate-500 dark:text-slate-400'>
+						className='slide-in-bottom-subtitle mt-48 text-center font-normal text-slate-500 dark:text-slate-400'>
 						Pick a month and an employee.
 					</Heading>
 				)}

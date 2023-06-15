@@ -8,7 +8,7 @@ import Container from '../../components/ui/Container.tsx'
 
 const HomePage = () => {
 	const token = localStorage.getItem('token')
-	const [loading, setLoading] = useState(true)
+	const [loading, setLoading] = useState<boolean>(true)
 
 	useEffect(() => {
 		verifyUser()
@@ -47,7 +47,7 @@ const HomePage = () => {
 			) : (
 				<>
 					<div className='flex w-full items-center pt-12'>
-						<div className='ml-8 mr-auto flex flex-col items-center overflow-y-hidden'>
+						<div className='flex flex-col items-center overflow-y-hidden'>
 							<h1 className='slide-in-bottom-h1 text-center text-3xl font-bold leading-tight text-sky-600 md:text-left md:text-5xl'>
 								Main Hero Message to sell your app
 							</h1>
@@ -66,11 +66,11 @@ const HomePage = () => {
 						</div>
 
 						<img
-							className='slide-in-bottom mx-auto lg:mr-0'
+							className={`slide-in-bottom mx-auto lg:mr-0`}
 							src='./calendar.svg'
 						/>
 					</div>
-					<div className='fade-in flex w-full flex-col items-center pt-80 text-center text-sm md:text-center'>
+					<div className='fade-in flex w-full flex-col items-center pt-44 text-center text-sm md:text-center'>
 						<div className='flex '>
 							<a
 								className='hover:text-underline inline-block h-10 p-2 text-center text-blue-300 no-underline hover:text-indigo-800 md:h-auto md:p-4'

@@ -59,7 +59,7 @@ const Dashboard: FC<DashboardProps> = ({
 		<Container
 			size={'lg'}
 			className='dashboard p-0 pt-20'>
-			<div className='flex min-h-[36rem] rounded border bg-white shadow dark:border-slate-600 dark:bg-slate-700'>
+			<div className='slide-in-bottom flex min-h-[36rem] rounded border bg-white shadow dark:border-slate-600 dark:bg-slate-700'>
 				{data.map((day: WorkDay) => (
 					<div
 						className='group flex w-64 cursor-pointer flex-col items-center border-x dark:border-slate-600'
@@ -106,7 +106,7 @@ const Dashboard: FC<DashboardProps> = ({
 				))}
 			</div>
 
-			<div className='mt-12'>
+			<div className='slide-in-bottom-h1 mt-12'>
 				<Button
 					variant={'link'}
 					title='Previous Week'

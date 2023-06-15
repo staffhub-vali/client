@@ -42,6 +42,7 @@ const NewSchedulePage = () => {
 	return (
 		<Container
 			size={'lg'}
+			className='overflow-y-hidden'
 			onClick={() => (isOpen ? setIsOpen(false) : null)}>
 			{loading ? (
 				<Spinner />

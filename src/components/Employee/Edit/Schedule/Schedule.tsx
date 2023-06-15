@@ -84,7 +84,7 @@ const Schedule: FC<ScheduleProps> = ({ loading, setError, setMessage, employee, 
 			return startMonth === date.getMonth()
 		})
 
-		setFilteredShifts(filteredShifts.sort((a, b) => a.date - b.date))
+		setFilteredShifts(filteredShifts.sort((a: any, b: any) => a.date - b.date))
 
 		setMergedData(combineArrays(monthData, filteredShifts))
 	}
@@ -106,7 +106,7 @@ const Schedule: FC<ScheduleProps> = ({ loading, setError, setMessage, employee, 
 		return data
 	}
 
-	function combineArrays(emptyDays: any, shifts: any) {
+	const combineArrays = (emptyDays: any, shifts: any) => {
 		const combinedArray = emptyDays.map((day: any) => {
 			const matchingDateShift = shifts.find((shift: any) => shift.workDay.date === day.date)
 			if (matchingDateShift) {

@@ -4,8 +4,12 @@ import NewEmployeeForm from '../../components/Employee/NewEmployeeForm.tsx'
 
 const NewEmployeePage = () => {
 	return (
-		<Container>
-			<Heading size='sm'>Create an Employee</Heading>
+		<Container className='overflow-y-hidden'>
+			<Heading
+				size='sm'
+				className='slide-in-bottom'>
+				Create an Employee
+			</Heading>
 			<NewEmployeeForm />
 		</Container>
 	)

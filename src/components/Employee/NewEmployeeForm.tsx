@@ -81,7 +81,7 @@ const NewEmployeeForm = () => {
 			size={'lg'}>
 			<form
 				onSubmit={handleSubmit}
-				className='center mb-16 mt-12 flex w-2/3 flex-col gap-2'>
+				className='slide-in-bottom-h1 mb-16 mt-12 flex w-2/3 flex-col gap-2'>
 				<Label htmlFor='name'>Employee Name</Label>
 
 				<Input
@@ -134,14 +134,15 @@ const NewEmployeeForm = () => {
 					onChange={(e) => setAddress(e.target.value)}
 					placeholder='Enter the address of the employee'
 				/>
-
-				<Button
-					size={'lg'}
-					loading={loading}
-					className='mx-auto'
-					title='Save information and create employee'>
-					Submit {<Check className='ml-2 h-5 w-5 ' />}
-				</Button>
+				<div className='fade-in'>
+					<Button
+						size={'lg'}
+						loading={loading}
+						className='fade-in bounce-top-icons mx-auto'
+						title='Save information and create employee'>
+						Submit {<Check className='ml-2' />}
+					</Button>
+				</div>
 			</form>
 			{error && (
 				<Notification

@@ -33,7 +33,9 @@ const EmployeesListPage = () => {
 	}
 
 	return (
-		<Container size={'lg'}>
+		<Container
+			size={'lg'}
+			className='overflow-y-hidden'>
 			<EmployeesList
 				data={data}
 				loading={loading}

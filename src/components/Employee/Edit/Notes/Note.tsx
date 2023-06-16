@@ -84,7 +84,7 @@ const Note: FC<NoteProps> = ({ note: n, index, employee, loading, setError, setL
 	}
 
 	return (
-		<div className='flex w-full items-center justify-center rounded-md bg-white px-3 py-1 shadow dark:bg-slate-700'>
+		<div className='my-2 flex w-full items-center justify-center rounded-md bg-white px-3 py-1 shadow dark:bg-slate-700'>
 			{editNote ? (
 				<>
 					<Input

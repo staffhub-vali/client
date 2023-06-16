@@ -134,15 +134,14 @@ const NewEmployeeForm = () => {
 					onChange={(e) => setAddress(e.target.value)}
 					placeholder='Enter the address of the employee'
 				/>
-				<div className='fade-in'>
-					<Button
-						size={'lg'}
-						loading={loading}
-						className='fade-in bounce-top-icons mx-auto'
-						title='Save information and create employee'>
-						Submit {<Check className='ml-2' />}
-					</Button>
-				</div>
+
+				<Button
+					size={'lg'}
+					loading={loading}
+					className='slide-in-bottom mr-auto'
+					title='Save information and create employee'>
+					Submit {<Check className='ml-2' />}
+				</Button>
 			</form>
 			{error && (
 				<Notification

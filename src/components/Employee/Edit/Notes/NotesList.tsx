@@ -60,11 +60,15 @@ const NotesList: FC<NotesListProps> = ({ employee, loading, setLoading, setError
 	return (
 		<Container>
 			<div className='flex w-full items-center justify-center space-x-8 border-b-2 pb-4 dark:border-slate-600'>
-				<Heading size={'sm'}>Notes</Heading>
+				<Heading
+					size={'sm'}
+					className=''>
+					Notes for {employee.name}
+				</Heading>
 				{showAddNote ? (
 					<Button
 						size={'sm'}
-						className='w-36'
+						className=' w-36'
 						variant={'outline'}
 						onClick={() => setShowAddNote(false)}>
 						Cancel
@@ -73,7 +77,7 @@ const NotesList: FC<NotesListProps> = ({ employee, loading, setLoading, setError
 				) : (
 					<Button
 						size={'sm'}
-						className='w-36'
+						className=' w-36'
 						onClick={() => setShowAddNote(true)}
 						variant={'outline'}>
 						New Note
@@ -83,7 +87,14 @@ const NotesList: FC<NotesListProps> = ({ employee, loading, setLoading, setError
 			</div>
 
 			{!showAddNote && (
-				<div className='mt-32'>
+				<div className='slide-in-bottom mt-36'>
+					{employee.notes.length > 0 && (
+						<Heading
+							size={'xs'}
+							className='mb-3 text-center'>
+							{employee.notes.length} {employee.notes.length === 1 ? 'note' : 'notes'}
+						</Heading>
+					)}
 					{employee.notes.length > 0 ? (
 						employee.notes.map((note, index) => (
 							<Note
@@ -113,18 +124,29 @@ const NotesList: FC<NotesListProps> = ({ employee, loading, setLoading, setError
 			{showAddNote && (
 				<form
 					onSubmit={addNote}
-					className='mt-32 flex w-2/3 space-x-4'>
-					<Input
-						type='text'
-						value={note}
-						placeholder=' Add a note...'
-						onChange={(e) => setNote(e.target.value)}
-					/>
-					<Button
-						className='w-16 min-w-0'
-						variant={'link'}>
-						<Check className='scale-110' />
-					</Button>
+					className='slide-in-bottom mt-36 flex w-2/3 flex-col items-center space-x-4'>
+					<Heading
+						size={'xs'}
+						className='mb-3'>
+						New note
+					</Heading>
+					<div className='flex w-full'>
+						<Input
+							type='text'
+							value={note}
+							size={'lg'}
+							placeholder=' Add a note...'
+							onChange={(e) => setNote(e.target.value)}
+						/>
+						<Button
+							className='w-20 min-w-0'
+							variant={'link'}>
+							<Check
+								size={36}
+								className='mt-2'
+							/>
+						</Button>
+					</div>
 				</form>
 			)}
 		</Container>

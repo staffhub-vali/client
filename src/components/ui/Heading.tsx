@@ -7,7 +7,7 @@ interface HeadingProps extends HTMLAttributes<HTMLHeadingElement>, VariantProps<
 const headingVariants = cva('text-slate-800 dark:text-slate-200 font-bold leading-tight tracking-tight', {
 	variants: {
 		size: {
-			default: 'text-5xl md:text-6xl lg:text-7xl',
+			default: 'text-5xl',
 			sm: 'text-2xl md:text-3xl lg:text-4xl',
 			xs: 'text-xl md:text-2xl lg:text-3xl',
 		},

@@ -79,7 +79,7 @@ const VacationList: FC<VacationListProps> = ({ loading, setLoading, employee, se
 				{showPlanner ? (
 					<Button
 						size={'sm'}
-						className='w-36'
+						className='slide-in-bottom w-36'
 						onClick={() => setShowPlanner(false)}>
 						Cancel <X className='ml-2' />
 					</Button>
@@ -114,15 +114,15 @@ const VacationList: FC<VacationListProps> = ({ loading, setLoading, employee, se
 				)}
 			</div>
 			{!showPlanner && !showChangeAmount && (
-				<div className='items-auto mt-12 flex w-full justify-center space-x-2 border-b-2 pb-4 dark:border-slate-700'>
+				<div className='items-auto mt-12 flex w-full justify-center space-x-2 border-b-2 pb-3 dark:border-slate-700'>
 					<Heading
 						size={'xs'}
-						className='font-normal'>
+						className='slide-in-bottom font-normal '>
 						Vacation days remaining:
 					</Heading>
 					<Heading
 						size={'xs'}
-						className=' text-green-500 dark:text-green-400'>
+						className=' slide-in-bottom text-green-500 dark:text-green-400 '>
 						{employee.vacationDays}
 					</Heading>
 				</div>
@@ -130,17 +130,18 @@ const VacationList: FC<VacationListProps> = ({ loading, setLoading, employee, se
 			{showChangeAmount && (
 				<form
 					onSubmit={updateAmount}
-					className='mt-12 flex w-full items-center justify-center space-x-2 border-b-2 pb-2 dark:border-slate-700'>
+					className='mt-9 flex w-full items-center justify-center border-b-2 pb-3 dark:border-slate-700'>
 					<Input
 						type='text'
 						value={amount}
-						className='m-0 w-fit text-center text-xl font-bold'
+						className='slide-in-bottom m-0 w-fit text-center text-2xl font-bold shadow-md '
 						onChange={(e) => setAmount(Number(e.target.value))}
 					/>
 					<Button
 						size={'sm'}
-						variant={'link'}>
-						<Check className=' h-8 w-8' />
+						variant={'link'}
+						className='slide-in-bottom w-20 min-w-0 '>
+						<Check size={36} />
 					</Button>
 				</form>
 			)}
@@ -157,10 +158,10 @@ const VacationList: FC<VacationListProps> = ({ loading, setLoading, employee, se
 			)}
 
 			{!showPlanner && employee.vacations.length > 0 ? (
-				<>
+				<div className='slide-in-bottom-h1'>
 					<Heading
 						size={'xs'}
-						className='mt-16'>
+						className='mb-3 mt-16 text-center'>
 						Vacations
 					</Heading>
 					{employee.vacations.map((vacation, index) => (
@@ -176,12 +177,11 @@ const VacationList: FC<VacationListProps> = ({ loading, setLoading, employee, se
 							setMessage={setMessage}
 						/>
 					))}
-				</>
+				</div>
 			) : (
-				!showPlanner &&
-				!showChangeAmount && (
+				!showPlanner && (
 					<Heading
-						className='mt-16'
+						className='slide-in-bottom-h1 mt-16'
 						size={'xs'}>
 						This employee has no planned vacations.
 					</Heading>

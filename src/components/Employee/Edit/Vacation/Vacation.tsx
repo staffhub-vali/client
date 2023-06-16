@@ -69,11 +69,11 @@ const Vacation: FC<VacationProps> = ({
 	}
 
 	return (
-		<div className='flex w-full items-center justify-center'>
-			<div className='mt-6 flex items-center space-x-6'>
+		<div className='flex w-full items-center justify-center rounded-md bg-white px-3 py-1 shadow dark:bg-slate-700'>
+			<div className='flex items-center space-x-6'>
 				<Paragraph
 					size={'xl'}
-					className='min-w-[16rem]'
+					className='w-96 min-w-[16rem] rounded-md bg-white px-2 py-2 text-left dark:bg-slate-700'
 					key={employee?._id}>
 					{formatDate(Number(vacation.start) / 1000)} - {formatDate(Number(vacation.end) / 1000)}
 				</Paragraph>

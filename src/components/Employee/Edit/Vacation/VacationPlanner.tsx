@@ -140,10 +140,10 @@ const VacationPlanner: FC<VacationPlannerProps> = ({
 			</div>
 			<Heading
 				size={'sm'}
-				className='mt-10'>
+				className='slide-in-bottom mt-10'>
 				Days planned: {daysPlanned}
 			</Heading>
-			<div className='mt-12 flex h-96 space-x-24'>
+			<div className='slide-in-bottom mt-12 flex h-96 space-x-24'>
 				<div>
 					<Heading
 						className='mb-2 text-center font-normal'
@@ -171,7 +171,8 @@ const VacationPlanner: FC<VacationPlannerProps> = ({
 			<form onSubmit={handleSubmit}>
 				<Button
 					size={'lg'}
-					loading={loading}>
+					loading={loading}
+					className='slide-in-bottom'>
 					Submit <Check className='ml-2' />
 				</Button>
 			</form>

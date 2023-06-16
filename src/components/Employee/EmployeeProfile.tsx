@@ -83,7 +83,7 @@ const EmployeeProfile: FC<EmployeeProfileProps> = ({ shifts, employee, showDropd
 	}
 
 	return (
-		<div className='mt-40 w-10/12 rounded bg-white py-4 shadow dark:bg-slate-700'>
+		<div className='slide-in-bottom mt-40 w-10/12 rounded bg-white py-4 shadow dark:bg-slate-700'>
 			<div className='relative flex'>
 				<Button
 					className='ml-auto min-w-0 rounded-full hover:bg-slate-50 dark:hover:bg-slate-600'

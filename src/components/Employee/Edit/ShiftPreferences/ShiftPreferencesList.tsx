@@ -68,7 +68,7 @@ const ShiftPreferencesList: FC<ShiftPreferencesListProps> = ({
 	return (
 		<Container>
 			<div className='flex items-center space-x-8'>
-				<Heading size={'sm'}>Shift preferences</Heading>
+				<Heading size={'sm'}>{employee.name}</Heading>
 				{showAddShiftPreference ? (
 					<Button
 						size={'sm'}

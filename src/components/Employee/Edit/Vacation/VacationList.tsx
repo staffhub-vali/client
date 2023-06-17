@@ -29,6 +29,7 @@ interface Employee {
 }
 
 const VacationList: FC<VacationListProps> = ({ loading, setLoading, employee, setMessage, setError }) => {
+	const [daysPlanned, setDaysPlanned] = useState<number>(0)
 	const [showPlanner, setShowPlanner] = useState<boolean>(false)
 	const [amount, setAmount] = useState<number>(employee.vacationDays)
 	const [showChangeAmount, setShowChangeAmount] = useState<boolean>(false)
@@ -75,20 +76,17 @@ const VacationList: FC<VacationListProps> = ({ loading, setLoading, employee, se
 				className='mb-6'>
 				{employee.name}
 			</Heading>
-			<div className='items-auto flex space-x-2	'>
-				{showPlanner ? (
-					<Button
-						size={'sm'}
-						className='slide-in-bottom w-36'
-						onClick={() => setShowPlanner(false)}>
-						Cancel <X className='ml-2' />
-					</Button>
-				) : (
+			<div className='items-auto slide-in-bottom flex space-x-2'>
+				{!showPlanner && (
 					<>
 						<Button
 							className='w-36'
 							size={'sm'}
-							onClick={() => setShowPlanner(true)}>
+							title='Create a new vacation'
+							onClick={() => {
+								setShowPlanner(true)
+								setShowChangeAmount(false)
+							}}>
 							New Vacation <Palmtree className='ml-2' />
 						</Button>
 						{showChangeAmount ? (
@@ -105,8 +103,9 @@ const VacationList: FC<VacationListProps> = ({ loading, setLoading, employee, se
 								className='w-56'
 								size={'sm'}
 								variant={'outline'}
+								title='Change the amount of vacation days'
 								onClick={() => setShowChangeAmount(true)}>
-								Change vacation amount
+								Change number of days
 								<FileDigit className='ml-2' />
 							</Button>
 						)}
@@ -146,15 +145,25 @@ const VacationList: FC<VacationListProps> = ({ loading, setLoading, employee, se
 				</form>
 			)}
 			{showPlanner && (
-				<VacationPlanner
-					loading={loading}
-					employee={employee}
-					setError={setError}
-					setAmount={setAmount}
-					setMessage={setMessage}
-					setLoading={setLoading}
-					setShowPlanner={setShowPlanner}
-				/>
+				<>
+					{' '}
+					<Heading
+						size={'xs'}
+						className='slide-in-bottom font-normal'>
+						Days planned: {daysPlanned}
+					</Heading>
+					<VacationPlanner
+						loading={loading}
+						employee={employee}
+						setError={setError}
+						setAmount={setAmount}
+						setMessage={setMessage}
+						setLoading={setLoading}
+						daysPlanned={daysPlanned}
+						setDaysPlanned={setDaysPlanned}
+						setShowPlanner={setShowPlanner}
+					/>
+				</>
 			)}
 
 			{!showPlanner && employee.vacations.length > 0 ? (

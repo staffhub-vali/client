@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { Check } from 'lucide-react'
+import { Check, X } from 'lucide-react'
 import 'react-calendar/dist/Calendar.css'
 import { Calendar } from 'react-calendar'
 import Button from '../../../ui/Button.tsx'
@@ -10,8 +10,10 @@ import { FC, useState, useEffect, Dispatch, SetStateAction } from 'react'
 interface VacationPlannerProps {
 	loading: boolean
 	employee: Employee
+	daysPlanned: number
 	setAmount: Dispatch<SetStateAction<number>>
 	setLoading: Dispatch<SetStateAction<boolean>>
+	setDaysPlanned: Dispatch<SetStateAction<number>>
 	setShowPlanner: Dispatch<SetStateAction<boolean>>
 	setError: Dispatch<SetStateAction<string | null>>
 	setMessage: Dispatch<SetStateAction<string | null>>
@@ -35,10 +37,11 @@ const VacationPlanner: FC<VacationPlannerProps> = ({
 	setError,
 	setShowPlanner,
 	setAmount,
+	daysPlanned,
+	setDaysPlanned,
 }) => {
 	const [end, setEnd] = useState(new Date())
 	const [start, setStart] = useState(new Date())
-	const [daysPlanned, setDaysPlanned] = useState(0)
 	const [daysRemaining, setDaysRemaining] = useState(employee.vacationDays)
 
 	const calculateTotalDays = () => {
@@ -129,20 +132,16 @@ const VacationPlanner: FC<VacationPlannerProps> = ({
 			<div className='items-auto mt-12 flex w-full justify-center space-x-2 border-b-2 pb-3 dark:border-slate-700'>
 				<Heading
 					size={'xs'}
-					className='font-normal'>
+					className='slide-in-bottom font-normal'>
 					Vacation days remaining:
 				</Heading>
 				<Heading
 					size={'xs'}
-					className=' text-green-500 dark:text-green-400'>
+					className=' slide-in-bottom text-green-500 dark:text-green-400'>
 					{daysRemaining}
 				</Heading>
 			</div>
-			<Heading
-				size={'sm'}
-				className='slide-in-bottom mt-10'>
-				Days planned: {daysPlanned}
-			</Heading>
+
 			<div className='slide-in-bottom mt-12 flex h-96 space-x-24'>
 				<div>
 					<Heading
@@ -168,12 +167,22 @@ const VacationPlanner: FC<VacationPlannerProps> = ({
 				</div>
 			</div>
 
-			<form onSubmit={handleSubmit}>
+			<form
+				onSubmit={handleSubmit}
+				className='flex space-x-2'>
 				<Button
-					size={'lg'}
+					size={'sm'}
+					title='Create vacation'
 					loading={loading}
-					className='slide-in-bottom'>
+					className='slide-in-bottom w-36'>
 					Submit <Check className='ml-2' />
+				</Button>
+				<Button
+					size={'sm'}
+					variant={'outline'}
+					className=' slide-in-bottom w-36'
+					onClick={() => setShowPlanner(false)}>
+					Cancel <X className='ml-2' />
 				</Button>
 			</form>
 		</>

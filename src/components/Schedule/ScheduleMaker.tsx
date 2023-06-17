@@ -3,14 +3,14 @@ import Button from '../ui/Button.tsx'
 import Heading from '../ui/Heading.tsx'
 import { Logout } from '../../Auth.tsx'
 import { Check } from 'lucide-react'
-import { Dispatch, FC, SetStateAction, useState } from 'react'
+import { Dispatch, FC, SetStateAction, useEffect, useState } from 'react'
 import { Calendar } from 'react-calendar'
 import Container from '../ui/Container.tsx'
 import 'react-calendar/dist/Calendar.css'
 import ScheduleTable from './ScheduleTable.tsx'
 import Notification from '../ui/Notification.tsx'
 import SearchEmployees from './SearchEmployees.tsx'
-import { formatMonth } from '../../utils/DateFormatting.ts'
+import { formatDate, formatMonth } from '../../utils/DateFormatting.ts'
 import Paragraph from '../ui/Paragraph.tsx'
 
 interface Employee {
@@ -54,22 +54,29 @@ const ScheduleMaker: FC<ScheduleMakerProps> = ({
 	const [loading, setLoading] = useState<boolean>(false)
 	const [schedule, setSchedule] = useState<WorkDay[]>([])
 	const [error, setError] = useState<string | null>(null)
+	const [mergedData, setMergedData] = useState<WorkDay[]>([])
 	const [message, setMessage] = useState<string | null>(null)
+	const [yearArray, setYearArray] = useState<{ date: number }[]>([])
 
 	const [month, setMonth] = useState(() => {
 		const month = currentDate.getMonth() + 2
 		return `${currentDate.getFullYear()}-${month < 10 ? `0${month}` : month}`
 	})
 
+	useEffect(() => {
+		setMergedData(mergeObjectsByDate(yearArray, schedule))
+	}, [schedule])
+
 	const createSchedule = async () => {
 		setLoading(true)
+
 		try {
 			const token = localStorage.getItem('token')
 			const { data } = await axios.post(
 				`${import.meta.env.VITE_BASE_URL}/roster`,
 				{
 					id,
-					data: schedule,
+					data: mergedData,
 				},
 				{
 					headers: {
@@ -77,6 +84,7 @@ const ScheduleMaker: FC<ScheduleMakerProps> = ({
 					},
 				},
 			)
+
 			setMessage(data.message)
 		} catch (error: any) {
 			setError(error.response.data.message)
@@ -91,6 +99,8 @@ const ScheduleMaker: FC<ScheduleMakerProps> = ({
 	const handleMonthChange: any = (date: Date) => {
 		setValue(date)
 		const year = date.getFullYear()
+		setYearArray(generateYearArray(year))
+
 		const month = date.getMonth() + 1
 		setMonth(`${year}-${month < 10 ? `0${month}` : month}`)
 		setSchedule(() => updateMonthData(date))
@@ -98,6 +108,7 @@ const ScheduleMaker: FC<ScheduleMakerProps> = ({
 
 	const updateMonthData = (date: Date): WorkDay[] => {
 		const year = date.getFullYear()
+
 		const monthIndex = date.getMonth()
 		const daysInMonth = new Date(year, monthIndex + 1, 0).getDate()
 
@@ -109,8 +120,36 @@ const ScheduleMaker: FC<ScheduleMakerProps> = ({
 				date: dateUnixTimestamp,
 			}
 		})
-
 		return data
+	}
+
+	const generateYearArray = (year: number) => {
+		const daysInYear = 365 + (isLeapYear(year) ? 1 : 0)
+		const startOfYear = new Date(year, 0, 1)
+		const yearArray = []
+
+		for (let i = 0; i < daysInYear; i++) {
+			const currentDate = new Date(startOfYear.getTime() + i * 24 * 60 * 60 * 1000)
+			yearArray.push({ date: currentDate.getTime() / 1000 })
+		}
+
+		return yearArray
+	}
+
+	const isLeapYear = (year: number) => {
+		return (year % 4 === 0 && year % 100 !== 0) || year % 400 === 0
+	}
+
+	const mergeObjectsByDate = (yearArray: { date: number }[], monthArray: WorkDay[]) => {
+		const mergedArray = yearArray.map((obj1) => {
+			const obj2 = monthArray.find((obj) => formatDate(obj.date) === formatDate(obj1.date))
+			if (obj2) {
+				return { ...obj1, ...obj2 }
+			}
+			return obj1
+		})
+
+		return mergedArray
 	}
 
 	return (

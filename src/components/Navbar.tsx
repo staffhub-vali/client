@@ -31,17 +31,13 @@ const Navbar: FC<NavbarProps> = ({}) => {
 	return (
 		<div className=' navbar fixed m-0 w-full select-none font-bold'>
 			<div className='bg-white shadow dark:bg-slate-900 dark:text-slate-100'>
-				<div className='container mx-auto px-4'>
+				<div className=' mx-auto px-4'>
 					<div className='flex justify-around py-4 text-center'>
 						<div className='flex w-36 items-center justify-between'>
 							<Link
 								to='/'
-								className={`${buttonVariants({ variant: 'link' })} w-10 min-w-0 `}>
-								<img
-									src='../../logo.svg'
-									alt='logo'
-									className='scale-75 invert dark:invert-0'
-								/>
+								className={`${buttonVariants({ variant: 'link' })}  min-w-0 font-semibold `}>
+								StaffHub
 							</Link>
 							{sun && (
 								<p

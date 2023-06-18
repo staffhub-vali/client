@@ -43,7 +43,7 @@ const EmployeesTable: FC<EmployeesTableProps> = ({ headings, data, searchBar }) 
 				className='slide-in-bottom'>
 				Employees ({data.length})
 			</Heading>
-			<div className='slide-in-bottom mt-6 flex  items-center space-x-12'>
+			<div className='slide-in-bottom-h1 mt-6 flex  items-center space-x-12'>
 				{searchBar && (
 					<div className='mx-auto flex w-full items-center rounded-lg bg-white px-2 ring-slate-800  focus-within:ring-2 dark:bg-slate-700'>
 						<i className='fa fa-search text-slate-500 dark:text-slate-400' />
@@ -65,7 +65,7 @@ const EmployeesTable: FC<EmployeesTableProps> = ({ headings, data, searchBar }) 
 				</Link>
 			</div>
 
-			<table className='slide-in-bottom mt-4 w-4/5 divide-y-2 divide-slate-200 border-2 bg-white text-center dark:divide-slate-600 dark:border-slate-600 dark:bg-slate-700'>
+			<table className='slide-in-bottom-h1 mt-4 w-4/5 divide-y-2 divide-slate-200 border-2 bg-white text-center dark:divide-slate-600 dark:border-slate-600 dark:bg-slate-700'>
 				<thead>
 					<tr>
 						{headings.map((heading, index) => (

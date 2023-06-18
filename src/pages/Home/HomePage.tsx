@@ -47,13 +47,13 @@ const HomePage = () => {
 				<Spinner />
 			) : (
 				<>
-					<div className='flex w-full items-center pt-12'>
-						<div className='flex flex-col items-center overflow-y-hidden'>
-							<Heading className='slide-in-bottom-h1'>Main Hero Message to sell your app</Heading>
+					<div className='flex w-full items-center justify-evenly pt-12'>
+						<div className='mx-auto flex flex-col items-center overflow-y-hidden'>
+							<Heading className='slide-in-bottom-h1 text-center'>Simplify Administration, Maximize Results</Heading>
 							<Paragraph
 								size={'xl'}
 								className='slide-in-bottom-subtitle mt-2 '>
-								Sub-hero message, not too long and not too short. Make it just right!
+								Optimize Shifts, Track Attendance, and Ensure Smooth Operations!
 							</Paragraph>
 
 							<div className='fade-in flex w-full justify-center space-x-2 pt-6'>
@@ -73,11 +73,10 @@ const HomePage = () => {
 							/>
 						</div>
 					</div>
-					<div className='fade-in flex w-full flex-col items-center pt-44 text-center text-sm md:text-center'>
-						<Paragraph className='text-gray-500 no-underline hover:no-underline'>
-							&copy; App 2019 Marin Valenta
-						</Paragraph>
-					</div>
+
+					<Paragraph className='absolute bottom-2 text-slate-500 dark:text-slate-500'>
+						&copy; StaffHub 2023 Marin Valenta
+					</Paragraph>
 				</>
 			)}
 		</Container>

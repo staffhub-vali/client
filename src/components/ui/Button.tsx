@@ -4,7 +4,7 @@ import { ButtonHTMLAttributes, FC, forwardRef } from 'react'
 import { cva, VariantProps } from 'class-variance-authority'
 
 export const buttonVariants = cva(
-	'active:scale-95 inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus:ring-none active:ring-none disabled:pointer-events-none duration-150 transition-all ',
+	'text-sm font-medium active:scale-95 inline-flex items-center justify-center rounded-md transition-colors focus:ring-none active:ring-none disabled:pointer-events-none duration-150 transition-all ',
 	{
 		variants: {
 			variant: {

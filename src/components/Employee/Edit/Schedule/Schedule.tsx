@@ -53,6 +53,15 @@ const styles = StyleSheet.create({
 		alignItems: 'center',
 		borderBottom: '1px solid #ccc',
 	},
+	sectionShift: {
+		padding: 3.32,
+		display: 'flex',
+		flexDirection: 'row',
+		justifyContent: 'space-evenly',
+		alignItems: 'center',
+		borderBottom: '1px solid #ccc',
+		backgroundColor: '#f1f5f9',
+	},
 
 	shift: {
 		width: 200,
@@ -124,7 +133,7 @@ const Schedule: FC<ScheduleProps> = ({ loading, setError, setMessage, employee, 
 		return combinedArray
 	}
 
-	const MyDocument = () => (
+	const MonthlyRoster = () => (
 		<Document pageLayout='singlePage'>
 			<Page
 				size='A4'
@@ -138,7 +147,7 @@ const Schedule: FC<ScheduleProps> = ({ loading, setError, setMessage, employee, 
 				{mergedData.map((shift: { date: number; _id: string; start: number; end: number }) => (
 					<View
 						key={shift._id}
-						style={styles.section}>
+						style={shift.start && shift.end ? styles.section : styles.sectionShift}>
 						<Text style={styles.shift}>{formatDate(shift.date)}</Text>
 
 						{shift.start && shift.end ? (
@@ -170,86 +179,100 @@ const Schedule: FC<ScheduleProps> = ({ loading, setError, setMessage, employee, 
 				Total hours for {formatMonth(new Date().getTime() / 1000)} - {calculateMonthlyHours(shifts)}
 			</Heading>
 
-			<div className='mt-4 flex w-full'>
-				<div
-					className={`${
-						filteredShifts.length > 0
-							? 'overflow-y-scroll border bg-white shadow dark:border-slate-500 dark:bg-slate-800'
-							: 'border-none'
-					}  mx-auto h-[37rem] overflow-x-hidden rounded border`}>
-					{filteredShifts.length <= 0 && (
-						<Heading
-							size={'sm'}
-							className='mx-auto mt-36 w-[48.5rem] text-center'>
-							There are no shifts for {formatMonth(value.getTime() / 1000)}
-						</Heading>
-					)}
-					{filteredShifts.length > 0 && month && (
-						<Heading
-							size={'xs'}
-							className='text-md flex items-center justify-evenly border-b-2 border-t bg-white py-4 text-center font-normal dark:border-slate-500 dark:bg-slate-800'>
-							{formatMonth(value.getTime() / 1000)} - {filteredShifts.length}{' '}
-							{filteredShifts.length === 1 ? 'Shift' : 'Shifts'} ({calculateTotalHours(filteredShifts)} hours)
-							<Button
-								size={'lg'}
-								className='text-xl hover:text-sky-500 dark:hover:text-sky-400'
-								variant={'outlineHover'}>
-								<PDFDownloadLink
-									document={<MyDocument />}
-									fileName={`${employee.name} - ${formatMonth(value.getTime() / 1000)}`}>
-									Save as PDF
-								</PDFDownloadLink>
-							</Button>
-						</Heading>
-					)}
-					{!month && filteredShifts.length > 0 && (
-						<Heading
-							size={'sm'}
-							className='border-b-2 bg-white pb-3 pt-6 text-center font-normal dark:border-slate-500 dark:bg-slate-800'>
-							All shifts
-						</Heading>
-					)}
-					{filteredShifts.length > 0 &&
-						mergedData.map((shift: { date: number; _id: string; start: number; end: number }, index) => (
-							<div
-								key={shift._id}
-								onClick={() => shift._id && navigate(`/days/${shift._id}`)}
-								className={`${
-									shift._id && 'group cursor-pointer '
-								} flex w-[48rem] items-center space-y-4 border-b-2 dark:border-slate-500 ${
-									index % 2 === 0 ? 'bg-slate-50 dark:bg-slate-700' : 'bg-white dark:bg-slate-800'
-								} py-2`}>
-								<div className='mx-auto flex flex-col items-center group-hover:text-sky-500 dark:group-hover:text-sky-400'>
-									{formatDay(shift.date)}
+			{month ? (
+				<div className='mt-4 flex w-full'>
+					<div
+						className={`${
+							filteredShifts.length > 0
+								? 'slide-in-bottom overflow-y-scroll border bg-white shadow dark:border-slate-500 dark:bg-slate-800'
+								: 'border-none'
+						}  mx-auto h-[37rem] overflow-x-hidden rounded border`}>
+						{filteredShifts.length > 0 && month && (
+							<Heading
+								size={'xs'}
+								className='text-md flex items-center justify-evenly border-b-2 border-t bg-white py-4 text-center font-normal dark:border-slate-500 dark:bg-slate-800'>
+								{formatMonth(value.getTime() / 1000)} - {filteredShifts.length}{' '}
+								{filteredShifts.length === 1 ? 'Shift' : 'Shifts'} ({calculateTotalHours(filteredShifts)} hours)
+								<Button
+									size={'lg'}
+									className='text-xl hover:text-sky-500 dark:hover:text-sky-400'
+									variant={'outlineHover'}>
+									<PDFDownloadLink
+										document={<MonthlyRoster />}
+										fileName={`${employee.name} - ${formatMonth(value.getTime() / 1000)}`}>
+										Save as PDF
+									</PDFDownloadLink>
+								</Button>
+							</Heading>
+						)}
+
+						{filteredShifts.length <= 0 && (
+							<Heading
+								size={'sm'}
+								className='mx-auto mt-36 w-[48.5rem] text-center'>
+								There are no shifts for {formatMonth(value.getTime() / 1000)}
+							</Heading>
+						)}
+
+						{filteredShifts.length > 0 &&
+							mergedData.map((shift: { date: number; _id: string; start: number; end: number }, index) => (
+								<div
+									key={shift._id}
+									onClick={() => shift._id && navigate(`/days/${shift._id}`)}
+									className={`${
+										shift._id && 'group cursor-pointer '
+									} flex w-[48rem] items-center space-y-4 border-b-2 dark:border-slate-500 ${
+										index % 2 === 0 ? 'bg-slate-50 dark:bg-slate-700' : 'bg-white dark:bg-slate-800'
+									} py-2`}>
+									<div className='mx-auto flex flex-col items-center group-hover:text-sky-500 dark:group-hover:text-sky-400'>
+										{formatDay(shift.date)}
+										<Paragraph
+											className='group-hover:text-sky-500 dark:group-hover:text-sky-400'
+											size={'xl'}>
+											{formatDate(shift.date)}
+										</Paragraph>
+									</div>
+
 									<Paragraph
-										className='group-hover:text-sky-500 dark:group-hover:text-sky-400'
-										size={'xl'}>
-										{formatDate(shift.date)}
+										size={'xl'}
+										className='mx-auto w-48 pb-2 group-hover:text-sky-500 dark:group-hover:text-sky-400'>
+										{shift.start && (
+											<>
+												{formatTime(shift.start)} - {formatTime(shift.end)}
+											</>
+										)}
 									</Paragraph>
 								</div>
-
-								<Paragraph
-									size={'xl'}
-									className='mx-auto w-48 pb-2 group-hover:text-sky-500 dark:group-hover:text-sky-400'>
-									{shift.start && (
-										<>
-											{formatTime(shift.start)} - {formatTime(shift.end)}
-										</>
-									)}
-								</Paragraph>
-							</div>
-						))}
+							))}
+					</div>
+					<div className='mx-auto mt-24'>
+						<Calendar
+							value={value}
+							view={'month'}
+							maxDetail='year'
+							className='h-fit'
+							onChange={handleMonthChange}
+						/>
+					</div>
 				</div>
-				<div className='mx-auto mt-24'>
-					<Calendar
-						value={value}
-						view={'month'}
-						maxDetail='year'
-						className='h-fit'
-						onChange={handleMonthChange}
-					/>
+			) : (
+				<div className='flex w-full'>
+					<Heading
+						size={'sm'}
+						className='slide-in-bottom mx-auto mt-40 w-[48.5rem] text-center'>
+						Choose a month
+					</Heading>
+					<div className='slide-in-bottom-h1 mx-auto mt-28'>
+						<Calendar
+							value={value}
+							view={'month'}
+							maxDetail='year'
+							className='h-fit'
+							onChange={handleMonthChange}
+						/>
+					</div>
 				</div>
-			</div>
+			)}
 		</Container>
 	)
 }

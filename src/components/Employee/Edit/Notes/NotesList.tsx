@@ -139,8 +139,9 @@ const NotesList: FC<NotesListProps> = ({ employee, loading, setLoading, setError
 							onChange={(e) => setNote(e.target.value)}
 						/>
 						<Button
-							className='w-20 min-w-0'
-							variant={'link'}>
+							title='Add note'
+							variant={'link'}
+							className='w-20 min-w-0'>
 							<Check
 								size={36}
 								className='mt-2'

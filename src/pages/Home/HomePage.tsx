@@ -6,10 +6,13 @@ import Heading from '../../components/ui/Heading.tsx'
 import Spinner from '../../components/ui/Spinner.tsx'
 import Container from '../../components/ui/Container.tsx'
 import Paragraph from '../../components/ui/Paragraph.tsx'
+import { useNavigate } from 'react-router-dom'
 
 const HomePage = () => {
 	const token = localStorage.getItem('token')
 	const [loading, setLoading] = useState<boolean>(true)
+
+	const navigate = useNavigate()
 
 	useEffect(() => {
 		verifyUser()
@@ -49,20 +52,64 @@ const HomePage = () => {
 				<>
 					<div className='flex w-full items-center justify-evenly pt-12'>
 						<div className='mx-auto flex flex-col items-center overflow-y-hidden'>
-							<Heading className='slide-in-bottom-h1 text-center'>Simplify Administration, Maximize Results</Heading>
-							<Paragraph
-								size={'xl'}
-								className='slide-in-bottom-subtitle mt-2 '>
-								Optimize Shifts, Track Attendance, and Ensure Smooth Operations!
-							</Paragraph>
+							{token ? (
+								<>
+									<Heading className='slide-in-bottom-h1 text-center'>Hello {name}</Heading>
+									<Paragraph
+										size={'xl'}
+										className='slide-in-bottom-subtitle mt-2 '>
+										Subtitle header that isnt too short or too long, just perfect!
+									</Paragraph>
+								</>
+							) : (
+								<>
+									{' '}
+									<Heading className='slide-in-bottom-h1 text-center'>
+										Simplify Administration, Maximize Results
+									</Heading>
+									<Paragraph
+										size={'xl'}
+										className='slide-in-bottom-subtitle mt-2 '>
+										Optimize Shifts, Track Attendance, and Ensure Smooth Operations!
+									</Paragraph>
+								</>
+							)}
 
 							<div className='fade-in flex w-full justify-center space-x-2 pt-6'>
-								<Button className='bounce-top-icons'>Get started</Button>
-								<Button
-									className='bounce-top-icons'
-									variant={'outline'}>
-									How to use
-								</Button>
+								{token ? (
+									<>
+										<Button
+											title='Instructions on getting started'
+											variant={'default'}
+											className='bounce-top-icons'>
+											How to use
+										</Button>
+										<Button
+											onClick={Logout}
+											variant={'outline'}
+											className='bounce-top-icons'
+											title='Sign out of your account'>
+											Logout
+										</Button>
+									</>
+								) : (
+									<>
+										<Button
+											title='Sign up and start managing'
+											variant={'default'}
+											onClick={() => navigate('/login')}
+											className='bounce-top-icons'>
+											Get Started
+										</Button>
+										<Button
+											variant={'outline'}
+											className='bounce-top-icons'
+											onClick={() => navigate('/docs')}
+											title='Instructions on getting started'>
+											How to Use
+										</Button>
+									</>
+								)}
 							</div>
 						</div>
 

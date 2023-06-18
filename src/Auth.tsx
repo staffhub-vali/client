@@ -1,3 +1,4 @@
+import { googleLogout } from '@react-oauth/google'
 import axios from 'axios'
 import jwtDecode from 'jwt-decode'
 
@@ -14,6 +15,7 @@ export const Login = async (credentials: any): Promise<void> => {
 }
 
 export const Logout = () => {
+	googleLogout()
 	localStorage.setItem('token', '')
 	window.location.href = '/login'
 }

@@ -4,6 +4,7 @@ import Container from '../ui/Container.tsx'
 import { GoogleLogin } from '@react-oauth/google'
 import Notification from '../ui/Notification.tsx'
 import { Dispatch, FC, SetStateAction } from 'react'
+import Button from '../ui/Button.tsx'
 
 interface LoginFormProps {
 	error: string | null
@@ -26,12 +27,12 @@ const LoginForm: FC<LoginFormProps> = ({ message, error, setError, setLoading })
 
 	return (
 		<Container>
-			<Heading size={'sm'}>Sign In</Heading>
+			<Heading size={'sm'}>Sign In with Google</Heading>
 
-			<div className='mt-6'>
+			<div className='mt-12'>
 				<GoogleLogin
 					onSuccess={(credentialResponse) => {
-						handleSubmit(credentialResponse)
+						Login(credentialResponse)
 					}}
 					onError={() => {
 						console.log('Login Failed')

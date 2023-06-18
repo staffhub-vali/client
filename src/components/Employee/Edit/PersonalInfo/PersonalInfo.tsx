@@ -66,9 +66,10 @@ const PersonalInfo: FC<PersonalInfoProps> = ({ employee, loading, setLoading, se
 			<Heading size={'sm'}>{employee.name}</Heading>
 			<form
 				onSubmit={handleSubmit}
-				className='mt-6'>
+				className='slide-in-bottom mt-12 w-4/6'>
 				<Label htmlFor='name'>Name</Label>
 				<Input
+					size='lg'
 					id='name'
 					type='text'
 					name='name'
@@ -77,6 +78,7 @@ const PersonalInfo: FC<PersonalInfoProps> = ({ employee, loading, setLoading, se
 				/>
 				<Label htmlFor='email'>Email</Label>
 				<Input
+					size='lg'
 					id='email'
 					type='text'
 					name='email'
@@ -85,26 +87,30 @@ const PersonalInfo: FC<PersonalInfoProps> = ({ employee, loading, setLoading, se
 				/>
 				<Label htmlFor='phone'>Phone</Label>
 				<Input
+					size='lg'
 					type='text'
 					id='phone'
 					name='phone'
 					value={phone}
 					onChange={(e) => setPhone(e.target.value)}
 				/>
+				<div className='space-x-2'>
+					<Button
+						loading={loading}
+						title='Update information'
+						className='w-40'>
+						Save changes {<Check className='ml-2' />}
+					</Button>
 
-				<Button
-					size={'sm'}
-					loading={loading}>
-					Submit {<Check className='ml-2 h-5 w-5' />}
-				</Button>
-
-				<Button
-					size={'sm'}
-					type='button'
-					onClick={() => navigate(`/employees/${employee._id}`)}
-					className='mx-2 bg-slate-400 text-white hover:bg-slate-400 dark:bg-slate-400 dark:text-white dark:hover:bg-slate-400'>
-					Cancel {<X className='ml-2 h-5 w-5' />}
-				</Button>
+					<Button
+						type='button'
+						title='Go back'
+						className='w-40'
+						variant={'outline'}
+						onClick={() => navigate(`/employees/${employee._id}`)}>
+						Cancel {<X className='ml-2' />}
+					</Button>
+				</div>
 			</form>
 		</Container>
 	)

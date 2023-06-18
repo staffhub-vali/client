@@ -91,32 +91,32 @@ const ShiftPreference: FC<ShiftPreferenceProps> = ({
 	}
 
 	return (
-		<div className='flex w-full items-center justify-center'>
+		<div className='my-2 flex w-full items-center justify-center rounded-md bg-white px-3 py-1 shadow dark:bg-slate-700'>
 			{editShiftPreference ? (
 				<>
 					<Input
 						type='text'
 						value={shiftPreference}
-						className='m-0 w-fit'
+						className='m-0 w-96 text-xl shadow-none focus:ring-0'
 						onChange={(e) => setShiftPreference(e.target.value)}
 					/>
 					<Button
 						size={'sm'}
 						variant={'link'}
-						className='w-10 min-w-[3rem]'
+						title='Save changes'
+						className='w-16 min-w-0'
 						onClick={() => {
 							setShiftPreferenceIndex(index)
 							updateShiftPreference(index, shiftPreference)
-						}}
-						title='Save changes'>
+						}}>
 						{<Check />}
 					</Button>
 					<Button
 						size={'sm'}
+						title='Cancel'
 						variant={'link'}
-						className='w-10 min-w-[3rem]'
-						onClick={() => setEditShiftPreference(false)}
-						title='Cancel'>
+						className='w-16 min-w-0'
+						onClick={() => setEditShiftPreference(false)}>
 						{<XCircle />}
 					</Button>
 				</>
@@ -124,14 +124,14 @@ const ShiftPreference: FC<ShiftPreferenceProps> = ({
 				<div className='flex items-center'>
 					<Paragraph
 						size={'lg'}
-						className='min-w-[16rem]'
-						key={employee?._id}>
+						key={employee?._id}
+						className='w-96 min-w-[16rem] rounded-md bg-white px-2 py-2 text-left dark:bg-slate-700'>
 						{shiftPreference}
 					</Paragraph>
 					<Button
 						size={'sm'}
 						variant={'link'}
-						className='w-16 min-w-0 rounded-full p-5 hover:bg-slate-200'
+						className='w-16 min-w-0 rounded-full p-5 hover:bg-slate-100'
 						onClick={() => {
 							setEditShiftPreference(true)
 							setShiftPreferenceIndex(index)
@@ -142,7 +142,7 @@ const ShiftPreference: FC<ShiftPreferenceProps> = ({
 					<Button
 						size={'sm'}
 						variant={'link'}
-						className='w-16 min-w-0 rounded-full p-5 hover:bg-slate-200'
+						className='w-16 min-w-0 rounded-full p-5 hover:bg-slate-100'
 						onClick={() => {
 							setShowModal(true)
 							setShiftPreferenceIndex(index)

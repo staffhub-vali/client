@@ -15,6 +15,7 @@ interface PersonalInfoProps {
 		name: string
 		email: string
 		phone: string
+		address: string
 		sickDays: number | string
 		vacationDays: number | string
 	}
@@ -30,6 +31,7 @@ const PersonalInfo: FC<PersonalInfoProps> = ({ employee, loading, setLoading, se
 	const [name, setName] = useState<string>(employee.name)
 	const [email, setEmail] = useState<string>(employee.email)
 	const [phone, setPhone] = useState<string>(employee.phone)
+	const [address, setAddress] = useState<string>(employee.address)
 
 	const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault()
@@ -40,9 +42,10 @@ const PersonalInfo: FC<PersonalInfoProps> = ({ employee, loading, setLoading, se
 				`${import.meta.env.VITE_BASE_URL}/employees/${_id}`,
 				{
 					id: _id,
-					name,
-					email,
-					phone,
+					name: name,
+					email: email,
+					phone: phone,
+					address: address,
 				},
 				{
 					headers: {
@@ -51,6 +54,9 @@ const PersonalInfo: FC<PersonalInfoProps> = ({ employee, loading, setLoading, se
 				},
 			)
 			setMessage(data.message)
+			setTimeout(() => {
+				navigate(`/employees/${_id}`)
+			}, 1000)
 		} catch (error: any) {
 			setError(error.response.data.message)
 			if (error.response.status === 401) {
@@ -93,6 +99,15 @@ const PersonalInfo: FC<PersonalInfoProps> = ({ employee, loading, setLoading, se
 					name='phone'
 					value={phone}
 					onChange={(e) => setPhone(e.target.value)}
+				/>
+				<Label htmlFor='address'>Address</Label>
+				<Input
+					size='lg'
+					type='text'
+					id='address'
+					name='address'
+					value={address}
+					onChange={(e) => setAddress(e.target.value)}
 				/>
 				<div className='space-x-2'>
 					<Button

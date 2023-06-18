@@ -63,17 +63,21 @@ const NewSchedulePage = () => {
 			) : (
 				<>
 					<Heading
-						className='mb-2 mt-6'
+						className='slide-in-bottom mb-2 mt-6'
 						size={'sm'}>
 						You do not currently have any employees on your account to create a schedule.
 					</Heading>
-					<Heading size={'xs'}>Click below if you wish to create an employee.</Heading>
+					<Heading
+						size={'xs'}
+						className='slide-in-bottom'>
+						Click below if you wish to create an employee.
+					</Heading>
 					<Link
 						to='/employees/new'
+						title='Create a new employee'
 						className={`${buttonVariants({
 							variant: 'default',
-							size: 'lg',
-						})} mt-6`}>
+						})} slide-in-bottom mt-6`}>
 						New Employee {<UserPlus className='ml-2' />}
 					</Link>
 				</>

@@ -4,7 +4,7 @@ import Button from '../ui/Button.tsx'
 import Dropdown from './Dropdown.tsx'
 import Heading from '../ui/Heading.tsx'
 import Paragraph from '../ui/Paragraph.tsx'
-import { Mail, MoreVertical, Phone } from 'lucide-react'
+import { Mail, MapPin, MoreVertical, Palmtree, Phone, Scroll, Sticker } from 'lucide-react'
 import { Dispatch, FC, SetStateAction, useState } from 'react'
 import { calculateMonthlyHours } from '../../utils/CalculateHours.ts'
 
@@ -26,6 +26,7 @@ interface Employee {
 	email: string
 	phone: string
 	notes: string[]
+	address: string
 	vacations: Vacation[]
 	shiftPreferences: string[]
 	vacationDays: number | string
@@ -83,7 +84,7 @@ const EmployeeProfile: FC<EmployeeProfileProps> = ({ shifts, employee, showDropd
 	}
 
 	return (
-		<div className='slide-in-bottom mt-40 w-10/12 rounded bg-white py-4 shadow dark:bg-slate-700'>
+		<div className='slide-in-bottom mt-40 w-10/12 rounded-md bg-white py-4 shadow-lg dark:bg-slate-700'>
 			<div className='relative flex'>
 				<Button
 					className='ml-auto min-w-0 rounded-full hover:bg-slate-50 dark:hover:bg-slate-600'
@@ -102,33 +103,54 @@ const EmployeeProfile: FC<EmployeeProfileProps> = ({ shifts, employee, showDropd
 			<div className='space-y-6 border-b pb-8 dark:border-slate-500'>
 				<Heading
 					className=' text-center'
-					size={'sm'}>
+					size={'default'}>
 					{employee.name}
 				</Heading>
 
-				<Paragraph
-					size={'lg'}
-					className='mx-auto'>
-					Total hours for this month:
-					<span className='ml-2 font-bold text-blue-500 dark:text-blue-300'>{calculateMonthlyHours(shifts)}</span>
-				</Paragraph>
-				<div className='flex justify-center space-x-8'>
-					<Paragraph
-						size={'xl'}
-						className='flex'>
-						<Mail className='mr-2' /> {employee.email}
-					</Paragraph>
-					<Paragraph
-						size={'xl'}
-						className='flex'>
-						<Phone className='mr-2' />
-						{employee.phone}
-					</Paragraph>
+				<Heading
+					size={'xs'}
+					className='text-center font-normal'>
+					Total hours for this month: {calculateMonthlyHours(shifts)}
+				</Heading>
+				<div className='flex w-full justify-evenly'>
+					<div className='flex w-1/3 justify-center  border-r border-slate-400 px-8 py-1'>
+						<Paragraph
+							size={'xl'}
+							className='flex items-center'>
+							<Phone className='mr-4' />
+							{employee.phone}
+						</Paragraph>
+					</div>
+
+					<div className='flex w-1/3 justify-center  border-r border-slate-400 px-8 py-1'>
+						<Paragraph
+							size={'xl'}
+							className='flex items-center'>
+							<Mail className='mr-4' /> {employee.email}
+						</Paragraph>
+					</div>
+
+					<div className='flex w-1/3 justify-center  px-8 py-1'>
+						<Paragraph
+							size={'xl'}
+							className='flex items-center'>
+							<MapPin className='mr-4' />
+							{employee.address}
+						</Paragraph>
+					</div>
 				</div>
 			</div>
 
 			<div className='flex w-full flex-col items-center border-b py-4 dark:border-slate-500'>
-				<Heading size={'xs'}>Notes</Heading>
+				<Heading
+					size={'xs'}
+					className='flex items-center'>
+					Notes
+					<Scroll
+						size={26}
+						className='ml-2'
+					/>
+				</Heading>
 
 				<div className='flex flex-col py-2'>
 					{employee.notes.length > 0 ? (
@@ -140,7 +162,15 @@ const EmployeeProfile: FC<EmployeeProfileProps> = ({ shifts, employee, showDropd
 			</div>
 
 			<div className='flex w-full flex-col items-center border-b py-4 dark:border-slate-500'>
-				<Heading size={'xs'}>Vacation</Heading>
+				<Heading
+					size={'xs'}
+					className='flex items-center'>
+					Vacation{' '}
+					<Palmtree
+						size={26}
+						className='ml-2'
+					/>
+				</Heading>
 				<div className='flex flex-col space-y-2 py-2'>
 					<Paragraph
 						size={'xl'}
@@ -151,7 +181,15 @@ const EmployeeProfile: FC<EmployeeProfileProps> = ({ shifts, employee, showDropd
 			</div>
 
 			<div className='flex w-full flex-col items-center py-4'>
-				<Heading size={'xs'}>Shift Preferences</Heading>
+				<Heading
+					size={'xs'}
+					className='flex items-center'>
+					Shift Preferences{' '}
+					<Sticker
+						size={26}
+						className='ml-2'
+					/>
+				</Heading>
 
 				<div className='flex flex-col py-2'>
 					{employee.shiftPreferences.length > 0 ? (

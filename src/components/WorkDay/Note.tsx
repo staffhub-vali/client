@@ -83,7 +83,7 @@ const Note: FC<NoteProps> = ({ note: n, index, workDay, loading, setError, setLo
 	}
 
 	return (
-		<div className='flex w-full items-center justify-center rounded-md bg-white px-3 py-1 shadow dark:bg-slate-700'>
+		<div className='slide-in-bottom flex w-full items-center justify-center rounded-md bg-white px-3 py-1 shadow dark:bg-slate-700'>
 			{editNote ? (
 				<>
 					<Input

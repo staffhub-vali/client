@@ -152,7 +152,7 @@ const Employee: FC<EmployeeProps> = ({
 	}
 	return (
 		<div
-			className='flex items-center justify-between'
+			className='slide-in-bottom flex items-center justify-between'
 			key={shift._id}>
 			<Paragraph
 				size={'xl'}

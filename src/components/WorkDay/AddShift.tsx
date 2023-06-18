@@ -82,7 +82,7 @@ const AddShift: FC<AddShiftProps> = ({ workDay, setShowAddShift, setError, setMe
 		try {
 			const token = localStorage.getItem('token')
 			const { data } = await axios.post(
-				`${import.meta.env.VITE_BASE_URL}/employees/shifts`,
+				`${import.meta.env.VITE_BASE_URL}/shifts`,
 				{ workDayId: workDay?._id, start: start, end: end, employeeId: employeeId },
 				{
 					headers: {
@@ -103,7 +103,7 @@ const AddShift: FC<AddShiftProps> = ({ workDay, setShowAddShift, setError, setMe
 	}
 
 	return (
-		<div className='w-10/12 py-6'>
+		<div className='slide-in-bottom w-10/12 py-6'>
 			<Heading
 				size={'xs'}
 				className='text-center font-normal'>

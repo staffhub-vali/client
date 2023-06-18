@@ -79,9 +79,10 @@ const HomePage = () => {
 								{token ? (
 									<>
 										<Button
-											title='Instructions on getting started'
 											variant={'default'}
-											className='bounce-top-icons'>
+											className='bounce-top-icons'
+											onClick={() => navigate('/docs')}
+											title='Instructions on getting started'>
 											How to use
 										</Button>
 										<Button

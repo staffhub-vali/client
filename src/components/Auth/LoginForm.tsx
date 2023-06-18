@@ -27,9 +27,13 @@ const LoginForm: FC<LoginFormProps> = ({ message, error, setError, setLoading })
 
 	return (
 		<Container>
-			<Heading size={'sm'}>Sign In with Google</Heading>
+			<Heading
+				size={'sm'}
+				className='slide-in-bottom'>
+				Sign In with Google
+			</Heading>
 
-			<div className='mt-12'>
+			<div className='slide-in-bottom mt-12'>
 				<GoogleLogin
 					onSuccess={(credentialResponse) => {
 						Login(credentialResponse)

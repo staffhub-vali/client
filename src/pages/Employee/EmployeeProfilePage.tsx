@@ -85,7 +85,7 @@ const EmployeeProfilePage = () => {
 	return (
 		<Container
 			size={'lg'}
-			className='overflow-y-hidden p-0'
+			className='overflow-y-hidden p-4'
 			onClick={() => showDropdown && setShowDropdown(false)}>
 			{employee && isAbout && (
 				<PersonalInfo

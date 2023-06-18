@@ -4,7 +4,7 @@ import Container from '../../components/ui/Container.tsx'
 const DocumentationPage = () => {
 	return (
 		<Container>
-			<Heading>Documentation</Heading>
+			<Heading size={'sm'}>Documentation</Heading>
 		</Container>
 	)
 }

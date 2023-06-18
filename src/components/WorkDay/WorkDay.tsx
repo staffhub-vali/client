@@ -51,7 +51,7 @@ const WorkDay: FC<WorkDayProps> = ({
 
 	return (
 		<>
-			<div className='my-6 flex w-10/12 items-center justify-center space-x-10 border-b-2 pb-6 dark:border-slate-700 '>
+			<div className='my-6 flex w-10/12 items-center justify-center space-x-10 border-b-2 pb-6 dark:border-slate-700'>
 				<div className='flex space-x-3'>
 					<Heading size={'sm'}>{formatDay(workDay.date)}</Heading>
 					<Heading size={'sm'}>{formatDate(workDay.date)}</Heading>
@@ -79,12 +79,14 @@ const WorkDay: FC<WorkDayProps> = ({
 			</div>
 
 			{workDay.shifts.length < 1 && !showAddShift && !showAddNote && (
-				<Heading
-					className='w-10/12 border-b-2 py-6 text-center font-normal dark:border-slate-700'
-					size={'xs'}>
-					{' '}
-					There are currently no shifts for this day.{' '}
-				</Heading>
+				<div className='w-10/12 border-b-2 py-6 text-center font-normal dark:border-slate-700'>
+					<Heading
+						className='slide-in-bottom '
+						size={'xs'}>
+						{' '}
+						There are currently no shifts for this day.{' '}
+					</Heading>
+				</div>
 			)}
 			{workDay.shifts.length > 0 && (
 				<div className='flex w-10/12 flex-col items-center space-y-2 border-b-2 pb-6 dark:border-slate-700'>
@@ -116,14 +118,14 @@ const WorkDay: FC<WorkDayProps> = ({
 			<div className='flex flex-col items-center space-y-6 py-6'>
 				{workDay && !showAddShift && !showAddNote && (
 					<Heading
-						className='font-normal'
+						className='slide-in-bottom font-normal'
 						size={'xs'}>
 						Notes
 					</Heading>
 				)}
 				{workDay && showAddNote && (
 					<Heading
-						className='font-normal'
+						className='slide-in-bottom font-normal'
 						size={'xs'}>
 						Add a note
 					</Heading>
@@ -144,7 +146,11 @@ const WorkDay: FC<WorkDayProps> = ({
 					))}
 
 				{!showAddNote && !showAddShift && workDay.notes.length < 1 && (
-					<Paragraph size={'xl'}>There are no notes for this day.</Paragraph>
+					<Paragraph
+						size={'xl'}
+						className='slide-in-bottom'>
+						There are no notes for this day.
+					</Paragraph>
 				)}
 
 				{showAddNote && !showAddShift && (

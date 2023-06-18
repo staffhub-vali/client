@@ -81,13 +81,17 @@ const DashboardPage = () => {
 			) : (
 				<>
 					<Heading
-						className='mb-2 mt-6'
+						className='slide-in-bottom mb-2 mt-6'
 						size={'sm'}>
 						You do not currently have any created schedules.
 					</Heading>
-					<Heading size={'xs'}>Click below if you wish to create a schedule.</Heading>
+					<Heading
+						size={'xs'}
+						className='slide-in-bottom'>
+						Click below if you wish to create a schedule.
+					</Heading>
 					<Link
-						className={`${buttonVariants({ variant: 'default', size: 'lg' })} mt-6`}
+						className={`${buttonVariants({ variant: 'default' })} slide-in-bottom mt-6`}
 						to='/schedules/new'>
 						New Schedule {<CalendarPlus className='ml-2' />}
 					</Link>

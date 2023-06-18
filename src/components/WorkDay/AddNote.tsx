@@ -65,7 +65,7 @@ const AddNote: FC<AddNoteProps> = ({
 		}
 	}
 	return (
-		<div className='flex space-x-2'>
+		<div className='slide-in-bottom flex space-x-2'>
 			<Input
 				size={'lg'}
 				type='text'

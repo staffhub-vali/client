@@ -68,7 +68,9 @@ const WorkDayPage = () => {
 	}
 
 	return (
-		<Container size={'lg'}>
+		<Container
+			size={'lg'}
+			className='overflow-y-hidden'>
 			<WorkDay
 				error={error}
 				workDay={workDay}

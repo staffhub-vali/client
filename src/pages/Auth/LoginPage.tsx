@@ -23,7 +23,9 @@ const LoginPage = () => {
 	}, [error, message])
 
 	return (
-		<Container size={'lg'}>
+		<Container
+			size={'lg'}
+			className='overflow-y-hidden'>
 			<LoginForm
 				error={error}
 				message={message}

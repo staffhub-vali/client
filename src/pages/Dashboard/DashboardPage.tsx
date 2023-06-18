@@ -9,6 +9,7 @@ import Container from '../../components/ui/Container.tsx'
 import { buttonVariants } from '../../components/ui/Button.tsx'
 import Notification from '../../components/ui/Notification.tsx'
 import Dashboard from '../../components/Dashboard/Dashboard.tsx'
+import { useLocation } from 'react-router-dom'
 
 export interface WorkDay {
 	_id: string
@@ -25,7 +26,6 @@ interface Shift {
 }
 
 const DashboardPage = () => {
-	const [skip, setSkip] = useState<number>(0)
 	const [data, setData] = useState<WorkDay[]>([])
 	const [error, setError] = useState<string | null>(null)
 	const [loading, setLoading] = useState<boolean>(true)
@@ -33,8 +33,18 @@ const DashboardPage = () => {
 	const [prevPageLimit, setPrevPageLimit] = useState<boolean>(false)
 	const [nextPageLimit, setNextPageLimit] = useState<boolean>(false)
 
+	const location = useLocation()
+
+	const searchParams: any = new URLSearchParams(location.search)
+
+	const skipFromURL = searchParams.get('skip') ? parseInt(searchParams.get('skip'), 10) : 0
+
+	const [skip, setSkip] = useState<number>(skipFromURL)
+
 	useEffect(() => {
-		fetchData()
+		searchParams.set('skip', skip.toString())
+		const newURL = `${location.pathname}?${searchParams.toString()}`
+		window.history.replaceState(null, '', newURL)
 	}, [skip])
 
 	const fetchData = async () => {
@@ -60,6 +70,10 @@ const DashboardPage = () => {
 			setLoading(false)
 		}
 	}
+
+	useEffect(() => {
+		fetchData()
+	}, [skip])
 
 	return (
 		<Container

@@ -2,7 +2,7 @@ import Button from '../ui/Button.tsx'
 import Heading from '../ui/Heading.tsx'
 import Container from '../ui/Container.tsx'
 import Paragraph from '../ui/Paragraph.tsx'
-import { useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate, useParams } from 'react-router-dom'
 import groupShifts from '../../utils/GroupShifts.ts'
 import { Dispatch, FC, SetStateAction, useEffect } from 'react'
 import { WorkDay } from '../../pages/Dashboard/DashboardPage.tsx'
@@ -31,6 +31,10 @@ const Dashboard: FC<DashboardProps> = ({
 	setPrevPageLimit,
 }) => {
 	const navigate = useNavigate()
+
+	const location = useLocation()
+
+	console.log(location)
 
 	const handlePrevPage = () => {
 		!prevPageLimit && setSkip(skip - 1)

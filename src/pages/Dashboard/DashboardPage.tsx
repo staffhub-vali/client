@@ -3,13 +3,13 @@ import { Logout } from '../../Auth.tsx'
 import { Link } from 'react-router-dom'
 import { CalendarPlus } from 'lucide-react'
 import { useEffect, useState } from 'react'
+import { useLocation } from 'react-router-dom'
 import Heading from '../../components/ui/Heading.tsx'
 import Spinner from '../../components/ui/Spinner.tsx'
 import Container from '../../components/ui/Container.tsx'
 import { buttonVariants } from '../../components/ui/Button.tsx'
 import Notification from '../../components/ui/Notification.tsx'
 import Dashboard from '../../components/Dashboard/Dashboard.tsx'
-import { useLocation } from 'react-router-dom'
 
 export interface WorkDay {
 	_id: string
@@ -37,12 +37,12 @@ const DashboardPage = () => {
 
 	const searchParams: any = new URLSearchParams(location.search)
 
-	const skipFromURL = searchParams.get('skip') ? parseInt(searchParams.get('skip'), 10) : 0
+	const skipFromURL = searchParams.get('page') ? parseInt(searchParams.get('page'), 10) : 0
 
 	const [skip, setSkip] = useState<number>(skipFromURL)
 
 	useEffect(() => {
-		searchParams.set('skip', skip.toString())
+		searchParams.set('page', skip.toString())
 		const newURL = `${location.pathname}?${searchParams.toString()}`
 		window.history.replaceState(null, '', newURL)
 	}, [skip])

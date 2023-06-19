@@ -32,10 +32,6 @@ const Dashboard: FC<DashboardProps> = ({
 }) => {
 	const navigate = useNavigate()
 
-	const location = useLocation()
-
-	console.log(location)
-
 	const handlePrevPage = () => {
 		!prevPageLimit && setSkip(skip - 1)
 	}

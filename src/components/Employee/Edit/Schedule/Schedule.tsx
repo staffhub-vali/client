@@ -8,6 +8,8 @@ import { Dispatch, FC, SetStateAction, useState } from 'react'
 import ReactPDF, { Document, Page, Text, View, StyleSheet, PDFDownloadLink } from '@react-pdf/renderer'
 import { calculateMonthlyHours, calculateTotalHours } from '../../../../utils/CalculateHours.ts'
 import { formatDate, formatDay, formatMonth, formatTime, formatTotal } from '../../../../utils/DateFormatting.ts'
+import { MoreVertical } from 'lucide-react'
+import Dropdown from '../../Dropdown.tsx'
 
 interface ScheduleProps {
 	employee: {
@@ -21,8 +23,10 @@ interface ScheduleProps {
 	}
 	shifts: Shift[]
 	loading: boolean
+	showDropdown: boolean
 	setLoading: Dispatch<SetStateAction<boolean>>
 	setError: Dispatch<SetStateAction<string | null>>
+	setShowDropdown: Dispatch<SetStateAction<boolean>>
 	setMessage: Dispatch<SetStateAction<string | null>>
 }
 
@@ -70,11 +74,21 @@ const styles = StyleSheet.create({
 	},
 })
 
-const Schedule: FC<ScheduleProps> = ({ loading, setError, setMessage, employee, setLoading, shifts }) => {
+const Schedule: FC<ScheduleProps> = ({
+	loading,
+	setError,
+	setMessage,
+	employee,
+	setLoading,
+	shifts,
+	showDropdown,
+	setShowDropdown,
+}) => {
 	const navigate = useNavigate()
 
 	const [value, setValue] = useState(new Date())
 	const [month, setMonth] = useState<string | null>(null)
+	const [showModal, setShowModal] = useState<boolean>(false)
 	const [filteredShifts, setFilteredShifts] = useState<Shift[]>(shifts)
 
 	const [mergedData, setMergedData] = useState([])
@@ -170,14 +184,30 @@ const Schedule: FC<ScheduleProps> = ({ loading, setError, setMessage, employee, 
 	)
 
 	return (
-		<Container size={'lg'}>
-			<Heading size={'sm'}>{employee.name}</Heading>
-
-			<Heading
-				size={'xs'}
-				className='my-3 w-full border-b-2 p-4 text-center font-normal dark:border-slate-700'>
-				Total hours for {formatMonth(new Date().getTime() / 1000)} - {calculateMonthlyHours(shifts)}
-			</Heading>
+		<Container
+			size={'lg'}
+			className='pt-20'>
+			<div className='relative ml-auto flex'>
+				<Button
+					className='ml-auto min-w-0 rounded-full hover:bg-slate-50 dark:hover:bg-slate-600'
+					variant={'link'}
+					onClick={() => setShowDropdown(!showDropdown)}>
+					<MoreVertical size={24} />
+				</Button>
+				{showDropdown && (
+					<Dropdown
+						employee={employee}
+						setShowModal={setShowModal}
+						setShowDropdown={setShowDropdown}
+					/>
+				)}
+			</div>
+			<div className='flex w-full items-center justify-center space-x-8 border-b-2 pb-4 dark:border-slate-600'>
+				{' '}
+				<Heading size={'sm'}>
+					{employee.name} - Total hours for {formatMonth(new Date().getTime() / 1000)}: {calculateMonthlyHours(shifts)}h
+				</Heading>
+			</div>
 
 			{month ? (
 				<div className='mt-4 flex w-full'>

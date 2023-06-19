@@ -12,6 +12,7 @@ import Notification from '../ui/Notification.tsx'
 import SearchEmployees from './SearchEmployees.tsx'
 import { formatDate, formatMonth } from '../../utils/DateFormatting.ts'
 import Paragraph from '../ui/Paragraph.tsx'
+import { calculateMonthlyHours, calculateTotalHours } from '../../utils/CalculateHours.ts'
 
 interface Employee {
 	_id: string
@@ -196,7 +197,7 @@ const ScheduleMaker: FC<ScheduleMakerProps> = ({
 							<Heading
 								size={'xs'}
 								className='mb-2 text-center font-normal'>
-								{name} - {formatMonth(schedule[0].date)}
+								{name} - {formatMonth(schedule[0].date)} - ( {calculateTotalHours(schedule)} hours )
 							</Heading>
 						) : (
 							<Heading

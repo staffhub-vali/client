@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { Check, X } from 'lucide-react'
+import { Check, MoreVertical, X } from 'lucide-react'
 import Input from '../../../ui/Input.tsx'
 import Label from '../../../ui/Label.tsx'
 import Button from '../../../ui/Button.tsx'
@@ -8,6 +8,7 @@ import { useNavigate } from 'react-router-dom'
 import { Logout } from '../../../../Auth.tsx'
 import Container from '../../../ui/Container.tsx'
 import { Dispatch, FC, FormEvent, SetStateAction, useState } from 'react'
+import Dropdown from '../../Dropdown.tsx'
 
 interface PersonalInfoProps {
 	employee: {
@@ -15,19 +16,32 @@ interface PersonalInfoProps {
 		name: string
 		email: string
 		phone: string
+		notes: string[]
 		address: string
 		sickDays: number | string
+		shiftPreferences: string[]
 		vacationDays: number | string
 	}
 	loading: boolean
+	showDropdown: boolean
 	setLoading: Dispatch<SetStateAction<boolean>>
 	setError: Dispatch<SetStateAction<string | null>>
+	setShowDropdown: Dispatch<SetStateAction<boolean>>
 	setMessage: Dispatch<SetStateAction<string | null>>
 }
 
-const PersonalInfo: FC<PersonalInfoProps> = ({ employee, loading, setLoading, setMessage, setError }) => {
+const PersonalInfo: FC<PersonalInfoProps> = ({
+	employee,
+	loading,
+	setLoading,
+	setMessage,
+	setError,
+	showDropdown,
+	setShowDropdown,
+}) => {
 	const { _id } = employee
 	const navigate = useNavigate()
+	const [modal, setShowModal] = useState<boolean>(false)
 	const [name, setName] = useState<string>(employee.name)
 	const [email, setEmail] = useState<string>(employee.email)
 	const [phone, setPhone] = useState<string>(employee.phone)
@@ -68,11 +82,32 @@ const PersonalInfo: FC<PersonalInfoProps> = ({ employee, loading, setLoading, se
 	}
 
 	return (
-		<Container>
-			<Heading size={'sm'}>{employee.name}</Heading>
+		<Container
+			size={'lg'}
+			className='pt-20'>
+			<div className='relative ml-auto flex'>
+				<Button
+					className='ml-auto min-w-0 rounded-full hover:bg-slate-50 dark:hover:bg-slate-600'
+					variant={'link'}
+					onClick={() => setShowDropdown(!showDropdown)}>
+					<MoreVertical size={24} />
+				</Button>
+				{showDropdown && (
+					<Dropdown
+						employee={employee}
+						setShowModal={setShowModal}
+						setShowDropdown={setShowDropdown}
+					/>
+				)}
+			</div>
+			<div className='flex w-full items-center justify-center space-x-8 border-b-2 pb-4 dark:border-slate-600'>
+				{' '}
+				<Heading size={'sm'}>{employee.name}</Heading>
+			</div>
+
 			<form
 				onSubmit={handleSubmit}
-				className='slide-in-bottom mt-12 w-4/6'>
+				className='slide-in-bottom mt-12 w-2/6'>
 				<Label htmlFor='name'>Name</Label>
 				<Input
 					size='lg'

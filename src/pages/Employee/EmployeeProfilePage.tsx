@@ -94,6 +94,8 @@ const EmployeeProfilePage = () => {
 					setError={setError}
 					setLoading={setLoading}
 					setMessage={setMessage}
+					showDropdown={showDropdown}
+					setShowDropdown={setShowDropdown}
 				/>
 			)}
 			{employee && isPreferences && (
@@ -103,15 +105,19 @@ const EmployeeProfilePage = () => {
 					employee={employee}
 					setMessage={setMessage}
 					setLoading={setLoading}
+					showDropdown={showDropdown}
+					setShowDropdown={setShowDropdown}
 				/>
 			)}
 			{employee && isNotes && (
 				<NotesList
 					loading={loading}
 					setError={setError}
+					employee={employee}
 					setLoading={setLoading}
 					setMessage={setMessage}
-					employee={employee}
+					showDropdown={showDropdown}
+					setShowDropdown={setShowDropdown}
 				/>
 			)}
 			{employee && isVacation && (
@@ -121,6 +127,8 @@ const EmployeeProfilePage = () => {
 					employee={employee}
 					setMessage={setMessage}
 					setLoading={setLoading}
+					showDropdown={showDropdown}
+					setShowDropdown={setShowDropdown}
 				/>
 			)}
 			{employee && isSchedule && (
@@ -131,6 +139,8 @@ const EmployeeProfilePage = () => {
 					employee={employee}
 					setMessage={setMessage}
 					setLoading={setLoading}
+					showDropdown={showDropdown}
+					setShowDropdown={setShowDropdown}
 				/>
 			)}
 			{employee && !isNotes && !isAbout && !isPreferences && !isVacation && !isSchedule && (

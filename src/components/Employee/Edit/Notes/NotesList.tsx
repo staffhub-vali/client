@@ -4,9 +4,10 @@ import Input from '../../../ui/Input.tsx'
 import Button from '../../../ui/Button.tsx'
 import Heading from '../../../ui/Heading.tsx'
 import { Logout } from '../../../../Auth.tsx'
-import { Check, Scroll, X } from 'lucide-react'
+import { Check, MoreVertical, Scroll, X } from 'lucide-react'
 import Container from '../../../ui/Container.tsx'
 import { Dispatch, FC, SetStateAction, useState } from 'react'
+import Dropdown from '../../Dropdown.tsx'
 
 interface NotesListProps {
 	employee: {
@@ -19,13 +20,24 @@ interface NotesListProps {
 		vacationDays: number | string
 	}
 	loading: boolean
+	showDropdown: boolean
 	setLoading: Dispatch<SetStateAction<boolean>>
 	setError: Dispatch<SetStateAction<string | null>>
+	setShowDropdown: Dispatch<SetStateAction<boolean>>
 	setMessage: Dispatch<SetStateAction<string | null>>
 }
 
-const NotesList: FC<NotesListProps> = ({ employee, loading, setLoading, setError, setMessage }) => {
+const NotesList: FC<NotesListProps> = ({
+	employee,
+	loading,
+	setLoading,
+	setError,
+	setMessage,
+	showDropdown,
+	setShowDropdown,
+}) => {
 	const [note, setNote] = useState<string>('')
+	const [showModal, setShowModal] = useState<boolean>(false)
 	const [showAddNote, setShowAddNote] = useState<boolean>(false)
 
 	const addNote = async (e: React.FormEvent) => {
@@ -58,7 +70,24 @@ const NotesList: FC<NotesListProps> = ({ employee, loading, setLoading, setError
 	}
 
 	return (
-		<Container>
+		<Container
+			size={'lg'}
+			className='pt-20'>
+			<div className='relative ml-auto flex'>
+				<Button
+					className='ml-auto min-w-0 rounded-full hover:bg-slate-50 dark:hover:bg-slate-600'
+					variant={'link'}
+					onClick={() => setShowDropdown(!showDropdown)}>
+					<MoreVertical size={24} />
+				</Button>
+				{showDropdown && (
+					<Dropdown
+						employee={employee}
+						setShowModal={setShowModal}
+						setShowDropdown={setShowDropdown}
+					/>
+				)}
+			</div>
 			<div className='flex w-full items-center justify-center space-x-8 border-b-2 pb-4 dark:border-slate-600'>
 				<Heading
 					size={'sm'}
@@ -78,8 +107,7 @@ const NotesList: FC<NotesListProps> = ({ employee, loading, setLoading, setError
 					<Button
 						size={'sm'}
 						className=' w-36'
-						onClick={() => setShowAddNote(true)}
-						variant={'outline'}>
+						onClick={() => setShowAddNote(true)}>
 						New Note
 						<Scroll className='ml-2 h-5 w-5' />
 					</Button>

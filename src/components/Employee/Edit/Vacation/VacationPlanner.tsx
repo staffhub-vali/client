@@ -11,11 +11,13 @@ interface VacationPlannerProps {
 	loading: boolean
 	employee: Employee
 	daysPlanned: number
+	daysRemaining: number
 	setAmount: Dispatch<SetStateAction<number>>
 	setLoading: Dispatch<SetStateAction<boolean>>
 	setDaysPlanned: Dispatch<SetStateAction<number>>
 	setShowPlanner: Dispatch<SetStateAction<boolean>>
 	setError: Dispatch<SetStateAction<string | null>>
+	setDaysRemaining: Dispatch<SetStateAction<number>>
 	setMessage: Dispatch<SetStateAction<string | null>>
 }
 
@@ -39,10 +41,11 @@ const VacationPlanner: FC<VacationPlannerProps> = ({
 	setAmount,
 	daysPlanned,
 	setDaysPlanned,
+	daysRemaining,
+	setDaysRemaining,
 }) => {
 	const [end, setEnd] = useState(new Date())
 	const [start, setStart] = useState(new Date())
-	const [daysRemaining, setDaysRemaining] = useState(employee.vacationDays)
 
 	const calculateTotalDays = () => {
 		const millisecondsPerDay = 24 * 60 * 60 * 1000
@@ -129,20 +132,7 @@ const VacationPlanner: FC<VacationPlannerProps> = ({
 
 	return (
 		<>
-			<div className='items-auto mt-12 flex w-full justify-center space-x-2 border-b-2 pb-3 dark:border-slate-700'>
-				<Heading
-					size={'xs'}
-					className='slide-in-bottom font-normal'>
-					Vacation days remaining:
-				</Heading>
-				<Heading
-					size={'xs'}
-					className=' slide-in-bottom text-green-500 dark:text-green-400'>
-					{daysRemaining}
-				</Heading>
-			</div>
-
-			<div className='slide-in-bottom mt-12 flex h-96 space-x-24'>
+			<div className='slide-in-bottom mt-6 flex h-96 space-x-24'>
 				<div>
 					<Heading
 						className='mb-2 text-center font-normal'
@@ -176,13 +166,6 @@ const VacationPlanner: FC<VacationPlannerProps> = ({
 					loading={loading}
 					className='slide-in-bottom w-36'>
 					Submit <Check className='ml-2' />
-				</Button>
-				<Button
-					size={'sm'}
-					variant={'outline'}
-					className=' slide-in-bottom w-36'
-					onClick={() => setShowPlanner(false)}>
-					Cancel <X className='ml-2' />
 				</Button>
 			</form>
 		</>

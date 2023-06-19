@@ -3,6 +3,13 @@ interface Shift {
 	end: number
 }
 
+interface WorkDay {
+	start?: number
+	end?: number
+	total?: number
+	date: number
+}
+
 export const calculateMonthlyHours = (shifts: Shift[]) => {
 	const now = new Date()
 	const currentMonth = now.getMonth()
@@ -27,7 +34,7 @@ export const calculateMonthlyHours = (shifts: Shift[]) => {
 	return totalHours
 }
 
-export const calculateTotalHours = (shifts: Shift[]) => {
+export const calculateTotalHours = (shifts: Shift[] | any) => {
 	const totalHours = shifts.reduce((acc: number, shift: Shift) => {
 		if (shift.start && shift.end) {
 			const start = shift.start

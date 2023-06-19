@@ -1,12 +1,13 @@
 import axios from 'axios'
 import Input from '../../../ui/Input.tsx'
 import Button from '../../../ui/Button.tsx'
-import { Check, Plus, X } from 'lucide-react'
+import { Check, MoreVertical, Plus, Sticker, X } from 'lucide-react'
 import Heading from '../../../ui/Heading.tsx'
 import { Logout } from '../../../../Auth.tsx'
 import Container from '../../../ui/Container.tsx'
 import ShiftPreference from './ShiftPreference.tsx'
 import { Dispatch, FC, SetStateAction, useState } from 'react'
+import Dropdown from '../../Dropdown.tsx'
 
 interface ShiftPreferencesListProps {
 	employee: {
@@ -19,9 +20,11 @@ interface ShiftPreferencesListProps {
 		vacationDays: number | string
 	}
 	loading: boolean
-	setError: Dispatch<SetStateAction<string | null>>
-	setMessage: Dispatch<SetStateAction<string | null>>
+	showDropdown: boolean
 	setLoading: Dispatch<SetStateAction<boolean>>
+	setError: Dispatch<SetStateAction<string | null>>
+	setShowDropdown: Dispatch<SetStateAction<boolean>>
+	setMessage: Dispatch<SetStateAction<string | null>>
 }
 
 const ShiftPreferencesList: FC<ShiftPreferencesListProps> = ({
@@ -30,7 +33,10 @@ const ShiftPreferencesList: FC<ShiftPreferencesListProps> = ({
 	setError,
 	setLoading,
 	setMessage,
+	showDropdown,
+	setShowDropdown,
 }) => {
+	const [showModal, setShowModal] = useState<boolean>(false)
 	const [shiftPreference, setShiftPreference] = useState<string>('')
 	const [showAddShiftPreference, setShowAddShiftPreference] = useState<boolean>(false)
 
@@ -66,9 +72,26 @@ const ShiftPreferencesList: FC<ShiftPreferencesListProps> = ({
 	}
 
 	return (
-		<Container>
-			<div className='flex items-center space-x-8'>
-				<Heading size={'sm'}>{employee.name}</Heading>
+		<Container
+			size={'lg'}
+			className='pt-20'>
+			<div className='relative ml-auto flex'>
+				<Button
+					className='ml-auto min-w-0 rounded-full hover:bg-slate-50 dark:hover:bg-slate-600'
+					variant={'link'}
+					onClick={() => setShowDropdown(!showDropdown)}>
+					<MoreVertical size={24} />
+				</Button>
+				{showDropdown && (
+					<Dropdown
+						employee={employee}
+						setShowModal={setShowModal}
+						setShowDropdown={setShowDropdown}
+					/>
+				)}
+			</div>
+			<div className='flex w-full items-center justify-center space-x-8 border-b-2 pb-4 dark:border-slate-600'>
+				<Heading size={'sm'}>Shift preferences for {employee.name}</Heading>
 				{showAddShiftPreference ? (
 					<Button
 						size={'sm'}
@@ -82,10 +105,9 @@ const ShiftPreferencesList: FC<ShiftPreferencesListProps> = ({
 					<Button
 						size={'sm'}
 						className='w-48'
-						onClick={() => setShowAddShiftPreference(true)}
-						variant={'outline'}>
+						onClick={() => setShowAddShiftPreference(true)}>
 						New Shift Preference
-						<Plus className='ml-2 h-5 w-5' />
+						<Sticker className='ml-2 h-5 w-5' />
 					</Button>
 				)}
 			</div>

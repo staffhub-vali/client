@@ -12,15 +12,16 @@ interface DropdownProps {
 		shiftPreferences: string[]
 		vacationDays: number | string
 	}
+	showDelete?: boolean
 	setShowModal: Dispatch<SetStateAction<boolean>>
 	setShowDropdown: Dispatch<SetStateAction<boolean>>
 }
 
-const Dropdown: FC<DropdownProps> = ({ employee, setShowModal, setShowDropdown }) => {
+const Dropdown: FC<DropdownProps> = ({ employee, setShowModal, setShowDropdown, showDelete }) => {
 	const navigate = useNavigate()
 
 	return (
-		<div className='absolute right-2 top-10 mt-2 w-72 rounded-md bg-white  shadow-lg ring-1 ring-black ring-opacity-5 dark:bg-slate-600'>
+		<div className='absolute right-2 top-10 z-50 mt-2 w-72 rounded-md  bg-white shadow-lg ring-1 ring-black ring-opacity-5 dark:bg-slate-600'>
 			<ul>
 				<li
 					onClick={() => {
@@ -68,15 +69,17 @@ const Dropdown: FC<DropdownProps> = ({ employee, setShowModal, setShowDropdown }
 					<User2 className='ml-2' />
 				</li>
 
-				<li
-					onClick={() => {
-						setShowModal(true)
-						setShowDropdown(false)
-					}}
-					className='flex cursor-pointer items-center justify-between px-4 py-3 hover:bg-slate-50 dark:hover:bg-slate-500'>
-					Delete Employee
-					<Trash2 className='ml-2 text-red-500' />
-				</li>
+				{showDelete && (
+					<li
+						onClick={() => {
+							setShowModal(true)
+							setShowDropdown(false)
+						}}
+						className='flex cursor-pointer items-center justify-between px-4 py-3 hover:bg-slate-50 dark:hover:bg-slate-500'>
+						Delete Employee
+						<Trash2 className='ml-2 text-red-500' />
+					</li>
+				)}
 			</ul>
 		</div>
 	)

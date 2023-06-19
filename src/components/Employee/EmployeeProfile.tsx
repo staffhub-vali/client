@@ -94,6 +94,7 @@ const EmployeeProfile: FC<EmployeeProfileProps> = ({ shifts, employee, showDropd
 				</Button>
 				{showDropdown && (
 					<Dropdown
+						showDelete={true}
 						employee={employee}
 						setShowModal={setShowModal}
 						setShowDropdown={setShowDropdown}

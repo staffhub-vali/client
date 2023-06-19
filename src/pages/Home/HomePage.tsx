@@ -58,12 +58,11 @@ const HomePage = () => {
 									<Paragraph
 										size={'xl'}
 										className='slide-in-bottom-subtitle mt-2 '>
-										Subtitle header that isnt too short or too long, just perfect!
+										Enjoy the Seamless Efficiency at Your Fingertips
 									</Paragraph>
 								</>
 							) : (
 								<>
-									{' '}
 									<Heading className='slide-in-bottom-h1 text-center'>
 										Simplify Administration, Maximize Results
 									</Heading>

@@ -6,14 +6,17 @@ import Heading from '../../../ui/Heading.tsx'
 import { Logout } from '../../../../Auth.tsx'
 import Container from '../../../ui/Container.tsx'
 import VacationPlanner from './VacationPlanner.tsx'
-import { Check, FileDigit, Palmtree, X } from 'lucide-react'
+import { Check, FileDigit, MoreVertical, Palmtree, X } from 'lucide-react'
 import { Dispatch, FC, SetStateAction, useState } from 'react'
+import Dropdown from '../../Dropdown.tsx'
 
 interface VacationListProps {
 	loading: boolean
 	employee: Employee
+	showDropdown: boolean
 	setLoading: Dispatch<SetStateAction<boolean>>
 	setError: Dispatch<SetStateAction<string | null>>
+	setShowDropdown: Dispatch<SetStateAction<boolean>>
 	setMessage: Dispatch<SetStateAction<string | null>>
 }
 
@@ -28,11 +31,21 @@ interface Employee {
 	vacations: [{ start: number; end: number }]
 }
 
-const VacationList: FC<VacationListProps> = ({ loading, setLoading, employee, setMessage, setError }) => {
+const VacationList: FC<VacationListProps> = ({
+	loading,
+	setLoading,
+	employee,
+	setMessage,
+	setError,
+	showDropdown,
+	setShowDropdown,
+}) => {
+	const [showModal, setShowModal] = useState<boolean>(false)
 	const [daysPlanned, setDaysPlanned] = useState<number>(0)
 	const [showPlanner, setShowPlanner] = useState<boolean>(false)
 	const [amount, setAmount] = useState<number>(employee.vacationDays)
 	const [showChangeAmount, setShowChangeAmount] = useState<boolean>(false)
+	const [daysRemaining, setDaysRemaining] = useState(employee.vacationDays)
 
 	const updateAmount = async (e: React.FormEvent) => {
 		e.preventDefault()
@@ -70,15 +83,39 @@ const VacationList: FC<VacationListProps> = ({ loading, setLoading, employee, se
 	}
 
 	return (
-		<Container size={'lg'}>
-			<Heading
-				size={'sm'}
-				className='mb-6'>
-				{employee.name}
-			</Heading>
-			<div className='items-auto slide-in-bottom flex space-x-2'>
-				{!showPlanner && (
-					<>
+		<Container
+			size={'lg'}
+			className='pt-20'>
+			<div className='relative ml-auto flex'>
+				<Button
+					className='ml-auto min-w-0 rounded-full hover:bg-slate-50 dark:hover:bg-slate-600'
+					variant={'link'}
+					onClick={() => setShowDropdown(!showDropdown)}>
+					<MoreVertical size={24} />
+				</Button>
+				{showDropdown && (
+					<Dropdown
+						employee={employee}
+						setShowModal={setShowModal}
+						setShowDropdown={setShowDropdown}
+					/>
+				)}
+			</div>
+			<div className='flex w-full items-center justify-center space-x-8 border-b-2 pb-4 dark:border-slate-600'>
+				<Heading size={'sm'}>
+					{employee.name} - Vacation days remaining: {daysRemaining}
+				</Heading>
+
+				<div className='space-x-2'>
+					{showPlanner ? (
+						<Button
+							size={'sm'}
+							variant={'outline'}
+							className='w-36'
+							onClick={() => setShowPlanner(false)}>
+							Cancel <X className='ml-2' />
+						</Button>
+					) : (
 						<Button
 							className='w-36'
 							size={'sm'}
@@ -89,43 +126,30 @@ const VacationList: FC<VacationListProps> = ({ loading, setLoading, employee, se
 							}}>
 							New Vacation <Palmtree className='ml-2' />
 						</Button>
-						{showChangeAmount ? (
-							<Button
-								className='w-56'
-								size={'sm'}
-								variant={'outline'}
-								onClick={() => setShowChangeAmount(false)}>
-								Cancel
-								<X className='ml-2' />
-							</Button>
-						) : (
-							<Button
-								className='w-56'
-								size={'sm'}
-								variant={'outline'}
-								title='Change the amount of vacation days'
-								onClick={() => setShowChangeAmount(true)}>
-								Change number of days
-								<FileDigit className='ml-2' />
-							</Button>
-						)}
-					</>
-				)}
-			</div>
-			{!showPlanner && !showChangeAmount && (
-				<div className='items-auto mt-12 flex w-full justify-center space-x-2 border-b-2 pb-3 dark:border-slate-700'>
-					<Heading
-						size={'xs'}
-						className='slide-in-bottom font-normal '>
-						Vacation days remaining:
-					</Heading>
-					<Heading
-						size={'xs'}
-						className=' slide-in-bottom text-green-500 dark:text-green-400 '>
-						{employee.vacationDays}
-					</Heading>
+					)}
+					{showChangeAmount ? (
+						<Button
+							className='w-56'
+							size={'sm'}
+							variant={'outline'}
+							onClick={() => setShowChangeAmount(false)}>
+							Cancel
+							<X className='ml-2' />
+						</Button>
+					) : (
+						<Button
+							className='w-56'
+							size={'sm'}
+							variant={'outline'}
+							title='Change the amount of vacation days'
+							onClick={() => setShowChangeAmount(true)}>
+							Change number of days
+							<FileDigit className='ml-2' />
+						</Button>
+					)}
 				</div>
-			)}
+			</div>
+
 			{showChangeAmount && (
 				<form
 					onSubmit={updateAmount}
@@ -149,7 +173,7 @@ const VacationList: FC<VacationListProps> = ({ loading, setLoading, employee, se
 					{' '}
 					<Heading
 						size={'xs'}
-						className='slide-in-bottom font-normal'>
+						className='slide-in-bottom mt-12 font-normal'>
 						Days planned: {daysPlanned}
 					</Heading>
 					<VacationPlanner
@@ -160,8 +184,10 @@ const VacationList: FC<VacationListProps> = ({ loading, setLoading, employee, se
 						setMessage={setMessage}
 						setLoading={setLoading}
 						daysPlanned={daysPlanned}
+						daysRemaining={daysRemaining}
 						setDaysPlanned={setDaysPlanned}
 						setShowPlanner={setShowPlanner}
+						setDaysRemaining={setDaysRemaining}
 					/>
 				</>
 			)}
@@ -190,7 +216,7 @@ const VacationList: FC<VacationListProps> = ({ loading, setLoading, employee, se
 			) : (
 				!showPlanner && (
 					<Heading
-						className='slide-in-bottom-h1 mt-16'
+						className='slide-in-bottom mt-16'
 						size={'xs'}>
 						This employee has no planned vacations.
 					</Heading>

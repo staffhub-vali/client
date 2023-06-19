@@ -7,7 +7,7 @@ const DocumentationPage = () => {
 		<Container size='lg'>
 			<Heading
 				size={'sm'}
-				className='w-1/2 border-b-2 pb-4 text-center dark:border-slate-500'>
+				className='w-2/3 border-b-2 border-slate-300 pb-4 text-center dark:border-slate-500'>
 				Documentation
 			</Heading>
 			<Heading
@@ -46,11 +46,9 @@ const DocumentationPage = () => {
 				Shifts
 			</Heading>
 			<Paragraph size={'xl'}>
-				When creating a shift, the correct format is the european format. For example: 09:00 - 17:00.
-			</Paragraph>
-			<Paragraph size={'xl'}>
-				If your shift ends at midnight, you will have to write it as 24:00 and it will instantly change to 00:00 and
-				calculate the total hours of the shift. Writing 00:00 yourself will not work.
+				When creating a shift, the correct format is the european format. For example: 09:00 - 17:00. If your shift ends
+				at midnight, you will have to write it as 24:00 and it will instantly change to 00:00 and calculate the total
+				hours of the shift. Writing 00:00 yourself will not work.
 			</Paragraph>
 		</Container>
 	)

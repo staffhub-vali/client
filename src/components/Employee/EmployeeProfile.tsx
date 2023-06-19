@@ -101,7 +101,7 @@ const EmployeeProfile: FC<EmployeeProfileProps> = ({ shifts, employee, showDropd
 					/>
 				)}
 			</div>
-			<div className='space-y-6 border-b pb-8 dark:border-slate-500'>
+			<div className='space-y-6 border-b border-slate-300 pb-8 dark:border-slate-500'>
 				<Heading
 					className=' text-center'
 					size={'default'}>
@@ -142,7 +142,7 @@ const EmployeeProfile: FC<EmployeeProfileProps> = ({ shifts, employee, showDropd
 				</div>
 			</div>
 
-			<div className='flex w-full flex-col items-center border-b py-4 dark:border-slate-500'>
+			<div className='flex w-full flex-col items-center border-b border-slate-300 py-4 dark:border-slate-500'>
 				<Heading
 					size={'xs'}
 					className='flex items-center'>
@@ -162,7 +162,7 @@ const EmployeeProfile: FC<EmployeeProfileProps> = ({ shifts, employee, showDropd
 				</div>
 			</div>
 
-			<div className='flex w-full flex-col items-center border-b py-4 dark:border-slate-500'>
+			<div className='flex w-full flex-col items-center border-b border-slate-300 py-4 dark:border-slate-500'>
 				<Heading
 					size={'xs'}
 					className='flex items-center'>

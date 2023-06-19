@@ -101,7 +101,7 @@ const VacationList: FC<VacationListProps> = ({
 					/>
 				)}
 			</div>
-			<div className='flex w-full items-center justify-center space-x-8 border-b-2 pb-4 dark:border-slate-600'>
+			<div className='flex w-full items-center justify-center space-x-8 border-b-2 border-slate-300 pb-4 dark:border-slate-600'>
 				<Heading size={'sm'}>
 					{employee.name} - Vacation days remaining: {daysRemaining}
 				</Heading>
@@ -153,7 +153,7 @@ const VacationList: FC<VacationListProps> = ({
 			{showChangeAmount && (
 				<form
 					onSubmit={updateAmount}
-					className='mt-9 flex w-full items-center justify-center border-b-2 pb-3 dark:border-slate-700'>
+					className='mt-9 flex w-full items-center justify-center border-b-2 border-slate-300 pb-3 dark:border-slate-700'>
 					<Input
 						type='text'
 						value={amount}

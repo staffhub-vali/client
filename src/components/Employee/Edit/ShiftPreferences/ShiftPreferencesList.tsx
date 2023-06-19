@@ -90,7 +90,7 @@ const ShiftPreferencesList: FC<ShiftPreferencesListProps> = ({
 					/>
 				)}
 			</div>
-			<div className='flex w-full items-center justify-center space-x-8 border-b-2 pb-4 dark:border-slate-600'>
+			<div className='flex w-full items-center justify-center space-x-8 border-b-2 border-slate-300 pb-4 dark:border-slate-600'>
 				<Heading size={'sm'}>Shift preferences for {employee.name}</Heading>
 				{showAddShiftPreference ? (
 					<Button

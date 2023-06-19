@@ -20,7 +20,7 @@ export const buttonVariants = cva(
 				cancel: "bg-slate-400 text-white hover:bg-slate-400 dark:bg-slate-400 dark:text-white dark:hover:bg-slate-400'",
 			},
 			size: {
-				default: 'h-10 py-2 px-4 min-w-[8rem]',
+				default: 'h-11 py-2 px-4 min-w-[8rem]',
 				sm: 'h-9 px-2 w-28 min-w-[6rem]',
 				lg: 'h-11 px-8 text-2xl min-w-[10rem]',
 			},

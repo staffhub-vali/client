@@ -1,7 +1,7 @@
 import Input from '../ui/Input.tsx'
 import { FC, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { UserPlus } from 'lucide-react'
+import { Search, UserPlus } from 'lucide-react'
 import Heading from '../ui/Heading.tsx'
 import Container from '../ui/Container.tsx'
 import { useNavigate } from 'react-router-dom'
@@ -9,8 +9,6 @@ import { buttonVariants } from '../../components/ui/Button.tsx'
 
 interface EmployeesTableProps {
 	data: Employee[]
-	headings: string[]
-	searchBar?: boolean
 }
 
 interface Employee {
@@ -24,9 +22,9 @@ interface Employee {
 	vacationDays: number | string
 }
 
-const EmployeesTable: FC<EmployeesTableProps> = ({ headings, data, searchBar }) => {
+const EmployeesTable: FC<EmployeesTableProps> = ({ data }) => {
+	const headings = ['Name', 'Email', 'Phone', 'Address']
 	const [searchText, setSearchText] = useState<string>('')
-
 	const filteredData = data.filter((employee) => {
 		const values = Object.values(employee).join('').toLowerCase()
 		return values.includes(searchText.toLowerCase())
@@ -44,28 +42,26 @@ const EmployeesTable: FC<EmployeesTableProps> = ({ headings, data, searchBar }) 
 				Employees ({data.length})
 			</Heading>
 			<div className='slide-in-bottom-h1 mt-6 flex  items-center space-x-12'>
-				{searchBar && (
-					<div className='mx-auto flex w-full items-center rounded-lg bg-white px-2 ring-slate-800  focus-within:ring-2 dark:bg-slate-700'>
-						<i className='fa fa-search text-slate-500 dark:text-slate-400' />
-						<Input
-							type='text'
-							size={'default'}
-							value={searchText}
-							placeholder='Search for employees...'
-							className='group mb-0 shadow-none focus:ring-0'
-							onChange={(event) => setSearchText(event.target.value)}
-						/>
-					</div>
-				)}
+				<div className='mx-auto flex w-full items-center rounded-lg bg-white px-2 shadow-md  ring-slate-800 focus-within:ring-2 dark:bg-slate-700'>
+					<Search />
+					<Input
+						type='text'
+						value={searchText}
+						placeholder='Search for employees...'
+						className='group mb-0 shadow-none focus:ring-0'
+						onChange={(event) => setSearchText(event.target.value)}
+					/>
+				</div>
+
 				<Link
 					to={'/employees/new'}
 					title='Add a new employee'
 					className={`${buttonVariants({ variant: 'default', size: 'default' })} w-64`}>
-					New Employee {<UserPlus className='ml-2 h-5 w-5' />}
+					New Employee {<UserPlus className='ml-2' />}
 				</Link>
 			</div>
 
-			<table className='slide-in-bottom-h1 mt-4 w-4/5 divide-y-2 divide-slate-200 border-2 bg-white text-center dark:divide-slate-600 dark:border-slate-600 dark:bg-slate-700'>
+			<table className='slide-in-bottom-h1 mt-4 w-4/5 divide-y-2 divide-slate-300 border-2 border-slate-300 bg-white text-center dark:divide-slate-600 dark:border-slate-600 dark:bg-slate-700'>
 				<thead>
 					<tr>
 						{headings.map((heading, index) => (
@@ -78,7 +74,7 @@ const EmployeesTable: FC<EmployeesTableProps> = ({ headings, data, searchBar }) 
 					</tr>
 				</thead>
 
-				<tbody className='divide-y-2 divide-slate-200 dark:divide-slate-600'>
+				<tbody className='divide-y-2 divide-slate-300 dark:divide-slate-600'>
 					{filteredData.map((employee, index) => (
 						<tr
 							onClick={() => navigate(`/employees/${employee._id}`)}

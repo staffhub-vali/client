@@ -37,7 +37,7 @@ const SchedulesList: FC<SchedulesListProps> = ({ data, headings }) => {
 
 	return (
 		<div className='w-1/2 overflow-scroll overflow-x-hidden rounded'>
-			<table className='w-full divide-y-2 divide-slate-200 rounded border-2 bg-white text-center text-lg shadow-md'>
+			<table className='w-full divide-y-2 divide-slate-300 rounded border-2 border-slate-300 bg-white text-center text-lg shadow-md'>
 				<thead>
 					<tr className='sticky top-0 bg-white '>
 						{headings.map((heading, index) => (
@@ -49,7 +49,7 @@ const SchedulesList: FC<SchedulesListProps> = ({ data, headings }) => {
 						))}
 					</tr>
 				</thead>
-				<tbody className='divide-y-2 divide-slate-200 '>
+				<tbody className='divide-y-2 divide-slate-300 '>
 					{data.map((item, index) => {
 						return (
 							<tr

@@ -59,10 +59,10 @@ const Dashboard: FC<DashboardProps> = ({
 		<Container
 			size={'lg'}
 			className='dashboard p-0 pt-20'>
-			<div className='slide-in-bottom flex min-h-[36rem] rounded border bg-white shadow dark:border-slate-600 dark:bg-slate-700'>
+			<div className='slide-in-bottom flex min-h-[36rem] rounded border border-slate-300 bg-white shadow dark:border-slate-500 dark:bg-slate-700'>
 				{data.map((day: WorkDay) => (
 					<div
-						className='group flex w-64 cursor-pointer flex-col items-center border-x dark:border-slate-600'
+						className='group flex w-64 cursor-pointer flex-col items-center border-x border-slate-300 dark:border-slate-500'
 						key={day._id}
 						onClick={() => navigate(`/days/${day._id}`)}>
 						<div className='w-full text-center'>
@@ -73,7 +73,7 @@ const Dashboard: FC<DashboardProps> = ({
 							</Heading>
 							<Paragraph
 								size={'xl'}
-								className=' w-full cursor-pointer border-b-2 py-2 text-center group-hover:text-sky-400 dark:border-slate-600'>
+								className=' w-full cursor-pointer border-b-2 border-slate-300 py-2 text-center group-hover:text-sky-400 dark:border-slate-500'>
 								{day && formatDate(day.date)}
 							</Paragraph>
 						</div>

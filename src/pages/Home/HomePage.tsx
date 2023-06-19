@@ -58,7 +58,7 @@ const HomePage = () => {
 									<Paragraph
 										size={'xl'}
 										className='slide-in-bottom-subtitle mt-2 '>
-										Enjoy the Seamless Efficiency at Your Fingertips
+										Enjoy the Seamless Efficiency at Your Fingertips!
 									</Paragraph>
 								</>
 							) : (

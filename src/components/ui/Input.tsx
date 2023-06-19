@@ -9,8 +9,8 @@ export const inputVariants = cva('rounded-md font-medium focus:outline-none shad
 				'bg-white text-slate-800 dark:bg-slate-700 dark:text-slate-200 focus:ring-2 ring-slate-800 dark:ring-slate-200 w-full',
 		},
 		size: {
-			default: 'p-2 text-md',
-			sm: 'px-2 py-1 text-sm',
+			default: 'p-2 text-lg',
+			sm: 'px-2 py-1 text-md',
 			lg: 'px-4 py-3 text-lg',
 		},
 	},

@@ -9,12 +9,6 @@ import { buttonVariants } from '../../components/ui/Button.tsx'
 import EmployeesTable from '../../components/Employee/EmployeesTable.tsx'
 import Container from '../../components/ui/Container.tsx'
 
-interface EmployeesListProps {
-	loading: boolean
-	data: Employee[]
-	headings: string[]
-}
-
 interface Employee {
 	_id: string
 	name: string
@@ -25,11 +19,9 @@ interface Employee {
 	vacationDays: number | string
 }
 
-const headings = ['Name', 'Email', 'Phone', 'Address']
-
 const EmployeesListPage = () => {
-	const [data, setData] = useState([])
-	const [loading, setLoading] = useState(true)
+	const [data, setData] = useState<Employee[]>([])
+	const [loading, setLoading] = useState<boolean>(true)
 
 	useEffect(() => {
 		fetchEmployees()
@@ -60,11 +52,7 @@ const EmployeesListPage = () => {
 			{loading ? (
 				<Spinner />
 			) : data.length > 0 ? (
-				<EmployeesTable
-					data={data}
-					searchBar={true}
-					headings={headings}
-				/>
+				<EmployeesTable data={data} />
 			) : (
 				<>
 					<Heading

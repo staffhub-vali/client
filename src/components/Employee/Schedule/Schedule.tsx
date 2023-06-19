@@ -1,15 +1,15 @@
 import { Calendar } from 'react-calendar'
-import Button from '../../../ui/Button.tsx'
-import Heading from '../../../ui/Heading.tsx'
-import Container from '../../../ui/Container.tsx'
-import Paragraph from '../../../ui/Paragraph.tsx'
-import { Link, useNavigate } from 'react-router-dom'
-import { Dispatch, FC, SetStateAction, useState } from 'react'
-import ReactPDF, { Document, Page, Text, View, StyleSheet, PDFDownloadLink } from '@react-pdf/renderer'
-import { calculateMonthlyHours, calculateTotalHours } from '../../../../utils/CalculateHours.ts'
-import { formatDate, formatDay, formatMonth, formatTime, formatTotal } from '../../../../utils/DateFormatting.ts'
+import Dropdown from '../Dropdown.js'
+import Button from '../../ui/Button.js'
 import { MoreVertical } from 'lucide-react'
-import Dropdown from '../../Dropdown.tsx'
+import Heading from '../../ui/Heading.js'
+import { useNavigate } from 'react-router-dom'
+import Container from '../../ui/Container.js'
+import Paragraph from '../../ui/Paragraph.js'
+import { Dispatch, FC, SetStateAction, useState } from 'react'
+import { Document, Page, Text, View, StyleSheet, PDFDownloadLink } from '@react-pdf/renderer'
+import { calculateMonthlyHours, calculateTotalHours } from '../../../utils/CalculateHours.js'
+import { formatDate, formatDay, formatMonth, formatTime, formatTotal } from '../../../utils/DateFormatting.js'
 
 interface ScheduleProps {
 	employee: {
@@ -202,7 +202,7 @@ const Schedule: FC<ScheduleProps> = ({
 					/>
 				)}
 			</div>
-			<div className='flex w-full items-center justify-center space-x-8 border-b-2 pb-4 dark:border-slate-600'>
+			<div className='flex w-full items-center justify-center space-x-8 border-b-2 border-slate-300 pb-4 dark:border-slate-600'>
 				{' '}
 				<Heading size={'sm'}>
 					{employee.name} - Total hours for {formatMonth(new Date().getTime() / 1000)}: {calculateMonthlyHours(shifts)}h
@@ -214,13 +214,13 @@ const Schedule: FC<ScheduleProps> = ({
 					<div
 						className={`${
 							filteredShifts.length > 0
-								? 'slide-in-bottom overflow-y-scroll border bg-white shadow dark:border-slate-500 dark:bg-slate-800'
+								? 'slide-in-bottom overflow-y-scroll border border-slate-300 bg-white shadow dark:border-slate-500 dark:bg-slate-800'
 								: 'border-none'
-						}  mx-auto h-[37rem] overflow-x-hidden rounded border`}>
+						}  mx-auto h-[37rem] overflow-x-hidden rounded border border-slate-300`}>
 						{filteredShifts.length > 0 && month && (
 							<Heading
 								size={'xs'}
-								className='text-md flex items-center justify-evenly border-b-2 border-t bg-white py-4 text-center font-normal dark:border-slate-500 dark:bg-slate-800'>
+								className='text-md flex items-center justify-evenly border-b-2 border-t border-slate-300 bg-white py-4 text-center font-normal dark:border-slate-500 dark:bg-slate-800'>
 								{formatMonth(value.getTime() / 1000)} - {filteredShifts.length}{' '}
 								{filteredShifts.length === 1 ? 'Shift' : 'Shifts'} ({calculateTotalHours(filteredShifts)} hours)
 								<Button
@@ -251,7 +251,7 @@ const Schedule: FC<ScheduleProps> = ({
 									onClick={() => shift._id && navigate(`/days/${shift._id}`)}
 									className={`${
 										shift._id && 'group cursor-pointer '
-									} flex w-[48rem] items-center space-y-4 border-b-2 dark:border-slate-500 ${
+									} flex w-[48rem] items-center space-y-4 border-b-2 border-slate-300 dark:border-slate-500 ${
 										index % 2 === 0 ? 'bg-slate-50 dark:bg-slate-700' : 'bg-white dark:bg-slate-800'
 									} py-2`}>
 									<div className='mx-auto flex flex-col items-center group-hover:text-sky-500 dark:group-hover:text-sky-400'>

@@ -4,12 +4,11 @@ import Button from '../ui/Button.tsx'
 import Dropdown from './Dropdown.tsx'
 import Heading from '../ui/Heading.tsx'
 import Paragraph from '../ui/Paragraph.tsx'
-import { Mail, MapPin, MoreVertical, Palmtree, Phone, Scroll, Sticker } from 'lucide-react'
 import { Dispatch, FC, SetStateAction, useState } from 'react'
-import { calculateMonthlyHours } from '../../utils/CalculateHours.ts'
+import { Mail, MapPin, MoreVertical, Palmtree, Phone, Scroll, Sticker } from 'lucide-react'
 
 interface EmployeeProfileProps {
-	shifts: Shift[]
+	workDays: WorkDay[]
 	employee: Employee
 	showDropdown: boolean
 	setShowDropdown: Dispatch<SetStateAction<boolean>>
@@ -37,7 +36,13 @@ interface Vacation {
 	end: number
 }
 
-const EmployeeProfile: FC<EmployeeProfileProps> = ({ shifts, employee, showDropdown, setShowDropdown }) => {
+interface WorkDay {
+	_id: string
+	shifts: Shift[]
+	date: number
+}
+
+const EmployeeProfile: FC<EmployeeProfileProps> = ({ workDays, employee, showDropdown, setShowDropdown }) => {
 	const [loading, setLoading] = useState<boolean>(false)
 	const [showModal, setShowModal] = useState<boolean>(false)
 
@@ -108,11 +113,6 @@ const EmployeeProfile: FC<EmployeeProfileProps> = ({ shifts, employee, showDropd
 					{employee.name}
 				</Heading>
 
-				<Heading
-					size={'xs'}
-					className='text-center font-normal'>
-					Total hours for this month: {calculateMonthlyHours(shifts)}
-				</Heading>
 				<div className='flex w-full justify-evenly'>
 					<div className='flex w-1/3 justify-center  border-r border-slate-400 px-8 py-1'>
 						<Paragraph

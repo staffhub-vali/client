@@ -49,10 +49,14 @@ const VacationPlanner: FC<VacationPlannerProps> = ({
 
 	const calculateTotalDays = () => {
 		const millisecondsPerDay = 24 * 60 * 60 * 1000
-		const totalDays = Math.ceil((end.getTime() - start.getTime()) / millisecondsPerDay) + 1
-
-		setDaysPlanned(totalDays)
-		setDaysRemaining(employee.vacationDays - totalDays)
+		let totalDays = Math.ceil((end.getTime() - start.getTime()) / millisecondsPerDay) + 1
+		if (totalDays > 0 && daysRemaining <= employee.vacationDays) {
+			setDaysPlanned(totalDays)
+			setDaysRemaining(employee.vacationDays - totalDays)
+		} else {
+			setDaysPlanned(0)
+			setDaysRemaining(employee.vacationDays)
+		}
 	}
 
 	useEffect(() => {
@@ -64,17 +68,16 @@ const VacationPlanner: FC<VacationPlannerProps> = ({
 		const millisecondsPerDay = 24 * 60 * 60 * 1000
 		const newTotalDays = Math.ceil((end.getTime() - newStart.getTime()) / millisecondsPerDay) + 1
 
-		if (newStart > end) {
-			return setError('Start date must be before end date.')
-		}
-
 		if (employee.vacationDays - newTotalDays < 0) {
 			return setError("You can't plan that many days.")
 		}
 
 		setStart(newStart)
-		setDaysPlanned(newTotalDays)
-		setDaysRemaining(employee.vacationDays - newTotalDays)
+
+		if (newTotalDays > 0 && daysRemaining < employee.vacationDays) {
+			setDaysPlanned(newTotalDays)
+			setDaysRemaining(employee.vacationDays - newTotalDays)
+		}
 	}
 
 	const handleEndChange: any = (date: Date) => {
@@ -91,8 +94,11 @@ const VacationPlanner: FC<VacationPlannerProps> = ({
 		}
 
 		setEnd(newEnd)
-		setDaysPlanned(newTotalDays)
-		setDaysRemaining(employee.vacationDays - newTotalDays)
+
+		if (newTotalDays > 0 && daysRemaining < employee.vacationDays) {
+			setDaysPlanned(newTotalDays)
+			setDaysRemaining(employee.vacationDays - newTotalDays)
+		}
 	}
 
 	const handleSubmit = async (e: React.FormEvent) => {

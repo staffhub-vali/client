@@ -157,7 +157,7 @@ const ScheduleMaker: FC<ScheduleMakerProps> = ({
 		<Container
 			size={'lg'}
 			className='flex flex-row justify-evenly p-0'>
-			<div className='slide-in-bottom-h1 mt-2 flex h-[36rem] flex-col items-center space-y-4'>
+			<div className='slide-in-bottom-h1 mt-2 flex h-[44rem] flex-col items-center space-y-4'>
 				<SearchEmployees
 					name={name}
 					setId={setId}
@@ -190,13 +190,13 @@ const ScheduleMaker: FC<ScheduleMakerProps> = ({
 					}
 				</Button>
 			</div>
-			<div className='mt-4 h-[36rem] w-[82rem]'>
+			<div className='mt-4 h-[44rem] w-[82rem]'>
 				{schedule.length > 0 ? (
 					<>
 						{name ? (
 							<Heading
 								size={'xs'}
-								className='mb-2 text-center font-normal'>
+								className='mb-2 text-center'>
 								{name} - {formatMonth(schedule[0].date)} - ( {calculateTotalHours(schedule)} hours )
 							</Heading>
 						) : (
@@ -211,17 +211,17 @@ const ScheduleMaker: FC<ScheduleMakerProps> = ({
 							setData={setSchedule}
 						/>
 						{shiftPreferences.length > 0 ? (
-							<div className='mt-4 rounded-md border border-slate-300 pb-2 shadow-lg'>
+							<div className='slide-in-bottom mt-4'>
 								<Heading
 									size={'xs'}
-									className='mb-4 rounded-t-md border-b-2 border-slate-300 bg-white py-2 text-center font-normal'>
+									className='mx-auto mb-4 w-1/2 rounded-t-md border-b-2 border-slate-300 p-2 text-center dark:border-slate-500'>
 									Shift preferences:
 								</Heading>
-								<div className='flex flex-wrap justify-evenly'>
+								<div className='flex flex-col items-center'>
 									{shiftPreferences.map((preference) => (
 										<Paragraph
 											size={'xl'}
-											className='mb-2 h-fit w-[27.2rem] rounded-md bg-white p-1 text-center font-normal shadow-md'>
+											className='mb-2 p-1 text-center font-normal'>
 											{preference}
 										</Paragraph>
 									))}

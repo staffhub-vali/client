@@ -89,7 +89,7 @@ const Note: FC<NoteProps> = ({ note: n, index, workDay, loading, setError, setLo
 					<Input
 						type='text'
 						value={note}
-						className='m-0 w-96 text-xl shadow-none focus:ring-0'
+						className='m-0 w-[40rem] text-xl shadow-none focus:ring-0'
 						onChange={(e) => setNote(e.target.value)}
 					/>
 					<Button
@@ -116,7 +116,7 @@ const Note: FC<NoteProps> = ({ note: n, index, workDay, loading, setError, setLo
 				<div className='flex items-center'>
 					<Paragraph
 						size={'lg'}
-						className='w-96 min-w-[16rem] rounded-md bg-white px-2 py-2 text-left dark:bg-slate-700'
+						className='w-[40rem] min-w-[16rem] rounded-md bg-white px-2 py-2 text-left dark:bg-slate-700'
 						key={workDay?._id}>
 						{note}
 					</Paragraph>

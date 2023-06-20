@@ -103,7 +103,7 @@ const VacationList: FC<VacationListProps> = ({
 			</div>
 			<div className='flex w-full items-center justify-center space-x-8 border-b-2 border-slate-300 pb-4 dark:border-slate-600'>
 				<Heading size={'sm'}>
-					{employee.name} - Vacation days remaining: {daysRemaining}
+					{employee.name} - Vacation days remaining: {daysRemaining <= employee.vacationDays ? daysRemaining : 0}
 				</Heading>
 
 				<div className='space-x-2'>
@@ -112,7 +112,10 @@ const VacationList: FC<VacationListProps> = ({
 							size={'sm'}
 							variant={'outline'}
 							className='w-36'
-							onClick={() => setShowPlanner(false)}>
+							onClick={() => {
+								setShowPlanner(false)
+								setDaysRemaining(employee.vacationDays)
+							}}>
 							Cancel <X className='ml-2' />
 						</Button>
 					) : (
@@ -142,7 +145,10 @@ const VacationList: FC<VacationListProps> = ({
 							size={'sm'}
 							variant={'outline'}
 							title='Change the amount of vacation days'
-							onClick={() => setShowChangeAmount(true)}>
+							onClick={() => {
+								setShowChangeAmount(true)
+								setShowPlanner(false)
+							}}>
 							Change number of days
 							<FileDigit className='ml-2' />
 						</Button>
@@ -151,22 +157,30 @@ const VacationList: FC<VacationListProps> = ({
 			</div>
 
 			{showChangeAmount && (
-				<form
-					onSubmit={updateAmount}
-					className='mt-9 flex w-full items-center justify-center border-b-2 border-slate-300 pb-3 dark:border-slate-700'>
-					<Input
-						type='text'
-						value={amount}
-						className='slide-in-bottom m-0 w-fit text-center text-2xl font-bold shadow-md '
-						onChange={(e) => setAmount(Number(e.target.value))}
-					/>
-					<Button
-						size={'sm'}
-						variant={'link'}
-						className='slide-in-bottom w-20 min-w-0 '>
-						<Check size={36} />
-					</Button>
-				</form>
+				<>
+					<Heading
+						size={'xs'}
+						className='slide-in-bottom mb-3 mt-32'>
+						Change the amount of vacation days
+					</Heading>
+					<form
+						onSubmit={updateAmount}
+						className=' flex w-full items-center justify-center pb-3 dark:border-slate-700'>
+						<Input
+							type='text'
+							size={'lg'}
+							value={amount}
+							className='slide-in-bottom m-0 w-[36rem] text-center text-2xl font-bold shadow-md '
+							onChange={(e) => setAmount(Number(e.target.value))}
+						/>
+						<Button
+							size={'sm'}
+							variant={'link'}
+							className='slide-in-bottom w-20 min-w-0 '>
+							<Check size={36} />
+						</Button>
+					</form>
+				</>
 			)}
 			{showPlanner && (
 				<>
@@ -174,7 +188,7 @@ const VacationList: FC<VacationListProps> = ({
 					<Heading
 						size={'xs'}
 						className='slide-in-bottom mt-12 font-normal'>
-						Days planned: {daysPlanned}
+						Days planned: {daysPlanned > 0 ? daysPlanned : 0}
 					</Heading>
 					<VacationPlanner
 						loading={loading}
@@ -192,11 +206,11 @@ const VacationList: FC<VacationListProps> = ({
 				</>
 			)}
 
-			{!showPlanner && employee.vacations.length > 0 ? (
-				<div className='slide-in-bottom-h1'>
+			{!showChangeAmount && !showPlanner && employee.vacations.length > 0 ? (
+				<div className='slide-in-bottom'>
 					<Heading
 						size={'xs'}
-						className='mb-3 mt-16 text-center'>
+						className='mb-3 mt-32 text-center'>
 						Vacations
 					</Heading>
 					{employee.vacations.map((vacation, index) => (
@@ -214,6 +228,7 @@ const VacationList: FC<VacationListProps> = ({
 					))}
 				</div>
 			) : (
+				!showChangeAmount &&
 				!showPlanner && (
 					<Heading
 						className='slide-in-bottom mt-16'

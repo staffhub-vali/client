@@ -91,7 +91,7 @@ const Note: FC<NoteProps> = ({ note: n, index, employee, loading, setError, setL
 						type='text'
 						value={note}
 						onChange={(e) => setNote(e.target.value)}
-						className='m-0 w-96 text-xl shadow-none focus:ring-0'
+						className='m-0 w-[36rem] text-xl shadow-none focus:ring-0'
 					/>
 					<Button
 						size={'sm'}
@@ -118,7 +118,7 @@ const Note: FC<NoteProps> = ({ note: n, index, employee, loading, setError, setL
 					<Paragraph
 						size={'lg'}
 						key={employee?._id}
-						className='w-96 min-w-[16rem] rounded-md bg-white px-2 py-2 text-left dark:bg-slate-700'>
+						className='w-[36rem] min-w-[16rem] rounded-md bg-white px-2 py-2 text-left dark:bg-slate-700'>
 						{note}
 					</Paragraph>
 					<Button

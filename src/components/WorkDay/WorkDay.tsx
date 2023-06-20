@@ -88,20 +88,23 @@ const WorkDay: FC<WorkDayProps> = ({
 					</Heading>
 				</div>
 			)}
+
 			{workDay.shifts.length > 0 && (
 				<div className='flex w-10/12 flex-col items-center space-y-2 border-b-2 border-slate-300 pb-6 dark:border-slate-700'>
-					{workDay?.shifts?.map((shift, index) => (
-						<Employee
-							shift={shift}
-							index={index}
-							loading={loading}
-							workDay={workDay}
-							setError={setError}
-							setMessage={setMessage}
-							setWorkDay={setWorkDay}
-							setLoading={setLoading}
-						/>
-					))}
+					{workDay?.shifts
+						?.sort((a, b) => a.start - b.start)
+						.map((shift, index) => (
+							<Employee
+								shift={shift}
+								index={index}
+								loading={loading}
+								workDay={workDay}
+								setError={setError}
+								setMessage={setMessage}
+								setWorkDay={setWorkDay}
+								setLoading={setLoading}
+							/>
+						))}
 				</div>
 			)}
 

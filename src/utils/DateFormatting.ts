@@ -70,3 +70,20 @@ export function formatTotal(start: number | undefined, end: number | undefined) 
 		return result
 	} else return `${0}h ${0}min`
 }
+
+export function getMonthBoundaryTimestamps(dateString: string | Date) {
+	const date = new Date(dateString)
+
+	// Set the date to the beginning of the month
+	date.setDate(1)
+	date.setHours(0, 0, 0, 0)
+	const startOfMonthTimestamp = Math.floor(date.getTime() / 1000)
+
+	// Set the date to the next month and subtract 1 millisecond
+	date.setMonth(date.getMonth() + 1)
+	date.setDate(date.getDate() - 1)
+	date.setHours(23, 59, 59, 999)
+	const endOfMonthTimestamp = Math.floor(date.getTime() / 1000)
+
+	return [startOfMonthTimestamp, endOfMonthTimestamp]
+}

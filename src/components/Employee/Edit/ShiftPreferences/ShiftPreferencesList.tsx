@@ -114,6 +114,14 @@ const ShiftPreferencesList: FC<ShiftPreferencesListProps> = ({
 
 			{!showAddShiftPreference && (
 				<div className='slide-in-bottom mt-32'>
+					{employee.shiftPreferences.length > 0 && (
+						<Heading
+							size={'xs'}
+							className='mb-3 text-center'>
+							{employee.shiftPreferences.length}{' '}
+							{employee.shiftPreferences.length === 1 ? 'shift preference' : 'shift preferences'}
+						</Heading>
+					)}
 					{employee.shiftPreferences.length > 0 ? (
 						employee.shiftPreferences.map((shiftPreference, index) => (
 							<ShiftPreference

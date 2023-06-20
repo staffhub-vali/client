@@ -115,7 +115,7 @@ const NotesList: FC<NotesListProps> = ({
 			</div>
 
 			{!showAddNote && (
-				<div className='slide-in-bottom mt-36'>
+				<div className='slide-in-bottom mt-32'>
 					{employee.notes.length > 0 && (
 						<Heading
 							size={'xs'}
@@ -152,17 +152,18 @@ const NotesList: FC<NotesListProps> = ({
 			{showAddNote && (
 				<form
 					onSubmit={addNote}
-					className='slide-in-bottom mt-36 flex w-2/3 flex-col items-center space-x-4'>
+					className='slide-in-bottom mx-auto mt-32 flex w-full flex-col items-center space-x-4'>
 					<Heading
 						size={'xs'}
 						className='mb-3'>
 						New note
 					</Heading>
-					<div className='flex w-full'>
+					<div className='flex w-[46rem]'>
 						<Input
 							type='text'
 							value={note}
 							size={'lg'}
+							className='mx-auto w-full'
 							placeholder=' Add a note...'
 							onChange={(e) => setNote(e.target.value)}
 						/>

@@ -70,7 +70,7 @@ const AddNote: FC<AddNoteProps> = ({
 				size={'lg'}
 				type='text'
 				name='note'
-				className='w-96'
+				className='w-[40rem]'
 				placeholder='Anything to note?'
 				onChange={(e) => setNote(e.target.value)}
 				value={note}

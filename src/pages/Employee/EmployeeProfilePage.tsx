@@ -4,21 +4,52 @@ import { useEffect, useState } from 'react'
 import Container from '../../components/ui/Container.tsx'
 import { useLocation, useParams } from 'react-router-dom'
 import Notification from '../../components/ui/Notification.tsx'
-import NotesList from '../../components/Employee/Edit/Notes/NotesList.tsx'
-import EmployeeProfile from '../../components/Employee/EmployeeProfile.tsx'
 import Schedule from '../../components/Employee/Schedule/Schedule.tsx'
+import NotesList from '../../components/Employee/Edit/Notes/NotesList.tsx'
+import { formatMonth, getMonthBoundaryTimestamps } from '../../utils/DateFormatting.ts'
+import EmployeeProfile from '../../components/Employee/EmployeeProfile.tsx'
 import VacationList from '../../components/Employee/Edit/Vacation/VacationList.tsx'
 import PersonalInfo from '../../components/Employee/Edit/PersonalInfo/PersonalInfo.tsx'
 import ShiftPreferencesList from '../../components/Employee/Edit/ShiftPreferences/ShiftPreferencesList.tsx'
 
+interface WorkDay {
+	_id: string
+	shifts: Shift[]
+	date: number
+}
+
+interface Shift {
+	_id: string
+	start: number
+	end: number
+	employee: string
+	workDay: WorkDay
+}
+
+interface Employee {
+	_id: string
+	name: string
+	email: string
+	phone: string
+	notes: string[]
+	address: string
+	vacationDays: number
+	sickDays: number | string
+	shiftPreferences: string[]
+	vacations: [{ start: number; end: number }]
+}
+
 const EmployeeProfilePage = () => {
 	const { id } = useParams()
-	const [shifts, setShifts] = useState([])
-	const [employee, setEmployee] = useState(null)
+	const [employee, setEmployee] = useState<Employee | null>(null)
 	const [loading, setLoading] = useState<boolean>(false)
 	const [error, setError] = useState<string | null>(null)
+	const [workDays, setWorkDays] = useState<WorkDay[]>([])
 	const [message, setMessage] = useState<string | null>(null)
 	const [showDropdown, setShowDropdown] = useState<boolean>(false)
+	const [month, setMonth] = useState<string | null>(null)
+
+	const [value, setValue] = useState<Date | null>(null)
 
 	const location = useLocation()
 
@@ -31,7 +62,7 @@ const EmployeeProfilePage = () => {
 	useEffect(() => {
 		fetchShifts()
 		fetchProfile()
-	}, [loading])
+	}, [value, loading])
 
 	useEffect(() => {
 		let timeoutId: any = null
@@ -50,6 +81,7 @@ const EmployeeProfilePage = () => {
 
 	const fetchProfile = async () => {
 		const token = localStorage.getItem('token')
+
 		try {
 			const { data } = await axios.get(`${import.meta.env.VITE_BASE_URL}/employees/${id}`, {
 				headers: {
@@ -66,20 +98,40 @@ const EmployeeProfilePage = () => {
 	}
 
 	const fetchShifts = async () => {
-		const token = localStorage.getItem('token')
-		try {
-			const { data } = await axios.get(`${import.meta.env.VITE_BASE_URL}/shifts?employeeId=${id}`, {
-				headers: {
-					Authorization: `Bearer ${token}`,
-				},
-			})
-			setShifts(data)
-		} catch (error: any) {
-			console.log(error)
-			if (error.response.status === 401) {
-				Logout()
+		if (value) {
+			const token = localStorage.getItem('token')
+			const [startOfMonth, endOfMonth] = getMonthBoundaryTimestamps(value)
+
+			setMonth(formatMonth(value.getTime() / 1000))
+
+			try {
+				const { data } = await axios.get(
+					`${import.meta.env.VITE_BASE_URL}/shifts?employeeId=${id}&start=${startOfMonth}&end=${endOfMonth}`,
+					{
+						headers: {
+							Authorization: `Bearer ${token}`,
+						},
+					},
+				)
+				const newData = await filterDays(data)
+				setWorkDays(newData)
+			} catch (error: any) {
+				console.log(error)
+				if (error.response.status === 401) {
+					Logout()
+				}
 			}
 		}
+	}
+
+	const filterDays = async (workDays: WorkDay[]) => {
+		const filteredDays = workDays.map((workDay) => {
+			const filteredShift = workDay.shifts.filter((shift) => shift.employee === employee?._id)
+			const filteredDay = { ...workDay, shifts: filteredShift }
+			return filteredDay
+		})
+
+		return filteredDays
 	}
 
 	return (
@@ -133,8 +185,11 @@ const EmployeeProfilePage = () => {
 			)}
 			{employee && isSchedule && (
 				<Schedule
-					shifts={shifts}
+					value={value}
+					month={month}
+					workDays={workDays}
 					loading={loading}
+					setValue={setValue}
 					setError={setError}
 					employee={employee}
 					setMessage={setMessage}
@@ -145,7 +200,7 @@ const EmployeeProfilePage = () => {
 			)}
 			{employee && !isNotes && !isAbout && !isPreferences && !isVacation && !isSchedule && (
 				<EmployeeProfile
-					shifts={shifts}
+					workDays={workDays}
 					employee={employee}
 					showDropdown={showDropdown}
 					setShowDropdown={setShowDropdown}

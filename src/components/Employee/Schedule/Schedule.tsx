@@ -6,9 +6,9 @@ import Heading from '../../ui/Heading.js'
 import { useNavigate } from 'react-router-dom'
 import Container from '../../ui/Container.js'
 import Paragraph from '../../ui/Paragraph.js'
-import { Dispatch, FC, SetStateAction, useState } from 'react'
+import { Dispatch, FC, SetStateAction, useEffect, useState } from 'react'
 import { Document, Page, Text, View, StyleSheet, PDFDownloadLink } from '@react-pdf/renderer'
-import { calculateMonthlyHours, calculateTotalHours } from '../../../utils/CalculateHours.js'
+import { calculateTotalHours } from '../../../utils/CalculateHours.js'
 import { formatDate, formatDay, formatMonth, formatTime, formatTotal } from '../../../utils/DateFormatting.js'
 
 interface ScheduleProps {
@@ -21,9 +21,13 @@ interface ScheduleProps {
 		shiftPreferences: string[]
 		vacationDays: number | string
 	}
-	shifts: Shift[]
+	value: Date | null
+	month: string | null
+	workDays: WorkDay[]
 	loading: boolean
 	showDropdown: boolean
+
+	setValue: Dispatch<SetStateAction<Date | null>>
 	setLoading: Dispatch<SetStateAction<boolean>>
 	setError: Dispatch<SetStateAction<string | null>>
 	setShowDropdown: Dispatch<SetStateAction<boolean>>
@@ -35,7 +39,13 @@ interface Shift {
 	start: number
 	end: number
 	employee: string
-	workDay: { date: number; _id: string }
+	workDay: WorkDay
+}
+
+interface WorkDay {
+	_id: string
+	shifts: Shift[]
+	date: number
 }
 
 const styles = StyleSheet.create({
@@ -76,75 +86,23 @@ const styles = StyleSheet.create({
 
 const Schedule: FC<ScheduleProps> = ({
 	loading,
+	value,
+	setValue,
 	setError,
 	setMessage,
 	employee,
 	setLoading,
-	shifts,
+	workDays,
 	showDropdown,
 	setShowDropdown,
+	month,
 }) => {
 	const navigate = useNavigate()
 
-	const [value, setValue] = useState(new Date())
-	const [month, setMonth] = useState<string | null>(null)
 	const [showModal, setShowModal] = useState<boolean>(false)
-	const [filteredShifts, setFilteredShifts] = useState<Shift[]>(shifts)
-
-	const [mergedData, setMergedData] = useState([])
 
 	const handleMonthChange: any = (date: Date) => {
-		const monthData = updateMonthData(date)
-
 		setValue(date)
-		updateMonthData(date)
-		setMonth(formatMonth(value.getTime() / 1000))
-		const filteredShifts = shifts.filter((shift) => {
-			const startTimestamp = shift.start
-			const startDate = new Date(startTimestamp * 1000)
-			const startMonth = startDate.getMonth()
-
-			return startMonth === date.getMonth()
-		})
-
-		setFilteredShifts(filteredShifts.sort((a: any, b: any) => a.date - b.date))
-
-		setMergedData(combineArrays(monthData, filteredShifts))
-	}
-
-	const updateMonthData = (date: Date) => {
-		const year = date.getFullYear()
-		const monthIndex = date.getMonth()
-		const daysInMonth = new Date(year, monthIndex + 1, 0).getDate()
-
-		const data = new Array(daysInMonth).fill(null).map((_, index) => {
-			const day = index + 1
-			const dateUnixTimestamp = new Date(year, monthIndex, day).getTime() / 1000
-
-			return {
-				date: dateUnixTimestamp,
-			}
-		})
-
-		return data
-	}
-
-	const combineArrays = (emptyDays: any, shifts: any) => {
-		const combinedArray = emptyDays.map((day: any) => {
-			const matchingDateShift = shifts.find((shift: any) => shift.workDay.date === day.date)
-			if (matchingDateShift) {
-				return {
-					_id: matchingDateShift.workDay._id,
-					date: matchingDateShift.workDay.date,
-					start: matchingDateShift.start,
-					end: matchingDateShift.end,
-				}
-			} else {
-				return day
-			}
-		})
-
-		return combinedArray
 	}
 
 	const MonthlyRoster = () => (
@@ -155,21 +113,21 @@ const Schedule: FC<ScheduleProps> = ({
 				style={styles.page}>
 				<View style={styles.title}>
 					<Text>
-						{employee.name} - {month} ({calculateTotalHours(mergedData)}h)
+						{employee.name} - {month} ({calculateTotalHours(workDays)}h)
 					</Text>
 				</View>
-				{mergedData.map((shift: { date: number; _id: string; start: number; end: number }) => (
+				{workDays.map((workDay: WorkDay) => (
 					<View
-						key={shift._id}
-						style={shift.start && shift.end ? styles.section : styles.sectionShift}>
-						<Text style={styles.shift}>{formatDate(shift.date)}</Text>
+						key={workDay._id}
+						style={workDay.shifts[0]?.start && workDay.shifts[0]?.end ? styles.section : styles.sectionShift}>
+						<Text style={styles.shift}>{formatDate(workDay.date)}</Text>
 
-						{shift.start && shift.end ? (
+						{workDay.shifts[0]?.start && workDay.shifts[0]?.end ? (
 							<>
 								<Text style={styles.shift}>
-									{formatTime(shift.start)} - {formatTime(shift.end)}
+									{formatTime(workDay.shifts[0]?.start)} - {formatTime(workDay.shifts[0]?.end)}
 								</Text>
-								<Text style={styles.shift}>{formatTotal(shift.start, shift.end)}</Text>
+								<Text style={styles.shift}>{formatTotal(workDay.shifts[0]?.start, workDay.shifts[0]?.end)}</Text>
 							</>
 						) : (
 							<>
@@ -204,78 +162,65 @@ const Schedule: FC<ScheduleProps> = ({
 			</div>
 			<div className='flex w-full items-center justify-center space-x-8 border-b-2 border-slate-300 pb-4 dark:border-slate-600'>
 				{' '}
-				<Heading size={'sm'}>
-					{employee.name} - Total hours for {formatMonth(new Date().getTime() / 1000)}: {calculateMonthlyHours(shifts)}h
-				</Heading>
+				<Heading size={'sm'}>Schedules for {employee.name}</Heading>
 			</div>
 
-			{month ? (
-				<div className='mt-4 flex w-full'>
+			{value && month ? (
+				<div className='mt-16 flex w-full'>
 					<div
 						className={`${
-							filteredShifts.length > 0
+							value
 								? 'slide-in-bottom overflow-y-scroll border border-slate-300 bg-white shadow dark:border-slate-500 dark:bg-slate-800'
 								: 'border-none'
 						}  mx-auto h-[37rem] overflow-x-hidden rounded border border-slate-300`}>
-						{filteredShifts.length > 0 && month && (
+						<div className='flex w-full items-center border-b-2 border-t border-slate-300 bg-white py-4 dark:border-slate-500 dark:bg-slate-800'>
 							<Heading
 								size={'xs'}
-								className='text-md flex items-center justify-evenly border-b-2 border-t border-slate-300 bg-white py-4 text-center font-normal dark:border-slate-500 dark:bg-slate-800'>
-								{formatMonth(value.getTime() / 1000)} - {filteredShifts.length}{' '}
-								{filteredShifts.length === 1 ? 'Shift' : 'Shifts'} ({calculateTotalHours(filteredShifts)} hours)
-								<Button
-									size={'lg'}
-									className='text-xl hover:text-sky-500 dark:hover:text-sky-400'
-									variant={'outlineHover'}>
-									<PDFDownloadLink
-										document={<MonthlyRoster />}
-										fileName={`${employee.name} - ${formatMonth(value.getTime() / 1000)}`}>
-										Save as PDF
-									</PDFDownloadLink>
-								</Button>
+								className='text-md  w-96 text-center font-normal'>
+								{month} ({calculateTotalHours(workDays)} hours)
 							</Heading>
-						)}
+							<Button
+								size={'lg'}
+								className='ml-24 text-xl hover:text-sky-500 dark:hover:text-sky-400'
+								variant={'outlineHover'}>
+								<PDFDownloadLink
+									document={<MonthlyRoster />}
+									fileName={`${employee.name} - ${formatMonth(value.getTime() / 1000)}`}>
+									Save as PDF
+								</PDFDownloadLink>
+							</Button>
+						</div>
 
-						{filteredShifts.length <= 0 && (
-							<Heading
-								size={'sm'}
-								className='mx-auto mt-36 w-[48.5rem] text-center'>
-								There are no shifts for {formatMonth(value.getTime() / 1000)}
-							</Heading>
-						)}
-
-						{filteredShifts.length > 0 &&
-							mergedData.map((shift: { date: number; _id: string; start: number; end: number }, index) => (
-								<div
-									key={shift._id}
-									onClick={() => shift._id && navigate(`/days/${shift._id}`)}
-									className={`${
-										shift._id && 'group cursor-pointer '
-									} flex w-[48rem] items-center space-y-4 border-b-2 border-slate-300 dark:border-slate-500 ${
-										index % 2 === 0 ? 'bg-slate-50 dark:bg-slate-700' : 'bg-white dark:bg-slate-800'
-									} py-2`}>
-									<div className='mx-auto flex flex-col items-center group-hover:text-sky-500 dark:group-hover:text-sky-400'>
-										{formatDay(shift.date)}
-										<Paragraph
-											className='group-hover:text-sky-500 dark:group-hover:text-sky-400'
-											size={'xl'}>
-											{formatDate(shift.date)}
-										</Paragraph>
-									</div>
-
+						{workDays.map((day: WorkDay, index: number) => (
+							<div
+								key={day._id}
+								onClick={() => navigate(`/days/${day._id}`)}
+								className={`group flex w-[48rem] cursor-pointer items-center space-y-4 border-b-2 border-slate-300 dark:border-slate-500 ${
+									index % 2 === 0 ? 'bg-slate-50 dark:bg-slate-700' : 'bg-white dark:bg-slate-800'
+								} py-2`}>
+								<div className='mx-auto flex flex-col items-center group-hover:text-sky-500 dark:group-hover:text-sky-400'>
+									{formatDay(day.date)}
 									<Paragraph
-										size={'xl'}
-										className='mx-auto w-48 pb-2 group-hover:text-sky-500 dark:group-hover:text-sky-400'>
-										{shift.start && (
-											<>
-												{formatTime(shift.start)} - {formatTime(shift.end)}
-											</>
-										)}
+										className='group-hover:text-sky-500 dark:group-hover:text-sky-400'
+										size={'xl'}>
+										{formatDate(day.date)}
 									</Paragraph>
 								</div>
-							))}
+
+								<Paragraph
+									size={'xl'}
+									className='mx-auto w-48 pb-2 group-hover:text-sky-500 dark:group-hover:text-sky-400'>
+									{day.shifts[0]?.start && (
+										<>
+											{formatTime(day.shifts[0]?.start)} - {formatTime(day.shifts[0]?.end)}
+										</>
+									)}
+								</Paragraph>
+							</div>
+						))}
 					</div>
-					<div className='mx-auto mt-24'>
+
+					<div className=' mr-52 mt-24'>
 						<Calendar
 							value={value}
 							view={'month'}
@@ -286,13 +231,11 @@ const Schedule: FC<ScheduleProps> = ({
 					</div>
 				</div>
 			) : (
-				<div className='flex w-full'>
-					<Heading
-						size={'sm'}
-						className='slide-in-bottom mx-auto mt-40 w-[48.5rem] text-center'>
+				<div className='mt-12 flex w-full'>
+					<Heading className='slide-in-bottom mx-auto w-[48.5rem] pt-64 text-center text-slate-600 dark:text-slate-400'>
 						Choose a month
 					</Heading>
-					<div className='slide-in-bottom-h1 mx-auto mt-28'>
+					<div className='slide-in-bottom-h1 mr-52 mt-28'>
 						<Calendar
 							value={value}
 							view={'month'}

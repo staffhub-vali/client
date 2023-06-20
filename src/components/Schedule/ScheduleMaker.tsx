@@ -12,7 +12,7 @@ import Notification from '../ui/Notification.tsx'
 import SearchEmployees from './SearchEmployees.tsx'
 import { formatDate, formatMonth } from '../../utils/DateFormatting.ts'
 import Paragraph from '../ui/Paragraph.tsx'
-import { calculateMonthlyHours, calculateTotalHours } from '../../utils/CalculateHours.ts'
+import { calculateTotalHours } from '../../utils/CalculateHours.ts'
 
 interface Employee {
 	_id: string

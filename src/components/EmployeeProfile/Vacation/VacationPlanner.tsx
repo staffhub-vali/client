@@ -2,9 +2,9 @@ import axios from 'axios'
 import { Check, X } from 'lucide-react'
 import 'react-calendar/dist/Calendar.css'
 import { Calendar } from 'react-calendar'
-import Button from '../../../ui/Button.tsx'
-import { Logout } from '../../../../Auth.tsx'
-import Heading from '../../../ui/Heading.tsx'
+import Button from '../../ui/Button.tsx'
+import { Logout } from '../../../Auth.tsx'
+import Heading from '../../ui/Heading.tsx'
 import { FC, useState, useEffect, Dispatch, SetStateAction } from 'react'
 
 interface VacationPlannerProps {

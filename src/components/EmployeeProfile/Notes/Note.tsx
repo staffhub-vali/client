@@ -1,47 +1,39 @@
 import axios from 'axios'
-import Modal from '../../../ui/Modal.tsx'
-import Input from '../../../ui/Input.tsx'
-import Button from '../../../ui/Button.tsx'
-import { Logout } from '../../../../Auth.tsx'
-import Paragraph from '../../../ui/Paragraph.tsx'
+import Modal from '../../ui/Modal.tsx'
+import Input from '../../ui/Input.tsx'
+import Button from '../../ui/Button.tsx'
+import Paragraph from '../../ui/Paragraph.tsx'
 import { Check, XCircle, Trash2, Pencil } from 'lucide-react'
 import { FC, useState, SetStateAction, Dispatch } from 'react'
+import { Logout } from '../../../Auth.tsx'
 
-interface ShiftPreferenceProps {
+interface NoteProps {
+	note: string
 	index: number
 	loading: boolean
 	employee: Employee
-	shiftPreference: string
 	setLoading: Dispatch<SetStateAction<boolean>>
 	setError: Dispatch<SetStateAction<string | null>>
 	setMessage: Dispatch<SetStateAction<string | null>>
 }
 
 interface Employee {
-	_id: string
 	notes: string[]
+	_id: string
 }
 
-const ShiftPreference: FC<ShiftPreferenceProps> = ({
-	shiftPreference: sf,
-	index,
-	employee,
-	loading,
-	setError,
-	setLoading,
-	setMessage,
-}) => {
+const Note: FC<NoteProps> = ({ note: n, index, employee, loading, setError, setLoading, setMessage }) => {
+	const [note, setNote] = useState<string>(n)
+	const [editNote, setEditNote] = useState<boolean>(false)
 	const [showModal, setShowModal] = useState<boolean>(false)
-	const [shiftPreference, setShiftPreference] = useState<string>(sf)
-	const [editShiftPreference, setEditShiftPreference] = useState<boolean>(false)
-	const [shiftPreferenceIndex, setShiftPreferenceIndex] = useState<number | null>(null)
+	const [noteIndex, setNoteIndex] = useState<number | null>(null)
 
-	const deleteShiftPreference = async (index: number | null) => {
+	const deleteNote = async (index: number | null) => {
+		setLoading(true)
 		try {
-			setLoading(true)
 			const token = localStorage.getItem('token')
 			const { data } = await axios.delete(
-				`${import.meta.env.VITE_BASE_URL}/employees/preferences/?employeeId=${employee?._id}&index=${index}`,
+				`${import.meta.env.VITE_BASE_URL}/employees/notes/?employeeId=${employee?._id}&index=${index}`,
 				{
 					headers: {
 						Authorization: `Bearer ${token}`,
@@ -60,14 +52,14 @@ const ShiftPreference: FC<ShiftPreferenceProps> = ({
 		}
 	}
 
-	const updateShiftPreference = async (index: number | null, shiftPreference: string) => {
+	const updateNote = async (index: number | null, note: string) => {
+		setLoading(true)
 		try {
-			setLoading(true)
 			const token = localStorage.getItem('token')
 			const { data } = await axios.put(
-				`${import.meta.env.VITE_BASE_URL}/employees/preferences`,
+				`${import.meta.env.VITE_BASE_URL}/employees/notes`,
 				{
-					shiftPreference: shiftPreference,
+					note: note,
 					index: index,
 					employeeId: employee?._id,
 				},
@@ -77,28 +69,29 @@ const ShiftPreference: FC<ShiftPreferenceProps> = ({
 					},
 				},
 			)
-			setError('')
-			setLoading(false)
-			setEditShiftPreference(false)
-			setShowModal(false)
+
+			setEditNote(false)
 			setMessage(data.message)
 		} catch (error: any) {
-			setMessage('')
+			setError(error.response.data.message)
+			if (error.response.status === 401) {
+				Logout()
+			}
+		} finally {
 			setLoading(false)
 			setShowModal(false)
-			setError(error.response.data.message)
 		}
 	}
 
 	return (
-		<div className='mx-auto my-2 flex w-full items-center justify-center rounded-md bg-white px-3 py-1 shadow dark:bg-slate-700'>
-			{editShiftPreference ? (
+		<div className='my-2 flex w-full items-center justify-center rounded-md bg-white px-3 py-1 shadow dark:bg-slate-700'>
+			{editNote ? (
 				<>
 					<Input
 						type='text'
-						value={shiftPreference}
+						value={note}
+						onChange={(e) => setNote(e.target.value)}
 						className='m-0 w-[36rem] text-xl shadow-none focus:ring-0'
-						onChange={(e) => setShiftPreference(e.target.value)}
 					/>
 					<Button
 						size={'sm'}
@@ -106,8 +99,8 @@ const ShiftPreference: FC<ShiftPreferenceProps> = ({
 						title='Save changes'
 						className='w-16 min-w-0'
 						onClick={() => {
-							setShiftPreferenceIndex(index)
-							updateShiftPreference(index, shiftPreference)
+							setNoteIndex(index)
+							updateNote(index, note)
 						}}>
 						{<Check />}
 					</Button>
@@ -116,7 +109,7 @@ const ShiftPreference: FC<ShiftPreferenceProps> = ({
 						title='Cancel'
 						variant={'link'}
 						className='w-16 min-w-0'
-						onClick={() => setEditShiftPreference(false)}>
+						onClick={() => setEditNote(false)}>
 						{<XCircle />}
 					</Button>
 				</>
@@ -126,17 +119,17 @@ const ShiftPreference: FC<ShiftPreferenceProps> = ({
 						size={'lg'}
 						key={employee?._id}
 						className='w-[36rem] min-w-[16rem] rounded-md bg-white px-2 py-2 text-left dark:bg-slate-700'>
-						{shiftPreference}
+						{note}
 					</Paragraph>
 					<Button
 						size={'sm'}
 						variant={'link'}
 						className='w-16 min-w-0 rounded-full p-5 hover:bg-slate-100'
 						onClick={() => {
-							setEditShiftPreference(true)
-							setShiftPreferenceIndex(index)
+							setEditNote(true)
+							setNoteIndex(index)
 						}}
-						title='Edit shift preference'>
+						title='Edit note'>
 						{<Pencil />}
 					</Button>
 					<Button
@@ -145,19 +138,19 @@ const ShiftPreference: FC<ShiftPreferenceProps> = ({
 						className='w-16 min-w-0 rounded-full p-5 hover:bg-slate-100'
 						onClick={() => {
 							setShowModal(true)
-							setShiftPreferenceIndex(index)
+							setNoteIndex(index)
 						}}
-						title='Delete shift preference'>
+						title='Delete note'>
 						{<Trash2 />}
 					</Button>
 
 					{showModal && (
 						<Modal
 							loading={loading}
-							text={'Delete shift preference?'}
+							text={'Delete note?'}
 							showModal={showModal}
 							cancel={() => setShowModal(false)}
-							submit={() => deleteShiftPreference(shiftPreferenceIndex)}
+							submit={() => deleteNote(noteIndex)}
 						/>
 					)}
 				</div>
@@ -166,4 +159,4 @@ const ShiftPreference: FC<ShiftPreferenceProps> = ({
 	)
 }
 
-export default ShiftPreference
+export default Note

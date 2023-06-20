@@ -5,7 +5,7 @@ import { Search, UserPlus } from 'lucide-react'
 import Heading from '../ui/Heading.tsx'
 import Container from '../ui/Container.tsx'
 import { useNavigate } from 'react-router-dom'
-import { buttonVariants } from '../../components/ui/Button.tsx'
+import { buttonVariants } from '../ui/Button.tsx'
 
 interface EmployeesTableProps {
 	data: Employee[]

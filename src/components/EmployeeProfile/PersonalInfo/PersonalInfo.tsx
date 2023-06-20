@@ -1,14 +1,16 @@
 import axios from 'axios'
 import { Check, MoreVertical, X } from 'lucide-react'
-import Input from '../../../ui/Input.tsx'
-import Label from '../../../ui/Label.tsx'
-import Button from '../../../ui/Button.tsx'
-import Heading from '../../../ui/Heading.tsx'
+
 import { useNavigate } from 'react-router-dom'
-import { Logout } from '../../../../Auth.tsx'
-import Container from '../../../ui/Container.tsx'
+
 import { Dispatch, FC, FormEvent, SetStateAction, useState } from 'react'
-import Dropdown from '../../Dropdown.tsx'
+import { Logout } from '../../../Auth.tsx'
+import Container from '../../ui/Container.tsx'
+import Button from '../../ui/Button.tsx'
+import Dropdown from '../Dropdown.tsx'
+import Heading from '../../ui/Heading.tsx'
+import Label from '../../ui/Label.tsx'
+import Input from '../../ui/Input.tsx'
 
 interface PersonalInfoProps {
 	employee: {

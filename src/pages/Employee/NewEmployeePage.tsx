@@ -1,6 +1,6 @@
 import Heading from '../../components/ui/Heading.tsx'
 import Container from '../../components/ui/Container.tsx'
-import NewEmployeeForm from '../../components/Employee/NewEmployeeForm.tsx'
+import NewEmployeeForm from '../../components/EmployeeProfile/NewEmployeeForm.tsx'
 
 const NewEmployeePage = () => {
 	return (

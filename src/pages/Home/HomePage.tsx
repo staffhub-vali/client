@@ -6,7 +6,7 @@ import Heading from '../../components/ui/Heading.tsx'
 import Spinner from '../../components/ui/Spinner.tsx'
 import Container from '../../components/ui/Container.tsx'
 import Paragraph from '../../components/ui/Paragraph.tsx'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 const HomePage = () => {
 	const token = localStorage.getItem('token')
@@ -122,7 +122,11 @@ const HomePage = () => {
 					</div>
 
 					<Paragraph className='absolute bottom-2 text-slate-500 dark:text-slate-500'>
-						&copy; StaffHub 2023 Marin Valenta
+						<Link
+							to={'https://www.linkedin.com/in/marin-valenta'}
+							target='_blank'>
+							&copy; StaffHub 2023 Marin Valenta{' '}
+						</Link>
 					</Paragraph>
 				</>
 			)}

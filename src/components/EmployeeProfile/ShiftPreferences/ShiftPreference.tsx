@@ -1,39 +1,47 @@
 import axios from 'axios'
-import Modal from '../../../ui/Modal.tsx'
-import Input from '../../../ui/Input.tsx'
-import Button from '../../../ui/Button.tsx'
-import Paragraph from '../../../ui/Paragraph.tsx'
+import Modal from '../../ui/Modal.tsx'
+import Input from '../../ui/Input.tsx'
+import Button from '../../ui/Button.tsx'
+import { Logout } from '../../../Auth.tsx'
+import Paragraph from '../../ui/Paragraph.tsx'
 import { Check, XCircle, Trash2, Pencil } from 'lucide-react'
 import { FC, useState, SetStateAction, Dispatch } from 'react'
-import { Logout } from '../../../../Auth.tsx'
 
-interface NoteProps {
-	note: string
+interface ShiftPreferenceProps {
 	index: number
 	loading: boolean
 	employee: Employee
+	shiftPreference: string
 	setLoading: Dispatch<SetStateAction<boolean>>
 	setError: Dispatch<SetStateAction<string | null>>
 	setMessage: Dispatch<SetStateAction<string | null>>
 }
 
 interface Employee {
-	notes: string[]
 	_id: string
+	notes: string[]
 }
 
-const Note: FC<NoteProps> = ({ note: n, index, employee, loading, setError, setLoading, setMessage }) => {
-	const [note, setNote] = useState<string>(n)
-	const [editNote, setEditNote] = useState<boolean>(false)
+const ShiftPreference: FC<ShiftPreferenceProps> = ({
+	shiftPreference: sf,
+	index,
+	employee,
+	loading,
+	setError,
+	setLoading,
+	setMessage,
+}) => {
 	const [showModal, setShowModal] = useState<boolean>(false)
-	const [noteIndex, setNoteIndex] = useState<number | null>(null)
+	const [shiftPreference, setShiftPreference] = useState<string>(sf)
+	const [editShiftPreference, setEditShiftPreference] = useState<boolean>(false)
+	const [shiftPreferenceIndex, setShiftPreferenceIndex] = useState<number | null>(null)
 
-	const deleteNote = async (index: number | null) => {
-		setLoading(true)
+	const deleteShiftPreference = async (index: number | null) => {
 		try {
+			setLoading(true)
 			const token = localStorage.getItem('token')
 			const { data } = await axios.delete(
-				`${import.meta.env.VITE_BASE_URL}/employees/notes/?employeeId=${employee?._id}&index=${index}`,
+				`${import.meta.env.VITE_BASE_URL}/employees/preferences/?employeeId=${employee?._id}&index=${index}`,
 				{
 					headers: {
 						Authorization: `Bearer ${token}`,
@@ -52,14 +60,14 @@ const Note: FC<NoteProps> = ({ note: n, index, employee, loading, setError, setL
 		}
 	}
 
-	const updateNote = async (index: number | null, note: string) => {
-		setLoading(true)
+	const updateShiftPreference = async (index: number | null, shiftPreference: string) => {
 		try {
+			setLoading(true)
 			const token = localStorage.getItem('token')
 			const { data } = await axios.put(
-				`${import.meta.env.VITE_BASE_URL}/employees/notes`,
+				`${import.meta.env.VITE_BASE_URL}/employees/preferences`,
 				{
-					note: note,
+					shiftPreference: shiftPreference,
 					index: index,
 					employeeId: employee?._id,
 				},
@@ -69,29 +77,28 @@ const Note: FC<NoteProps> = ({ note: n, index, employee, loading, setError, setL
 					},
 				},
 			)
-
-			setEditNote(false)
+			setError('')
+			setLoading(false)
+			setEditShiftPreference(false)
+			setShowModal(false)
 			setMessage(data.message)
 		} catch (error: any) {
-			setError(error.response.data.message)
-			if (error.response.status === 401) {
-				Logout()
-			}
-		} finally {
+			setMessage('')
 			setLoading(false)
 			setShowModal(false)
+			setError(error.response.data.message)
 		}
 	}
 
 	return (
-		<div className='my-2 flex w-full items-center justify-center rounded-md bg-white px-3 py-1 shadow dark:bg-slate-700'>
-			{editNote ? (
+		<div className='mx-auto my-2 flex w-full items-center justify-center rounded-md bg-white px-3 py-1 shadow dark:bg-slate-700'>
+			{editShiftPreference ? (
 				<>
 					<Input
 						type='text'
-						value={note}
-						onChange={(e) => setNote(e.target.value)}
+						value={shiftPreference}
 						className='m-0 w-[36rem] text-xl shadow-none focus:ring-0'
+						onChange={(e) => setShiftPreference(e.target.value)}
 					/>
 					<Button
 						size={'sm'}
@@ -99,8 +106,8 @@ const Note: FC<NoteProps> = ({ note: n, index, employee, loading, setError, setL
 						title='Save changes'
 						className='w-16 min-w-0'
 						onClick={() => {
-							setNoteIndex(index)
-							updateNote(index, note)
+							setShiftPreferenceIndex(index)
+							updateShiftPreference(index, shiftPreference)
 						}}>
 						{<Check />}
 					</Button>
@@ -109,7 +116,7 @@ const Note: FC<NoteProps> = ({ note: n, index, employee, loading, setError, setL
 						title='Cancel'
 						variant={'link'}
 						className='w-16 min-w-0'
-						onClick={() => setEditNote(false)}>
+						onClick={() => setEditShiftPreference(false)}>
 						{<XCircle />}
 					</Button>
 				</>
@@ -119,17 +126,17 @@ const Note: FC<NoteProps> = ({ note: n, index, employee, loading, setError, setL
 						size={'lg'}
 						key={employee?._id}
 						className='w-[36rem] min-w-[16rem] rounded-md bg-white px-2 py-2 text-left dark:bg-slate-700'>
-						{note}
+						{shiftPreference}
 					</Paragraph>
 					<Button
 						size={'sm'}
 						variant={'link'}
 						className='w-16 min-w-0 rounded-full p-5 hover:bg-slate-100'
 						onClick={() => {
-							setEditNote(true)
-							setNoteIndex(index)
+							setEditShiftPreference(true)
+							setShiftPreferenceIndex(index)
 						}}
-						title='Edit note'>
+						title='Edit shift preference'>
 						{<Pencil />}
 					</Button>
 					<Button
@@ -138,19 +145,19 @@ const Note: FC<NoteProps> = ({ note: n, index, employee, loading, setError, setL
 						className='w-16 min-w-0 rounded-full p-5 hover:bg-slate-100'
 						onClick={() => {
 							setShowModal(true)
-							setNoteIndex(index)
+							setShiftPreferenceIndex(index)
 						}}
-						title='Delete note'>
+						title='Delete shift preference'>
 						{<Trash2 />}
 					</Button>
 
 					{showModal && (
 						<Modal
 							loading={loading}
-							text={'Delete note?'}
+							text={'Delete shift preference?'}
 							showModal={showModal}
 							cancel={() => setShowModal(false)}
-							submit={() => deleteNote(noteIndex)}
+							submit={() => deleteShiftPreference(shiftPreferenceIndex)}
 						/>
 					)}
 				</div>
@@ -159,4 +166,4 @@ const Note: FC<NoteProps> = ({ note: n, index, employee, loading, setError, setL
 	)
 }
 
-export default Note
+export default ShiftPreference

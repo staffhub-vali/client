@@ -1,15 +1,15 @@
 import { Calendar } from 'react-calendar'
-import Dropdown from '../Dropdown.js'
-import Button from '../../ui/Button.js'
+import Dropdown from '../Dropdown.tsx'
+import Button from '../../ui/Button.tsx'
 import { MoreVertical } from 'lucide-react'
-import Heading from '../../ui/Heading.js'
+import Heading from '../../ui/Heading.tsx'
 import { useNavigate } from 'react-router-dom'
-import Container from '../../ui/Container.js'
-import Paragraph from '../../ui/Paragraph.js'
+import Container from '../../ui/Container.tsx'
+import Paragraph from '../../ui/Paragraph.tsx'
 import { Dispatch, FC, SetStateAction, useEffect, useState } from 'react'
 import { Document, Page, Text, View, StyleSheet, PDFDownloadLink } from '@react-pdf/renderer'
-import { calculateTotalHours } from '../../../utils/CalculateHours.js'
-import { formatDate, formatDay, formatMonth, formatTime, formatTotal } from '../../../utils/DateFormatting.js'
+import { calculateTotalHours } from '../../../utils/CalculateHours.ts'
+import { formatDate, formatDay, formatMonth, formatTime, formatTotal } from '../../../utils/DateFormatting.ts'
 
 interface ScheduleProps {
 	employee: {

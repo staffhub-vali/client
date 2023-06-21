@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom'
 import { Dispatch, FC, SetStateAction } from 'react'
-import { Calendar, Palmtree, Scroll, Sticker, Trash2, User2 } from 'lucide-react'
+import { Calendar, Palmtree, Scroll, ScrollText, Sticker, Trash2, User2 } from 'lucide-react'
 
 interface DropdownProps {
 	employee: {
@@ -30,7 +30,7 @@ const Dropdown: FC<DropdownProps> = ({ employee, setShowModal, setShowDropdown, 
 					}}
 					className='flex cursor-pointer items-center justify-between px-4 py-3 hover:bg-slate-50 dark:hover:bg-slate-500'>
 					Notes
-					<Scroll className='ml-2' />
+					<ScrollText className='ml-2' />
 				</li>
 
 				<li

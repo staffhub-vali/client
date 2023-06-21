@@ -5,7 +5,8 @@ import Heading from '../ui/Heading.tsx'
 import Container from '../ui/Container.tsx'
 import { useNavigate } from 'react-router-dom'
 import { Search, UserPlus } from 'lucide-react'
-import { buttonVariants } from '../ui/Button.tsx'
+import Button, { buttonVariants } from '../ui/Button.tsx'
+import Paragraph from '../ui/Paragraph.tsx'
 
 interface EmployeesTableProps {
 	data: Employee[]
@@ -36,32 +37,41 @@ const EmployeesTable: FC<EmployeesTableProps> = ({ data }) => {
 		<Container
 			className='p-6'
 			size={'lg'}>
-			<Heading
-				size={'sm'}
-				className='slide-in-bottom'>
-				Employees ({data.length})
-			</Heading>
-			<div className='slide-in-bottom-h1 mt-6 flex  items-center space-x-12'>
-				<div className='mx-auto flex w-full items-center rounded-lg bg-white px-2 shadow-md  ring-slate-800 focus-within:ring-2 dark:bg-slate-700'>
-					<Search />
-					<Input
-						type='text'
-						value={searchText}
-						placeholder='Search for employees...'
-						className='group mb-0 shadow-none focus:ring-0'
-						onChange={(event) => setSearchText(event.target.value)}
-					/>
+			<div className='mb-2 flex w-4/5 items-end justify-between'>
+				<div className='ml-8 flex items-baseline  space-x-4 	'>
+					<Heading
+						size={'sm'}
+						className='slide-in-bottom'>
+						Your Staff
+					</Heading>
+					<Paragraph
+						size={'xl'}
+						className='slide-in-bottom'>
+						has {data.length} {data.length > 1 ? 'members' : 'member'}
+					</Paragraph>
 				</div>
+				<div className='slide-in-bottom mb-1 mr-8  flex items-center space-x-12 '>
+					<div className='mx-auto flex w-full  items-center rounded-lg border border-white bg-white px-2 shadow dark:border-slate-700 dark:bg-slate-700'>
+						<Search />
+						<Input
+							size={'sm'}
+							type='text'
+							value={searchText}
+							placeholder='Search your employees...'
+							className='group m-0 py-2 shadow-none focus:ring-0'
+							onChange={(event) => setSearchText(event.target.value)}
+						/>
+					</div>
 
-				<Link
-					to={'/employees/new'}
-					title='Add a new employee'
-					className={`${buttonVariants({ variant: 'default', size: 'default' })} w-64`}>
-					New Employee {<UserPlus className='ml-2' />}
-				</Link>
+					<Button
+						title='Add a new employee'
+						className=' mb-0 mt-auto h-[2.65rem] w-64 shadow'
+						onClick={() => navigate('/employees/new')}>
+						Add Employee {<UserPlus className='ml-2' />}
+					</Button>
+				</div>
 			</div>
-
-			<table className='slide-in-bottom-h1 mt-4 w-4/5 divide-y-2 divide-slate-300 border-2 border-slate-300 bg-white text-center dark:divide-slate-600 dark:border-slate-600 dark:bg-slate-700'>
+			<table className='slide-in-bottom w-4/5 divide-y-2 divide-slate-300 border-2 border-slate-300 bg-white text-left  dark:divide-slate-600 dark:border-slate-600 dark:bg-slate-700'>
 				<thead>
 					<tr>
 						{headings.map((heading, index) => (

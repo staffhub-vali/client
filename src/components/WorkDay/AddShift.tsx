@@ -158,7 +158,7 @@ const AddShift: FC<AddShiftProps> = ({ workDay, setShowAddShift, setError, setMe
 						/>
 					</div>
 				</div>
-				<div className='mt-auto flex flex-col'>
+				<div className='mt-auto flex w-48 flex-col'>
 					<Label className='text-center'>Total</Label>
 					<Paragraph
 						size={'xl'}

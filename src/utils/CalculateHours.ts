@@ -27,3 +27,22 @@ export const calculateTotalHours = (days: WorkDay[] | any) => {
 	}, 0)
 	return totalHours
 }
+
+export const calculateTotalMonthlyHours = (days: any) => {
+	const totalMinutes = days.reduce((acc: number, day: any) => {
+		if (day.start && day.end) {
+			const start = day.start
+			const end = day.end
+			const seconds = end - start
+			const minutes = seconds / 60
+			return acc + minutes
+		}
+		return acc
+	}, 0)
+
+	const hours = Math.floor(totalMinutes / 60)
+	const minutes = Math.floor(totalMinutes % 60)
+
+	const formattedTime = `${hours}h ${minutes}min`
+	return formattedTime
+}

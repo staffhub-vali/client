@@ -4,7 +4,7 @@ import Modal from '../../ui/Modal.tsx'
 import Button from '../../ui/Button.tsx'
 import { Logout } from '../../../Auth.tsx'
 import Paragraph from '../../ui/Paragraph.tsx'
-import { formatDate } from '../../../utils/DateFormatting.ts'
+import { formatDate, formatDateLong } from '../../../utils/DateFormatting.ts'
 import { FC, useState, SetStateAction, Dispatch, useEffect } from 'react'
 
 interface VacationProps {
@@ -75,7 +75,8 @@ const Vacation: FC<VacationProps> = ({
 					size={'xl'}
 					className='w-[36rem] min-w-[16rem] rounded-md bg-white px-2 py-2 text-left dark:bg-slate-700'
 					key={employee?._id}>
-					{formatDate(Number(vacation.start) / 1000)} - {formatDate(Number(vacation.end) / 1000)}
+					From <span className='font-bold'>{formatDateLong(Number(vacation.start) / 1000)}. </span> untill{' '}
+					<span className='font-bold'>{formatDateLong(Number(vacation.end) / 1000)}.</span>
 				</Paragraph>
 
 				<Button

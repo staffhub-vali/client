@@ -10,7 +10,7 @@ import Paragraph from '../ui/Paragraph.tsx'
 import ScheduleTable from './ScheduleTable.tsx'
 import Notification from '../ui/Notification.tsx'
 import SearchEmployees from './SearchEmployees.tsx'
-import { calculateTotalHours } from '../../utils/CalculateHours.ts'
+import { calculateTotalHours, calculateTotalMonthlyHours } from '../../utils/CalculateHours.ts'
 import { formatDate, formatMonth } from '../../utils/DateFormatting.ts'
 import { Dispatch, FC, SetStateAction, useEffect, useState } from 'react'
 
@@ -175,34 +175,38 @@ const ScheduleMaker: FC<ScheduleMakerProps> = ({
 					className='h-fit'
 					onChange={handleMonthChange}
 				/>
-				<Button
-					size={'lg'}
-					loading={loading}
-					className='w-full text-2xl'
-					title='Create schedule'
-					onClick={createSchedule}>
-					Create schedule{' '}
-					{
-						<Check
-							size={30}
-							className='ml-10'
-						/>
-					}
-				</Button>
+				{schedule.length > 0 && (
+					<Button
+						size={'lg'}
+						loading={loading}
+						className='w-full text-2xl'
+						title='Create schedule'
+						onClick={createSchedule}>
+						Create Schedule{' '}
+					</Button>
+				)}
 			</div>
 			<div className='mt-4 h-[44rem] w-[82rem]'>
 				{schedule.length > 0 ? (
 					<>
-						{name ? (
-							<Heading
-								size={'xs'}
-								className='mb-2 text-center'>
-								{name} - {formatMonth(schedule[0].date)} - ( {calculateTotalHours(schedule)} hours )
-							</Heading>
+						{name && schedule ? (
+							<div className='flex items-baseline justify-between'>
+								<Heading
+									size={'xs'}
+									className='mb-2 ml-8 text-left'>
+									{name}
+								</Heading>
+								<Paragraph
+									size={'xl'}
+									className='mb-2 mr-10 text-left font-normal'>
+									will work <span className='font-bold'>{calculateTotalMonthlyHours(schedule)}</span> hours in{' '}
+									{formatMonth(schedule[0].date)}
+								</Paragraph>
+							</div>
 						) : (
 							<Heading
 								size={'xs'}
-								className='mb-2 text-center font-normal'>
+								className='slide-in-bottom mb-2 ml-8 text-left font-normal'>
 								Choose an employee.
 							</Heading>
 						)}

@@ -8,6 +8,24 @@ export function formatDate(unixTimestamp: number) {
 	return `${day}/${month}/${year}`
 }
 
+export function formatDateLong(unixTimestamp: number) {
+	const date = new Date(unixTimestamp * 1000)
+
+	const options: Intl.DateTimeFormatOptions = {
+		year: 'numeric', // Full year (e.g., "2023")
+		month: 'long', // Full month name (e.g., "July")
+		day: 'numeric', // Day of the month, numeric (e.g., "22")
+	}
+
+	const formattedDate = date.toLocaleString('en-US', options)
+	const parts = formattedDate.split(' ')
+	const day = parts[1].split(',')[0]
+	const month = parts[0]
+	const year = parts[2]
+
+	return `${day}.  ${month}${day.endsWith(',') ? '' : ','} ${year}`
+}
+
 export function formatDay(unixTimestamp: number) {
 	const date = new Date(unixTimestamp * 1000)
 

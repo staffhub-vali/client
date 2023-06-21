@@ -4,9 +4,10 @@ import Container from '../ui/Container.tsx'
 import Paragraph from '../ui/Paragraph.tsx'
 import { useNavigate } from 'react-router-dom'
 import groupShifts from '../../utils/GroupShifts.ts'
+import { formatMonth } from '../../utils/DateFormatting.ts'
 import { Dispatch, FC, SetStateAction, useEffect } from 'react'
 import { WorkDay } from '../../pages/Dashboard/DashboardPage.tsx'
-import { ChevronLeft, ChevronRight, ScrollText, User, X } from 'lucide-react'
+import { ChevronLeft, ChevronRight, Scroll, ScrollText, User, X } from 'lucide-react'
 import { formatDate, formatDay, formatTime } from '../../utils/DateFormatting.ts'
 
 interface DashboardProps {
@@ -59,15 +60,20 @@ const Dashboard: FC<DashboardProps> = ({
 		<Container
 			size={'lg'}
 			className='dashboard p-0 pt-20'>
+			<Heading
+				size={'sm'}
+				className='slide-in-bottom mb-4 mr-auto text-left'>
+				{formatMonth(data[0].date)}
+			</Heading>
 			<div className='slide-in-bottom flex min-h-[36rem] rounded border border-slate-300 bg-white shadow dark:border-slate-500 dark:bg-slate-700'>
 				{data.map((day: WorkDay) => (
 					<div
-						className='group flex w-64 cursor-pointer flex-col items-center border-x border-slate-300 dark:border-slate-500'
+						className='group flex w-64 cursor-pointer flex-col items-center border-x border-slate-300 transition-colors duration-150 hover:bg-slate-50 dark:border-slate-500 dark:hover:bg-slate-600'
 						key={day._id}
 						onClick={() => navigate(`/days/${day._id}`)}>
 						<div className='w-full text-center'>
 							<Heading
-								className='px-3 pt-6 transition-colors duration-75 group-hover:text-sky-500'
+								className='px-3 pt-6 transition-colors duration-75 group-hover:text-sky-400'
 								size={'xs'}>
 								{formatDay(day.date)}
 							</Heading>
@@ -97,9 +103,17 @@ const Dashboard: FC<DashboardProps> = ({
 								</Paragraph>
 							)}
 						</div>
-						{day.notes.length > 0 && (
-							<Paragraph className='mt-auto flex items-center pb-2 text-2xl'>
+						{day.notes.length > 0 ? (
+							<Paragraph
+								title={`${day.notes.length} ${day.notes.length === 1 ? 'note' : 'notes'} `}
+								className='mt-auto flex items-center pb-2 text-2xl'>
 								{day.notes.length} <ScrollText className='ml-2 h-6 w-6' />
+							</Paragraph>
+						) : (
+							<Paragraph
+								title={`${day.notes.length} ${day.notes.length === 1 ? 'note' : 'notes'} `}
+								className='mt-auto flex items-center pb-2 text-2xl'>
+								{day.notes.length} <Scroll className='ml-2 h-6 w-6' />
 							</Paragraph>
 						)}
 					</div>

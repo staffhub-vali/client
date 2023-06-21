@@ -9,7 +9,14 @@ import Paragraph from '../../ui/Paragraph.tsx'
 import { Dispatch, FC, SetStateAction, useState } from 'react'
 import { calculateTotalHours } from '../../../utils/CalculateHours.ts'
 import { Document, Page, Text, View, StyleSheet, PDFDownloadLink } from '@react-pdf/renderer'
-import { formatDate, formatDay, formatMonth, formatTime, formatTotal } from '../../../utils/DateFormatting.ts'
+import {
+	formatDate,
+	formatDateLong,
+	formatDay,
+	formatMonth,
+	formatTime,
+	formatTotal,
+} from '../../../utils/DateFormatting.ts'
 
 interface ScheduleProps {
 	employee: {
@@ -163,15 +170,15 @@ const Schedule: FC<ScheduleProps> = ({ month, value, setValue, employee, workDay
 								? 'slide-in-bottom overflow-y-scroll border border-slate-300 bg-white shadow dark:border-slate-500 dark:bg-slate-800'
 								: 'border-none'
 						}  mx-auto h-[37rem] overflow-x-hidden rounded border border-slate-300`}>
-						<div className='flex w-full items-center border-b-2 border-t border-slate-300 bg-white py-4 dark:border-slate-500 dark:bg-slate-800'>
+						<div className='flex w-full items-center justify-between border-b-2 border-t border-slate-300 bg-white py-4 dark:border-slate-500 dark:bg-slate-800'>
 							<Heading
 								size={'xs'}
-								className='text-md  w-96 text-center font-normal'>
+								className='text-md ml-8 text-center font-normal'>
 								{month} ({calculateTotalHours(workDays)} hours)
 							</Heading>
 							<Button
 								size={'lg'}
-								className='ml-24 text-xl hover:text-sky-500 dark:hover:text-sky-400'
+								className='mr-8 text-xl hover:text-sky-500 dark:hover:text-sky-400'
 								variant={'outlineHover'}>
 								<PDFDownloadLink
 									document={<MonthlyRoster />}
@@ -188,18 +195,18 @@ const Schedule: FC<ScheduleProps> = ({ month, value, setValue, employee, workDay
 								className={`group flex w-[48rem] cursor-pointer items-center space-y-4 border-b-2 border-slate-300 dark:border-slate-500 ${
 									index % 2 === 0 ? 'bg-slate-50 dark:bg-slate-700' : 'bg-white dark:bg-slate-800'
 								} py-2`}>
-								<div className='mx-auto flex flex-col items-center group-hover:text-sky-500 dark:group-hover:text-sky-400'>
+								<div className='ml-8 mr-auto flex w-96 flex-col items-start group-hover:text-sky-500 dark:group-hover:text-sky-400'>
 									{formatDay(day.date)}
 									<Paragraph
-										className='group-hover:text-sky-500 dark:group-hover:text-sky-400'
+										className=' group-hover:text-sky-500 dark:group-hover:text-sky-400'
 										size={'xl'}>
-										{formatDate(day.date)}
+										{formatDateLong(day.date)}
 									</Paragraph>
 								</div>
 
 								<Paragraph
 									size={'xl'}
-									className='mx-auto w-48 pb-2 group-hover:text-sky-500 dark:group-hover:text-sky-400'>
+									className='ml-auto mr-8  pb-2 group-hover:text-sky-500 dark:group-hover:text-sky-400'>
 									{day.shifts[0]?.start && (
 										<>
 											{formatTime(day.shifts[0]?.start)} - {formatTime(day.shifts[0]?.end)}

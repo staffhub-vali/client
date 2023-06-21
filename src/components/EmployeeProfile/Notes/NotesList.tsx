@@ -1,13 +1,13 @@
 import axios from 'axios'
 import Note from './Note.tsx'
 import Input from '../../ui/Input.tsx'
+import Dropdown from '../Dropdown.tsx'
 import Button from '../../ui/Button.tsx'
 import Heading from '../../ui/Heading.tsx'
 import { Logout } from '../../../Auth.tsx'
-import { Check, MoreVertical, Scroll, X } from 'lucide-react'
 import Container from '../../ui/Container.tsx'
+import { Check, MoreVertical, Scroll, X } from 'lucide-react'
 import { Dispatch, FC, SetStateAction, useState } from 'react'
-import Dropdown from '../Dropdown.tsx'
 
 interface NotesListProps {
 	employee: {

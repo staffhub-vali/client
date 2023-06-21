@@ -1,12 +1,10 @@
 import { Logout } from '../Auth.tsx'
 import { Link } from 'react-router-dom'
 import { themeSwitch } from '../main.tsx'
+import { useEffect, useState } from 'react'
 import { buttonVariants } from './ui/Button.tsx'
-import { FC, useEffect, useState } from 'react'
 
-interface NavbarProps {}
-
-const Navbar: FC<NavbarProps> = ({}) => {
+const Navbar = () => {
 	const token = localStorage.getItem('token')
 	const theme = localStorage.getItem('theme')
 	const [sun, setSun] = useState<boolean>(true)

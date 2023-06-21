@@ -5,9 +5,9 @@ import { UserPlus } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import Heading from '../../components/ui/Heading.tsx'
 import Spinner from '../../components/ui/Spinner.tsx'
+import Container from '../../components/ui/Container.tsx'
 import { buttonVariants } from '../../components/ui/Button.tsx'
 import EmployeesTable from '../../components/EmployeeProfile/EmployeesTable.tsx'
-import Container from '../../components/ui/Container.tsx'
 
 interface Employee {
 	_id: string

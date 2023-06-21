@@ -1,13 +1,13 @@
 import axios from 'axios'
 import Input from '../../ui/Input.tsx'
+import Dropdown from '../Dropdown.tsx'
 import Button from '../../ui/Button.tsx'
-import { Check, MoreVertical, Plus, Sticker, X } from 'lucide-react'
 import Heading from '../../ui/Heading.tsx'
 import { Logout } from '../../../Auth.tsx'
 import Container from '../../ui/Container.tsx'
 import ShiftPreference from './ShiftPreference.tsx'
+import { Check, MoreVertical, Sticker, X } from 'lucide-react'
 import { Dispatch, FC, SetStateAction, useState } from 'react'
-import Dropdown from '../Dropdown.tsx'
 
 interface ShiftPreferencesListProps {
 	employee: {

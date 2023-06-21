@@ -1,10 +1,10 @@
 import Input from '../ui/Input.tsx'
 import { FC, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { Search, UserPlus } from 'lucide-react'
 import Heading from '../ui/Heading.tsx'
 import Container from '../ui/Container.tsx'
 import { useNavigate } from 'react-router-dom'
+import { Search, UserPlus } from 'lucide-react'
 import { buttonVariants } from '../ui/Button.tsx'
 
 interface EmployeesTableProps {

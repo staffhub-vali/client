@@ -6,8 +6,8 @@ import Button from '../ui/Button.tsx'
 import { Logout } from '../../Auth.tsx'
 import Container from '../ui/Container.tsx'
 import { useEffect, useState } from 'react'
-import Notification from '../ui/Notification.tsx'
 import { useNavigate } from 'react-router-dom'
+import Notification from '../ui/Notification.tsx'
 
 const NewEmployeeForm = () => {
 	const [name, setName] = useState<string>('')

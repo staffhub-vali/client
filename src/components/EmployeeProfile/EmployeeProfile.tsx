@@ -2,6 +2,7 @@ import axios from 'axios'
 import Modal from '../ui/Modal.tsx'
 import Button from '../ui/Button.tsx'
 import Dropdown from './Dropdown.tsx'
+import { Logout } from '../../Auth.tsx'
 import Heading from '../ui/Heading.tsx'
 import Paragraph from '../ui/Paragraph.tsx'
 import { Dispatch, FC, SetStateAction, useState } from 'react'
@@ -80,8 +81,10 @@ const EmployeeProfile: FC<EmployeeProfileProps> = ({ workDays, employee, showDro
 				},
 			})
 			window.location.href = '/employees'
-		} catch (error) {
-			console.log(error)
+		} catch (error: any) {
+			if (error.response.status === 401) {
+				Logout()
+			}
 		} finally {
 			setShowModal(false)
 			setLoading(false)

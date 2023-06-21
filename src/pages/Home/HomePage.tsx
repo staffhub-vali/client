@@ -4,9 +4,9 @@ import { Logout, UserData } from '../../Auth.tsx'
 import Button from '../../components/ui/Button.tsx'
 import Heading from '../../components/ui/Heading.tsx'
 import Spinner from '../../components/ui/Spinner.tsx'
+import { Link, useNavigate } from 'react-router-dom'
 import Container from '../../components/ui/Container.tsx'
 import Paragraph from '../../components/ui/Paragraph.tsx'
-import { Link, useNavigate } from 'react-router-dom'
 
 const HomePage = () => {
 	const token = localStorage.getItem('token')

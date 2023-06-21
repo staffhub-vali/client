@@ -1,18 +1,18 @@
 import axios from 'axios'
+import { Check } from 'lucide-react'
 import Button from '../ui/Button.tsx'
 import Heading from '../ui/Heading.tsx'
 import { Logout } from '../../Auth.tsx'
-import { Check } from 'lucide-react'
-import { Dispatch, FC, SetStateAction, useEffect, useState } from 'react'
 import { Calendar } from 'react-calendar'
-import Container from '../ui/Container.tsx'
 import 'react-calendar/dist/Calendar.css'
+import Container from '../ui/Container.tsx'
+import Paragraph from '../ui/Paragraph.tsx'
 import ScheduleTable from './ScheduleTable.tsx'
 import Notification from '../ui/Notification.tsx'
 import SearchEmployees from './SearchEmployees.tsx'
-import { formatDate, formatMonth } from '../../utils/DateFormatting.ts'
-import Paragraph from '../ui/Paragraph.tsx'
 import { calculateTotalHours } from '../../utils/CalculateHours.ts'
+import { formatDate, formatMonth } from '../../utils/DateFormatting.ts'
+import { Dispatch, FC, SetStateAction, useEffect, useState } from 'react'
 
 interface Employee {
 	_id: string

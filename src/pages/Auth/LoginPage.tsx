@@ -1,9 +1,8 @@
 import { useEffect, useState } from 'react'
-import Container from '../../components/ui/Container.js'
-import LoginForm from '../../components/Auth/LoginForm.js'
+import Container from '../../components/ui/Container.tsx'
+import LoginForm from '../../components/Auth/LoginForm.tsx'
 
 const LoginPage = () => {
-	const [loading, setLoading] = useState<boolean>(false)
 	const [error, setError] = useState<string | null>(null)
 	const [message, setMessage] = useState<string | null>(null)
 
@@ -29,8 +28,6 @@ const LoginPage = () => {
 			<LoginForm
 				error={error}
 				message={message}
-				setError={setError}
-				setLoading={setLoading}
 			/>
 		</Container>
 	)

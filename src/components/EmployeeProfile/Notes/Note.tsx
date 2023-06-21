@@ -2,10 +2,10 @@ import axios from 'axios'
 import Modal from '../../ui/Modal.tsx'
 import Input from '../../ui/Input.tsx'
 import Button from '../../ui/Button.tsx'
+import { Logout } from '../../../Auth.tsx'
 import Paragraph from '../../ui/Paragraph.tsx'
 import { Check, XCircle, Trash2, Pencil } from 'lucide-react'
 import { FC, useState, SetStateAction, Dispatch } from 'react'
-import { Logout } from '../../../Auth.tsx'
 
 interface NoteProps {
 	note: string
@@ -18,8 +18,8 @@ interface NoteProps {
 }
 
 interface Employee {
-	notes: string[]
 	_id: string
+	notes: string[]
 }
 
 const Note: FC<NoteProps> = ({ note: n, index, employee, loading, setError, setLoading, setMessage }) => {

@@ -6,9 +6,9 @@ import Heading from '../../ui/Heading.tsx'
 import { useNavigate } from 'react-router-dom'
 import Container from '../../ui/Container.tsx'
 import Paragraph from '../../ui/Paragraph.tsx'
-import { Dispatch, FC, SetStateAction, useEffect, useState } from 'react'
-import { Document, Page, Text, View, StyleSheet, PDFDownloadLink } from '@react-pdf/renderer'
+import { Dispatch, FC, SetStateAction, useState } from 'react'
 import { calculateTotalHours } from '../../../utils/CalculateHours.ts'
+import { Document, Page, Text, View, StyleSheet, PDFDownloadLink } from '@react-pdf/renderer'
 import { formatDate, formatDay, formatMonth, formatTime, formatTotal } from '../../../utils/DateFormatting.ts'
 
 interface ScheduleProps {
@@ -21,14 +21,14 @@ interface ScheduleProps {
 		shiftPreferences: string[]
 		vacationDays: number | string
 	}
-	value: Date | null
-	month: string | null
-	workDays: WorkDay[]
 	loading: boolean
+	value: Date | null
+	workDays: WorkDay[]
+	month: string | null
 	showDropdown: boolean
 
-	setValue: Dispatch<SetStateAction<Date | null>>
 	setLoading: Dispatch<SetStateAction<boolean>>
+	setValue: Dispatch<SetStateAction<Date | null>>
 	setError: Dispatch<SetStateAction<string | null>>
 	setShowDropdown: Dispatch<SetStateAction<boolean>>
 	setMessage: Dispatch<SetStateAction<string | null>>
@@ -36,16 +36,16 @@ interface ScheduleProps {
 
 interface Shift {
 	_id: string
-	start: number
 	end: number
+	start: number
 	employee: string
 	workDay: WorkDay
 }
 
 interface WorkDay {
 	_id: string
-	shifts: Shift[]
 	date: number
+	shifts: Shift[]
 }
 
 const styles = StyleSheet.create({
@@ -86,19 +86,7 @@ const styles = StyleSheet.create({
 	},
 })
 
-const Schedule: FC<ScheduleProps> = ({
-	loading,
-	value,
-	setValue,
-	setError,
-	setMessage,
-	employee,
-	setLoading,
-	workDays,
-	showDropdown,
-	setShowDropdown,
-	month,
-}) => {
+const Schedule: FC<ScheduleProps> = ({ month, value, setValue, employee, workDays, showDropdown, setShowDropdown }) => {
 	const navigate = useNavigate()
 
 	const [showModal, setShowModal] = useState<boolean>(false)

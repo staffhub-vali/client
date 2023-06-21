@@ -151,23 +151,30 @@ const ShiftPreferencesList: FC<ShiftPreferencesListProps> = ({
 			{showAddShiftPreference && (
 				<form
 					onSubmit={addShiftPreference}
-					className='slide-in-bottom mt-32 flex w-2/3 space-x-4'>
-					<Input
-						type='text'
-						value={shiftPreference}
-						size={'lg'}
-						placeholder=' Add a shift preference...'
-						onChange={(e) => setShiftPreference(e.target.value)}
-					/>
-					<Button
-						title='Add shift preference'
-						variant={'link'}
-						className='w-20 min-w-0'>
-						<Check
-							size={36}
-							className='mt-2'
+					className='slide-in-bottom mt-32 flex flex-col space-x-4'>
+					<Heading
+						size={'xs'}
+						className='mb-3 text-center'>
+						New shift preference
+					</Heading>
+					<div className=' flex w-[48rem]'>
+						<Input
+							type='text'
+							value={shiftPreference}
+							size={'lg'}
+							placeholder=' Add a shift preference...'
+							onChange={(e) => setShiftPreference(e.target.value)}
 						/>
-					</Button>
+						<Button
+							title='Add shift preference'
+							variant={'link'}
+							className='w-20 min-w-0'>
+							<Check
+								size={36}
+								className='mt-2'
+							/>
+						</Button>
+					</div>
 				</form>
 			)}
 		</Container>

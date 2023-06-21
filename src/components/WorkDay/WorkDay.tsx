@@ -118,17 +118,17 @@ const WorkDay: FC<WorkDayProps> = ({
 					setShowAddShift={setShowAddShift}
 				/>
 			)}
-			<div className='flex flex-col items-center space-y-6 py-6'>
+			<div className='flex flex-col items-center py-6'>
 				{workDay && !showAddShift && !showAddNote && (
 					<Heading
-						className='slide-in-bottom font-normal'
+						className='slide-in-bottom mb-2 font-normal'
 						size={'xs'}>
 						Notes
 					</Heading>
 				)}
 				{workDay && showAddNote && (
 					<Heading
-						className='slide-in-bottom font-normal'
+						className='slide-in-bottom mb-2 font-normal'
 						size={'xs'}>
 						Add a note
 					</Heading>

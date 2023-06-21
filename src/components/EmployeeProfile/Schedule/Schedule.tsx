@@ -51,13 +51,15 @@ interface WorkDay {
 const styles = StyleSheet.create({
 	page: {
 		flexDirection: 'column',
-		backgroundColor: 'white',
+		backgroundColor: '#1e293b',
+		color: '#e2e8f0',
 	},
 	title: {
 		textAlign: 'center',
 		fontSize: 24,
 		padding: 16,
-		borderBottom: '1px solid black',
+		borderBottom: '1px solid #64748b',
+		backgroundColor: '#334155',
 	},
 	section: {
 		padding: 3.32,
@@ -65,7 +67,7 @@ const styles = StyleSheet.create({
 		flexDirection: 'row',
 		justifyContent: 'space-evenly',
 		alignItems: 'center',
-		borderBottom: '1px solid #ccc',
+		borderBottom: '1px solid #64748b',
 	},
 	sectionShift: {
 		padding: 3.32,
@@ -73,8 +75,8 @@ const styles = StyleSheet.create({
 		flexDirection: 'row',
 		justifyContent: 'space-evenly',
 		alignItems: 'center',
-		borderBottom: '1px solid #ccc',
-		backgroundColor: '#f1f5f9',
+		borderBottom: '1px solid #64748b',
+		backgroundColor: '#334155',
 	},
 
 	shift: {

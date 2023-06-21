@@ -36,7 +36,6 @@ const LoginForm: FC<LoginFormProps> = ({ message, error, setError, setLoading })
 			<div className='slide-in-bottom mt-12'>
 				<GoogleLogin
 					text='continue_with'
-					width='330'
 					onSuccess={(credentialResponse) => {
 						Login(credentialResponse)
 					}}

@@ -45,7 +45,7 @@ const HomePage = () => {
 	return (
 		<Container
 			size={'lg'}
-			className='overflow-y-hidden p-0 px-24 pt-36'>
+			className='overflow-y-hidden p-0 px-24 pt-24'>
 			{loading ? (
 				<Spinner />
 			) : (

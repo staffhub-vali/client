@@ -76,12 +76,10 @@ const NewEmployeeForm = () => {
 	}
 
 	return (
-		<Container
-			className='p-0'
-			size={'lg'}>
+		<div className='w-full'>
 			<form
 				onSubmit={handleSubmit}
-				className='slide-in-bottom-h1 mb-16 mt-12 flex w-2/3 flex-col gap-2'>
+				className='slide-in-bottom-h1 mx-auto mb-16 mt-12 flex flex-col gap-2 sm:w-1/3'>
 				<Label htmlFor='name'>Employee Name</Label>
 
 				<Input
@@ -140,7 +138,7 @@ const NewEmployeeForm = () => {
 					loading={loading}
 					className='slide-in-bottom mr-auto'
 					title='Save information and create employee'>
-					Submit {<Check className='ml-2' />}
+					Submit
 				</Button>
 			</form>
 			{error && (
@@ -157,7 +155,7 @@ const NewEmployeeForm = () => {
 					{message}
 				</Notification>
 			)}
-		</Container>
+		</div>
 	)
 }
 

@@ -48,7 +48,7 @@ const EmployeesListPage = () => {
 	return (
 		<Container
 			size={'lg'}
-			className='overflow-y-hidden'>
+			className='overflow-y-hidden px-2'>
 			{loading ? (
 				<Spinner />
 			) : data.length > 0 ? (
@@ -56,13 +56,13 @@ const EmployeesListPage = () => {
 			) : (
 				<>
 					<Heading
-						className='slide-in-bottom mb-2 mt-6'
+						className='slide-in-bottom mb-2 mt-6 text-center'
 						size={'sm'}>
 						You do not currently have any employees on your account.
 					</Heading>
 					<Heading
 						size={'xs'}
-						className='slide-in-bottom'>
+						className='slide-in-bottom text-center'>
 						Click below if you wish to create an employee.
 					</Heading>{' '}
 					<Link

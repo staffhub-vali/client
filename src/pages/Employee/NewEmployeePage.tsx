@@ -4,10 +4,12 @@ import NewEmployeeForm from '../../components/EmployeeProfile/NewEmployeeForm.ts
 
 const NewEmployeePage = () => {
 	return (
-		<Container className='overflow-y-hidden'>
+		<Container
+			size={'lg'}
+			className='overflow-y-hidden px-2'>
 			<Heading
 				size='sm'
-				className='slide-in-bottom'>
+				className='slide-in-bottom '>
 				Create an Employee
 			</Heading>
 			<NewEmployeeForm />

@@ -37,8 +37,8 @@ const EmployeesTable: FC<EmployeesTableProps> = ({ data }) => {
 		<Container
 			className='p-6'
 			size={'lg'}>
-			<div className='mb-2 flex w-4/5 items-end justify-between'>
-				<div className='ml-8 flex items-baseline  space-x-4 	'>
+			<div className='mb-2 flex w-2/5 items-end justify-between sm:w-3/5'>
+				<div className='flex items-baseline space-x-4  sm:ml-8 	'>
 					<Heading
 						size={'sm'}
 						className='slide-in-bottom'>
@@ -50,8 +50,8 @@ const EmployeesTable: FC<EmployeesTableProps> = ({ data }) => {
 						has {data.length} {data.length > 1 ? 'members' : 'member'}
 					</Paragraph>
 				</div>
-				<div className='slide-in-bottom mb-1 mr-8  flex items-center space-x-12 '>
-					<div className='mx-auto flex w-full  items-center rounded-lg border border-white bg-white px-2 shadow dark:border-slate-700 dark:bg-slate-700'>
+				<div className='slide-in-bottom mb-1 flex  items-center space-x-12 sm:mr-8 '>
+					<div className='mx-auto flex items-center  rounded-lg border border-white bg-white px-2 shadow dark:border-slate-700 dark:bg-slate-700 sm:w-full'>
 						<Search />
 						<Input
 							size={'sm'}
@@ -71,7 +71,7 @@ const EmployeesTable: FC<EmployeesTableProps> = ({ data }) => {
 					</Button>
 				</div>
 			</div>
-			<table className='slide-in-bottom w-4/5 divide-y-2 divide-slate-300 border-2 border-slate-300 bg-white text-left  dark:divide-slate-600 dark:border-slate-600 dark:bg-slate-700'>
+			<table className='slide-in-bottom w-2/5 divide-y-2 divide-slate-300 border-2 border-slate-300 bg-white text-left dark:divide-slate-600  dark:border-slate-600 dark:bg-slate-700 sm:w-3/5'>
 				<thead>
 					<tr>
 						{headings.map((heading, index) => (

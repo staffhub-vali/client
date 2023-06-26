@@ -7,10 +7,10 @@ interface ParagraphProps extends HTMLAttributes<HTMLParagraphElement>, VariantPr
 const paragraphVariants = cva('text-slate-800 max-w-prose dark:text-slate-200 text-center', {
 	variants: {
 		size: {
-			default: 'text-lg',
-			sm: 'text-sm',
-			lg: 'text-xl',
-			xl: 'text-2xl',
+			default: 'sm:text-lg text-md',
+			sm: 'sm:text-sm text-xs',
+			lg: 'sm:text-xl text-lg',
+			xl: 'sm:text-2xl text-xl',
 		},
 	},
 	defaultVariants: { size: 'default' },

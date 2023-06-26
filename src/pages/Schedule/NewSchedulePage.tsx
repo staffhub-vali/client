@@ -42,7 +42,7 @@ const NewSchedulePage = () => {
 	return (
 		<Container
 			size={'lg'}
-			className='overflow-y-hidden'
+			className='overflow-y- px-2'
 			onClick={() => (isOpen ? setIsOpen(false) : null)}>
 			{loading ? (
 				<Spinner />
@@ -63,13 +63,13 @@ const NewSchedulePage = () => {
 			) : (
 				<>
 					<Heading
-						className='slide-in-bottom mb-2 mt-6'
+						className='slide-in-bottom mb-2 mt-6 text-center'
 						size={'sm'}>
 						You do not currently have any employees on your account to create a schedule.
 					</Heading>
 					<Heading
 						size={'xs'}
-						className='slide-in-bottom'>
+						className='slide-in-bottom text-center'>
 						Click below if you wish to create an employee.
 					</Heading>
 					<Link

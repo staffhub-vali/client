@@ -35,22 +35,20 @@ const HomePage = () => {
 	}
 
 	let name
-	let picture
 
 	if (token) {
 		name = UserData().name
-		picture = UserData().picture
 	}
 
 	return (
 		<Container
 			size={'lg'}
-			className='overflow-y-hidden p-0 px-24 pt-24'>
+			className='overflow-y-hidden p-0 sm:px-24 sm:pt-24'>
 			{loading ? (
 				<Spinner />
 			) : (
 				<>
-					<div className='flex w-full items-center justify-evenly pt-12'>
+					<div className='flex w-full flex-col items-center justify-evenly pt-12 sm:flex-row'>
 						<div className='mx-auto flex flex-col items-center overflow-y-hidden'>
 							{token ? (
 								<>
@@ -113,7 +111,7 @@ const HomePage = () => {
 							</div>
 						</div>
 
-						<div className='slide-in-bottom mx-auto'>
+						<div className='slide-in-bottom mx-auto mt-12 sm:mt-0'>
 							<img
 								src='./calendar.svg'
 								alt='Calendar'

@@ -15,8 +15,8 @@ These instructions will get you a copy of the project up and running on your loc
 
 ### Prerequisites
 
-- Node.js
 - npm
+- Node.js
 
 ### Installation
 
@@ -32,13 +32,11 @@ npm run dev
 
 To run this project, you will need to add the following environment variables to your .env file:
 
-`GOOGLE_CLIENT_ID` - Your Google Client ID for OAuth
+`VITE_BASE_URL` - The base URL for your API 
 
-`GOOGLE_CLIENT_SECRET` - Your Google Client Secret for OAuth
+`VITE_GOOGLE_CLIENT_ID` - Your Google Client ID for OAuth
 
-`MONGO_URL` - Your MongoDB connection string
-
-`ORIGIN` - The origin URL for your application
+`VITE_GOOGLE_CLIENT_SECRET` - Your Google Client Secret for OAuth
 
 ## Built With
 
